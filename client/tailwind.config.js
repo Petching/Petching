@@ -8,6 +8,8 @@ module.exports = {
       },
       colors: {
         customGreen: "#BADA7A",
+        kakaoYellow: "#F7E600",
+        kakaoText: "#3A1D1D",
       },
     },
   },

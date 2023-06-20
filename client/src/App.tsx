@@ -1,13 +1,16 @@
 import React from "react";
-import logo from "./logo.svg";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import SignIn from "./Page/signIn";
-
+import SignUp from "./Page/signUp";
 function App() {
   return (
-    <div className="App">
-      <SignIn />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/signup" element={<SignUp />}></Route>
+        <Route path="/signin" element={<SignIn />}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

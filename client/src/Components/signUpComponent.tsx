@@ -69,7 +69,7 @@ const SignComponent: React.FC = () => {
           </div>
         </div>
         <br></br>
-        <button className="ml-4 flex-2 bg-customGreen border border-gray-300 p-2 rounded text-white">
+        <button className="ml-4 flex-2 bg-customGreen border border-gray-300 p-2 rounded text-white mr-7 hover:bg-green-500">
           회원가입하기
         </button>
       </div>

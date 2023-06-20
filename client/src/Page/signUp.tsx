@@ -1,10 +1,10 @@
 import React from "react";
-import SignInComponent from "../Components/signInComponent";
+import SignUpComponent from "../Components/signUpComponent";
 
 const SignIn = () => {
   return (
     <div className="h-screen flex items-center justify-center bg-gray-100">
-      <SignInComponent />
+      <SignUpComponent />
     </div>
   );
 };
