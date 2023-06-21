@@ -1,3 +1,5 @@
+import { RxGithubLogo } from "react-icons/rx";
+
 const Footer = () => {
   return (
     <div className='bg-customGreen h-8 fixed bottom-0 left-0 w-full z-50 flex justify-between items-center px-2'>
@@ -10,10 +12,7 @@ const Footer = () => {
       <div className='flex items-center'>
         <button>문의하기</button>
         <button className='w-5 ml-2'>
-          <img
-            src='https://img.icons8.com/?size=512&id=106562&format=png'
-            alt='깃허브 링크'
-          />
+          <RxGithubLogo />
         </button>
       </div>
     </div>
