@@ -4,7 +4,7 @@ import { RxHamburgerMenu } from 'react-icons/rx';
 
 const GNB = () => {
   const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState<boolean>(true);
+  const [isLogin, setIsLogin] = useState<boolean>(false);
   const [userIcon, setUserIcon] = useState<boolean>(false);
   const [menu, setMenu] = useState<boolean>(false);
   const userOpen = () => {
