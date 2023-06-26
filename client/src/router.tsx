@@ -4,6 +4,9 @@ import GeneralLayout from './Layout/GeneraLayout';
 import Main from './Page/Main';
 import SignUp from './Page/signUp';
 import SignIn from './Page/signIn';
+import User from './Page/User';
+import ChatList from './Page/chatList';
+import Chatting from './Page/chatting';
 
 export const routers: RemixRouter = createBrowserRouter([
   {
@@ -24,7 +27,15 @@ export const routers: RemixRouter = createBrowserRouter([
       },
       {
         path: '/user/:userId',
-        // element: <User />,
+        element: <User />,
+      },
+      {
+        path: '/chatlist',
+        element: <ChatList />,
+      },
+      {
+        path: '/chatting',
+        element: <Chatting />,
       },
     ],
   },
