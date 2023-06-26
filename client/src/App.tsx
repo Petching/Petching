@@ -5,7 +5,7 @@ import SignIn from "./Page/signIn";
 import SignUp from "./Page/signUp";
 import ChatList from "./Page/chatList";
 import Chatting from "./Page/chatting";
-import logo from "./logo.svg";
+
 import "./App.css";
 
 function App() {
