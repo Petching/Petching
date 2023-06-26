@@ -11,27 +11,14 @@ import "./App.css";
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <BrowserRouter>
-            <Routes>
-              <Route path="/signin" element={<SignIn />}></Route>
-              <Route path="/signup" element={<SignUp />}></Route>
-              <Route path="/chatlist" element={<ChatList />}></Route>
-              <Route path="/chatting" element={<Chatting />}></Route>
-            </Routes>
-          </BrowserRouter>
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/signin" element={<SignIn />}></Route>
+          <Route path="/signup" element={<SignUp />}></Route>
+          <Route path="/chatlist" element={<ChatList />}></Route>
+          <Route path="/chatting" element={<Chatting />}></Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
