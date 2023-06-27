@@ -44,8 +44,8 @@ public class CarePost extends Auditable {
     @Column
     private Date endDate;
 
-
-    @OneToMany(mappedBy = "carePost", cascade = CascadeType.PERSIST)
+    @JsonIgnore
+    @OneToMany(mappedBy = "carePost", cascade = CascadeType.ALL)
     private List<CarePost_ConditionTag> postConditionTags = new ArrayList<>();
 
     public void setCarePost_ConditionTag(CarePost_ConditionTag postConditionTags) {

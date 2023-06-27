@@ -18,7 +18,7 @@ public class CarePost_ConditionTag {
     private long carePostConditionTagId;
 
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "POST_ID")
     private CarePost carePost;
 

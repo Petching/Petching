@@ -72,10 +72,11 @@ public class CarePostService implements Cloneable {
         Optional.ofNullable(patch.getEndDate())
                 .ifPresent(findPost::setEndDate);
 
+        carePostConditionTagRepository.deleteAllByCarePost_PostId(postId);
         //fixme 수정!!
         Optional.ofNullable(patch.getConditionTags()).ifPresent((TagList) -> {
 
-            carePostConditionTagRepository.deleteAllByCarePost_PostId(postId);
+
             List<CarePost_ConditionTag> newCarePost_ConditionTagList = new ArrayList<>();
             for (String tagTemp : patch.getConditionTags()) {  //태그 저장
                 ConditionTag findTag = conditionTagRepository.findByBody(tagTemp);
@@ -167,7 +168,8 @@ public class CarePostService implements Cloneable {
 
     public List<CarePost> findAllPost() {
 
-        return repository.findAll(Sort.by("postId").descending());
+//        return repository.findAll(Sort.by("postId").descending());
+        return repository.findAll();
 
     }
 
