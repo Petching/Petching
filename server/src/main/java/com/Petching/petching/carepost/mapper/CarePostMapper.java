@@ -44,7 +44,7 @@ public interface CarePostMapper {
     }
 
     //Todo : null발생 (수동매핑 필요)
-    List<CarePost> carePostsToCarePostResponseDtos(List<CarePost> carePosts);
+    List<CarePostDto.Response> carePostsToCarePostResponseDtos(List<CarePost> carePosts);
 
     default List<String> postTagDtoResponse (List<CarePost_ConditionTag> postTags) {
         List<String> tagName = postTags.stream().map(tag -> tag.getConditionTag().getBody())
