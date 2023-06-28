@@ -14,7 +14,7 @@ const Info = () => {
           <br />
           찾아보세요!
         </p>
-        <button className="w-full h-16 mt-10 bg-customGreen text-xl hover:scale-90 transition-all rounded">
+        <button className="w-full h-16 mt-10 bg-[#FFE2E2] text-xl hover:scale-90 transition-all rounded">
           펫시터 찾아보기
         </button>
       </div>
