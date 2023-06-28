@@ -2,7 +2,8 @@ package com.Petching.petching.exception;
 
 import lombok.Getter;
 public enum ExceptionCode {
-        BOARD_NOT_FOUND(404,"Board not found");
+        BOARD_NOT_FOUND(404,"Board not found"),
+        COMMENT_NOT_FOUND(404, "Comment not found");
 
         @Getter
         private int status;

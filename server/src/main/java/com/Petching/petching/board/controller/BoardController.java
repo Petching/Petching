@@ -5,8 +5,10 @@ import com.Petching.petching.board.entity.Board;
 import com.Petching.petching.board.mapper.BoardMapper;
 import com.Petching.petching.board.service.BoardService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,10 +33,10 @@ public class BoardController {
         this.mapper = mapper;
     }
 
-    // 게시판 글 작성(C)
     @PostMapping
-    public ResponseEntity postBoard(@Valid @RequestBody BoardDto.Post postDto){
-        Board board = boardService.createBoard(mapper.boardPostDtoToBoard(postDto));
+    public ResponseEntity postBoard(@Valid @RequestBody BoardDto.Post requestBody){
+
+        Board board = boardService.createBoard(mapper.boardPostDtoToBoard(requestBody));
 
         URI uri = UriComponentsBuilder.newInstance()
                 .path("/api/boards/"+board.getBoardId())
@@ -42,37 +44,25 @@ public class BoardController {
 
         return ResponseEntity.created(uri).build();
     }
-    // 게시판 수정(U)
-    @PatchMapping("/{id}")
-    public ResponseEntity patchBoard(@PathVariable("id") long id, @Valid @RequestBody BoardDto.Patch patchDto){
-        patchDto.setBoardId(id);
-        Board board = mapper.boardPatchDtoToBoard(patchDto);
+    @PatchMapping("/{board-id}")
+    public ResponseEntity patchBoard(@PathVariable("board-id") long id, @Valid @RequestBody BoardDto.Patch requestBody){
+        requestBody.setBoardId(id);
+        Board board = mapper.boardPatchDtoToBoard(requestBody);
         Board response = boardService.updateBoard(board);
 
         return new ResponseEntity<>(mapper.boardToBoardResponseDto(response), HttpStatus.OK);
     }
-    // 게시판 삭제(D)
-    @DeleteMapping("/{id}")
-    public ResponseEntity deleteBoard(@PathVariable("id") long id) {
+    @DeleteMapping("/{board-id}")
+    public ResponseEntity deleteBoard(@PathVariable("board-id") long id){
         boardService.deleteBoard(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    @GetMapping("/{boardId}")
-    public ResponseEntity findBoard(@PathVariable("boardId") Long id){
-        // 게시판 상세 조회(Detailed R)
-        Board board = boardService.findBoard(id);
-        if(board ==null){
-            return ResponseEntity.notFound().build();
-        }
-        BoardDto.Detail details = mapper.BoardToDetailDto(board);
-        return ResponseEntity.ok(details);
-    }
 
-    // 게시판 전체 조회(R)
+    // 전체 게시글 목록 조회
     @GetMapping
     public ResponseEntity getBoards(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue ="20") int size
+            @RequestParam(defaultValue = "10") int size
     ){
         Pageable pageable = PageRequest.of(page, size);
         Page<Board> boardPage = boardService.findBoards(pageable);
@@ -81,8 +71,17 @@ public class BoardController {
                 .stream()
                 .map(board->mapper.boardToBoardResponseDto(board))
                 .collect(Collectors.toList());
-
+        // TODO:현재 전체 페이지 수 헤더에 추가?
         return ResponseEntity.ok().body(response);
     }
-
+    // 특정 게시글 조회
+    @GetMapping("/{board-id}")
+    public ResponseEntity getBoard(@PathVariable("board-id") long id){
+        Board board = boardService.findBoard(id);
+        if(board == null){
+            return ResponseEntity.notFound().build();
+        }
+        BoardDto.Response response = mapper.boardToBoardResponseDto(board);
+        return ResponseEntity.ok(response);
+    }
 }
