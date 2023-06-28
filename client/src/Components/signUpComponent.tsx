@@ -1,37 +1,37 @@
-import React, { useState } from "react";
-import { checkUser, checkNickname, checkEmail } from "../API/signUp";
+import React, { useState } from 'react';
+import { checkUser, checkNickname, checkEmail } from '../API/signUp';
 
 const SignComponent: React.FC = () => {
-  const [message, setMessage] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [email, setEmail] = useState('');
   //중복 아이디, 중복 닉네임 확인은 다른 함수로 각각 만들어야함
   const handleCheck = async () => {
     // checkUser 함수 호출
     const data = await checkUser();
     // 유저 정보 비교
     if (data.exists) {
-      setMessage("중복입니다");
+      setMessage('중복입니다');
     } else {
-      setMessage("사용 가능");
+      setMessage('사용 가능');
     }
   };
 
   const handleEmaileCheck = async () => {
     const isDuplicate = await checkEmail(email);
     if (isDuplicate) {
-      setMessage("중복입니다");
+      setMessage('중복입니다');
     } else {
-      setMessage("사용 가능");
+      setMessage('사용 가능');
     }
   };
 
   const handleNicknameCheck = async () => {
     const isDuplicate = await checkNickname(nickname);
     if (isDuplicate) {
-      setMessage("중복입니다");
+      setMessage('중복입니다');
     } else {
-      setMessage("사용 가능");
+      setMessage('사용 가능');
     }
   };
 
@@ -44,7 +44,7 @@ const SignComponent: React.FC = () => {
           <input
             className="ml-4  border border-gray-300 p-2 rounded-lg mr-2"
             placeholder="이메일을 입력해주세요"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={e => setEmail(e.target.value)}
             value={email}
           />
           <button
@@ -71,7 +71,7 @@ const SignComponent: React.FC = () => {
           <input
             className="ml-4 border border-gray-300 p-2 rounded-lg mr-2"
             placeholder="닉네임을 입력해주세요"
-            onChange={(e) => setNickname(e.target.value)}
+            onChange={e => setNickname(e.target.value)}
             value={nickname}
           />
           <button
@@ -82,11 +82,11 @@ const SignComponent: React.FC = () => {
           </button>
           <div
             className={`${
-              message === "중복입니다"
-                ? "text-red-500"
-                : message === "사용 가능"
-                ? "text-blue-500"
-                : "text-black"
+              message === '중복입니다'
+                ? 'text-red-500'
+                : message === '사용 가능'
+                ? 'text-blue-500'
+                : 'text-black'
             }`}
           >
             {message}

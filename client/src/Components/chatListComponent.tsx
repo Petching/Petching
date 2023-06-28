@@ -1,4 +1,4 @@
-import kakaoLogo from "../Style/kakaoLogo.png";
+import kakaoLogo from '../Style/kakaoLogo.png';
 
 const ChatComponent: React.FC = () => {
   return (

@@ -40,22 +40,22 @@ const Member = () => {
     },
   ];
   return (
-    <div className='flex w-full h-full justify-evenly items-center'>
+    <div className="flex w-full h-full justify-evenly items-center">
       <div>
         <p>BACK END</p>
-        {member_be.map((data) => (
-          <div className='flex my-3'>
-            <div className='w-40 h-40 overflow-hidden rounded'>
+        {member_be.map(data => (
+          <div className="flex my-3">
+            <div className="w-40 h-40 overflow-hidden rounded">
               <img
                 src={data.icon}
-                alt='멤버 이미지'
-                className='w-full h-full'
+                alt="멤버 이미지"
+                className="w-full h-full"
               />
             </div>
-            <div className='flex items-center'>
-              <div className='pl-10'>
+            <div className="flex items-center">
+              <div className="pl-10">
                 <p>이름 : {data.name}</p>
-                <p className='my-2'>깃허브 : {data.github}</p>
+                <p className="my-2">깃허브 : {data.github}</p>
                 <p>담당 : {data.part}</p>
               </div>
             </div>
@@ -64,19 +64,19 @@ const Member = () => {
       </div>
       <div>
         <p>FRONT END</p>
-        {member_be.map((data) => (
-          <div className='flex my-3'>
-            <div className='w-40 h-40 overflow-hidden rounded'>
+        {member_be.map(data => (
+          <div className="flex my-3">
+            <div className="w-40 h-40 overflow-hidden rounded">
               <img
                 src={data.icon}
-                alt='멤버 이미지'
-                className='w-full h-full'
+                alt="멤버 이미지"
+                className="w-full h-full"
               />
             </div>
-            <div className='flex items-center'>
-              <div className='pl-10'>
+            <div className="flex items-center">
+              <div className="pl-10">
                 <p>이름 : {data.name}</p>
-                <p className='my-2'>깃허브 : {data.github}</p>
+                <p className="my-2">깃허브 : {data.github}</p>
                 <p>담당 : {data.part}</p>
               </div>
             </div>

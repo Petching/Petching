@@ -15,20 +15,22 @@ const Main = () => {
   };
 
   return (
-    <SectionsContainer {...options}>
-      <Section>
-        <Info />
-      </Section>
-      <Section>
-        <Explan />
-      </Section>
-      <Section>
-        <Peacock />
-      </Section>
-      <Section>
-        <Member />
-      </Section>
-    </SectionsContainer>
+    <>
+      <SectionsContainer {...options}>
+        <Section>
+          <Info />
+        </Section>
+        <Section>
+          <Explan />
+        </Section>
+        <Section>
+          <Peacock />
+        </Section>
+        <Section>
+          <Member />
+        </Section>
+      </SectionsContainer>
+    </>
   );
 };
 
