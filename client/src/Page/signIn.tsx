@@ -1,5 +1,5 @@
-import React from "react";
-import SignInComponent from "../Components/signInComponent";
+import React from 'react';
+import SignInComponent from '../Components/signInComponent';
 
 const SignIn = () => {
   return (

@@ -1,19 +1,19 @@
-import React, { useState } from "react";
-import googleLogo from "../Style/googleLogo.png";
-import kakaoLogo from "../Style/kakaoLogo.png";
-import { authenticate } from "../API/signIn";
+import React, { useState } from 'react';
+import googleLogo from '../Style/googleLogo.png';
+import kakaoLogo from '../Style/kakaoLogo.png';
+import { authenticate } from '../API/signIn';
 
 const SignInComponent: React.FC = () => {
-  const [message, setMessage] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleButtonClick = async () => {
     const success = await authenticate(email, password);
     if (success) {
-      window.location.href = "/main";
+      window.location.href = '/main';
     } else {
-      setMessage("아이디와 비밀번호를 다시 확인해주세요");
+      setMessage('아이디와 비밀번호를 다시 확인해주세요');
     }
   };
 
