@@ -6,7 +6,8 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity @Getter @Builder
-@NoArgsConstructor @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Table(name = "USERS")
 public class User extends Auditing {
     @Id
@@ -29,5 +30,14 @@ public class User extends Auditing {
 //    }
     public void updateNickName (String nickName) {
         this.nickName = nickName;
+    }
+    public void updateEmail (String email) {
+        this.email = email;
+    }
+    public void updatePassword (String password) {
+        this.password = password;
+    }
+    public void updateAddress (String address) {
+        this.address = address;
     }
 }
