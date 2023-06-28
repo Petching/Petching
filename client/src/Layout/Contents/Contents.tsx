@@ -3,7 +3,7 @@ type ContentsProps = {
 };
 
 const Contents: React.FC<ContentsProps> = ({ children }) => {
-  return <div className="mt-14">{children}</div>;
+  return <div className="mt-[4.5rem]">{children}</div>;
 };
 
 export default Contents;
