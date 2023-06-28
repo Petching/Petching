@@ -18,7 +18,7 @@ spring:
 
 logging:
   level:
-    server.mainproject: DEBUG
+    server.petching: DEBUG
     org:
       springframework:
         orm:
