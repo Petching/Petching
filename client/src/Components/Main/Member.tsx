@@ -43,8 +43,8 @@ const Member = () => {
     <div className="flex w-full h-full justify-evenly items-center">
       <div>
         <p>BACK END</p>
-        {member_be.map(data => (
-          <div className="flex my-3">
+        {member_be.map((data, index) => (
+          <div key={index} className="flex my-3">
             <div className="w-40 h-40 overflow-hidden rounded">
               <img
                 src={data.icon}
@@ -64,8 +64,8 @@ const Member = () => {
       </div>
       <div>
         <p>FRONT END</p>
-        {member_be.map(data => (
-          <div className="flex my-3">
+        {member_be.map((data, index) => (
+          <div key={index} className="flex my-3">
             <div className="w-40 h-40 overflow-hidden rounded">
               <img
                 src={data.icon}
