@@ -8,18 +8,18 @@ const Header = () => {
   };
 
   return (
-    <div className='bg-customGreen h-14 fixed top-0 left-0 w-full flex justify-center items-center z-50'>
+    <div className="bg-customGreen h-14 fixed top-0 left-0 w-full flex justify-center items-center z-50">
       <div
-        className='flex w-24 h-10 justify-between cursor-pointer items-center'
+        className="flex w-24 h-10 justify-between cursor-pointer items-center"
         onClick={toMain}
       >
-        <div className='w-9 hover:scale-90'>
+        <div className="w-9 hover:scale-90">
           <img
-            src='https://img.icons8.com/?size=512&id=121198&format=png'
-            alt='발바닥 모양의 아이콘'
+            src="https://img.icons8.com/?size=512&id=121198&format=png"
+            alt="발바닥 모양의 아이콘"
           />
         </div>
-        <h1 className='text-3xl'>펫칭</h1>
+        <h1 className="text-3xl">펫칭</h1>
       </div>
       <GNB />
     </div>
