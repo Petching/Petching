@@ -15,6 +15,8 @@ spring:
   sql:
     init:
       data-locations: classpath*:db/h2/data.sql
+  profiles:
+    active: local
 
 logging:
   level:
