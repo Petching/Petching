@@ -1,6 +1,6 @@
 package com.Petching.petching.carepost.entity;
 
-import com.Petching.petching.audit.Auditable;
+import com.Petching.petching.audit.Auditing;
 import com.Petching.petching.conditionTag.CarePost_ConditionTag;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CarePost extends Auditable {
+public class CarePost extends Auditing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long postId;
