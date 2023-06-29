@@ -1,16 +1,16 @@
-import { createBrowserRouter } from "react-router-dom";
-import { Router as RemixRouter } from "@remix-run/router/dist/router";
-import GeneralLayout from "./Layout/GeneraLayout";
-import Main from "./Page/Main";
-import SignUp from "./Page/signUp";
-import SignIn from "./Page/signIn";
-import User from "./Page/User";
-import ChatList from "./Page/chatList";
-import Chatting from "./Page/chatting";
+import { createBrowserRouter } from 'react-router-dom';
+import { Router as RemixRouter } from '@remix-run/router/dist/router';
+import GeneralLayout from './Layout/GeneraLayout';
+import Main from './Page/Main';
+import SignUp from './Page/signUp';
+import SignIn from './Page/signIn';
+import User from './Page/User';
+import ChatList from './Page/chatList';
+import Chatting from './Page/chatting';
 
 export const routers: RemixRouter = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <GeneralLayout />,
     children: [
       {
@@ -18,23 +18,23 @@ export const routers: RemixRouter = createBrowserRouter([
         element: <Main />,
       },
       {
-        path: "/signup",
+        path: '/signup',
         element: <SignUp />,
       },
       {
-        path: "/signin",
+        path: '/signin',
         element: <SignIn />,
       },
       {
-        path: "/user/:userId",
+        path: '/user/:userId',
         element: <User />,
       },
       {
-        path: "/chatlist",
+        path: '/chatlist',
         element: <ChatList />,
       },
       {
-        path: "/chatting",
+        path: '/chatting',
         element: <Chatting />,
       },
     ],
