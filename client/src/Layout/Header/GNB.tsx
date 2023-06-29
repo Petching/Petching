@@ -19,6 +19,9 @@ const GNB = () => {
   const toSignUp = () => {
     navigate('/signup');
   };
+  const toCareList = () => {
+    navigate('/carelist');
+  };
   const tempLogout = () => {
     setIsLogin(false);
     setUserIcon(false);
@@ -27,7 +30,9 @@ const GNB = () => {
   return (
     <>
       <div className="absolute right-0 md:right-10 flex justify-center items-center">
-        <button className="mx-3 hidden md:block">돌봄리스트</button>
+        <button className="mx-3 hidden md:block" onClick={toCareList}>
+          돌봄리스트
+        </button>
         <button className="mx-3 hidden md:block">자랑하기</button>
         {isLogin ? (
           <>
