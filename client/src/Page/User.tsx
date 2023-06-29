@@ -1,5 +1,41 @@
+import { useState } from 'react';
+import MyPets from '../Components/User/MyPets';
+import UserInfo from '../Components/User/UserInfo';
+import MyPost from '../Components/User/MyPost';
+import MyLikes from '../Components/User/MyLikes';
+
 const User = () => {
-  return <div>hello</div>;
+  const [category, setCategory] = useState('반려동물');
+  return (
+    <div className="flex justify-center w-full flex-col items-center">
+      <UserInfo />
+      <div className="flex justify-center items-center">
+        <button
+          onClick={() => setCategory('반려동물')}
+          className={`mx-5 ${category === '반려동물' && 'text-[#5fb7a1]'}`}
+        >
+          반려동물
+        </button>
+        <button
+          onClick={() => setCategory('작성')}
+          className={`mx-5 ${category === '작성' && 'text-[#5fb7a1]'}`}
+        >
+          작성한 게시글
+        </button>
+        <button
+          onClick={() => setCategory('좋아요')}
+          className={`mx-5 ${category === '좋아요' && 'text-[#5fb7a1]'}`}
+        >
+          좋아요 게시글
+        </button>
+      </div>
+      <div className="flex justify-center items-center mt-10 w-9/12">
+        {category === '반려동물' && <MyPets />}
+        {category === '작성' && <MyPost />}
+        {category === '좋아요' && <MyLikes />}
+      </div>
+    </div>
+  );
 };
 
 export default User;
