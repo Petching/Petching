@@ -58,7 +58,7 @@ jobs:
       
       # CodeDeploy에 배포단위를 생성합니다.
     - name: Code Deploy
-      run: aws deploy create-deployment --application-name $CODE_DEPLOY_APPLICATION_NAME --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name $CODE_DEPLOY_DEPLOYMENT_GROUP_NAME --s3-location bucket=$BUCKET_NAME,bundleType=zip,key=deploy-practice-petching.zip
+      run: aws deploy create-deployment --application-name $CODE_DEPLOY_APPLICATION_NAME --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name $CODE_DEPLOY_DEPLOYMENT_GROUP_NAME --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=deploy-practice-petching.zip
 
 
       
