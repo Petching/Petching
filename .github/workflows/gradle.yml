@@ -57,8 +57,8 @@ jobs:
       run: aws s3 cp --region ap-northeast-2 ./deploy-practice-petching.zip s3://$S3_BUCKET_NAME/deploy-practice-petching.zip
       
       # CodeDeploy에 배포단위를 생성합니다.
-#     - name: Code Deploy
-#       run : aws deploy create-deployment --application-name $CODE_DEPLOY_APPLICATION_NAME --deployment-config-name CodeDeployDefault.OneAtATime --deployment-group-name $CODE_DEPLOY_DEPLOYMENT_GROUP_NAME --s3-location bucket=$BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip
+    - name: Code Deploy
+      run : aws deploy create-deployment --application-name $CODE_DEPLOY_APPLICATION_NAME --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name $CODE_DEPLOY_DEPLOYMENT_GROUP_NAME --s3-location bucket=$BUCKET_NAME,bundleType=zip, key=deploy-practice-petching.zip
 
 
       
