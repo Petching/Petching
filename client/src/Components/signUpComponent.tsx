@@ -1,11 +1,13 @@
 /* eslint-disable */
 import React, { useState } from 'react';
 import { checkUser, checkNickname, checkEmail } from '../API/signUp';
-
+import { useNavigate } from 'react-router-dom';
 const SignComponent: React.FC = () => {
   const [message, setMessage] = useState('');
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
+  const navigate = useNavigate();
+
   //중복 아이디, 중복 닉네임 확인은 다른 함수로 각각 만들어야함
   const handleCheck = async () => {
     // checkUser 함수 호출
@@ -96,6 +98,12 @@ const SignComponent: React.FC = () => {
         <br></br>
         <button className="ml-4 flex-2 bg-customGreen border border-gray-300 p-2 rounded text-white mr-7 hover:bg-green-500">
           회원가입하기
+        </button>
+        <button
+          onClick={() => navigate('/signin')}
+          className="flex items-center justify-center"
+        >
+          로그인하러가기
         </button>
       </div>
     </>

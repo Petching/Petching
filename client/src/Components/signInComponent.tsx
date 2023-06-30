@@ -3,11 +3,13 @@ import React, { useState } from 'react';
 import googleLogo from '../Style/googleLogo.png';
 import kakaoLogo from '../Style/kakaoLogo.png';
 import { authenticate } from '../API/signIn';
+import { useNavigate } from 'react-router-dom';
 
 const SignInComponent: React.FC = () => {
   const [message, setMessage] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleButtonClick = async () => {
     const success = await authenticate(email, password);
@@ -58,6 +60,12 @@ const SignInComponent: React.FC = () => {
         <button className="ml-4 bg-white border border-gray-300 p-3 rounded text-black  flex items-center justify-center mr-7 hover:bg-gray-200">
           <img src={googleLogo} alt="google Image" className="h-5 w-5 mr-4" />
           Google로 로그인하기
+        </button>
+        <button
+          onClick={() => navigate('/signup')}
+          className="flex items-center justify-center"
+        >
+          회원가입하러가기
         </button>
       </div>
     </>
