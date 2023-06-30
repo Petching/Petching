@@ -1,0 +1,10 @@
+jwt:
+  secretKey: jfiojeioj903j9fj390jfijiofjiejf39j9fj39jfj93jijojsoj390
+
+  access:
+    expiration: 360000
+    header: Authorization
+
+  refresh:
+    expiration: 120960000
+    header: Authorization-refresh

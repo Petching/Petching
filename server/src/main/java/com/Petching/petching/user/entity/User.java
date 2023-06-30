@@ -1,6 +1,6 @@
 package com.Petching.petching.user.entity;
 
-import com.Petching.petching.audit.Auditing;
+import com.Petching.petching.audit.Auditable;
 import lombok.*;
 
 import javax.persistence.*;
@@ -9,7 +9,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name = "USERS")
-public class User extends Auditing {
+public class User extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
@@ -25,9 +25,21 @@ public class User extends Auditing {
     @Column
     private String address;
 
-//    public void updatePassword (PasswordEncoder passwordEncoder, String password) {
-//        this.password = passwordEncoder.encode(password);
-//    }
+    @Enumerated(EnumType.STRING)
+    private SocialType socialType;
+
+    private String socialId;
+
+    private String refreshToken;
+
+    public void passwordEncode (PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(this.password);
+    }
+
+    public void updateRefreshToken (String updateRefreshToke) {
+        this.refreshToken = updateRefreshToke;
+    }
+
     public void updateNickName (String nickName) {
         this.nickName = nickName;
     }
