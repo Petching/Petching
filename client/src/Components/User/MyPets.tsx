@@ -7,7 +7,7 @@ const MyPets = () => {
   return (
     <div className="relative py-8 w-full">
       <button
-        className="absolute top-0 right-0 hover:text-[#5fb7a1]"
+        className="absolute top-0 right-0 hover:text-customGreen"
         onClick={() => setOpen(true)}
       >
         등록
