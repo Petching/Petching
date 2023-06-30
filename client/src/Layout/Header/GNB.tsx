@@ -27,10 +27,10 @@ const GNB = () => {
   return (
     <>
       <div className="absolute right-0 md:right-10 flex justify-center items-center">
-        <button className="mx-3 hidden md:block hover:text-[#5fb7a1]">
+        <button className="mx-3 hidden md:block hover:text-customGreen">
           돌봄리스트
         </button>
-        <button className="mx-3 hidden md:block hover:text-[#5fb7a1]">
+        <button className="mx-3 hidden md:block hover:text-customGreen">
           자랑하기
         </button>
         {isLogin ? (
@@ -46,13 +46,13 @@ const GNB = () => {
         ) : (
           <>
             <button
-              className="mx-3 hidden md:block hover:text-[#5fb7a1]"
+              className="mx-3 hidden md:block hover:text-customGreen"
               onClick={toSignIn}
             >
               로그인
             </button>
             <button
-              className="mx-3 hidden md:block hover:text-[#5fb7a1]"
+              className="mx-3 hidden md:block hover:text-customGreen"
               onClick={toSignUp}
             >
               회원가입

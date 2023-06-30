@@ -8,7 +8,7 @@ const Peacock = () => {
           다른 사람들의 반려동물을 <br />
           구경하세요
         </p>
-        <button className="w-full h-16 mt-10 bg-customGreen text-xl hover:scale-90 transition-all rounded">
+        <button className="w-full h-16 mt-10 bg-customPink text-xl hover:scale-90 transition-all rounded">
           자랑하러 가기
         </button>
       </div>

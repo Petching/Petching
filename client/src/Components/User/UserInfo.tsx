@@ -50,7 +50,7 @@ const UserInfo = () => {
             </button>
             <button
               onClick={() => setOnEdit(false)}
-              className="hover:text-[#5fb7a1]"
+              className="hover:text-customGreen"
             >
               수정 완료
             </button>
@@ -58,7 +58,7 @@ const UserInfo = () => {
         ) : (
           <button
             onClick={() => setOnEdit(true)}
-            className="hover:text-[#5fb7a1]"
+            className="hover:text-customGreen"
           >
             회원 정보 수정
           </button>

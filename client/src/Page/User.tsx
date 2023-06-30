@@ -12,19 +12,19 @@ const User = () => {
       <div className="flex justify-center items-center">
         <button
           onClick={() => setCategory('반려동물')}
-          className={`mx-5 ${category === '반려동물' && 'text-[#5fb7a1]'}`}
+          className={`mx-5 ${category === '반려동물' && 'text-customGreen'}`}
         >
           반려동물
         </button>
         <button
           onClick={() => setCategory('작성')}
-          className={`mx-5 ${category === '작성' && 'text-[#5fb7a1]'}`}
+          className={`mx-5 ${category === '작성' && 'text-customGreen'}`}
         >
           작성한 게시글
         </button>
         <button
           onClick={() => setCategory('좋아요')}
-          className={`mx-5 ${category === '좋아요' && 'text-[#5fb7a1]'}`}
+          className={`mx-5 ${category === '좋아요' && 'text-customGreen'}`}
         >
           좋아요 게시글
         </button>

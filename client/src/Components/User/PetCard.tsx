@@ -16,7 +16,7 @@ const PetCard = () => {
         <p>특이사항(기타사항)</p>
       </div>
       <div className="absolute top-4 right-4">
-        <button className="mr-2 hover:text-[#5fb7a1]">수정</button>
+        <button className="mr-2 hover:text-customGreen">수정</button>
         <button className="hover:text-red-600">삭제</button>
       </div>
     </div>
