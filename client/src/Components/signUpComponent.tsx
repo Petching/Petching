@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState } from 'react';
 import { checkUser, checkNickname, checkEmail } from '../API/signUp';
 
