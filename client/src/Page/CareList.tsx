@@ -61,19 +61,19 @@ const Carousel = () => {
   return (
     <div>
       <Slider {...settings}>
-        <div className="h-56 bg-sky-100">
+        <div className="h-56 w-80 bg-sky-100">
           <img src={maltese1} />
         </div>
-        <div className="h-56 bg-pink-100">
+        <div className="h-56 w-80 bg-pink-100">
           <img src={maltese2} />
         </div>
-        <div className="h-56 bg-yellow-100">
-          <img src={maltese3} />
+        <div className="h-56 w-80 bg-yellow-100">
+          <img src={maltese3} className="w-20" />
         </div>
-        <div className="h-56 bg-red-100">
+        <div className="h-56 w-80 bg-red-100">
           <img src={maltese4} />
         </div>
-        <div className="h-56 bg-purple-100">
+        <div className="h-56 w-80 bg-purple-100">
           <img src={maltese5} />
         </div>
       </Slider>
@@ -82,7 +82,7 @@ const Carousel = () => {
 };
 const CareList = () => {
   return (
-    <div className="flex flex-col items-center justify-center bg-gray-100">
+    <div>
       <Carousel></Carousel>
     </div>
   );
