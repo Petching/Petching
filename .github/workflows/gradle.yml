@@ -28,7 +28,7 @@ jobs:
         distribution: 'temurin'
         
     - name: Add permission
-      run: chmod +x ./gradlew
+      run: chmod +x server/gradlew
       shell: bash
       
     - name: init with Gradle
