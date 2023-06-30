@@ -9,7 +9,7 @@ defaults:
 env:
   AWS_REGION: ap-northeast-2
   S3_BUCKET_NAME: petching.link
-  API_SERVER: ec2-13-124-166-116.ap-northeast-2.compute.amazonaws.com
+  API_SERVER: ${{ secrets.API_SERVER }}
 
 jobs:
   build:
