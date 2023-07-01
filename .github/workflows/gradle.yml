@@ -11,7 +11,7 @@ permissions:
 env:
   AWS_REGION: ap-northeast-2
   S3_BUCKET_NAME: petching.link
-  RESOURCE_PATH: ../server/src/main/resources/application.yml
+  RESOURCE_PATH: ../../server/src/main/resources/application.yml
   CODE_DEPLOY_APPLICATION_NAME: petching-client-codeDeploy
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: petching-client-codeDeploy-group
 
