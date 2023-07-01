@@ -1,9 +1,9 @@
-package com.Petching.petching.conditionTag;
+package com.Petching.petching.tag.conditionTag;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import java.util.Optional;
-
+@EnableJpaRepositories
 public interface ConditionTagRepository extends JpaRepository<ConditionTag, Long> {
     ConditionTag findByBody(String body);
 }

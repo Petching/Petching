@@ -34,11 +34,11 @@ public class CarePost extends Auditable {
     @Column
     private String image;
 
-    @Column
-    private String address;
-
-    @Column
-    private String condition;
+//    @Column
+//    private String address;
+//
+//    @Column
+//    private String condition;
 
     @Column
     private Date startDate;
