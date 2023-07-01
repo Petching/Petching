@@ -42,7 +42,7 @@ jobs:
         
       # build한 후 프로젝트를 압축합니다.
     - name: Make zip file
-      run: zip -r ./deploy-practice-petching.zip .
+      run: zip -qq -r ./deploy-practice-petching.zip .
       shell: bash
       
     - name: Configure AWS credentials
