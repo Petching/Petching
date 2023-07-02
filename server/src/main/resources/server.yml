@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name : com.mysql.cj.jdbc.Driver
-    url: ${RDS_DATABASE_URL}ㅣ
+    url: ${RDS_DATABASE_URL}
     username: ${RDS_DATABASE_USERNAME}
     password: ${RDS_DATABASE_PASSWORD}
   jpa:
@@ -12,9 +12,16 @@ spring:
       hibernate:
         format_sql: true
     database: mysql
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-config:
-  domain: ${AWS S3 Endpoint}
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+cloud:
+  aws:
+    s3:
+      bucket: petching.link
+    region:
+      auto: false
+      static: ap-northeast-2
+    stack:
+      auto: false
 logging:
   level:
     server.petching: DEBUG
