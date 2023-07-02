@@ -1,5 +1,5 @@
 jwt:
-  secretKey: jfiojeioj903j9fj390jfijiofjiejf39j9fj39jfj93jijojsoj390
+  secretKey: secret
 
   access:
     expiration: 360000
