@@ -68,6 +68,14 @@ public class JwtService {
         log.info("Access Token, Refresh Token 헤더 설정 완료!");
     }
 
+    public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken, String refreshToken) {
+        response.setStatus(HttpServletResponse.SC_OK);
+
+        setAccessTokenHeader (response, accessToken);
+        setRefreshTokenHeader (response, refreshToken);
+        log.info("Access Token, Refresh Token 헤더 설정 완료");
+    }
+
     /**
      * 헤더에서 RefreshToken 추출
      * 토큰 형식 : Bearer XXX 에서 Bearer 를 제외하고 순수 토큰만 가져오자.
@@ -107,6 +115,13 @@ public class JwtService {
             log.error("액세스 토큰이 유효하지 않습니다.");
             return Optional.empty();
         }
+    }
+
+    public void setAccessTokenHeader(HttpServletResponse response, String accessToken ) {
+        response.setHeader(accessHeader, accessToken);
+    }
+    public void setRefreshTokenHeader (HttpServletResponse response, String refreshToken) {
+        response.setHeader(refreshHeader, refreshToken);
     }
 
     /**
