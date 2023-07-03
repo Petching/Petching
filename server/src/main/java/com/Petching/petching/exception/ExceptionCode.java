@@ -13,6 +13,7 @@ public enum ExceptionCode {
     COMMENT_NOT_FOUND(NOT_FOUND, "Comment not found"),
     POST_NOT_WRITE(UNAUTHORIZED, "Post not write"),
     POST_NOT_FOUND(NOT_FOUND,"Post not found");
+  
     private final HttpStatus status;
     private final String message;
 

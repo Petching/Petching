@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/comments")
+@RequestMapping("/comments")
 public class CommentController {
     private CommentService commentService;
     private CommentMapper mapper;
@@ -32,7 +32,7 @@ public class CommentController {
         Comment comment = commentService.createComment(mapper.commentPostDtoToComment(requestBody));
 
         URI uri = UriComponentsBuilder.newInstance()
-                .path("/api/comments/" + comment.getCommentId())
+                .path("/comments/" + comment.getCommentId())
                 .build().toUri();
 
         return ResponseEntity.created(uri).build();
