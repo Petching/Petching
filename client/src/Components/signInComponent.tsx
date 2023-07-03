@@ -53,7 +53,10 @@ const SignInComponent: React.FC = () => {
           <div className="m-1.5 fonr-semibold text-gray-400">또는</div>
           <div className="m-4 h-0.5 bg-gray-300 w-52"></div>
         </div>
-        <button className="ml-4 bg-kakaoYellow border border-gray-300 p-3 rounded text-kakaoText  flex items-center justify-center mr-7 hover:bg-yellow-300">
+        <button
+          onClick={() => navigate('/kakaologin')}
+          className="ml-4 bg-kakaoYellow border border-gray-300 p-3 rounded text-kakaoText  flex items-center justify-center mr-7 hover:bg-yellow-300"
+        >
           <img src={kakaoLogo} alt="kakao Image" className="h-7 w-7 mr-4 " />
           Kakao로 로그인하기
         </button>
