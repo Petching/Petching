@@ -66,9 +66,10 @@ public class CarePostController {
         return new ResponseEntity(new SingleResponse<>(mapper.carePostToCarePostResponseDto(find)),HttpStatus.OK);
     }
 
-    @DeleteMapping("/{post-id}")
-    public ResponseEntity deleteCarePost(@PathVariable("post-id") @Positive long postId) {
-        service.deletePost(postId);
+    @DeleteMapping("/{post-id}/{member-id}")
+    public ResponseEntity deleteCarePost(@PathVariable("post-id") @Positive long postId,
+                                         @PathVariable("member-id") @Positive long userId) {
+        service.deletePost(postId,userId);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
