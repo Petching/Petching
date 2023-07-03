@@ -1,8 +1,6 @@
-package com.Petching.petching.conditionTag;
+package com.Petching.petching.tag.locationTag;
 
 import com.Petching.petching.carepost.entity.CarePost;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,29 +10,31 @@ import javax.persistence.*;
 @Entity @Getter
 @Setter
 @NoArgsConstructor
-public class CarePost_ConditionTag {
+public class CarePost_LocationTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long carePostConditionTagId;
+    private long carePostLocationTagId;
 
 
     @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "POST_ID")
     private CarePost carePost;
 
+
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "CONDITION_TAG_ID")
-    private ConditionTag conditionTag;
+    @JoinColumn(name = "LOCATION_TAG_ID")
+    private LocationTag locationTag;
 
     public void setCarePost(CarePost carePost) {
         this.carePost = carePost;
-        if(!this.carePost.getPostConditionTags().contains(this)) {
-            this.carePost.setCarePost_ConditionTag(this);
+        if(!this.carePost.getPostLocationTags().contains(this)) {
+            this.carePost.setCarePost_LocationTag(this);
         }
 
     }
-    public CarePost_ConditionTag(CarePost carePost, ConditionTag conditionTag) {
+
+    public CarePost_LocationTag(CarePost carePost, LocationTag locationTag) {
         this.carePost = carePost;
-        this.conditionTag = conditionTag;
+        this.locationTag = locationTag;
     }
 }

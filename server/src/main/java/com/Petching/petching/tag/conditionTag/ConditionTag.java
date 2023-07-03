@@ -1,4 +1,4 @@
-package com.Petching.petching.conditionTag;
+package com.Petching.petching.tag.conditionTag;
 
 import lombok.*;
 
@@ -16,7 +16,7 @@ public class ConditionTag {
     private String body;
 
     @OneToMany(mappedBy = "conditionTag", cascade = CascadeType.ALL)
-    private List<CarePost_ConditionTag> postTags = new ArrayList<>();
+    private List<CarePost_ConditionTag> postConditionTags = new ArrayList<>();
 
     public ConditionTag(String body) {
         this.body = body;
