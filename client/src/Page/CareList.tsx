@@ -1,6 +1,12 @@
 import Carousel from '../Components/Care/Carousel';
+import Card from '../Components/Care/Card';
+
 const CareList = () => {
-  return <Carousel></Carousel>;
+  return (
+    <>
+      <Card />
+    </>
+  );
 };
 
 export default CareList;
