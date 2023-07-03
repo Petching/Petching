@@ -8,4 +8,5 @@ public interface BoardMapper {
     Board boardPostDtoToBoard(BoardDto.Post postDto);
     Board boardPatchDtoToBoard(BoardDto.Patch patchDto);
     BoardDto.Response boardToBoardResponseDto(Board board);
+    BoardDto.Detail boardToBoardDetailDto(Board board);
 }

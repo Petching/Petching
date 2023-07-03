@@ -4,6 +4,8 @@ import com.Petching.petching.board.dto.BoardDto;
 import com.Petching.petching.board.entity.Board;
 import com.Petching.petching.board.mapper.BoardMapper;
 import com.Petching.petching.board.service.BoardService;
+import com.Petching.petching.response.PageInfo;
+import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,7 +25,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
-@RequestMapping("/api/boards")
+@RequestMapping("/boards")
 public class BoardController {
     private BoardService boardService;
     private BoardMapper mapper;
@@ -39,7 +41,7 @@ public class BoardController {
         Board board = boardService.createBoard(mapper.boardPostDtoToBoard(requestBody));
 
         URI uri = UriComponentsBuilder.newInstance()
-                .path("/api/boards/"+board.getBoardId())
+                .path("/boards/"+board.getBoardId())
                 .build().toUri();
 
         return ResponseEntity.created(uri).build();
@@ -50,7 +52,7 @@ public class BoardController {
         Board board = mapper.boardPatchDtoToBoard(requestBody);
         Board response = boardService.updateBoard(board);
 
-        return new ResponseEntity<>(mapper.boardToBoardResponseDto(response), HttpStatus.OK);
+        return new ResponseEntity<>(mapper.boardToBoardDetailDto(response), HttpStatus.OK);
     }
     @DeleteMapping("/{board-id}")
     public ResponseEntity deleteBoard(@PathVariable("board-id") long id){
@@ -71,8 +73,18 @@ public class BoardController {
                 .stream()
                 .map(board->mapper.boardToBoardResponseDto(board))
                 .collect(Collectors.toList());
-        // TODO:현재 전체 페이지 수 헤더에 추가?
-        return ResponseEntity.ok().body(response);
+
+        // TODO: 페이지 정보 헤더에 추가
+        PageInfo pageInfo = new PageInfo(
+                boardPage.getNumber(),
+                boardPage.getSize(),
+                boardPage.getTotalElements(),
+                boardPage.getTotalPages()
+        );
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-Page-Info", new Gson().toJson(pageInfo));
+
+        return ResponseEntity.ok().headers(headers).body(response);
     }
     // 특정 게시글 조회
     @GetMapping("/{board-id}")
@@ -81,7 +93,7 @@ public class BoardController {
         if(board == null){
             return ResponseEntity.notFound().build();
         }
-        BoardDto.Response response = mapper.boardToBoardResponseDto(board);
+        BoardDto.Detail response = mapper.boardToBoardDetailDto(board);
         return ResponseEntity.ok(response);
     }
 }

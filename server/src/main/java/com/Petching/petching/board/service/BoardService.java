@@ -51,6 +51,8 @@ public class BoardService {
         }
     }
     public Page<Board> findBoards(Pageable pageable){
+
+
         return boardRepository.findAll(pageable);
     }
     public void deleteBoard(long boardId){

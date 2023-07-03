@@ -1,3 +1,35 @@
-# S3 추가/rds
-# ddl-auto : update
-#
+spring:
+  datasource:
+    driver-class-name : com.mysql.cj.jdbc.Driver
+    url: ${RDS_DATABASE_URL}
+    username: ${RDS_DATABASE_USERNAME}
+    password: ${RDS_DATABASE_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+cloud:
+  aws:
+    s3:
+      bucket: petching.link
+    region:
+      auto: false
+      static: ap-northeast-2
+    stack:
+      auto: false
+logging:
+  level:
+    server.petching: DEBUG
+    org:
+      springframework:
+        orm:
+          jpa: DEBUG
+server:
+  servlet:
+    encoding:
+      force-response: true
