@@ -4,6 +4,7 @@ import googleLogo from '../Style/googleLogo.png';
 import kakaoLogo from '../Style/kakaoLogo.png';
 import { authenticate } from '../API/signIn';
 import { useNavigate } from 'react-router-dom';
+import KakaoLogin from './KakaoLogin';
 
 const SignInComponent: React.FC = () => {
   const [message, setMessage] = useState('');
@@ -58,7 +59,7 @@ const SignInComponent: React.FC = () => {
           className="ml-4 bg-kakaoYellow border border-gray-300 p-3 rounded text-kakaoText  flex items-center justify-center mr-7 hover:bg-yellow-300"
         >
           <img src={kakaoLogo} alt="kakao Image" className="h-7 w-7 mr-4 " />
-          Kakao로 로그인하기
+          <KakaoLogin />
         </button>
         <button className="ml-4 bg-white border border-gray-300 p-3 rounded text-black  flex items-center justify-center mr-7 hover:bg-gray-200">
           <img src={googleLogo} alt="google Image" className="h-5 w-5 mr-4" />
