@@ -52,6 +52,7 @@
   },
   "devDependencies": {
     "@types/react-slick": "^0.23.10",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "eslint": "^8.43.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
