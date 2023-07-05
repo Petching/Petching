@@ -5,3 +5,9 @@ export interface User {
 export interface ChattingRoom {
   roomId: string;
 }
+
+export interface SignupData {
+  email: string;
+  password: string;
+  nickName: string;
+}
