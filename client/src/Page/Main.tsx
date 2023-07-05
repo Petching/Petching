@@ -1,8 +1,8 @@
 import { SectionsContainer, Section } from 'react-fullpage';
 import Info from '../Components/Main/Info';
 import Explan from '../Components/Main/Explan';
-import Peacock from '../Components/Main/Peacock';
-import Member from '../Components/Main/Member';
+import MainPeacock from '../Components/Main/MainPeacock';
+import MainMember from '../Components/Main/MainMember';
 
 const Main = () => {
   const options = {
@@ -24,10 +24,10 @@ const Main = () => {
           <Explan />
         </Section>
         <Section>
-          <Peacock />
+          <MainPeacock />
         </Section>
         <Section>
-          <Member />
+          <MainMember />
         </Section>
       </SectionsContainer>
     </>
