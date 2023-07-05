@@ -7,7 +7,7 @@ import SignIn from './Page/signIn';
 import User from './Page/User';
 import ChatList from './Page/chatList';
 import Chatting from './Page/chatting';
-import KakaoLogin from './Components/KakaoLogin';
+import Kakao from './Components/Kakao';
 
 export const routers: RemixRouter = createBrowserRouter([
   {
@@ -19,8 +19,8 @@ export const routers: RemixRouter = createBrowserRouter([
         element: <Main />,
       },
       {
-        path: '/kakaoLogin',
-        element: <KakaoLogin />,
+        path: '/kakao',
+        element: <Kakao />,
       },
       {
         path: '/signup',

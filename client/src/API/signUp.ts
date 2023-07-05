@@ -1,4 +1,4 @@
-import { User } from '../Util/types';
+import { User, SignupData } from '../Util/types';
 import axios from 'axios';
 
 export const checkUser = async () => {
@@ -6,6 +6,22 @@ export const checkUser = async () => {
   const response = await fetch('/api/check-user');
   const data: User = await response.json();
   return data;
+};
+
+export const signUpUser = async (data: SignupData) => {
+  try {
+    const response = await axios.post(
+      'https://fcf3-118-32-224-80.ngrok-free.app/users/sign-up',
+      data,
+      {
+        withCredentials: true,
+      },
+    );
+    return response;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 export const checkEmail = async (email: string) => {

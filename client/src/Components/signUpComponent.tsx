@@ -1,12 +1,31 @@
 /* eslint-disable */
 import React, { useState } from 'react';
-import { checkUser, checkNickname, checkEmail } from '../API/signUp';
+import {
+  checkUser,
+  checkNickname,
+  checkEmail,
+  signUpUser,
+} from '../API/signUp';
 import { useNavigate } from 'react-router-dom';
 const SignComponent: React.FC = () => {
   const [message, setMessage] = useState('');
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const navigate = useNavigate();
+
+  const handleSignup = async () => {
+    try {
+      const data = { email, password, nickName: nickname };
+      const response = await signUpUser(data);
+      console.log(response);
+      navigate('/signin');
+    } catch (error) {
+      setMessage('Sign up failed');
+      console.error(error);
+    }
+  };
 
   //중복 아이디, 중복 닉네임 확인은 다른 함수로 각각 만들어야함
   const handleCheck = async () => {
@@ -96,7 +115,10 @@ const SignComponent: React.FC = () => {
           </div>
         </div>
         <br></br>
-        <button className="ml-4 flex-2 bg-customGreen border border-gray-300 p-2 rounded text-white mr-7 hover:bg-green-500">
+        <button
+          onClick={handleSignup}
+          className="ml-4 flex-2 bg-customGreen border border-gray-300 p-2 rounded text-white mr-7 hover:bg-green-500"
+        >
           회원가입하기
         </button>
         <button
