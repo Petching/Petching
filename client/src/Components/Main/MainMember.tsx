@@ -1,21 +1,21 @@
 /* eslint-disable */
-const Member = () => {
+const MainMember = () => {
   const member_be = [
     {
       icon: 'https://cdn.pixabay.com/photo/2023/05/09/07/18/space-7980556_1280.jpg',
-      name: '김은정',
+      name: '멤버이름',
       github: 'https://github.com/196code-gray',
       part: '보안, 회원 CRUD',
     },
     {
       icon: 'https://cdn.pixabay.com/photo/2023/05/09/07/18/space-7980556_1280.jpg',
-      name: '김상래',
+      name: '멤버이름',
       github: 'https://github.com/ksr0818',
       part: '돌봄페이지 CRUD, 태그, 채팅',
     },
     {
       icon: 'https://cdn.pixabay.com/photo/2023/05/09/07/18/space-7980556_1280.jpg',
-      name: '이난영',
+      name: '멤버이름',
       github: 'https://github.com/NYinJP',
       part: '자랑페이지 CRUD, 댓글 CRUD',
     },
@@ -23,19 +23,19 @@ const Member = () => {
   const member_fe = [
     {
       icon: 'https://cdn.pixabay.com/photo/2023/05/09/07/18/space-7980556_1280.jpg',
-      name: '곽지현',
+      name: '멤버이름',
       github: 'https://github.com/938938',
       part: '메인, 헤더, 푸터, 마이페이지',
     },
     {
       icon: 'https://cdn.pixabay.com/photo/2023/05/09/07/18/space-7980556_1280.jpg',
-      name: '염도경',
+      name: '멤버이름',
       github: 'https://github.com/yeomdogyeong',
       part: '로그인, 회원가입, 무한스크롤',
     },
     {
       icon: 'https://cdn.pixabay.com/photo/2023/05/09/07/18/space-7980556_1280.jpg',
-      name: '이현진',
+      name: '멤버이름',
       github: 'https://github.com/lhj5924',
       part: '돌봄페이지, 자랑페이지',
     },
@@ -88,4 +88,4 @@ const Member = () => {
   );
 };
 
-export default Member;
+export default MainMember;
