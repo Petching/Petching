@@ -19,6 +19,9 @@ const GNB = () => {
   const toSignUp = () => {
     navigate('/signup');
   };
+  const toPeacock = () => {
+    navigate('/peacock');
+  };
   const tempLogout = () => {
     setIsLogin(false);
     setUserIcon(false);

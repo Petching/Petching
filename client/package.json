@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@tanstack/react-query": "^4.29.19",
+    "@heroicons/react": "^2.0.18",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -19,6 +20,7 @@
     "react-dom": "^18.2.0",
     "react-fullpage": "^0.1.19",
     "react-icons": "^4.10.1",
+    "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.11.0",
     "react-scripts": "5.0.1",
     "socket.io": "^4.6.2",
