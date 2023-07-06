@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-
+import { useMutation } from 'react-query';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import { AiOutlineComment } from 'react-icons/ai';
 
 const LikeComponent = () => {
   const [count, setCount] = useState(0);
@@ -21,6 +22,7 @@ const LikeComponent = () => {
       <button onClick={handleLike}>
         {isLiked ? <AiFillHeart color="red" /> : <AiOutlineHeart />}
       </button>
+      <AiOutlineComment />
       <span>{count}</span>
     </div>
   );

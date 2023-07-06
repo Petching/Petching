@@ -20,6 +20,7 @@
     "react-dom": "^18.2.0",
     "react-fullpage": "^0.1.19",
     "react-icons": "^4.10.1",
+    "react-query": "^3.39.3",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.11.0",
     "react-scripts": "5.0.1",
