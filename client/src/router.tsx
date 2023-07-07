@@ -7,7 +7,7 @@ import SignIn from './Page/signIn';
 import User from './Page/User';
 import ChatList from './Page/chatList';
 import Chatting from './Page/chatting';
-import Kakao from './Components/Kakao';
+import Kakao from './Components/Login/Kakao';
 
 export const routers: RemixRouter = createBrowserRouter([
   {
