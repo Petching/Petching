@@ -8,6 +8,7 @@ import User from './Page/User';
 import ChatList from './Page/chatList';
 import Chatting from './Page/chatting';
 import CareList from './Page/CareList';
+import Kakao from './Components/Kakao';
 
 export const routers: RemixRouter = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ export const routers: RemixRouter = createBrowserRouter([
       {
         index: true,
         element: <Main />,
+      },
+      {
+        path: '/kakao',
+        element: <Kakao />,
       },
       {
         path: '/signup',
