@@ -5,7 +5,7 @@ import {
   checkNickname,
   checkEmail,
   signUpUser,
-} from '../API/signUp';
+} from '../../API/signUp';
 import { useNavigate } from 'react-router-dom';
 const SignComponent: React.FC = () => {
   const [message, setMessage] = useState('');

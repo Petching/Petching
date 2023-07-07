@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useState } from 'react';
-import googleLogo from '../Style/googleLogo.png';
-import kakaoLogo from '../Style/kakaoLogo.png';
+import googleLogo from '../../Style/googleLogo.png';
+import kakaoLogo from '../../Style/kakaoLogo.png';
 import { authenticate } from '../../API/signIn';
 import { useNavigate } from 'react-router-dom';
 import Kakao from './Kakao';
