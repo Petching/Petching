@@ -3,9 +3,8 @@ import { useEffect } from 'react';
 import axios from 'axios';
 // import { setCookie } from "../components/social/Cookie";
 import { useNavigate } from 'react-router-dom';
-import { setCookie } from '../Util/getCookie';
 
-const KakaoLogin = () => {
+const GoogleLogin = () => {
   const goToMain = () => {
     navigate('/');
   };
@@ -16,7 +15,7 @@ const KakaoLogin = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   useEffect(() => {
-    const kakao = async () => {
+    const google = async () => {
       return await axios
         .get(`${BASE_URL}/api/v1/members/kakaoLogin?code=${code}`)
 
@@ -33,11 +32,11 @@ const KakaoLogin = () => {
         });
     };
     if (code) {
-      kakao();
+      google();
     }
   }, [code, navigate]);
 
   return <div></div>;
 };
 
-export default KakaoLogin;
+export default GoogleLogin;
