@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useGetUserProfile } from '../../Hook/useGetUserProfile';
+import { AiOutlineUser, AiOutlineHome, AiOutlineMail } from 'react-icons/ai';
 
 const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
   const [onEdit, setOnEdit] = useState(false);
@@ -39,12 +40,60 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
       </div>
       <div>
         {onEdit ? (
-          <input placeholder="유저 이름" className="block" />
+          <label className="flex items-center">
+            <p className="text-left text-gray-500 mr-2">
+              <AiOutlineUser />
+            </p>
+            <input
+              placeholder="유저 이름"
+              className="border border-gray-300 rounded mr-2 block"
+            />
+            <button className="ml-2 flex-2 rounded hover:scale-90 transition-all bg-customPink hover:bg-customGreen">
+              중복확인
+            </button>
+          </label>
         ) : (
-          <p>유저 이름</p>
+          // <p>{UserProfile?.name}</p>
+          <label className="flex items-center">
+            <p className="text-left text-gray-500 mr-2">
+              <AiOutlineUser />
+            </p>
+            <p>{UserProfile?.name || 'ABC'}</p>
+          </label>
         )}
-        {onEdit ? <input placeholder="주소" className="block" /> : <p>주소</p>}
-        {onEdit ? <p>이메일은 수정이 불가능합니다.</p> : <p>이메일</p>}
+        {onEdit ? (
+          <label className="flex items-center">
+            <p className="text-left text-gray-500 mr-2">
+              <AiOutlineHome />
+            </p>
+            <input
+              placeholder="주소"
+              className="border border-gray-300 rounded mr-2 block"
+            />
+          </label>
+        ) : (
+          <label className="flex items-center">
+            <p className="text-left text-gray-500 mr-2">
+              <AiOutlineHome />
+            </p>
+            <p>{UserProfile?.address || '유저 주소'}</p>
+          </label>
+        )}
+        {onEdit ? (
+          <label className="flex items-center">
+            <p className="text-left text-gray-500 mr-2">
+              <AiOutlineMail />
+            </p>
+            <p>이메일은 수정이 불가능합니다.</p>
+          </label>
+        ) : (
+          <label className="flex items-center">
+            <p className="text-left text-gray-500 mr-2">
+              <AiOutlineMail />
+            </p>
+            <p>{UserProfile?.email || '유저 email'}</p>
+          </label>
+        )}
       </div>
       {/* {onEdit && <button className="mr-3 absolute bottom-0">회원 탈퇴</button>} */}
       <div className="absolute right-0 bottom-0">
