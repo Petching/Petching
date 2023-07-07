@@ -11,7 +11,7 @@ const SignComponent: React.FC = () => {
   const [message, setMessage] = useState('');
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState(1234);
 
   const navigate = useNavigate();
 

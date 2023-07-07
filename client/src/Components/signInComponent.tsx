@@ -9,7 +9,7 @@ import Kakao from './Kakao';
 const SignInComponent: React.FC = () => {
   const [message, setMessage] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState(1234);
   const navigate = useNavigate();
 
   const handleButtonClick = async () => {

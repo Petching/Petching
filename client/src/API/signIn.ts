@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-export const authenticate = async (email: string, password: string) => {
+export const authenticate = async (email: string, password: number) => {
   try {
     const response = await axios.post(
-      '/api/authenticate',
+      'https://5ad6-118-32-224-80.ngrok-free.app/users/login',
       { email, password },
       {
         headers: {
