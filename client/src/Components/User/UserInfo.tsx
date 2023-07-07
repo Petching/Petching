@@ -1,7 +1,12 @@
 import { useState } from 'react';
+import { useGetUserProfile } from '../../Hook/useGetUserProfile';
 
-const UserInfo = () => {
+const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
   const [onEdit, setOnEdit] = useState(false);
+
+  const { UserProfile } = useGetUserProfile(userId);
+
+  console.log(UserProfile);
 
   return (
     <div className="flex items-center w-9/12 my-10 relative">
@@ -26,7 +31,7 @@ const UserInfo = () => {
           </label>
         ) : (
           <img
-            src="https://cdn.pixabay.com/photo/2023/06/14/10/02/pied-flycatcher-8062744_640.jpg"
+            src={UserProfile?.img}
             alt="유저의 프로필 이미지"
             className="w-32 h-32 rounded"
           />
