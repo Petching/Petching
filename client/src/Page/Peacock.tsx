@@ -1,10 +1,18 @@
 import React from 'react';
-import PeacockComponent from '../Components/peacockComponent';
+import { PeacockComponent, Square } from '../Components/peacockComponent';
 
 const Peacock = () => {
   return (
-    <div className="h-screen flex items-center justify-center">
-      <PeacockComponent />
+    <div className="flex flex-col items-center">
+      <Square />
+      <div className="flex flex-wrap justify-center">
+        <PeacockComponent />
+        <PeacockComponent />
+        <PeacockComponent />
+        <PeacockComponent />
+        <PeacockComponent />
+        <PeacockComponent />
+      </div>
     </div>
   );
 };
