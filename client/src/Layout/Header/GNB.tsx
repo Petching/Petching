@@ -19,6 +19,9 @@ const GNB = () => {
   const toSignUp = () => {
     navigate('/signup');
   };
+  const toPeacock = () => {
+    navigate('/peacock');
+  };
   const tempLogout = () => {
     setIsLogin(false);
     setUserIcon(false);
@@ -30,7 +33,10 @@ const GNB = () => {
         <button className="mx-3 hidden md:block hover:text-customGreen">
           돌봄리스트
         </button>
-        <button className="mx-3 hidden md:block hover:text-customGreen">
+        <button
+          className="mx-3 hidden md:block hover:text-customGreen"
+          onClick={toPeacock}
+        >
           자랑하기
         </button>
         {isLogin ? (
