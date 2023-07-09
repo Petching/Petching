@@ -3,8 +3,8 @@ import Carousel from './Carousel';
 import maltese1 from '../../Style/maltese1.jpg';
 const Card = () => {
   return (
-    <div>
-      <div className=" text-center rounded-md w-[18rem] h-[26rem] pt-6 bg-white shadow-md shadow-gray-400">
+    <div className="m-4">
+      <div className=" text-center rounded-md w-[18rem] h-[26rem] pt-6 bg-white shadow-lg shadow-gray-400">
         <div className="mx-auto w-60">
           <Carousel />
         </div>
