@@ -4,9 +4,22 @@ import { AiOutlineUser, AiOutlineHome, AiOutlineMail } from 'react-icons/ai';
 
 const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
   const [onEdit, setOnEdit] = useState(false);
+  const [changeImg, setChangeImg] = useState<string>(
+    'https://cdn.pixabay.com/photo/2023/06/14/10/02/pied-flycatcher-8062744_640.jpg',
+  );
 
   const { UserProfile } = useGetUserProfile(userId);
 
+  const changeImgHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const target = e.currentTarget;
+    const files = (target.files as FileList)[0];
+    if (!files) return;
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setChangeImg(reader.result as string);
+    };
+    reader.readAsDataURL(files);
+  };
   console.log(UserProfile);
 
   return (
@@ -19,7 +32,7 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
               변경
             </div>
             <img
-              src="https://cdn.pixabay.com/photo/2023/06/14/10/02/pied-flycatcher-8062744_640.jpg"
+              src={changeImg}
               alt="변경된 이미지"
               className="w-full h-full"
             />
@@ -28,6 +41,7 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
               type="file"
               accept="image/*"
               className="hidden"
+              onChange={changeImgHandler}
             />
           </label>
         ) : (
