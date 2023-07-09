@@ -1,4 +1,3 @@
-import React from 'react';
 import { PeacockComponent, Square } from '../Components/peacockComponent';
 
 const Peacock = () => {
