@@ -46,6 +46,14 @@ const AddPet: React.FC<Props> = ({ open, setOpen }) => {
           <input className="border" />
         </label>
         <label className="flex justify-between">
+          <p>몸무게</p>
+          <input className="border" />
+        </label>
+        <label className="flex justify-between">
+          <p>예방접종 유무</p>
+          <input className="border" />
+        </label>
+        <label className="flex justify-between">
           <p>특이사항</p>
           <input className="border" />
         </label>
