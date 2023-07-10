@@ -30,7 +30,10 @@ const GNB = () => {
   return (
     <>
       <div className="absolute right-0 md:right-10 flex justify-center items-center">
-        <button className="mx-3 hidden md:block hover:text-customGreen">
+        <button
+          className="mx-3 hidden md:block hover:text-customGreen"
+          onClick={toCareList}
+        >
           돌봄리스트
         </button>
         <button className="mx-3 hidden md:block hover:text-customGreen">

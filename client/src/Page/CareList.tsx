@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from '../Components/Care/Card';
+import Draft from '../Components/Care/TextEditor';
 
 const CareList = () => {
   return (
@@ -15,7 +16,7 @@ const CareList = () => {
             <input type="date"></input>
           </div>
         </div>
-        <div className="w-full">
+        <div className="w-[15rem]">
           <div className="text-center">원하시는 조건을 선택하세요</div>
           <div className="flex justify-center">
             <button className="w-[7rem] h-7 bg-white shadow-sm shadow-gray-400 rounded-full mr-1">
