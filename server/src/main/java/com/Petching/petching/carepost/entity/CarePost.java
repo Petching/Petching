@@ -1,7 +1,7 @@
 package com.Petching.petching.carepost.entity;
 
 
-import com.Petching.petching.audit.Auditable;
+import com.Petching.petching.audit.Auditing;
 import com.Petching.petching.tag.conditionTag.CarePost_ConditionTag;
 import com.Petching.petching.tag.locationTag.CarePost_LocationTag;
 import com.Petching.petching.user.entity.User;
