@@ -83,9 +83,9 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
     public void saveAuthentication (User user) {
         String password = user.getPassword();
-        if (password == null) {
+        /*if (password == null) {
             password = PasswordUtil.generateRandomPassword();
-        }
+        }*/
         UserDetails userDetails = org.springframework.security.core.userdetails.User.builder()
                 .username(user.getEmail())
                 .password(password)
