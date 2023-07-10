@@ -32,9 +32,9 @@ public class User extends Auditable {
 
     private String refreshToken;
 
-    public void passwordEncode (PasswordEncoder passwordEncoder) {
+   /* public void passwordEncode (PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(this.password);
-    }
+    }*/
 
     public void updateRefreshToken (String updateRefreshToke) {
         this.refreshToken = updateRefreshToke;
