@@ -21,6 +21,26 @@ repositories {
 	mavenCentral()
 }
 
+
+// jar file name 변경
+bootJar{
+	archiveFileName = 'petching.jar'
+}
+
+// springCloudVersion setting
+ext {
+	set('springCloudVersion', "2021.0.7")
+}
+
+// dependencyManagement setting
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
@@ -32,7 +52,6 @@ dependencies {
 	implementation 'mysql:mysql-connector-java:8.0.32'
 	implementation 'com.google.code.gson:gson'
 	runtimeOnly 'mysql:mysql-connector-java'
-	runtimeOnly 'com.h2database:h2'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
