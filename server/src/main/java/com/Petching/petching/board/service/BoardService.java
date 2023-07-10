@@ -2,13 +2,10 @@ package com.Petching.petching.board.service;
 
 import com.Petching.petching.board.entity.Board;
 import com.Petching.petching.board.repository.BoardRepository;
-import com.Petching.petching.comment.entity.Comment;
 import com.Petching.petching.exception.BusinessLogicException;
 import com.Petching.petching.exception.ExceptionCode;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

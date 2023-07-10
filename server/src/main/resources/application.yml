@@ -1,4 +1,6 @@
 spring:
+  config:
+    import: "aws-parameterstore:"
   datasource:
     url: ${AWS-RDS}
     username: ${AWS-RDS-username}
@@ -14,6 +16,10 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+
 cloud:
   aws:
     s3:
@@ -23,6 +29,20 @@ cloud:
       static: ap-northeast-2
     stack:
       auto: false
+
+aws:
+  paramstore:
+    enabled: true
+    prefix: /spring-boot-aws
+    defaultContext: petching
+    profileSeparator: _
+
+mail:
+  address: ${admin-address}
+
+config:
+  domain : ${deploy-domain}
+
 logging:
   level:
     server.petching: DEBUG
@@ -34,3 +54,14 @@ server:
   servlet:
     encoding:
       force-response: true
+
+jwt:
+  secretKey: y4ses4eyersghsgheesghsh5eshe45esh45sh45e4she5sh4
+
+  access:
+    expiration: 360000
+    header: Authorization
+
+  refresh:
+    expiration: 120960000
+    header: Authorization-refresh
