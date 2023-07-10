@@ -13,6 +13,8 @@ const PetCard = () => {
         <p>종(세부종)</p>
         <p>성별</p>
         <p>나이</p>
+        <p>몸무게</p>
+        <p>예방접종 유무</p>
         <p>특이사항(기타사항)</p>
       </div>
       <div className="absolute top-4 right-4">

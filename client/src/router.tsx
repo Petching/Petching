@@ -7,8 +7,10 @@ import SignIn from './Page/signIn';
 import User from './Page/User';
 import ChatList from './Page/chatList';
 import Chatting from './Page/chatting';
+import Kakao from './Components/Login/Kakao';
+import Peacock from './Page/Peacock';
+import Google from './Components/Login/Google';
 import CareList from './Page/CareList';
-import Kakao from './Components/Kakao';
 
 export const routers: RemixRouter = createBrowserRouter([
   {
@@ -22,6 +24,10 @@ export const routers: RemixRouter = createBrowserRouter([
       {
         path: '/kakao',
         element: <Kakao />,
+      },
+      {
+        path: '/google',
+        element: <Google />,
       },
       {
         path: '/signup',
@@ -42,6 +48,10 @@ export const routers: RemixRouter = createBrowserRouter([
       {
         path: '/chatting',
         element: <Chatting />,
+      },
+      {
+        path: '/peacock',
+        element: <Peacock />,
       },
       {
         path: '/carelist',

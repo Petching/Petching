@@ -1,7 +1,26 @@
 import { useState } from 'react';
+import { useGetUserProfile } from '../../Hook/useGetUserProfile';
+import { AiOutlineUser, AiOutlineHome, AiOutlineMail } from 'react-icons/ai';
 
-const UserInfo = () => {
+const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
   const [onEdit, setOnEdit] = useState(false);
+  const [changeImg, setChangeImg] = useState<string>(
+    'https://cdn.pixabay.com/photo/2023/06/14/10/02/pied-flycatcher-8062744_640.jpg',
+  );
+
+  const { UserProfile } = useGetUserProfile(userId);
+
+  const changeImgHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const target = e.currentTarget;
+    const files = (target.files as FileList)[0];
+    if (!files) return;
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setChangeImg(reader.result as string);
+    };
+    reader.readAsDataURL(files);
+  };
+  console.log(UserProfile);
 
   return (
     <div className="flex items-center w-9/12 my-10 relative">
@@ -13,7 +32,7 @@ const UserInfo = () => {
               변경
             </div>
             <img
-              src="https://cdn.pixabay.com/photo/2023/06/14/10/02/pied-flycatcher-8062744_640.jpg"
+              src={changeImg}
               alt="변경된 이미지"
               className="w-full h-full"
             />
@@ -22,11 +41,12 @@ const UserInfo = () => {
               type="file"
               accept="image/*"
               className="hidden"
+              onChange={changeImgHandler}
             />
           </label>
         ) : (
           <img
-            src="https://cdn.pixabay.com/photo/2023/06/14/10/02/pied-flycatcher-8062744_640.jpg"
+            src={UserProfile?.img}
             alt="유저의 프로필 이미지"
             className="w-32 h-32 rounded"
           />
@@ -34,12 +54,60 @@ const UserInfo = () => {
       </div>
       <div>
         {onEdit ? (
-          <input placeholder="유저 이름" className="block" />
+          <label className="flex items-center">
+            <p className="text-left text-gray-500 mr-2">
+              <AiOutlineUser />
+            </p>
+            <input
+              placeholder="유저 이름"
+              className="border border-gray-300 rounded mr-2 block"
+            />
+            <button className="ml-2 flex-2 rounded hover:scale-90 transition-all bg-customPink hover:bg-customGreen">
+              중복확인
+            </button>
+          </label>
         ) : (
-          <p>유저 이름</p>
+          // <p>{UserProfile?.name}</p>
+          <label className="flex items-center">
+            <p className="text-left text-gray-500 mr-2">
+              <AiOutlineUser />
+            </p>
+            <p>{UserProfile?.name || 'ABC'}</p>
+          </label>
         )}
-        {onEdit ? <input placeholder="주소" className="block" /> : <p>주소</p>}
-        {onEdit ? <p>이메일은 수정이 불가능합니다.</p> : <p>이메일</p>}
+        {onEdit ? (
+          <label className="flex items-center">
+            <p className="text-left text-gray-500 mr-2">
+              <AiOutlineHome />
+            </p>
+            <input
+              placeholder="주소"
+              className="border border-gray-300 rounded mr-2 block"
+            />
+          </label>
+        ) : (
+          <label className="flex items-center">
+            <p className="text-left text-gray-500 mr-2">
+              <AiOutlineHome />
+            </p>
+            <p>{UserProfile?.address || '유저 주소'}</p>
+          </label>
+        )}
+        {onEdit ? (
+          <label className="flex items-center">
+            <p className="text-left text-gray-500 mr-2">
+              <AiOutlineMail />
+            </p>
+            <p>이메일은 수정이 불가능합니다.</p>
+          </label>
+        ) : (
+          <label className="flex items-center">
+            <p className="text-left text-gray-500 mr-2">
+              <AiOutlineMail />
+            </p>
+            <p>{UserProfile?.email || '유저 email'}</p>
+          </label>
+        )}
       </div>
       {/* {onEdit && <button className="mr-3 absolute bottom-0">회원 탈퇴</button>} */}
       <div className="absolute right-0 bottom-0">

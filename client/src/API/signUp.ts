@@ -11,10 +11,13 @@ export const checkUser = async () => {
 export const signUpUser = async (data: SignupData) => {
   try {
     const response = await axios.post(
-      'https://fcf3-118-32-224-80.ngrok-free.app/users/sign-up',
+      'https://5ad6-118-32-224-80.ngrok-free.app/users/sign-up',
       data,
       {
-        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': '69420',
+        },
       },
     );
     return response;
