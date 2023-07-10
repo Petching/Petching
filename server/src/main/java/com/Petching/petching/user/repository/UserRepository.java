@@ -9,7 +9,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail (String email);
     Optional<User> findByNickName (String nickName);
 
-//    Optional<User> findByRefreshToken (String refreshToken);
+    Optional<User> findByRefreshToken (String refreshToken);
 
 //    Optional<User> findBySo
 }
