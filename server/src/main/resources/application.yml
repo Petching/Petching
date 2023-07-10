@@ -1,0 +1,36 @@
+spring:
+  datasource:
+    url: ${AWS-RDS}
+    username: ${AWS-RDS-username}
+    password: ${AWS-RDS-password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+cloud:
+  aws:
+    s3:
+      bucket: petching.net
+    region:
+      auto: false
+      static: ap-northeast-2
+    stack:
+      auto: false
+logging:
+  level:
+    server.petching: DEBUG
+    org:
+      springframework:
+        orm:
+          jpa: DEBUG
+server:
+  servlet:
+    encoding:
+      force-response: true
