@@ -6,10 +6,7 @@ plugins {
 
 group = 'com.Petching'
 version = '0.0.1-SNAPSHOT'
-
-java {
-	sourceCompatibility = '11'
-}
+sourceCompatibility = '11'
 
 configurations {
 	compileOnly {
@@ -29,7 +26,7 @@ bootJar{
 
 // springCloudVersion setting
 ext {
-	set('springCloudVersion', "2021.0.7")
+	set('springCloudVersion', "2021.0.8")
 }
 
 // dependencyManagement setting
@@ -42,25 +39,48 @@ dependencyManagement {
 
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-websocket'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-//	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.mapstruct:mapstruct:1.5.1.Final'
-	implementation 'com.auth0:java-jwt:4.2.1'
-	implementation 'mysql:mysql-connector-java:8.0.32'
-	implementation 'com.google.code.gson:gson'
-	runtimeOnly 'mysql:mysql-connector-java'
+	// AWS paramStore 사용 Spring boot 버전 호환 상세 : https://spring.io/projects/spring-cloud
+	// S3 Client 활성화
+	implementation "org.springframework.cloud:spring-cloud-starter-aws-parameter-store-config:2.2.6.RELEASE"
+	implementation "io.awspring.cloud:spring-cloud-starter-aws-parameter-store-config:2.3.0"
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+	// 애너테이션 프로세싱 기능 활성화
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
-	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
+
+	// Spring Web 기본 dependency
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// 실시간 채팅을 위한 websocket
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+	// Spring Data JPA 사용을 위함
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	// Spring security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	// 유효성 검증을 위한 dependency
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	// Entity 와 DTO 간 데이터 구조 변환을 위한 dependency
+	implementation 'org.mapstruct:mapstruct:1.5.2.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.2.Final'
+
+	// MySQL DB 사용을 위한 dependency
+	implementation 'mysql:mysql-connector-java:8.0.32'
+	runtimeOnly 'mysql:mysql-connector-java'
+
+	// GSON 라이브러리 : Java 객체 <=> JSON
+	implementation 'com.google.code.gson:gson'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	// AWS - S3
-//	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
-//	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+	// jwt (?)
+	implementation 'com.auth0:java-jwt:4.2.1'
+
 
 }
 
