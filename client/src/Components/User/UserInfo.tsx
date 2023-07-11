@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useGetUserProfile } from '../../Hook/useGetUserProfile';
 import { AiOutlineUser, AiOutlineHome, AiOutlineMail } from 'react-icons/ai';
 
@@ -7,6 +7,9 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
   const [changeImg, setChangeImg] = useState<string>(
     'https://cdn.pixabay.com/photo/2023/06/14/10/02/pied-flycatcher-8062744_640.jpg',
   );
+  const nicknameRef = useRef<HTMLInputElement>(null);
+  const addressRef = useRef<HTMLInputElement>(null);
+  const [isDuplication, setIsDuplication] = useState<boolean>(false);
 
   const { UserProfile } = useGetUserProfile(userId);
 
@@ -20,7 +23,12 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
     };
     reader.readAsDataURL(files);
   };
-  console.log(UserProfile);
+
+  const nickNameCheckHandler = () => {
+    const { value } = nicknameRef.current!;
+    console.log(value);
+    setIsDuplication(true);
+  };
 
   return (
     <div className="flex items-center w-9/12 my-10 relative">
@@ -61,13 +69,19 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
             <input
               placeholder="유저 이름"
               className="border border-gray-300 rounded mr-2 block"
+              ref={nicknameRef}
             />
-            <button className="ml-2 flex-2 rounded hover:scale-90 transition-all bg-customPink hover:bg-customGreen">
+            <button
+              className="ml-2 px-2 flex-2 rounded hover:scale-90 transition-all bg-customPink hover:bg-customGreen"
+              onClick={nickNameCheckHandler}
+            >
               중복확인
             </button>
+            {isDuplication && (
+              <p className="ml-2 text-red-700">중복된 닉네임입니다.</p>
+            )}
           </label>
         ) : (
-          // <p>{UserProfile?.name}</p>
           <label className="flex items-center">
             <p className="text-left text-gray-500 mr-2">
               <AiOutlineUser />
@@ -83,6 +97,7 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
             <input
               placeholder="주소"
               className="border border-gray-300 rounded mr-2 block"
+              ref={addressRef}
             />
           </label>
         ) : (
@@ -109,19 +124,13 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
           </label>
         )}
       </div>
-      {/* {onEdit && <button className="mr-3 absolute bottom-0">회원 탈퇴</button>} */}
       <div className="absolute right-0 bottom-0">
         {onEdit ? (
           <>
             <button className="mr-3 text-slate-400 hover:text-red-700">
               회원 탈퇴
             </button>
-            <button
-              onClick={() => setOnEdit(false)}
-              className="hover:text-customGreen"
-            >
-              수정 완료
-            </button>
+            <button className="hover:text-customGreen">수정 완료</button>
           </>
         ) : (
           <button
