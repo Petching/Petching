@@ -30,6 +30,13 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
     setIsDuplication(true);
   };
 
+  const submitHandler = () => {
+    const { value: nickname } = nicknameRef.current!;
+    const { value: address } = addressRef.current!;
+    console.log(nickname, address);
+    setOnEdit(false);
+  };
+
   return (
     <div className="flex items-center w-9/12 my-10 relative">
       <div className="mr-6">
@@ -130,7 +137,9 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
             <button className="mr-3 text-slate-400 hover:text-red-700">
               회원 탈퇴
             </button>
-            <button className="hover:text-customGreen">수정 완료</button>
+            <button onClick={submitHandler} className="hover:text-customGreen">
+              수정 완료
+            </button>
           </>
         ) : (
           <button
