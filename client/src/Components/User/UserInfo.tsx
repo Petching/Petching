@@ -137,6 +137,7 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
             <button className="mr-3 text-slate-400 hover:text-red-700">
               회원 탈퇴
             </button>
+            <button className="mr-3 hover:text-slate-400">수정취소</button>
             <button onClick={submitHandler} className="hover:text-customGreen">
               수정 완료
             </button>
