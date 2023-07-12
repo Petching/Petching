@@ -2,8 +2,11 @@ import { useState } from 'react';
 import { useGetUserProfile } from '../../Hook/useGetUserProfile';
 import { AiOutlineUser, AiOutlineHome, AiOutlineMail } from 'react-icons/ai';
 import { usePatchUserProfile } from '../../Hook/usePatchUserProfile';
+import { useDeleteUserProfile } from '../../Hook/useDeleteUserProfile';
+import { useNavigate } from 'react-router-dom';
 
 const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
+  const navigate = useNavigate();
   const [onEdit, setOnEdit] = useState(false);
   const [changeImg, setChangeImg] = useState<string>(
     'https://cdn.pixabay.com/photo/2023/06/14/10/02/pied-flycatcher-8062744_640.jpg',
@@ -12,6 +15,7 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
 
   const { UserProfile } = useGetUserProfile(userId);
   const { handlerPatchProfile } = usePatchUserProfile(userId);
+  const { handlerDeleteUserProfile } = useDeleteUserProfile(userId);
 
   const [changeNickName, setChangeNickName] = useState<string>(
     UserProfile?.nickName || '',
@@ -53,6 +57,11 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
       // img: changeImg,
     });
     setOnEdit(false);
+  };
+
+  const deleteHandler = () => {
+    handlerDeleteUserProfile(userId);
+    navigate('/');
   };
 
   return (
@@ -156,7 +165,10 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
       <div className="absolute right-0 bottom-0">
         {onEdit ? (
           <>
-            <button className="mr-3 text-slate-400 hover:text-red-700">
+            <button
+              className="mr-3 text-slate-400 hover:text-red-700"
+              onClick={deleteHandler}
+            >
               회원 탈퇴
             </button>
             <button
