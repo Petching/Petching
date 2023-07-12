@@ -1,3 +1,5 @@
+import React from 'react';
+
 const Kakao = () => {
   const restApiKey = process.env.REACT_APP_REST_API_KEY;
   const redirectUrl = 'http://localhost:3000/kakaologin';
