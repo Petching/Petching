@@ -1,10 +1,45 @@
 spring:
+  profiles:
+    active: local
+cloud:
+  aws:
+    s3:
+      bucket: petching.net
+    region:
+      auto: false
+      static: ap-northeast-2
+    stack:
+      auto: false
+aws:
+  paramstore:
+    enabled: true
+    prefix: /spring-boot-aws/petching
+    defaultContext: ${spring.profiles.active}
+    profileSeparator: _
+
+logging:
+  level:
+    server.petching: DEBUG
+    org:
+      springframework:
+        orm:
+          jpa: DEBUG
+server:
+  servlet:
+    encoding:
+      force-response: true
+
+---
+
+spring:
   config:
     import: "aws-parameterstore:"
+    activate:
+      on-profile: dev
   datasource:
-    url: ${AWS-RDS}
-    username: ${AWS-RDS-username}
-    password: ${AWS-RDS-password}
+    url:
+    username:
+    password:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database: mysql
@@ -20,48 +55,66 @@ spring:
     multipart:
       max-file-size: 10MB
 
-cloud:
-  aws:
-    s3:
-      bucket: petching.net
-    region:
-      auto: false
-      static: ap-northeast-2
-    stack:
-      auto: false
-
-aws:
-  paramstore:
-    enabled: true
-    prefix: /spring-boot-aws
-    defaultContext: petching
-    profileSeparator: _
-
-mail:
-  address: ${admin-address}
-
-config:
-  domain : ${deploy-domain}
-
-logging:
-  level:
-    server.petching: DEBUG
-    org:
-      springframework:
-        orm:
-          jpa: DEBUG
-server:
-  servlet:
-    encoding:
-      force-response: true
-
 jwt:
-  secretKey: y4ses4eyersghsgheesghsh5eshe45esh45sh45e4she5sh4
-
+  secretKey:
   access:
     expiration: 360000
     header: Authorization
-
   refresh:
     expiration: 120960000
     header: Authorization-refresh
+
+mail:
+  address:
+    admin:
+
+config:
+  domain :
+
+---
+
+spring:
+  config:
+    import: "aws-parameterstore:"
+    activate:
+      on-profile: local
+  datasource:
+    url:
+    username: root
+    password: 980915
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+
+aws:
+  accessKeyId:
+  secretKey:
+
+jwt:
+  secretKey:
+  access:
+    expiration: 360000
+    header: Authorization
+  refresh:
+    expiration: 120960000
+    header: Authorization-refresh
+
+mail:
+  address:
+    admin:
+
+config:
+  domain :
+
+---

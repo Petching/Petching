@@ -20,6 +20,7 @@ public class BoardService {
     }
 
     public Board createBoard(Board board){
+
         return boardRepository.save(board);
     }
     public Board updateBoard(Board board){
@@ -29,9 +30,10 @@ public class BoardService {
                 .ifPresent(title->findBoard.setTitle(title));
         Optional.ofNullable(board.getContent())
                 .ifPresent(content->findBoard.setContent(content));
-        //TODO:이미지 수정 추가
-        return boardRepository.save(findBoard);
+        Optional.ofNullable(board.getImgUrl())
+                .ifPresent(imgUrl->findBoard.setImgUrl(imgUrl));
 
+        return boardRepository.save(findBoard);
     }
 
     public Board findBoard(long boardId) {
@@ -49,21 +51,38 @@ public class BoardService {
     }
     public Page<Board> findBoards(Pageable pageable){
 
-
         return boardRepository.findAll(pageable);
     }
+
     public void deleteBoard(long boardId){
         Board board = findVerifiedBoard(boardId);
+
         boardRepository.delete(board);
     }
-    // 존재하는 Board인지 검증하는 메서드
-    public Board findVerifiedBoard(long boardId){
-        Optional<Board> optionalBoard = boardRepository.findById(boardId);
-        Board findBoard = optionalBoard.orElseThrow(()->
-                new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND));
-        return findBoard;
 
+
+    public Board findBoardByMK(long boardId){
+
+        Board board = findVerifiedBoard(boardId);
+
+        return board;
+    }
+
+    // Board 에 존재하는 img 중 최대 4개를 가져오는 메서드
+    public List<String> findBoardRandomImg(){
+
+        Optional<List<String>> randomImgList = boardRepository.findRandomBoardImages();
+
+        return randomImgList.orElseThrow(()->
+                new BusinessLogicException(ExceptionCode.CONTENT_NOT_FOUND));
     }
 
 
+    // 존재하는 Board 인지 검증하는 메서드
+    public Board findVerifiedBoard(long boardId){
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
+
+        return optionalBoard.orElseThrow(()->
+                new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND));
+    }
 }
