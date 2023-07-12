@@ -4,6 +4,8 @@ import com.Petching.petching.comment.dto.CommentDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
@@ -19,6 +21,10 @@ public class BoardDto {
         private String title;
         @NotBlank(message = "content not null")
         private String content;
+
+        Post(){
+
+        }
     }
 
     @Getter
@@ -46,6 +52,9 @@ public class BoardDto {
         private LocalDateTime modifiedAt;
         // 좋아요 눌렀는지 여부
         private boolean checkLike;
+
+        private String imgUrl;
+
 //        private List<CommentDto.Response> comments;
 //        private long commentCount;
 
@@ -68,6 +77,8 @@ public class BoardDto {
         private List<CommentDto.Response> comments;
         private long commentCount;
 
-        // public void setMember(Member member){this.memberId = member.getMemberId();}
+        private String imgUrl;
+
+        // public void setMember(Member member){this.memberId = member.getMemberId();
     }
 }

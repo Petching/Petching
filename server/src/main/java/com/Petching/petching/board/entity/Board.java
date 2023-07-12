@@ -5,6 +5,7 @@ import com.Petching.petching.comment.entity.Comment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -40,10 +41,15 @@ public class Board extends BaseEntity {
     @Column
     private long commentCount;
 
+    @Column
+    @Nullable
+    private String imgUrl;
+
     public Board() {
         this.likes = 0L;
     }
     public void addComment(Comment comment){comments.add(comment);}
+
    //TODO:이미지
    //TODO:게시글이 삭제 될 때, 게시글에 달린 댓글도 삭제되어야 함으로, Board 엔티티에 cascade 설정이 되어있어야 한다.
 
