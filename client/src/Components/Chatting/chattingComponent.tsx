@@ -13,6 +13,7 @@ const ChatComponent: React.FC = () => {
   );
   const socketRef = useRef<Socket | null>(null);
   const [room, setRoom] = useState<string>('defaultRoom');
+  const [inputValue, setInputValue] = useState<string>('');
 
   useEffect(() => {
     socketRef.current = io('http://localhost:4000');
@@ -28,11 +29,10 @@ const ChatComponent: React.FC = () => {
     };
   }, [room]);
 
-  const joinRoom = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (socketRef.current && room) {
-      socketRef.current.emit('joinRoom', room);
+  const joinRoom = () => {
+    if (socketRef.current && inputValue) {
+      setRoom(inputValue);
+      socketRef.current.emit('joinRoom', inputValue);
     }
   };
 
@@ -55,12 +55,12 @@ const ChatComponent: React.FC = () => {
     <div className="flex flex-col">
       <form onSubmit={joinRoom}>
         <input
-          value={room}
-          onChange={e => setRoom(e.target.value)}
+          value={inputValue}
+          onChange={e => setInputValue(e.target.value)}
           className="mb-3 p-2 rounded-md border"
           placeholder="Enter room"
         />
-        <button type="submit">Join Room</button>
+        <button onClick={joinRoom}>Join Room</button>
       </form>
       <div className="overflow-auto mb-4 p-3 flex-grow">
         {filteredMessages.map((message, i) => (
