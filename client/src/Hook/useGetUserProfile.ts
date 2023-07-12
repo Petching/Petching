@@ -2,10 +2,10 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
 type UserProfile = {
-  name: string;
-  img: string;
-  address: string;
+  nickName: string;
   email: string;
+  img?: string;
+  address?: string;
 };
 
 export const useGetUserProfile = (userId: string) => {
@@ -17,15 +17,12 @@ export const useGetUserProfile = (userId: string) => {
     queryKey: ['UserProfile', userId],
     queryFn: async () => {
       // const data = await axios.get('http://localhost:3001/profile');
-      const data = await axios.get(
-        `https://fcf3-118-32-224-80.ngrok-free.app/users/1`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'ngrok-skip-browser-warning': '69420',
-          },
+      const data = await axios.get(`https://server.petching.net/users/1`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': '69420',
         },
-      );
+      });
       return data.data;
     },
     onError: () => {
