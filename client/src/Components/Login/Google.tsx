@@ -1,3 +1,5 @@
+import React from 'react';
+
 const Google = () => {
   const googleAuthUrl =
     'https://accounts.google.com/o/oauth2/auth?' +
