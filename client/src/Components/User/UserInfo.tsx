@@ -1,17 +1,34 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useGetUserProfile } from '../../Hook/useGetUserProfile';
 import { AiOutlineUser, AiOutlineHome, AiOutlineMail } from 'react-icons/ai';
+import { usePatchUserProfile } from '../../Hook/usePatchUserProfile';
 
 const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
   const [onEdit, setOnEdit] = useState(false);
   const [changeImg, setChangeImg] = useState<string>(
     'https://cdn.pixabay.com/photo/2023/06/14/10/02/pied-flycatcher-8062744_640.jpg',
   );
-  const nicknameRef = useRef<HTMLInputElement>(null);
-  const addressRef = useRef<HTMLInputElement>(null);
   const [isDuplication, setIsDuplication] = useState<boolean>(false);
 
   const { UserProfile } = useGetUserProfile(userId);
+  const { handlerPatchProfile } = usePatchUserProfile(userId);
+
+  const [changeNickName, setChangeNickName] = useState<string>(
+    UserProfile?.nickName || '',
+  );
+
+  const [changeAddress, setChangeAddress] = useState<string>(
+    UserProfile?.address || '',
+  );
+
+  const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.currentTarget;
+    if (name === 'nickname') {
+      setChangeNickName(value);
+    } else {
+      setChangeAddress(value);
+    }
+  };
 
   const changeImgHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.currentTarget;
@@ -25,15 +42,16 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
   };
 
   const nickNameCheckHandler = () => {
-    const { value } = nicknameRef.current!;
-    console.log(value);
     setIsDuplication(true);
   };
 
   const submitHandler = () => {
-    const { value: nickname } = nicknameRef.current!;
-    const { value: address } = addressRef.current!;
-    console.log(nickname, address);
+    handlerPatchProfile({
+      userId,
+      nickname: changeNickName,
+      address: changeAddress,
+      // img: changeImg,
+    });
     setOnEdit(false);
   };
 
@@ -76,7 +94,9 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
             <input
               placeholder="유저 이름"
               className="border border-gray-300 rounded mr-2 block"
-              ref={nicknameRef}
+              value={changeNickName}
+              name="nickname"
+              onChange={inputChangeHandler}
             />
             <button
               className="ml-2 px-2 flex-2 rounded hover:scale-90 transition-all bg-customPink hover:bg-customGreen"
@@ -93,7 +113,7 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
             <p className="text-left text-gray-500 mr-2">
               <AiOutlineUser />
             </p>
-            <p>{UserProfile?.name || 'ABC'}</p>
+            <p>{UserProfile?.nickName}</p>
           </label>
         )}
         {onEdit ? (
@@ -104,7 +124,9 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
             <input
               placeholder="주소"
               className="border border-gray-300 rounded mr-2 block"
-              ref={addressRef}
+              value={changeAddress}
+              name="address"
+              onChange={inputChangeHandler}
             />
           </label>
         ) : (
@@ -137,7 +159,12 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
             <button className="mr-3 text-slate-400 hover:text-red-700">
               회원 탈퇴
             </button>
-            <button className="mr-3 hover:text-slate-400">수정취소</button>
+            <button
+              className="mr-3 hover:text-slate-400"
+              onClick={() => setOnEdit(false)}
+            >
+              수정취소
+            </button>
             <button onClick={submitHandler} className="hover:text-customGreen">
               수정 완료
             </button>
