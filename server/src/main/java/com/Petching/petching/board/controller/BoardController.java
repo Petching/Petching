@@ -1,5 +1,6 @@
 package com.Petching.petching.board.controller;
 
+import com.Petching.petching.aws.s3.client.CustomS3Client;
 import com.Petching.petching.board.dto.BoardDto;
 import com.Petching.petching.board.entity.Board;
 import com.Petching.petching.board.mapper.BoardMapper;
@@ -12,8 +13,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -26,18 +29,28 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequestMapping("/boards")
 public class BoardController {
-    private BoardService boardService;
-    private BoardMapper mapper;
+    private final BoardService boardService;
+    private final BoardMapper mapper;
 
-    public BoardController(BoardService boardService, BoardMapper mapper) {
+    private final CustomS3Client customS3Client;
+
+    public BoardController(BoardService boardService, BoardMapper mapper, CustomS3Client customS3Client) {
         this.boardService = boardService;
         this.mapper = mapper;
+        this.customS3Client = customS3Client;
     }
 
-    @PostMapping
-    public ResponseEntity postBoard(@Valid @RequestBody BoardDto.Post requestBody){
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity postBoard(@RequestPart(required = false) MultipartFile img,
+                                    @Valid @RequestPart BoardDto.Post requestBody){
 
         Board board = boardService.createBoard(mapper.boardPostDtoToBoard(requestBody));
+
+        if(img!=null){
+            String imgUrl = customS3Client.uploadImageToS3(img);
+            board.setImgUrl(imgUrl);
+            boardService.updateBoard(board);
+        }
 
         URI uri = UriComponentsBuilder.newInstance()
                 .path("/boards/"+board.getBoardId())
@@ -45,16 +58,20 @@ public class BoardController {
 
         return ResponseEntity.created(uri).build();
     }
+
     @PatchMapping("/{board-id}")
     public ResponseEntity patchBoard(@PathVariable("board-id") long id, @Valid @RequestBody BoardDto.Patch requestBody){
+
         requestBody.setBoardId(id);
         Board board = mapper.boardPatchDtoToBoard(requestBody);
         Board response = boardService.updateBoard(board);
 
         return new ResponseEntity<>(mapper.boardToBoardDetailDto(response), HttpStatus.OK);
     }
+
     @DeleteMapping("/{board-id}")
     public ResponseEntity deleteBoard(@PathVariable("board-id") long id){
+
         boardService.deleteBoard(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -73,7 +90,7 @@ public class BoardController {
                 .map(board->mapper.boardToBoardResponseDto(board))
                 .collect(Collectors.toList());
 
-        // TODO: 페이지 정보 헤더에 추가
+        // 페이지 정보 헤더에 추가
         PageInfo pageInfo = new PageInfo(
                 boardPage.getNumber(),
                 boardPage.getSize(),
@@ -85,14 +102,24 @@ public class BoardController {
 
         return ResponseEntity.ok().headers(headers).body(response);
     }
+
+
     // 특정 게시글 조회
     @GetMapping("/{board-id}")
     public ResponseEntity getBoard(@PathVariable("board-id") long id){
-        Board board = boardService.findBoard(id);
-        if(board == null){
-            return ResponseEntity.notFound().build();
-        }
+        Board board = boardService.findBoardByMK(id);
+
         BoardDto.Detail response = mapper.boardToBoardDetailDto(board);
+
         return ResponseEntity.ok(response);
     }
+
+    // Board 에 존재하는 img 중 최대 4개를 랜덤으로 가져오는 API
+    @GetMapping("/recently-created")
+    public ResponseEntity<List<String >> getRecentlyBoardImg(){
+        List<String> randomImgList = boardService.findBoardRandomImg();
+
+        return new ResponseEntity<>(randomImgList, HttpStatus.OK);
+    }
+
 }
