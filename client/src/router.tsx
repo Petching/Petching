@@ -9,6 +9,7 @@ import ChatList from './Page/chatList';
 import Chatting from './Page/chatting';
 import Kakao from './Components/Login/Kakao';
 import Peacock from './Page/Peacock';
+import PeacockDetail from './Page/peacockDetail';
 import Google from './Components/Login/Google';
 import CareList from './Page/CareList';
 
@@ -51,7 +52,7 @@ export const routers: RemixRouter = createBrowserRouter([
       },
       {
         path: '/peacock',
-        element: <Peacock />,
+        element: <PeacockDetail />,
       },
       {
         path: '/carelist',
