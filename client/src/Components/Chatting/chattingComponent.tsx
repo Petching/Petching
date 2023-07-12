@@ -11,10 +11,11 @@ const ChatComponent: React.FC = () => {
   const [messages, setMessages] = useState<{ room: string; message: string }[]>(
     [],
   );
+
   const socketRef = useRef<Socket | null>(null);
   const [room, setRoom] = useState<string>('defaultRoom');
   const [inputValue, setInputValue] = useState<string>('');
-
+  const filteredMessages = messages.filter(msg => msg.room === room);
   useEffect(() => {
     socketRef.current = io('http://localhost:4000');
 
@@ -48,19 +49,19 @@ const ChatComponent: React.FC = () => {
     }
   };
 
-  // Filter messages based on the current room
-  const filteredMessages = messages.filter(msg => msg.room === room);
-
   return (
     <div className="flex flex-col">
-      <form onSubmit={joinRoom}>
+      <h2>Current room: {room}</h2>
+      <form>
         <input
           value={inputValue}
           onChange={e => setInputValue(e.target.value)}
           className="mb-3 p-2 rounded-md border"
           placeholder="Enter room"
         />
-        <button onClick={joinRoom}>Join Room</button>
+        <button type="button" onClick={joinRoom}>
+          Join Room
+        </button>
       </form>
       <div className="overflow-auto mb-4 p-3 flex-grow">
         {filteredMessages.map((message, i) => (
