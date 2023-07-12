@@ -3,12 +3,15 @@ import MyPets from '../Components/User/MyPets';
 import UserInfo from '../Components/User/UserInfo';
 import MyPost from '../Components/User/MyPost';
 import MyLikes from '../Components/User/MyLikes';
+import { useParams } from 'react-router-dom';
 
 const User = () => {
+  const { userId } = useParams() as { userId: string };
+
   const [category, setCategory] = useState('반려동물');
   return (
     <div className="flex justify-center w-full flex-col items-center">
-      <UserInfo />
+      <UserInfo userId={userId} />
       <div className="flex justify-center items-center">
         <button
           onClick={() => setCategory('반려동물')}
