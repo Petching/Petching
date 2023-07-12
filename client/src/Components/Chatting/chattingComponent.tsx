@@ -3,43 +3,69 @@ import io, { Socket } from 'socket.io-client';
 
 type ChatEvent = {
   message: string;
+  room: string;
 };
 
 const ChatComponent: React.FC = () => {
   const [message, setMessage] = useState<string>('');
-  const [messages, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState<{ room: string; message: string }[]>(
+    [],
+  );
   const socketRef = useRef<Socket | null>(null);
+  const [room, setRoom] = useState<string>('defaultRoom');
 
   useEffect(() => {
     socketRef.current = io('http://localhost:4000');
 
+    socketRef.current.emit('joinRoom', room);
+
     socketRef.current?.on('chat', (data: ChatEvent) => {
-      console.log(data);
-      setMessages(messages => [...messages, data.message]);
+      setMessages(messages => [...messages, data]);
     });
 
     return () => {
       socketRef.current?.disconnect();
     };
-  }, []);
+  }, [room]);
+
+  const joinRoom = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (socketRef.current && room) {
+      socketRef.current.emit('joinRoom', room);
+    }
+  };
 
   const sendMessage = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(message);
 
-    socketRef.current?.emit('chat', {
-      message,
-    });
-
-    setMessage('');
+    if (socketRef.current) {
+      socketRef.current.emit('chat', {
+        message,
+        room,
+      });
+      setMessage('');
+    }
   };
 
+  // Filter messages based on the current room
+  const filteredMessages = messages.filter(msg => msg.room === room);
+
   return (
-    <div className="flex flex-col ">
-      <div id="messages" className="overflow-auto mb-4 p-3 flex-grow">
-        {messages.map((message, i) => (
+    <div className="flex flex-col">
+      <form onSubmit={joinRoom}>
+        <input
+          value={room}
+          onChange={e => setRoom(e.target.value)}
+          className="mb-3 p-2 rounded-md border"
+          placeholder="Enter room"
+        />
+        <button type="submit">Join Room</button>
+      </form>
+      <div className="overflow-auto mb-4 p-3 flex-grow">
+        {filteredMessages.map((message, i) => (
           <p key={i} className="mb-2 text-sm border p-2 rounded-lg bg-gray-100">
-            {message}
+            {message.message}
           </p>
         ))}
       </div>
