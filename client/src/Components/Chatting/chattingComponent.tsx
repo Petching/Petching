@@ -65,16 +65,9 @@ const ChatComponent: React.FC = () => {
       </form>
       <div className="overflow-auto mb-4 p-3 flex-grow">
         {filteredMessages.map((message, i) => (
-          <div
-            key={i}
-            className={`mb-2 text-sm border p-2 rounded-lg ${
-              message.user === 'me'
-                ? 'bg-blue-100 ml-auto'
-                : 'bg-gray-100 mr-auto'
-            }`}
-          >
-            <p>{message.message}</p>
-          </div>
+          <p key={i} className="mb-2 text-sm border p-2 rounded-lg bg-gray-100">
+            {message.message}
+          </p>
         ))}
       </div>
       <form onSubmit={sendMessage} className="flex">
