@@ -1,6 +1,5 @@
 package com.Petching.petching.user.dto;
 
-import com.Petching.petching.user.entity.Role;
 import com.Petching.petching.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
