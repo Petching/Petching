@@ -1,100 +1,84 @@
 package com.Petching.petching.login.jwt.filter;
 
+import com.Petching.petching.login.dto.LoginDto;
 import com.Petching.petching.login.jwt.service.JwtService;
 import com.Petching.petching.user.entity.User;
-import com.Petching.petching.user.repository.UserRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
-import org.springframework.security.core.authority.mapping.NullAuthoritiesMapper;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Slf4j
-public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
-    private static final String NO_CHECK_URL = "/login";
-
+public class JwtAuthenticationProcessingFilter extends UsernamePasswordAuthenticationFilter {
+    private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
-    private final UserRepository userRepository;
 
-    private GrantedAuthoritiesMapper authoritiesMapper = new NullAuthoritiesMapper();
+    @SneakyThrows
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class);
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
+
+        return authenticationManager.authenticate(authenticationToken);
+    }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
-        if (request.getRequestURI().equals(NO_CHECK_URL)) {
-            filterChain.doFilter(request, response);
-            return;
-        }
+    protected void successfulAuthentication(HttpServletRequest request,
+                                            HttpServletResponse response,
+                                            FilterChain chain,
+                                            Authentication authResult) throws ServletException, IOException {
+        User user = (User) authResult.getPrincipal();
 
-        String refreshToken = jwtService.extractRefreshToken(request)
-                .filter(service -> jwtService.isTokenValid(service))
-                .orElse(null);
+        String accessToken = delegateAccessToken(user);
+        String refreshToken = delegateRefreshToken(user);
 
-        if (refreshToken != null) {
-            checkRefreshTokenAndReIssueAccessToken (response, refreshToken);
-            return;
-        }
+        response.setHeader("Authorization", "Bearer " + accessToken);
+        response.setHeader("Refresh", refreshToken);
 
-        if (refreshToken == null) {
-            checkAccessTokenAndAuthentication(request, response, filterChain);
-        }
+        this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);  // 추가
     }
 
-    public void checkRefreshTokenAndReIssueAccessToken(HttpServletResponse response, String refreshToken) {
-        userRepository.findByRefreshToken(refreshToken)
-                .ifPresent(user -> {
-                    String reIssuedRefreshToken = reIssueRefreshToken(user);
-                    jwtService.sendAccessAndRefreshToken(response, jwtService.createAccessToken(user.getEmail()),
-                            reIssuedRefreshToken);
-                });
+
+    private String delegateAccessToken(User user) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("email", user.getEmail());
+        claims.put("roles", user.getRoles());
+        claims.put("userId", user.getUserId());
+
+
+        String subject = user.getEmail();
+        Date expiration = jwtService.getTokenExpiration(jwtService.getRefreshTokenExpirationPeriod());
+
+        String base64EncodedSecretKey = jwtService.encodeBase64SecretKey(jwtService.getSecretKey());
+
+        String accessToken = jwtService.generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
+
+        return accessToken;
     }
 
-    private String reIssueRefreshToken(User user) {
-        String reIssuedRefreshToken = jwtService.createRefreshToken();
-        user.updateRefreshToken(reIssuedRefreshToken);
-        userRepository.saveAndFlush(user);
-        return reIssuedRefreshToken;
+    private String delegateRefreshToken(User user) {
+        String subject = user.getEmail();
+        Date expiration = jwtService.getTokenExpiration(jwtService.getRefreshTokenExpirationPeriod());
+        String base64EncodedSecretKey = jwtService.encodeBase64SecretKey(jwtService.getSecretKey());
+
+        String refreshToken = jwtService.generateRefreshToken(subject, expiration, base64EncodedSecretKey);
+
+        return refreshToken;
     }
-
-    public void checkAccessTokenAndAuthentication (HttpServletRequest request, HttpServletResponse response,
-                                                   FilterChain chain) throws ServletException, IOException {
-        log.info("checkAccessTokenAndAuthentication () 호출");
-        jwtService.extractAccessToken(request)
-                .filter(service -> jwtService.isTokenValid(service)).ifPresent(
-                        accessToken -> jwtService.extractEmail(accessToken)
-                                .ifPresent(email -> userRepository.findByEmail(email)
-                                        .ifPresent(this::saveAuthentication))
-                );
-        chain.doFilter(request, response);
-
-    }
-
-    public void saveAuthentication (User user) {
-        String password = user.getPassword();
-        /*if (password == null) {
-            password = PasswordUtil.generateRandomPassword();
-        }*/
-        UserDetails userDetails = org.springframework.security.core.userdetails.User.builder()
-                .username(user.getEmail())
-                .password(password)
-                .build();
-
-        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null,
-                authoritiesMapper.mapAuthorities(userDetails.getAuthorities()));
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-    }
-
 }

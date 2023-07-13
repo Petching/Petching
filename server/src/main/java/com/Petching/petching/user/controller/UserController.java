@@ -21,6 +21,7 @@ import java.net.URI;
 @RequiredArgsConstructor
 @RequestMapping("/users/")
 @Validated
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
     private final UserMapper mapper;
     private final UserService service;
@@ -28,7 +29,7 @@ public class UserController {
     @PostMapping("sign-up")
     public ResponseEntity postUser (@RequestBody @Valid UserPostDto postDto) {
         User user = service.savedUser(postDto);
-        URI uri = URICreator.createUri("sing-up", user.getUserId());
+        URI uri = URICreator.createUri("sign-up", user.getUserId());
 
         return ResponseEntity.created(uri).build();
     }
