@@ -1,149 +1,103 @@
 package com.Petching.petching.login.jwt.service;
 
-import com.Petching.petching.exception.BusinessLogicException;
-import com.Petching.petching.exception.ExceptionCode;
-import com.Petching.petching.user.repository.UserRepository;
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.io.Encoders;
+import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.swing.text.html.Option;
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 import java.util.Optional;
 
-@Service @Getter
-@RequiredArgsConstructor @Slf4j
+@Component @Getter
 public class JwtService {
     @Value("${jwt.secretKey}")
     private String secretKey;
 
     @Value("${jwt.access.expiration}")
-    private Long accessTokenExpirationPeriod;
+    private int accessTokenExpirationPeriod;
 
     @Value("${jwt.refresh.expiration}")
-    private Long refreshTokenExpirationPeriod;
+    private int refreshTokenExpirationPeriod;
 
-    @Value("${jwt.access.header}")
-    private String accessHeader;
+//    @Value("${jwt.access.header}")
+//    private String accessHeader;
+//
+//    @Value("${jwt.refresh.header}")
+//    private String refreshHeader;
 
-    @Value("${jwt.refresh.header}")
-    private String refreshHeader;
-
-    private static final String ACCESS_TOKEN_SUBJECT = "AccessToken";
-    private static final String REFRESH_TOKEN_SUBJECT = "RefreshToken";
-    private static final String EMAIL_CLAIM = "email";
-    private static final String BEARER = "Bearer";
-
-    private final UserRepository userRepository;
-
-    public String createAccessToken (String email) {
-        Date now = new Date();
-        return JWT.create()
-                .withSubject(ACCESS_TOKEN_SUBJECT)
-                .withExpiresAt(new Date(now.getTime() + accessTokenExpirationPeriod))
-                .withClaim(EMAIL_CLAIM, email)
-                .sign(Algorithm.HMAC512(secretKey));
+    public String encodeBase64SecretKey(String secretKey) {
+        return Encoders.BASE64.encode(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String createRefreshToken() {
-        Date now = new Date();
-        return JWT.create()
-                .withSubject(REFRESH_TOKEN_SUBJECT)
-                .withExpiresAt(new Date(now.getTime() + refreshTokenExpirationPeriod))
-                .sign(Algorithm.HMAC512(secretKey));
+    public String generateAccessToken(Map<String, Object> claims,
+                                      String subject,
+                                      Date expiration,
+                                      String base64EncodedSecretKey) {
+        Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
+
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(subject)
+                .setIssuedAt(Calendar.getInstance().getTime())
+                .setExpiration(expiration)
+                .signWith(key)
+                .compact();
     }
 
-    public void sendAccessToken (HttpServletResponse response, String accessToken, String refreshToken) {
-        response.setStatus(HttpServletResponse.SC_OK);
+    public String generateRefreshToken(String subject, Date expiration, String base64EncodedSecretKey) {
+        Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
 
-        response.setHeader(accessHeader, accessToken);
-        response.setHeader(refreshHeader, refreshToken);
-        log.info("Access Token, Refresh Token 헤더 설정 완료!");
+        return Jwts.builder()
+                .setSubject(subject)
+                .setIssuedAt(Calendar.getInstance().getTime())
+                .setExpiration(expiration)
+                .signWith(key)
+                .compact();
     }
 
-    public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken, String refreshToken) {
-        response.setStatus(HttpServletResponse.SC_OK);
+    public Jws<Claims> getClaims(String jws, String base64EncodedSecretKey) {
+        Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
 
-        setAccessTokenHeader (response, accessToken);
-        setRefreshTokenHeader (response, refreshToken);
-        log.info("Access Token, Refresh Token 헤더 설정 완료");
+        Jws<Claims> claims = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(jws);
+        return claims;
     }
 
-    /**
-     * 헤더에서 RefreshToken 추출
-     * 토큰 형식 : Bearer XXX 에서 Bearer 를 제외하고 순수 토큰만 가져오자.
-     * 헤더를 가져온 후 replace 로 "Bearer" 를 삭제
-     */
-    public Optional<String> extractRefreshToken (HttpServletRequest request) {
-        return Optional.ofNullable(request.getHeader(refreshHeader))
-                .filter(refreshToken -> refreshToken.startsWith(BEARER))
-                .map(refresh -> refresh.replace(BEARER, ""));
+    public void verifySignature(String jws, String base64EncodedSecretKey) {
+        Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
+
+        Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(jws);
     }
 
-    /**
-     * 헤더에서 AccessToken 추출
-     * 토큰 형식 : Bearer ~ 에서 Bearer 를 제외하고 순수 토큰만.
-     * 헤더를 가져오고 replace 로 "Bearer" 삭제
-     */
-    public Optional<String> extractAccessToken (HttpServletRequest request) {
-        return Optional.ofNullable(request.getHeader(accessHeader))
-                .filter(refreshToken -> refreshToken.startsWith(BEARER))
-                .map(refresh -> refresh.replace(BEARER, ""));
+    public Date getTokenExpiration(int expirationMinutes) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MINUTE, expirationMinutes);
+        Date expiration = calendar.getTime();
+
+        return expiration;
     }
 
-    /**
-     * AccessToken 에서 email 추출
-     * 추출 전 JWT.require() 로 검증기 생성
-     * verify 로 AccessToken 검증 후 유효하다면 getClaim() 으로 이메일 추출
-     * 유효하지 않다면 빈 Optional 객체 반환
-     */
-    public Optional<String> extractEmail (String accessToken) {
-        try {
-            return Optional.ofNullable(JWT.require(Algorithm.HMAC512(secretKey))
-                    .build()
-                    .verify(accessToken)
-                    .getClaim(EMAIL_CLAIM)
-                    .asString());
-        } catch (Exception e) {
-            log.error("액세스 토큰이 유효하지 않습니다.");
-            return Optional.empty();
-        }
-    }
+    private Key getKeyFromBase64EncodedKey(String base64EncodedSecretKey) {
+        byte[] keyBytes = Decoders.BASE64.decode(base64EncodedSecretKey);
+        Key key = Keys.hmacShaKeyFor(keyBytes);
 
-    public void setAccessTokenHeader(HttpServletResponse response, String accessToken ) {
-        response.setHeader(accessHeader, accessToken);
-    }
-    public void setRefreshTokenHeader (HttpServletResponse response, String refreshToken) {
-        response.setHeader(refreshHeader, refreshToken);
-    }
-
-    /**
-     * RefreshToken DB 에 저장 & 업데이트
-     */
-    public void updateRefreshToken (String email, String refreshToken) {
-        userRepository.findByEmail(email)
-                .ifPresentOrElse(
-                        user -> user.updateRefreshToken(refreshToken),
-                        () -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND)
-                );
-    }
-
-    public boolean isTokenValid (String token) {
-        try {
-            JWT.require(Algorithm.HMAC512(secretKey))
-                    .build()
-                    .verify(token);
-            return true;
-        } catch (Exception e) {
-            log.error("유효하지 않은 토큰. {}", e.getMessage());
-            return false;
-        }
+        return key;
     }
 }
