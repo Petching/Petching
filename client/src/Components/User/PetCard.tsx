@@ -1,3 +1,4 @@
+import { useDeleteMyPet } from '../../Hook/useDeleteMyPet';
 import { MyPetsType } from './MyPets';
 
 const PetCard: React.FC<MyPetsType> = ({
@@ -10,6 +11,10 @@ const PetCard: React.FC<MyPetsType> = ({
   vaccination,
   etc,
 }) => {
+  const { handlerDeleteMyPet } = useDeleteMyPet();
+  const deleteHandler = () => {
+    handlerDeleteMyPet();
+  };
   return (
     <div className="flex border p-4 rounded relative">
       <div className="w-32 h-32 rounded overflow-hidden mr-3">
@@ -30,7 +35,9 @@ const PetCard: React.FC<MyPetsType> = ({
       </div>
       <div className="absolute top-4 right-4">
         <button className="mr-2 hover:text-customGreen">수정</button>
-        <button className="hover:text-red-600">삭제</button>
+        <button className="hover:text-red-600" onClick={deleteHandler}>
+          삭제
+        </button>
       </div>
     </div>
   );
