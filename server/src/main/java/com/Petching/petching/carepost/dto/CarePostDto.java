@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -69,5 +70,8 @@ public class CarePostDto {
 
         private List<String> conditionTags;
         private List<String> locationTags;
+
+        private LocalDateTime createdAt;
+        private LocalDateTime modifiedAt;
     }
 }
