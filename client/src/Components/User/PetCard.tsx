@@ -1,4 +1,15 @@
-const PetCard = () => {
+import { MyPetsType } from './MyPets';
+
+const PetCard: React.FC<MyPetsType> = ({
+  // img,
+  name,
+  kind,
+  gender,
+  age,
+  weight,
+  vaccination,
+  etc,
+}) => {
   return (
     <div className="flex border p-4 rounded relative">
       <div className="w-32 h-32 rounded overflow-hidden mr-3">
@@ -9,13 +20,13 @@ const PetCard = () => {
         />
       </div>
       <div>
-        <p>이름</p>
-        <p>종(세부종)</p>
-        <p>성별</p>
-        <p>나이</p>
-        <p>몸무게</p>
-        <p>예방접종 유무</p>
-        <p>특이사항(기타사항)</p>
+        <p>{name}</p>
+        <p>{kind}</p>
+        <p>{gender}</p>
+        <p>{age}</p>
+        <p>{weight}</p>
+        <p>{vaccination}</p>
+        <p>{etc}</p>
       </div>
       <div className="absolute top-4 right-4">
         <button className="mr-2 hover:text-customGreen">수정</button>
