@@ -1,6 +1,5 @@
 package com.Petching.petching.exception;
 
-import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 import static org.springframework.http.HttpStatus.*;
@@ -12,7 +11,9 @@ public enum ExceptionCode {
     BOARD_NOT_FOUND(NOT_FOUND,"Board not found"),
     COMMENT_NOT_FOUND(NOT_FOUND, "Comment not found"),
     POST_NOT_WRITE(UNAUTHORIZED, "Post not write"),
-    POST_NOT_FOUND(NOT_FOUND,"Post not found");
+    POST_NOT_FOUND(NOT_FOUND,"Post not found"),
+
+    CONTENT_NOT_FOUND(NOT_FOUND, "Content not found");
   
     private final HttpStatus status;
     private final String message;

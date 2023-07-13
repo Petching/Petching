@@ -21,7 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CarePost extends Auditing {
+public class CarePost extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long postId;

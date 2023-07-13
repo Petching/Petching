@@ -54,11 +54,13 @@ public class JwtAuthenticationProcessingFilter extends UsernamePasswordAuthentic
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);  // 추가
     }
 
+
     private String delegateAccessToken(User user) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("email", user.getEmail());
         claims.put("roles", user.getRoles());
         claims.put("userId", user.getUserId());
+
 
         String subject = user.getEmail();
         Date expiration = jwtService.getTokenExpiration(jwtService.getRefreshTokenExpirationPeriod());
