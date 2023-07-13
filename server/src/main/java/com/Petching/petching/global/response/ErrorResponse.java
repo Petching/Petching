@@ -28,13 +28,14 @@ public class ErrorResponse {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<FieldError> fieldErrors;
 
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private CustomData customData;
-
-
     // URI 변수 값의 유효성 검증 실패로 발생한 에러 정버를 담는 멤버 변수
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<ConstraintViolationError> violationErrors;
+
+
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private CustomData customData;
+
 
     // 아래 of 메서드를 이용해서 ErrorResponse 객체를 생성할 것이기 때문에 생성자 임에도 불구하고 private
     private ErrorResponse(List<FieldError> fieldErrors, List<ConstraintViolationError> violationErrors) {
@@ -49,6 +50,8 @@ public class ErrorResponse {
     private ErrorResponse(CustomData data){
         this.customData = data;
     }
+
+    
     // BindingResult 에 대한 ErrorResponse 객체를 생성하기 위해 FieldError 에게 전달시켜 fieldError 를 받아옴.
     public static ErrorResponse of(BindingResult bindingResult) {
         return new ErrorResponse(FieldError.of(bindingResult), null);

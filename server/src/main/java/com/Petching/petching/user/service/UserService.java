@@ -1,7 +1,7 @@
 package com.Petching.petching.user.service;
 
-import com.Petching.petching.exception.BusinessLoginException;
-import com.Petching.petching.exception.ExceptionCode;
+import com.Petching.petching.global.exception.BusinessLoginException;
+import com.Petching.petching.global.exception.ExceptionCode;
 import com.Petching.petching.login.jwt.util.CustomAuthorityUtils;
 import com.Petching.petching.user.dto.UserPatchDto;
 import com.Petching.petching.user.dto.UserPostDto;
@@ -69,7 +69,7 @@ public class UserService {
 
     public User verifiedUser (long userId) {
         Optional<User> optional = repository.findById(userId);
-        User find = optional.orElseThrow(() -> new BusinessLoginException(ExceptionCode.USER_NOT_FOUND));
+        User find = optional.orElseThrow(() -> new BusinessLoginException(ExceptionCode.MEMBER_NOT_FOUND));
 
         return find;
     }
