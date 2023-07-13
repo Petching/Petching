@@ -2,8 +2,8 @@ package com.Petching.petching.board.service;
 
 import com.Petching.petching.board.entity.Board;
 import com.Petching.petching.board.repository.BoardRepository;
-import com.Petching.petching.exception.BusinessLogicException;
-import com.Petching.petching.exception.ExceptionCode;
+import com.Petching.petching.global.exception.BusinessLogicException;
+import com.Petching.petching.global.exception.ExceptionCode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -46,7 +46,7 @@ public class BoardService {
             board.setCommentCount(commentCount);
             return board;
         } else {
-            throw new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND);
+            throw new BusinessLogicException(ExceptionCode.CONTENT_NOT_FOUND);
         }
     }
     public Page<Board> findBoards(Pageable pageable){
@@ -83,6 +83,6 @@ public class BoardService {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
 
         return optionalBoard.orElseThrow(()->
-                new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND));
+                new BusinessLogicException(ExceptionCode.CONTENT_NOT_FOUND));
     }
 }

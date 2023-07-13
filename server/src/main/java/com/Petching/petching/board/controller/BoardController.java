@@ -1,10 +1,11 @@
 package com.Petching.petching.board.controller;
 
-import com.Petching.petching.aws.s3.client.CustomS3Client;
+import com.Petching.petching.aws.s3.service.UploadToS3;
 import com.Petching.petching.board.dto.BoardDto;
 import com.Petching.petching.board.entity.Board;
 import com.Petching.petching.board.mapper.BoardMapper;
 import com.Petching.petching.board.service.BoardService;
+import com.Petching.petching.global.exception.BusinessLogicException;
 import com.Petching.petching.response.PageInfo;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
@@ -29,15 +30,15 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequestMapping("/boards")
 public class BoardController {
+
     private final BoardService boardService;
     private final BoardMapper mapper;
+    private final UploadToS3 uploadToS3;
 
-    private final CustomS3Client customS3Client;
-
-    public BoardController(BoardService boardService, BoardMapper mapper, CustomS3Client customS3Client) {
+    public BoardController(BoardService boardService, BoardMapper mapper, UploadToS3 uploadToS3) {
         this.boardService = boardService;
         this.mapper = mapper;
-        this.customS3Client = customS3Client;
+        this.uploadToS3 = uploadToS3;
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -47,7 +48,7 @@ public class BoardController {
         Board board = boardService.createBoard(mapper.boardPostDtoToBoard(requestBody));
 
         if(img!=null){
-            String imgUrl = customS3Client.uploadImageToS3(img);
+            String imgUrl = uploadToS3.uploadImageToS3(img);
             board.setImgUrl(imgUrl);
             boardService.updateBoard(board);
         }
