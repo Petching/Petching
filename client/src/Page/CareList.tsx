@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from '../Components/Care/Card';
-import Draft from '../Components/Care/TextEditor';
+import Editor from '../Components/Care/TextEditor';
 
 const CareList = () => {
   return (
@@ -46,6 +46,9 @@ const CareList = () => {
         <Card />
         <Card />
         <Card />
+      </div>
+      <div>
+        <Editor></Editor>
       </div>
     </div>
   );
