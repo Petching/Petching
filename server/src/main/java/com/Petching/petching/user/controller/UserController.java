@@ -7,7 +7,6 @@ import com.Petching.petching.user.mapper.UserMapper;
 import com.Petching.petching.user.service.UserService;
 import com.Petching.petching.utils.URICreator;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -18,13 +17,16 @@ import javax.validation.constraints.Positive;
 import java.net.URI;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/users/")
-@Validated
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
     private final UserMapper mapper;
     private final UserService service;
+
+    public UserController(UserService service, UserMapper mapper) {
+        this.service = service;
+        this.mapper = mapper;
+    }
 
     @PostMapping("sign-up")
     public ResponseEntity postUser (@RequestBody @Valid UserPostDto postDto) {

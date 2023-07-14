@@ -49,7 +49,7 @@ public class UserService {
         User findUser = verifiedUser(patchDto.getUserId());
 
         Optional.ofNullable(patchDto.getEmail()).ifPresent(email -> findUser.updateEmail(email));
-        Optional.ofNullable(patchDto.getNickname()).ifPresent(nickname -> findUser.updateNickName(nickname));
+        Optional.ofNullable(patchDto.getNickName()).ifPresent(nickname -> findUser.updateNickName(nickname));
         Optional.ofNullable(patchDto.getAddress()).ifPresent(adr -> findUser.updateAddress(adr));
         Optional.ofNullable(patchDto.getPassword())
                 .ifPresent(pw -> findUser.updatePassword(passwordEncoder.encode(pw)));

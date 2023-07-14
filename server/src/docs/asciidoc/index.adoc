@@ -1,0 +1,139 @@
+= API Documentation
+:sectnums:
+:toc: left
+:doctype: book
+:icons: font
+:sectlinks:
+:sectanchors:
+:source-highlighter: highlightjs
+:highlightjs-theme: github
+:toclevels: 3
+:snippets: ./build/generated-snippets
+
+[[User-API]]
+= User API
+
+== UserController
+
+
+=== 회원 등록 API
+[discrete]
+==== `Request`
+[source,http]
+----
+POST: /users/sign-up
+----
+[discrete]
+==== `Request fields`
+include::{snippets}/post-user/request-fields.adoc[]
+[discrete]
+===== `Request body`
+include::{snippets}/post-user/request-body.adoc[]
+
+
+[discrete]
+===== `Request Summary`
+include::{snippets}/post-user/http-request.adoc[]
+
+
+[discrete]
+==== `Response`
+
+성공적인 회원 등록의 경우 `201 Created` 응답과 함께,  +
+새로 생성된 회원 사용자 정보(`User 식별자 ID`) 가 header 에 담겨 반환됩니다.  +
+
+[discrete]
+==== `Response header`
+include::{snippets}/post-user/response-headers.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/post-user/http-response.adoc[]
+
+
+[discrete]
+==== 오류 응답
+
+`TODO: 오류 응답 종류 추가`
+
+
+=== 회원 수정 API
+[discrete]
+==== `Request`
+[source,http]
+----
+PATCH: /users/
+----
+[discrete]
+==== `Request fields`
+include::{snippets}/patch-user/request-fields.adoc[]
+[discrete]
+===== `Request body`
+include::{snippets}/patch-user/request-body.adoc[]
+
+
+[discrete]
+===== `Request Summary`
+include::{snippets}/patch-user/http-request.adoc[]
+
+
+[discrete]
+==== `Response`
+
+성공적인 회원 등록의 경우 `200 OK` 응답과 함께,  +
+업데이트된 회원 사용자 정보가 반환됩니다.  +
+
+[discrete]
+==== `Response fields`
+include::{snippets}/patch-user/response-fields.adoc[]
+
+[discrete]
+==== `Response body`
+include::{snippets}/patch-user/response-body.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/patch-user/http-response.adoc[]
+
+
+[discrete]
+==== 오류 응답
+
+`TODO: 오류 응답 종류 추가`
+
+
+=== 회원 조회 API
+[discrete]
+==== `Request`
+[source,http]
+----
+GET: /users/{userId}
+----
+
+[discrete]
+===== `Request Summary`
+include::{snippets}/get-user/http-request.adoc[]
+
+[discrete]
+==== `Response`
+
+성공적인 회원 등록의 경우 `200 OK` 응답과 함께,  +
+조회된 회원 사용자 정보가 반환됩니다.  +
+
+[discrete]
+==== `Response fields`
+include::{snippets}/get-user/response-fields.adoc[]
+
+[discrete]
+==== `Response body`
+include::{snippets}/get-user/response-body.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/get-user/http-response.adoc[]
+
+
+[discrete]
+==== 오류 응답
+
+`TODO: 오류 응답 종류 추가`
