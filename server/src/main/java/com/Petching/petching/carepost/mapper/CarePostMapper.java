@@ -6,6 +6,7 @@ import com.Petching.petching.tag.conditionTag.CarePost_ConditionTag;
 import com.Petching.petching.tag.locationTag.CarePost_LocationTag;
 import org.mapstruct.Mapper;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,17 +30,21 @@ public interface CarePostMapper {
         String image = null;
         Date startDate = null;
         Date endDate = null;
+        LocalDateTime createdAt = null;
+        LocalDateTime modifiedAt = null;
 
         title = carePost.getTitle();
         content = carePost.getContent();
         image = carePost.getImage();
         startDate = carePost.getStartDate();
         endDate = carePost.getEndDate();
+        createdAt = carePost.getCreatedAt();
+        modifiedAt = carePost.getModifiedAt();
 
         List<String> conditionTags = postConditionTagDtoResponse(postConditionTags);
         List<String> locationTags = postLocationTagDtoResponse(postLocationTags);
 
-        CarePostDto.Response response = new CarePostDto.Response( title, content, image, startDate, endDate, conditionTags, locationTags );
+        CarePostDto.Response response = new CarePostDto.Response( title, content, image, startDate, endDate, conditionTags, locationTags, createdAt, modifiedAt);
 
         return response;
     }
