@@ -12,12 +12,14 @@ import com.Petching.petching.carepost.dto.CarePostDto;
 import com.Petching.petching.carepost.entity.CarePost;
 import com.Petching.petching.carepost.mapper.CarePostMapper;
 import com.Petching.petching.carepost.repository.CarePostRepository;
-import com.Petching.petching.exception.BusinessLogicException;
-import com.Petching.petching.exception.ExceptionCode;
+import com.Petching.petching.global.exception.BusinessLogicException;
+import com.Petching.petching.global.exception.ExceptionCode;
 import com.Petching.petching.user.entity.User;
 import com.Petching.petching.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -158,9 +160,9 @@ public class CarePostService {
 
     }
 
-    public List<CarePost> findAllPost() {
+    public Page<CarePost> findAllPost(Pageable pageable) {
 
-        return repository.findAll(Sort.by("postId").descending());
+        return repository.findAll(pageable);
 //        return repository.findAll();
 
     }
