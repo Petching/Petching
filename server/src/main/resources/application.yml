@@ -1,20 +1,21 @@
 spring:
-  h2:
-    console:
-      enabled: true
-      path: /h2
-  datasource:
-    url: jdbc:h2:mem:test
-  jpa:
-    hibernate:
-      ddl-auto: create
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-  sql:
-    init:
-      data-locations: classpath*:db/h2/data.sql
+  profiles:
+    active: local
+cloud:
+  aws:
+    s3:
+      bucket: petching.net
+    region:
+      auto: false
+      static: ap-northeast-2
+    stack:
+      auto: false
+aws:
+  paramstore:
+    enabled: true
+    prefix: /spring-boot-aws/petching
+    defaultContext: ${spring.profiles.active}
+    profileSeparator: _
 
 logging:
   level:
@@ -27,3 +28,107 @@ server:
   servlet:
     encoding:
       force-response: true
+
+---
+
+spring:
+  config:
+    import: "aws-parameterstore:"
+    activate:
+      on-profile: dev
+  datasource:
+    url:
+    username:
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+
+jwt:
+  secretKey:
+  access:
+    expiration: 360000
+    header: Authorization
+  refresh:
+    expiration: 120960000
+    header: Authorization-refresh
+
+mail:
+  address:
+    admin:
+
+config:
+  domain :
+
+---
+
+spring:
+  config:
+    import: "aws-parameterstore:"
+    activate:
+      on-profile: local
+  datasource:
+    url:
+    username: root
+    password: 980915
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+
+aws:
+  accessKeyId:
+  secretKey:
+
+jwt:
+  secretKey:
+  access:
+    expiration: 360000
+    header: Authorization
+  refresh:
+    expiration: 120960000
+    header: Authorization-refresh
+
+mail:
+  address:
+    admin:
+
+config:
+  domain :
+
+---
+spring:
+  mustache:
+    suffix: .html
+viewname:
+  chatroom:
+    list: /chat1/rooms
+    detail: /chat1/room-detail
+---
+spring:
+  profiles: stomp
+viewname:
+  chatroom:
+    list: /chat2/rooms
+    detail: /chat2/room-detail

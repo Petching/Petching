@@ -25,7 +25,8 @@ public class UserController {
     private final UserMapper mapper;
     private final UserService service;
 
-    @PostMapping("sing-up")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PostMapping("sign-up")
     public ResponseEntity postUser (@RequestBody @Valid UserPostDto postDto) {
         User user = service.savedUser(postDto);
         URI uri = URICreator.createUri("sing-up", user.getUserId());

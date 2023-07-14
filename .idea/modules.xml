@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Petching.iml" filepath="$PROJECT_DIR$/.idea/Petching.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/petching.main.iml" filepath="$PROJECT_DIR$/.idea/modules/petching.main.iml" />
     </modules>
   </component>
 </project>

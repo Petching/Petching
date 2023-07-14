@@ -34,6 +34,18 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'mysql:mysql-connector-java:8.0.32'
+	runtimeOnly 'mysql:mysql-connector-java'
+	//websocket
+//	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	//sockjs
+	implementation 'org.webjars:sockjs-client:1.5.1'
+	//stomp
+	implementation 'org.webjars:stomp-websocket:2.3.4'
+	//gson
+	implementation 'com.google.code.gson:gson:2.9.0'
+	// https://mvnrepository.com/artifact/org.webjars/stomp-websocket
+	implementation group: 'org.webjars', name: 'stomp-websocket', version: '2.3.3-1'
 
 	// AWS - S3
 //	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
