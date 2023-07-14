@@ -1,6 +1,6 @@
 package com.Petching.petching.login.handler;
 
-import com.Petching.petching.exception.response.ErrorResponse;
+import com.Petching.petching.global.response.ErrorResponse;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
