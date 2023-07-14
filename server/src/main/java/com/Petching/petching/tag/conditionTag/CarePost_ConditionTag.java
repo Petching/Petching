@@ -15,8 +15,6 @@ public class CarePost_ConditionTag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long carePostConditionTagId;
 
-
-//    @ManyToOne(cascade = CascadeType.DETACH)
     @ManyToOne
     @JoinColumn(name = "POST_ID")
     private CarePost carePost;
