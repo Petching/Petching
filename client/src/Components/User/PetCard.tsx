@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDeleteMyPet } from '../../Hook/useDeleteMyPet';
 import { MyPetsType } from './MyPets';
+import { usePatchMyPet } from '../../Hook/usePatchMyPet';
 
 const PetCard: React.FC<MyPetsType> = ({
   // img,
@@ -12,6 +13,8 @@ const PetCard: React.FC<MyPetsType> = ({
   vaccination,
   etc,
 }) => {
+  const { handlerPatchMyPet } = usePatchMyPet();
+  const { handlerDeleteMyPet } = useDeleteMyPet();
   const [onEdit, setOnEdit] = useState<boolean>(false);
   const [changeImg, setChangeImg] = useState<string>(
     'https://cdn.pixabay.com/photo/2017/07/25/01/22/cat-2536662_1280.jpg',
@@ -59,7 +62,19 @@ const PetCard: React.FC<MyPetsType> = ({
     }
   };
 
-  const { handlerDeleteMyPet } = useDeleteMyPet();
+  const submitHandler = () => {
+    handlerPatchMyPet({
+      name: changeName,
+      kind: changeKind,
+      gender: changeGender,
+      age: changeAge,
+      weight: changeWeight,
+      vaccination: changeVaccination,
+      etc: changeEtc,
+    });
+    setOnEdit(false);
+  };
+
   const deleteHandler = () => {
     handlerDeleteMyPet();
   };
@@ -200,9 +215,7 @@ const PetCard: React.FC<MyPetsType> = ({
         {onEdit ? (
           <button
             className="mr-2 hover:text-customGreen"
-            onClick={() => {
-              setOnEdit(false);
-            }}
+            onClick={submitHandler}
           >
             수정 완료
           </button>
