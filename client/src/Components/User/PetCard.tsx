@@ -13,6 +13,9 @@ const PetCard: React.FC<MyPetsType> = ({
   etc,
 }) => {
   const [onEdit, setOnEdit] = useState<boolean>(false);
+  const [changeImg, setChangeImg] = useState<string>(
+    'https://cdn.pixabay.com/photo/2017/07/25/01/22/cat-2536662_1280.jpg',
+  );
   const [changeName, setChangeName] = useState<string>(name);
   const [changeKind, setChangeKind] = useState<string>(kind);
   const [changeGender, setChangeGender] = useState<string>(gender);
@@ -22,6 +25,17 @@ const PetCard: React.FC<MyPetsType> = ({
     vaccination || '',
   );
   const [changeEtc, setChangeEtc] = useState<string>(etc || '');
+
+  const changeImgHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const target = e.currentTarget;
+    const files = (target.files as FileList)[0];
+    if (!files) return;
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setChangeImg(reader.result as string);
+    };
+    reader.readAsDataURL(files);
+  };
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.currentTarget;
@@ -52,11 +66,32 @@ const PetCard: React.FC<MyPetsType> = ({
   return (
     <div className="flex border p-4 rounded relative">
       <div className="w-32 h-32 rounded overflow-hidden mr-3">
-        <img
-          src="https://cdn.pixabay.com/photo/2017/07/25/01/22/cat-2536662_1280.jpg"
-          alt="반려동물의 이미지"
-          className="w-full h-full"
-        />
+        {onEdit ? (
+          <label className="w-32 h-32 rounded overflow-hidden border relative block cursor-pointer hover:border-4">
+            <div className="absolute bottom-0 left-0 w-full h-1/2 bg-white text-center p-2 opacity-80">
+              이미지 <br />
+              변경
+            </div>
+            <img
+              src={changeImg}
+              alt="변경된 이미지"
+              className="w-full h-full"
+            />
+            <input
+              id="attach-file"
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={changeImgHandler}
+            />
+          </label>
+        ) : (
+          <img
+            src="https://cdn.pixabay.com/photo/2017/07/25/01/22/cat-2536662_1280.jpg"
+            alt="반려동물의 이미지"
+            className="w-32 h-32 rounded"
+          />
+        )}
       </div>
       <form>
         <label className="flex flex-col">
