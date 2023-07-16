@@ -1,54 +1,45 @@
-import React, { useState } from 'react';
-import { Editor } from 'react-draft-wysiwyg';
-import { EditorState, convertToRaw } from 'draft-js';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import draftjsToHtml from 'draftjs-to-html';
+import React, { useRef, useState } from 'react';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-const Draft = () => {
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const [htmlString, setHtmlString] = useState('');
+const TextEditor = () => {
+  const editorRef = useRef<any>(null);
+  const [data, setData] = useState('');
 
-  const updateTextDescription = async (state: EditorState) => {
-    await setEditorState(state);
-    const html = draftjsToHtml(convertToRaw(editorState.getCurrentContent()));
-    setHtmlString(html);
+  const handleInit = (editor: any) => {
+    editorRef.current = editor;
+    setData(editor.getData());
   };
 
-  const uploadCallback = () => {
-    console.log('이미지 업로드');
+  const handleChange = (event: any, editor: any) => {
+    setData(editor.getData());
   };
 
   return (
-    <>
-      <div>draft</div>
-      <div className="w-full">
-        <Editor
-          placeholder="게시글을 작성해주세요"
-          editorState={editorState}
-          onEditorStateChange={updateTextDescription}
-          toolbar={{
-            image: { uploadCallback: uploadCallback },
-          }}
-          localization={{ locale: 'ko' }}
-          editorStyle={{
-            height: '400px',
-            width: '100%',
-            border: '3px solid lightgray',
-            padding: '20px',
-          }}
-        />
-      </div>
-      <div className="w-full flex">
-        <div
-          className="w-1/2 p-5 mt-5 border-2 border-gray-400"
-          dangerouslySetInnerHTML={{ __html: htmlString }}
-        />
-        <div className="w-1/2 p-5 mt-5 border-2 border-gray-400">
-          {htmlString}
-        </div>
-      </div>
-    </>
+    <div className="w-full">
+      <CKEditor
+        editor={ClassicEditor}
+        config={{
+          toolbar: [
+            'bold',
+            'italic',
+            'link',
+            'bulletedList',
+            'numberedList',
+            'blockQuote',
+            'imageUpload', //이미지추가기능
+          ],
+          ckfinder: {
+            // 이미지 업로드 기능을 서버측 API를 사용하여 설정합니다.
+            uploadUrl: 'https://server.petching.net/',
+          },
+        }}
+        onReady={(editor: any) => handleInit(editor)}
+        onChange={(event: any, editor: any) => handleChange(event, editor)}
+        data={data}
+      />
+    </div>
   );
 };
 
-export default Draft;
+export default TextEditor;
