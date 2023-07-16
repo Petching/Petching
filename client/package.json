@@ -12,7 +12,6 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/draftjs-to-html": "^0.8.1",
     "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.36",
     "@types/react": "^18.2.12",
     "@types/react-dom": "^18.2.5",
     "@types/react-router-dom": "^5.3.3",
@@ -20,6 +19,7 @@
     "axios": "^1.4.0",
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
+    "express": "^4.18.2",
     "postcss": "^8.4.24",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -30,7 +30,7 @@
     "react-router-dom": "^6.11.0",
     "react-scripts": "5.0.1",
     "slick-carousel": "^1.8.1",
-    "socket.io": "^4.6.2",
+    "socket.io": "^4.7.1",
     "socket.io-client": "^4.7.0",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4",
@@ -40,7 +40,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "server": "node server.js"
   },
   "eslintConfig": {
     "extends": [
