@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-const Editor: React.FC = () => {
+const TextEditor = () => {
   const editorRef = useRef<any>(null);
   const [data, setData] = useState('');
 
@@ -27,7 +27,12 @@ const Editor: React.FC = () => {
             'bulletedList',
             'numberedList',
             'blockQuote',
+            'imageUpload', //이미지추가기능
           ],
+          ckfinder: {
+            // 이미지 업로드 기능을 서버측 API를 사용하여 설정합니다.
+            uploadUrl: 'https://server.petching.net/',
+          },
         }}
         onReady={(editor: any) => handleInit(editor)}
         onChange={(event: any, editor: any) => handleChange(event, editor)}
@@ -37,4 +42,4 @@ const Editor: React.FC = () => {
   );
 };
 
-export default Editor;
+export default TextEditor;
