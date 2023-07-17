@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+/* eslint-disable */
 module.exports = {
   content: ['./src/**/*.{html,js,tsx}'],
   theme: {
@@ -8,6 +9,7 @@ module.exports = {
       },
       colors: {
         customGreen: '#99DDCC',
+        customHoverGreen: '#79C3B1',
         customPink: '#FFE2E2',
         customWhite: '#F6F6F6',
         customBlue: '#BAD7DF',

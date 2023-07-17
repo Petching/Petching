@@ -74,7 +74,7 @@ const ChatComponent: React.FC = () => {
         <button
           type="button"
           onClick={joinRoom}
-          className="w-full bg-green-500 text-white p-2 rounded-md hover:bg-green-600 md:w-1/2 md:text-lg"
+          className="w-full bg-[#99DDCC] text-white p-2 rounded-md hover:bg-[#79C3B1] md:w-1/2 md:text-lg"
         >
           Join Room
         </button>
@@ -104,7 +104,7 @@ const ChatComponent: React.FC = () => {
         <button
           id="send-button"
           type="submit"
-          className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-r-md md:text-lg"
+          className="bg-[#99DDCC] hover:bg-[#79C3B1] text-white py-2 px-4 rounded-r-md md:text-lg"
         >
           Send
         </button>
