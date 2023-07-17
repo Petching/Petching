@@ -17,12 +17,17 @@ const ChatComponent: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>('');
   const filteredMessages = messages.filter(msg => msg.room === room);
   useEffect(() => {
+    console.log('socketRef.current:', socketRef.current);
     socketRef.current = io('http://localhost:4000');
 
     socketRef.current.emit('joinRoom', room);
 
     socketRef.current?.on('chat', (data: ChatEvent) => {
+      console.log('Received chat event:', data);
       setMessages(messages => [...messages, data]);
+    });
+    socketRef.current?.on('load_messages', messages => {
+      setMessages(messages);
     });
 
     return () => {
@@ -31,6 +36,7 @@ const ChatComponent: React.FC = () => {
   }, [room]);
 
   const joinRoom = () => {
+    console.log('조인룸');
     if (socketRef.current && inputValue) {
       setRoom(inputValue);
       socketRef.current.emit('joinRoom', inputValue);
@@ -38,6 +44,7 @@ const ChatComponent: React.FC = () => {
   };
 
   const sendMessage = (e: React.FormEvent) => {
+    console.log('메세지');
     e.preventDefault();
 
     if (socketRef.current) {
@@ -45,6 +52,7 @@ const ChatComponent: React.FC = () => {
         message,
         room,
       });
+
       setMessage('');
     }
   };
