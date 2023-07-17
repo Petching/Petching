@@ -8,9 +8,9 @@ type ChatEvent = {
 
 const ChatComponent: React.FC = () => {
   const [message, setMessage] = useState<string>('');
-  const [messages, setMessages] = useState<{ room: string; message: string }[]>(
-    [],
-  );
+  const [messages, setMessages] = useState<
+    { room: string; message: string; createdAt: Date }[]
+  >([]);
 
   const socketRef = useRef<Socket | null>(null);
   const [room, setRoom] = useState<string>('defaultRoom');
@@ -24,7 +24,11 @@ const ChatComponent: React.FC = () => {
 
     socketRef.current?.on('chat', (data: ChatEvent) => {
       console.log('Received chat event:', data);
-      setMessages(messages => [...messages, data]);
+      // setMessages(messages => [...messages, data]);
+      setMessages(messages => [
+        ...messages,
+        { ...data, createdAt: new Date() },
+      ]);
     });
     socketRef.current?.on('load_messages', messages => {
       setMessages(messages);
@@ -79,10 +83,13 @@ const ChatComponent: React.FC = () => {
         {filteredMessages.map((message, i) => (
           <div
             key={i}
-            className="mb-3 p-2 rounded-md bg-gray-100 text-black flex items-center justify-start"
+            className="mb-3 p-2 rounded-md space-x-10 bg-gray-100 text-black flex items-center justify-start"
           >
             <div className="rounded-full h-8 w-8 bg-blue-500 mr-3 md:h-10 md:w-10"></div>
             <p className="text-sm md:text-base">{message.message}</p>
+            <p className="text-xs text-gray-500">
+              {new Date(message.createdAt).toLocaleString()}
+            </p>
           </div>
         ))}
       </div>
