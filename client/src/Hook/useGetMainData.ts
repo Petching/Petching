@@ -10,7 +10,9 @@ export const useGetMainData = () => {
     queryKey: ['mainData'],
     queryFn: async () => {
       // * : 현재 json 서버와 통신 중
-      const data = await axios.get('http://localhost:3001/data');
+      const data = await axios.get(
+        'https://server.petching.net/boards/recently-created',
+      );
       return data.data;
     },
     onError: () => {

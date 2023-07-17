@@ -1,4 +1,10 @@
+import { useNavigate } from 'react-router-dom';
+
 const Info = () => {
+  const navigate = useNavigate();
+  const toCareList = () => {
+    navigate('/carelist');
+  };
   return (
     <div className="w-full h-full flex justify-center items-center">
       <div className="w-1/4 -mt-20">
@@ -14,7 +20,10 @@ const Info = () => {
           <br />
           찾아보세요!
         </p>
-        <button className="w-full h-16 mt-10 bg-customPink text-xl hover:scale-90 transition-all rounded">
+        <button
+          className="w-full h-16 mt-10 bg-customPink text-xl hover:scale-90 transition-all rounded"
+          onClick={toCareList}
+        >
           펫시터 찾아보기
         </button>
       </div>
