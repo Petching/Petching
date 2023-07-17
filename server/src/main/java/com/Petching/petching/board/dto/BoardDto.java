@@ -26,7 +26,7 @@ public class BoardDto {
         @NotBlank(message = "userId not null, JWT 구현이후 token 으로 바꿀 예정입니다.")
         private long userId;
 
-        private String imgUrl;
+        private List<String> imgUrls;
 
         Post(){
 
@@ -48,7 +48,7 @@ public class BoardDto {
         @NotBlank(message = "content not null")
         private String content;
 
-        private String imgUrl;
+        private List<String> imgUrls;
     }
 
     @Getter
@@ -57,21 +57,18 @@ public class BoardDto {
     public static class Response{
         private long boardId;
         private String title;
-        private String content;
+        private String profileImgUrl;
+        private String nickName;
         private long likes;
-        // 멤버 아이디
-        // 멤버 닉네임
+
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
+
         // 좋아요 눌렀는지 여부
-        private boolean checkLike;
+        private boolean checkLike =false;
 
-        private String imgUrl;
+        private List<String> imgUrls;
 
-//        private List<CommentDto.Response> comments;
-//        private long commentCount;
-
-        // public void setMember(Member member){this.memberId = member.getMemberId();}
     }
     @Getter
     @Setter
@@ -86,12 +83,11 @@ public class BoardDto {
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
         // 좋아요 눌렀는지 여부
-        private boolean checkLike;
+        private boolean checkLike= false;
         private List<CommentDto.Response> comments;
         private long commentCount;
 
-        private String imgUrl;
+        private List<String> imgUrls;
 
-        // public void setMember(Member member){this.memberId = member.getMemberId();
     }
 }

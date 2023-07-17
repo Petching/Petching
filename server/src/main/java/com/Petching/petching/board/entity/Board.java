@@ -48,6 +48,9 @@ public class Board extends BaseEntity {
     @Nullable
     private String imgUrl;
 
+    @ElementCollection
+    private List<String> imgUrls;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
@@ -66,9 +69,7 @@ public class Board extends BaseEntity {
     // N : 1(Member) 양방향 매핑
     // todo : 질문이 삭제 될 때, 질문에 달린 답변도 삭제되어야 함으로, 질문 엔티티에 cascade 설정이 되어있어야 한다.
     // todo : 상위 엔티티에서 cascade 설정이 붙어야 함!
-//    @ManyToOne
-//    @JoinColumn(name="MEMBER_ID")
-//    private Member member;
+
 
 
 }

@@ -1,61 +1,79 @@
 package com.Petching.petching.comment.controller;
 
+import com.Petching.petching.board.entity.Board;
+import com.Petching.petching.board.service.BoardService;
 import com.Petching.petching.comment.dto.CommentDto;
 import com.Petching.petching.comment.entity.Comment;
 import com.Petching.petching.comment.mapper.CommentMapper;
 import com.Petching.petching.comment.service.CommentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.Petching.petching.user.entity.User;
+import com.Petching.petching.user.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/boards/{board-id}")
+@RequestMapping("/boards/{boardId}")
 public class CommentController {
+
     private final CommentService commentService;
     private final CommentMapper mapper;
+    private final BoardService boardService;
+    private final UserService userService;
 
-    public CommentController(CommentService commentService, CommentMapper mapper) {
+    public CommentController(CommentService commentService, CommentMapper mapper, BoardService boardService, UserService userService) {
         this.commentService = commentService;
         this.mapper = mapper;
+        this.boardService = boardService;
+        this.userService = userService;
     }
 
     @PostMapping
-    public ResponseEntity postComment(@Valid @RequestBody CommentDto.Post requestBody) {
-        //uri 리턴 방식
-        Comment comment = commentService.createComment(mapper.commentPostDtoToComment(requestBody));
+    public ResponseEntity postComment(@PathVariable("boardId") long boardId, @RequestBody CommentDto.Post requestBody) {
+
+        Comment comment = mapper.commentPostDtoToComment(requestBody);
+        User user = userService.findUser(requestBody.getUserId());
+        Board board = boardService.findBoardByMK(boardId);
+        comment.setBoard(board);
+        comment.setUser(user);
+
+        commentService.createComment(comment);
 
         URI uri = UriComponentsBuilder.newInstance()
-                .path("/comments/" + comment.getCommentId())
+                .path("/"+boardId+"/" + comment.getCommentId())
                 .build().toUri();
 
         return ResponseEntity.created(uri).build();
     }
 
-    @PatchMapping("/{comment-id}")
-    public ResponseEntity patchComment(@Valid @RequestBody CommentDto.Patch requestBody,
-                                       @PathVariable("comment-id") long id) {
-        requestBody.setCommentId(id);
+    @PatchMapping("/{commentId}")
+    public ResponseEntity patchComment(
+            @PathVariable("commentId") long commentId,
+            @RequestBody CommentDto.Patch requestBody) {
+
         Comment comment = mapper.commentPatchDtoToComment(requestBody);
+        comment.setCommentId(commentId);
+
         Comment response = commentService.updateComment(comment);
 
         return new ResponseEntity<>(mapper.commentToCommentResponseDto(response), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{comment-id}")
-    public ResponseEntity deleteComment(@PathVariable("comment-id") long id) {
-        commentService.deleteComment(id);
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity deleteComment(
+            @PathVariable("commentId") long commentId) {
 
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        commentService.deleteComment(commentId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/comments")
     public ResponseEntity getComments() {
         List<Comment> comments = commentService.findComments();
 
@@ -66,48 +84,12 @@ public class CommentController {
 
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
+
+    @GetMapping("{commentId}")
+    public ResponseEntity getComment(
+            @PathVariable("commentId") Long commentId) {
+        Comment comment = commentService.findComment(commentId);
+
+        return new ResponseEntity<>(mapper.commentToCommentResponseDto(comment), HttpStatus.OK);
+    }
 }
-
-    //    private CommentMapper mapper;
-//    private CommentService commentService;
-//    @Autowired
-//    public CommentController(CommentMapper mapper, CommentService commentService) {
-//        this.mapper = mapper;
-//        this.commentService = commentService;
-//    }
-//    @PostMapping
-//    public ResponseEntity postComment(@Valid @RequestBody CommentDto.Post requestBody){
-//        Comment comment = commentService.createComment(mapper.commentPostDtoToComment(requestBody));
-//
-//        URI uri = UriComponentsBuilder.newInstance()
-//                .path("/api/comments/"+comment.getCommentId())
-//                .build().toUri();
-//
-//        return ResponseEntity.created(uri).build();
-//
-//    }
-//    @PatchMapping("/{id}")
-//    public ResponseEntity patchComment(@Valid @RequestBody CommentDto.Patch requestBody,
-//                                       @PathVariable("id") long id){
-//        requestBody.setCommentId(id);
-//        Comment comment = mapper.commentPatchDtoToComment(requestBody);
-//        Comment response = commentService.updateComment(comment);
-//
-//        return new ResponseEntity<>(mapper.commentToCommentResponseDto(response), HttpStatus.OK);
-//    }
-//    @GetMapping
-//    public ResponseEntity getComments(){
-//        List<Comment> comments = commentService.findComments();
-//
-//        List<CommentDto.Response> response = comments.stream().map(comment->mapper.commentToCommentResponseDto(comment))
-//                .collect(Collectors.toList());
-//
-//        return new ResponseEntity<>(response, HttpStatus.OK);
-//    }
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity deleteComment(@PathVariable("id") long id) {
-//        commentService.deleteComment(id);
-//
-//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//    }
-

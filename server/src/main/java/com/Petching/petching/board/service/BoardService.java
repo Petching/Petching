@@ -35,8 +35,10 @@ public class BoardService {
                 .ifPresent(title->findBoard.setTitle(title));
         Optional.ofNullable(board.getContent())
                 .ifPresent(content->findBoard.setContent(content));
-        Optional.ofNullable(board.getImgUrl())
-                .ifPresent(imgUrl->findBoard.setImgUrl(imgUrl));
+        Optional.ofNullable(board.getImgUrls())
+                .ifPresent(imgUrls -> findBoard.setImgUrls(imgUrls));
+
+
 
         return boardRepository.save(findBoard);
     }
@@ -62,7 +64,9 @@ public class BoardService {
 
     public void deleteBoard(long boardId){
         Board board = findVerifiedBoard(boardId);
+
         deleteImageFromBoard(board);
+
         boardRepository.delete(board);
     }
 
@@ -92,12 +96,26 @@ public class BoardService {
                 new BusinessLogicException(ExceptionCode.CONTENT_NOT_FOUND));
     }
 
+    // board 에서 img 가 있다면 하나씩 지워주는 메서드
     public void deleteImageFromBoard(Board board) {
 
-        Optional.ofNullable(board.getImgUrl())
-                .ifPresent(imgUrl -> s3Service.deleteImage(imgUrl));
+        Optional.ofNullable(board.getImgUrls())
+                .ifPresent(imgUrls -> {
+                    for (String imgUrl: imgUrls) {
+                        s3Service.deleteFile("boards", imgUrl);
+                    }
+                });
 
     }
 
+    public Board updateBoardLike(long boardId) {
+
+        Board board = findBoardByMK(boardId);
+
+        long updateLike = board.getLikes() + 1;
+        board.setLikes(updateLike);
+
+        return boardRepository.save(board);
+    }
 
 }
