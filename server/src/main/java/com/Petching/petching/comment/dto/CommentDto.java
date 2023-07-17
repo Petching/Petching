@@ -14,20 +14,14 @@ public class CommentDto {
     public static class Post{
         @NotBlank(message="content is not null")
         private String content;
-        @Positive
-        private long boardId;
 
-        public Board getBoard() {
-            Board board = new Board();
-            board.setBoardId(boardId);
-            return board;
-        }
+        @NotBlank(message = "userId not null, JWT 구현이후 token 으로 바꿀 예정입니다.")
+        private long userId;
+
     }
     @Getter
     @Setter
-    @AllArgsConstructor
     public static class Patch{
-        private long commentId;
         @NotBlank(message="content not null")
         private String content;
     }
@@ -39,10 +33,6 @@ public class CommentDto {
         private long boardId;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
-        //멤버아이디명
-        //멤버아이디번호
 
-        //public void setMember(Member member){this.memberId= member.getMemberId();}
-        //public void setBoard(Board board){this.b_id = board.getB_id();}
     }
 }

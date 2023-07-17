@@ -5,6 +5,7 @@ import com.Petching.petching.global.exception.ExceptionCode;
 import com.Petching.petching.global.response.ErrorResponse;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
@@ -167,7 +169,18 @@ public class GlobalExceptionAdvice {
         return new ResponseEntity<>(ErrorResponse.of(response , info), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ResponseEntity notFoundException(NoHandlerFoundException e) {
+
+        final ErrorResponse response = ErrorResponse.of(HttpStatus.NOT_FOUND);
+
+        Map<String, String > info = new HashMap<>();
+
+        info.put("requestURL", e.getRequestURL());
+        info.put("httpMethod", e.getHttpMethod());
+        info.put("errorMessage", e.getMessage());
 
 
-
+        return new ResponseEntity<>(ErrorResponse.of(response , info), HttpStatus.NOT_FOUND);
+    }
 }
