@@ -16,10 +16,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/comments")
+@RequestMapping("/boards/{board-id}")
 public class CommentController {
-    private CommentService commentService;
-    private CommentMapper mapper;
+    private final CommentService commentService;
+    private final CommentMapper mapper;
 
     public CommentController(CommentService commentService, CommentMapper mapper) {
         this.commentService = commentService;

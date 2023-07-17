@@ -2,6 +2,7 @@ package com.Petching.petching.board.service;
 
 import com.Petching.petching.board.entity.Board;
 import com.Petching.petching.board.repository.BoardRepository;
+import com.Petching.petching.global.aws.s3.service.S3Service;
 import com.Petching.petching.global.exception.BusinessLogicException;
 import com.Petching.petching.global.exception.ExceptionCode;
 import org.springframework.data.domain.Page;
@@ -14,9 +15,13 @@ import java.util.Optional;
 @Service
 public class BoardService {
     private final BoardRepository boardRepository;
+
+    private final S3Service s3Service;
+
     // DI
-    public BoardService(BoardRepository boardRepository) {
+    public BoardService(BoardRepository boardRepository, S3Service s3Service) {
         this.boardRepository = boardRepository;
+        this.s3Service = s3Service;
     }
 
     public Board createBoard(Board board){
@@ -48,6 +53,7 @@ public class BoardService {
         } else {
             throw new BusinessLogicException(ExceptionCode.CONTENT_NOT_FOUND);
         }
+
     }
     public Page<Board> findBoards(Pageable pageable){
 
@@ -56,7 +62,7 @@ public class BoardService {
 
     public void deleteBoard(long boardId){
         Board board = findVerifiedBoard(boardId);
-
+        deleteImageFromBoard(board);
         boardRepository.delete(board);
     }
 
@@ -85,4 +91,13 @@ public class BoardService {
         return optionalBoard.orElseThrow(()->
                 new BusinessLogicException(ExceptionCode.CONTENT_NOT_FOUND));
     }
+
+    public void deleteImageFromBoard(Board board) {
+
+        Optional.ofNullable(board.getImgUrl())
+                .ifPresent(imgUrl -> s3Service.deleteImage(imgUrl));
+
+    }
+
+
 }
