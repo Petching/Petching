@@ -17,12 +17,17 @@ const ChatComponent: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>('');
   const filteredMessages = messages.filter(msg => msg.room === room);
   useEffect(() => {
+    console.log('socketRef.current:', socketRef.current);
     socketRef.current = io('http://localhost:4000');
 
     socketRef.current.emit('joinRoom', room);
 
     socketRef.current?.on('chat', (data: ChatEvent) => {
+      console.log('Received chat event:', data);
       setMessages(messages => [...messages, data]);
+    });
+    socketRef.current?.on('load_messages', messages => {
+      setMessages(messages);
     });
 
     return () => {
@@ -31,6 +36,7 @@ const ChatComponent: React.FC = () => {
   }, [room]);
 
   const joinRoom = () => {
+    console.log('조인룸');
     if (socketRef.current && inputValue) {
       setRoom(inputValue);
       socketRef.current.emit('joinRoom', inputValue);
@@ -38,6 +44,7 @@ const ChatComponent: React.FC = () => {
   };
 
   const sendMessage = (e: React.FormEvent) => {
+    console.log('메세지');
     e.preventDefault();
 
     if (socketRef.current) {
@@ -45,29 +52,38 @@ const ChatComponent: React.FC = () => {
         message,
         room,
       });
+
       setMessage('');
     }
   };
 
   return (
-    <div className="flex flex-col">
-      <h2>Current room: {room}</h2>
-      <form>
+    <div className="flex flex-col w-full h-screen p-4 md:p-8">
+      <h2 className="text-xl mb-2 md:text-2xl">Current room: {room}</h2>
+      <form className="mb-4">
         <input
           value={inputValue}
           onChange={e => setInputValue(e.target.value)}
-          className="mb-3 p-2 rounded-md border"
+          className="mb-3 p-2 rounded-md border w-full md:w-1/2 md:text-lg"
           placeholder="Enter room"
         />
-        <button type="button" onClick={joinRoom}>
+        <button
+          type="button"
+          onClick={joinRoom}
+          className="w-full bg-green-500 text-white p-2 rounded-md hover:bg-green-600 md:w-1/2 md:text-lg"
+        >
           Join Room
         </button>
       </form>
-      <div className="overflow-auto mb-4 p-3 flex-grow">
+      <div className="flex-grow overflow-auto mb-4 p-3 bg-white rounded-md">
         {filteredMessages.map((message, i) => (
-          <p key={i} className="mb-2 text-sm border p-2 rounded-lg bg-gray-100">
-            {message.message}
-          </p>
+          <div
+            key={i}
+            className="mb-3 p-2 rounded-md bg-gray-100 text-black flex items-center justify-start"
+          >
+            <div className="rounded-full h-8 w-8 bg-blue-500 mr-3 md:h-10 md:w-10"></div>
+            <p className="text-sm md:text-base">{message.message}</p>
+          </div>
         ))}
       </div>
       <form onSubmit={sendMessage} className="flex">
@@ -76,12 +92,12 @@ const ChatComponent: React.FC = () => {
           type="text"
           value={message}
           onChange={e => setMessage(e.target.value)}
-          className="flex-grow border rounded-l-md p-2 focus:outline-none focus:ring-2 focus:ring-green-600"
+          className="flex-grow border rounded-l-md p-2 focus:outline-none focus:ring-2 focus:ring-green-600 md:text-lg"
         />
         <button
           id="send-button"
           type="submit"
-          className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-r-md"
+          className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-r-md md:text-lg"
         >
           Send
         </button>
