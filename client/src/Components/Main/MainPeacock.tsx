@@ -1,7 +1,12 @@
+import { useNavigate } from 'react-router-dom';
 import { useGetMainData } from '../../Hook/useGetMainData';
 
 const MainPeacock = () => {
   const { MainData } = useGetMainData();
+  const navigate = useNavigate();
+  const toPeacock = () => {
+    navigate('/peacock');
+  };
   return (
     <div className="w-full h-full flex flex-col justify-center items-center md:flex-row">
       <div className="w-1/5 -mt-20">
@@ -11,7 +16,10 @@ const MainPeacock = () => {
           다른 사람들의 반려동물을 <br />
           구경하세요
         </p>
-        <button className="w-full h-16 mt-10 bg-customPink text-xl hover:scale-90 transition-all rounded">
+        <button
+          className="w-full h-16 mt-10 bg-customPink text-xl hover:scale-90 transition-all rounded"
+          onClick={toPeacock}
+        >
           자랑하러 가기
         </button>
       </div>
