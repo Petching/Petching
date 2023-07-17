@@ -33,7 +33,7 @@ const User = () => {
         </button>
       </div>
       <div className="flex justify-center items-center mt-10 w-9/12">
-        {category === '반려동물' && <MyPets />}
+        {category === '반려동물' && <MyPets userId={userId} />}
         {category === '작성' && <MyPost />}
         {category === '좋아요' && <MyLikes />}
       </div>

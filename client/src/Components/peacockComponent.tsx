@@ -8,7 +8,7 @@ import doctor from '../Style/doctor.jpg';
 import doctors from '../Style/doctors.jpg';
 import pills from '../Style/pills.jpg';
 
-const CarouselComponent: React.FC = () => {
+export const CarouselComponent: React.FC = () => {
   const slides = [
     {
       id: 1,
@@ -43,7 +43,7 @@ const CarouselComponent: React.FC = () => {
   );
 };
 
-const LikeComponent = () => {
+export const LikeComponent = () => {
   const [count, setCount] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
 
@@ -59,7 +59,7 @@ const LikeComponent = () => {
 
   return (
     <div className="flex items-center">
-      <button className="ml-4" onClick={handleLike}>
+      <button className="" onClick={handleLike}>
         {isLiked ? (
           <AiFillHeart className="w-6 h-6" color="red" />
         ) : (

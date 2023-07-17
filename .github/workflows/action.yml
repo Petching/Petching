@@ -8,7 +8,7 @@ defaults:
     working-directory: ./client #default working directory
 env:
   AWS_REGION: ap-northeast-2
-  S3_BUCKET_NAME: petching.link
+  S3_BUCKET_NAME: petching.net
   API_SERVER: ${{ secrets.API_SERVER }}
   REACT_APP_REST_API_KEY: ${{ secrets.REACT_APP_REST_API_KEY }}
 
