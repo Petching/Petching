@@ -17,7 +17,7 @@ const KakaoLogin = () => {
   useEffect(() => {
     const kakao = async () => {
       return await axios
-        .get(`${BASE_URL}/api/v1/members/kakaoLogin?code=${code}`)
+        .get(`${BASE_URL}/kakaoLogin?code=${code}`)
 
         .then(response => {
           const data = response.data;
