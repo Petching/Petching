@@ -27,4 +27,8 @@ public class UserPostDto {
                 .nickName(this.nickName)
                 .build();
     }
+
+    public UserPostDto(){
+
+    }
 }

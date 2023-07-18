@@ -18,7 +18,7 @@
 
 === 회원 등록 API
 [discrete]
-==== `Request`
+=== `Request`
 [source,http]
 ----
 POST: /users/sign-up
@@ -37,7 +37,7 @@ include::{snippets}/post-user/http-request.adoc[]
 
 
 [discrete]
-==== `Response`
+=== `Response`
 
 성공적인 회원 등록의 경우 `201 Created` 응답과 함께,  +
 새로 생성된 회원 사용자 정보(`User 식별자 ID`) 가 header 에 담겨 반환됩니다.  +
@@ -59,7 +59,7 @@ include::{snippets}/post-user/http-response.adoc[]
 
 === 회원 수정 API
 [discrete]
-==== `Request`
+=== `Request`
 [source,http]
 ----
 PATCH: /users/
@@ -78,7 +78,7 @@ include::{snippets}/patch-user/http-request.adoc[]
 
 
 [discrete]
-==== `Response`
+=== `Response`
 
 성공적인 회원 등록의 경우 `200 OK` 응답과 함께,  +
 업데이트된 회원 사용자 정보가 반환됩니다.  +
@@ -101,13 +101,63 @@ include::{snippets}/patch-user/http-response.adoc[]
 
 `TODO: 오류 응답 종류 추가`
 
+[[S3-API]]
+= S3 API
+== S3 Controller
 
-=== 회원 조회 API
+=== 파일 업로드 API
+[discrete]
+=== `Request`
+[source,http]
+----
+POST: /api/v1/uploads
+----
+
+[discrete]
+==== `Request headers`
+include::{snippets}/post-s3-upload/request-headers.adoc[]
+[discrete]
+==== `Request parameter`
+include::{snippets}/post-s3-upload/request-parameters.adoc[]
+[discrete]
+==== `Request parts`
+include::{snippets}/post-s3-upload/request-parts.adoc[]
+
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/post-s3-upload/http-request.adoc[]
+
+
+
+[discrete]
+=== `Response`
+
+[discrete]
+==== `Response fields`
+include::{snippets}/post-s3-upload/response-fields.adoc[]
+
+[discrete]
+==== `Response body`
+include::{snippets}/post-s3-upload/response-body.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/post-s3-upload/http-response.adoc[]
+
+
+[discrete]
+==== 오류 응답
+
+`TODO: 오류 응답 종류 추가`
+
+
+=== 파일 삭제 API
 [discrete]
 ==== `Request`
 [source,http]
 ----
-GET: /users/{userId}
+DELETE: /api/v1/delete
 ----
 
 [discrete]
@@ -116,24 +166,3 @@ include::{snippets}/get-user/http-request.adoc[]
 
 [discrete]
 ==== `Response`
-
-성공적인 회원 등록의 경우 `200 OK` 응답과 함께,  +
-조회된 회원 사용자 정보가 반환됩니다.  +
-
-[discrete]
-==== `Response fields`
-include::{snippets}/get-user/response-fields.adoc[]
-
-[discrete]
-==== `Response body`
-include::{snippets}/get-user/response-body.adoc[]
-
-[discrete]
-==== `Response Summary`
-include::{snippets}/get-user/http-response.adoc[]
-
-
-[discrete]
-==== 오류 응답
-
-`TODO: 오류 응답 종류 추가`
