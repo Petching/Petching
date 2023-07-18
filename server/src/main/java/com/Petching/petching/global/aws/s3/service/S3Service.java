@@ -4,13 +4,9 @@ import com.Petching.petching.global.aws.s3.dto.S3FileDto;
 import com.Petching.petching.global.exception.BusinessLogicException;
 import com.Petching.petching.global.exception.ExceptionCode;
 import com.Petching.petching.utils.GenerateName;
-import com.amazonaws.Response;
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
@@ -30,12 +26,10 @@ public class S3Service{
 
     private final GenerateName generateName;
 
-    private final AmazonS3Client amazonS3Client;
 
 
-    public S3Service(GenerateName generateName, AmazonS3Client amazonS3Client) {
+    public S3Service(GenerateName generateName) {
         this.generateName = generateName;
-        this.amazonS3Client = amazonS3Client;
     }
 
     public List<S3FileDto> uploadFiles(String uploadTo, List<MultipartFile> multipartFiles) {
@@ -45,6 +39,7 @@ public class S3Service{
         String uploadFilePath = uploadTo;
 
         for (MultipartFile multipartFile : multipartFiles) {
+            AmazonS3Client amazonS3Client = new AmazonS3Client();
 
             String originalFileName = multipartFile.getOriginalFilename();
             if(originalFileName==null)
@@ -94,7 +89,7 @@ public class S3Service{
      * S3에 이미지 파일 업로드
      */
     public String uploadImageToS3(MultipartFile image) {
-
+        AmazonS3Client amazonS3Client = new AmazonS3Client();
         try {
             // 업로드할 이미지 파일의 이름 생성
             String fileName = null;
@@ -133,7 +128,7 @@ public class S3Service{
      */
 
     public String deleteFile(String from, String url) {
-
+        AmazonS3Client amazonS3Client = new AmazonS3Client();
         String result = "Success";
         boolean isObjectExist = false;
 
