@@ -30,22 +30,8 @@ const io = new Server(server, {
   },
 });
 
-const rooms = {};
-
 io.on("connection", (socket) => {
   console.log("New client connected");
-
-  //   socket.on("createRoom", (room) => {
-  //     // 채팅방이 이미 존재하는 경우
-  //     if (rooms[room]) {
-  //       socket.emit("notification", `Room ${room} already exists`);
-  //     } else {
-  //       // 새로운 채팅방을 생성하고, 사용자를 참여시킴
-  //       rooms[room] = true;
-  //       socket.join(room);
-  //       socket.emit("notification", `Room ${room} created and joined`);
-  //     }
-  //   });
 
   socket.on("joinRoom", async (room) => {
     console.log("socket - joinRoom");
@@ -57,7 +43,14 @@ io.on("connection", (socket) => {
       .limit(50)
       .exec();
 
-    socket.emit("load_messages", messages.reverse());
+    socket.emit(
+      "load_messages",
+      messages.reverse().map((msg) => ({
+        room: msg.room,
+        message: msg.message,
+        createdAt: msg.createdAt,
+      }))
+    );
   });
 
   socket.on("chat", async (data) => {

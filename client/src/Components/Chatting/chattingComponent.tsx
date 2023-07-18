@@ -1,16 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import io, { Socket } from 'socket.io-client';
+import Pet from '../../Style/icon_Pet.png';
 
 type ChatEvent = {
   message: string;
   room: string;
+  createdAt: string;
 };
 
 const ChatComponent: React.FC = () => {
   const [message, setMessage] = useState<string>('');
-  const [messages, setMessages] = useState<{ room: string; message: string }[]>(
-    [],
-  );
+  const [messages, setMessages] = useState<
+    { room: string; message: string; createdAt: Date }[]
+  >([]);
 
   const socketRef = useRef<Socket | null>(null);
   const [room, setRoom] = useState<string>('defaultRoom');
@@ -24,7 +26,11 @@ const ChatComponent: React.FC = () => {
 
     socketRef.current?.on('chat', (data: ChatEvent) => {
       console.log('Received chat event:', data);
-      setMessages(messages => [...messages, data]);
+      // setMessages(messages => [...messages, data]);
+      setMessages(messages => [
+        ...messages,
+        { ...data, createdAt: new Date() },
+      ]);
     });
     socketRef.current?.on('load_messages', messages => {
       setMessages(messages);
@@ -70,7 +76,7 @@ const ChatComponent: React.FC = () => {
         <button
           type="button"
           onClick={joinRoom}
-          className="w-full bg-green-500 text-white p-2 rounded-md hover:bg-green-600 md:w-1/2 md:text-lg"
+          className="w-full bg-[#99DDCC] text-white p-2 rounded-md hover:bg-[#79C3B1] md:w-1/2 md:text-lg"
         >
           Join Room
         </button>
@@ -79,10 +85,17 @@ const ChatComponent: React.FC = () => {
         {filteredMessages.map((message, i) => (
           <div
             key={i}
-            className="mb-3 p-2 rounded-md bg-gray-100 text-black flex items-center justify-start"
+            className="mb-3 p-2 rounded-md space-x-10 bg-gray-100 text-black flex items-center justify-start"
           >
-            <div className="rounded-full h-8 w-8 bg-blue-500 mr-3 md:h-10 md:w-10"></div>
+            <img
+              className="rounded-full h-8 w-8 mr-3 md:h-10 md:w-10"
+              src={Pet}
+            ></img>
+
             <p className="text-sm md:text-base">{message.message}</p>
+            <p className="text-xs text-gray-500">
+              {new Date(message.createdAt).toLocaleString()}
+            </p>
           </div>
         ))}
       </div>
@@ -92,12 +105,12 @@ const ChatComponent: React.FC = () => {
           type="text"
           value={message}
           onChange={e => setMessage(e.target.value)}
-          className="flex-grow border rounded-l-md p-2 focus:outline-none focus:ring-2 focus:ring-green-600 md:text-lg"
+          className="flex-grow border rounded-l-md p-2 focus:outline-none focus:ring-1 md:text-lg"
         />
         <button
           id="send-button"
           type="submit"
-          className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-r-md md:text-lg"
+          className="bg-[#99DDCC] hover:bg-[#79C3B1] text-white py-2 px-4 rounded-r-md md:text-lg"
         >
           Send
         </button>
