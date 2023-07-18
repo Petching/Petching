@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import io, { Socket } from 'socket.io-client';
+import Pet from '../../Style/icon_Pet.png';
 
 type ChatEvent = {
   message: string;
@@ -86,7 +87,11 @@ const ChatComponent: React.FC = () => {
             key={i}
             className="mb-3 p-2 rounded-md space-x-10 bg-gray-100 text-black flex items-center justify-start"
           >
-            <div className="rounded-full h-8 w-8 bg-blue-500 mr-3 md:h-10 md:w-10"></div>
+            <img
+              className="rounded-full h-8 w-8 mr-3 md:h-10 md:w-10"
+              src={Pet}
+            ></img>
+
             <p className="text-sm md:text-base">{message.message}</p>
             <p className="text-xs text-gray-500">
               {new Date(message.createdAt).toLocaleString()}
