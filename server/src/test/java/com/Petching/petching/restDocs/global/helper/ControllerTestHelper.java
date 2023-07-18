@@ -70,6 +70,13 @@ public interface ControllerTestHelper<T> {
         return delete(uri);
     }
 
+
+    default RequestBuilder deleteRequestBuilder(String url, MultiValueMap<String, String> queryParams) {
+        return delete(url)
+                .params(
+                        queryParams
+                );
+    }
     default String toJsonContent(T t) {
         Gson gson = new Gson();
         String content = gson.toJson(t);

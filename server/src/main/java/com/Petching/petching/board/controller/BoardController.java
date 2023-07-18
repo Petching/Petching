@@ -66,11 +66,11 @@ public class BoardController {
      * userId 는 request header 로 요청받아서 유저를 검증하는 방법으로 리팩토링 필요
      * */
     @PostMapping
-    public ResponseEntity postBoard(@RequestBody BoardDto.Post requestBody){
+    public ResponseEntity postBoard(@Valid @RequestBody BoardDto.Post requestBody){
 
-        User user = userService.findUser(requestBody.getUserId());
 
         Board board = mapper.boardPostDtoToBoard(requestBody);
+        User user = userService.findUser(requestBody.getUserId());
         board.setUser(user);
 
         Board savedBoard = boardService.createBoard(board);

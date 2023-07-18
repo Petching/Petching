@@ -34,6 +34,7 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -73,7 +74,8 @@ class UserControllerTest implements UserControllerTestHelper {
         given(userService.savedUser(Mockito.any(UserPostDto.class))).willReturn(user);
 
         // when
-        ResultActions actions = mockMvc.perform(postRequestBuilder(getUrl()+"sign-up", content));
+        ResultActions actions = mockMvc.perform(
+                postRequestBuilder(getUrl()+"sign-up", content));
 
         // then
         actions
@@ -159,6 +161,40 @@ class UserControllerTest implements UserControllerTestHelper {
                         responseFields(
                                 getFullResponseDescriptors(
                                         getDefaultMemberResponseDescriptors(DataResponseType.SINGLE))
+                        )
+                ));
+    }
+
+    @DisplayName("Test - UserController - DELETE")
+    @Test
+    public void deleteUserTest() throws Exception {
+
+        // given
+        UserPostDto post = (UserPostDto) StubData.MockUser.getRequestBody(HttpMethod.POST);
+
+        User user = User.builder()
+                .email(post.getEmail())
+                .nickName(post.getNickName())
+                .password(post.getPassword())
+                .build();
+        user.setUserId(1L);
+
+        given(userService.savedUser(Mockito.any(UserPostDto.class))).willReturn(user);
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                deleteRequestBuilder(getURI(),user.getUserId())
+        );
+
+
+        // then
+        actions
+                .andExpect(status().is2xxSuccessful())
+                .andDo(document("delete-user",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        pathParameters(
+                                getMemberRequestPathParameterDescriptor()
                         )
                 ));
     }
