@@ -4,6 +4,7 @@ import io, { Socket } from 'socket.io-client';
 type ChatEvent = {
   message: string;
   room: string;
+  createdAt: string;
 };
 
 const ChatComponent: React.FC = () => {
@@ -99,7 +100,7 @@ const ChatComponent: React.FC = () => {
           type="text"
           value={message}
           onChange={e => setMessage(e.target.value)}
-          className="flex-grow border rounded-l-md p-2 focus:outline-none focus:ring-2 focus:ring-green-600 md:text-lg"
+          className="flex-grow border rounded-l-md p-2 focus:outline-none focus:ring-1 md:text-lg"
         />
         <button
           id="send-button"
