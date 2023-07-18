@@ -1,5 +1,6 @@
 package com.Petching.petching.user.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Positive;
 
 @Getter
+@AllArgsConstructor
 public class UserPatchDto {
     @Positive
     private long userId;
@@ -17,9 +19,12 @@ public class UserPatchDto {
 
     private String password;
 
-    private String nickname;
+    private String nickName;
 
     private String address;
 
+    public UserPatchDto(){
+
+    }
 
 }
