@@ -1,5 +1,6 @@
 package com.Petching.petching.restDocs.global.helper;
 
+import com.Petching.petching.global.aws.s3.dto.S3FileDto;
 import com.Petching.petching.user.dto.UserPatchDto;
 import com.Petching.petching.user.dto.UserPostDto;
 import com.Petching.petching.user.dto.UserResponseDto;
@@ -13,7 +14,6 @@ import org.springframework.http.HttpMethod;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 
 public class StubData {

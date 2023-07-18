@@ -1,5 +1,6 @@
 package com.Petching.petching.global.api.s3.controller;
 
+import com.Petching.petching.global.aws.s3.dto.S3FileDto;
 import com.Petching.petching.global.aws.s3.service.S3Service;
 import com.Petching.petching.user.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -23,23 +24,28 @@ public class S3Controller {
     }
 
     @PostMapping("/uploads")
-    public ResponseEntity<Object> uploadFiles(
+    public ResponseEntity<List<S3FileDto>> uploadFiles(
             @RequestParam(value = "uploadTo") String uploadTo,
             @RequestPart(value = "files") List<MultipartFile> multipartFiles) {
+
+        List<S3FileDto> multipartFileList = s3Service.uploadFiles(uploadTo, multipartFiles);
+
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(s3Service.uploadFiles(uploadTo, multipartFiles));
+                .body(multipartFileList);
     }
 
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Object> deleteFile(
+    public ResponseEntity<String> deleteFile(
             @Valid @RequestParam(value = "from") String from,
             @Valid @RequestParam(value = "url") String url ){
 
+        String result = s3Service.deleteFile(from, url);
+
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(s3Service.deleteFile(from, url));
+                .body(result);
     }
 
 }

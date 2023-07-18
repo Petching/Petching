@@ -2,7 +2,6 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.12'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-
 	// asciidoc 파일을 변환해주고, build 폴더에 복사해주는 플러그인
 	id "org.asciidoctor.jvm.convert" version "3.3.2"
 }
@@ -40,9 +39,11 @@ dependencyManagement {
 
 
 dependencies {
+
 	// rest docs
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 	implementation 'org.springframework.restdocs:spring-restdocs-core:2.0.7.RELEASE'
+	testImplementation 'org.projectlombok:lombok:1.18.22'
 	asciidoctorExtensions  'org.springframework.restdocs:spring-restdocs-asciidoctor'
 	implementation 'org.asciidoctor:asciidoctorj:2.5.7'
 
@@ -87,18 +88,16 @@ dependencies {
 	// TEST 라이브러리
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	// jwt (?)
+	// jwt
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	runtimeOnly	'io.jsonwebtoken:jjwt-jackson:0.11.5'
-
 
 }
 
 tasks.named('test') {
 	// test task 실행 시 API 문서 생성 스니펫 디렉토리 경로 설정
 	outputs.dir snippetsDir
-	useJUnitPlatform()
 }
 tasks.named('asciidoctor') {
 /*	attributes \
@@ -106,8 +105,9 @@ tasks.named('asciidoctor') {
 		'stylesheet': 'src/docs/asciidoc/stylesheets/custom-ui.css'*/
 
 	// asciidoctor task 실행 시 Asciidoctor 기능을 사용하기 위한 asciidoctorExtensions configuration
-	configurations "asciidoctorExtensions"
+
 	inputs.dir snippetsDir
+	configurations "asciidoctorExtensions"
 	dependsOn test
 }
 
@@ -118,12 +118,7 @@ task copyDocument(type: Copy) {
 	// "build/docs/asciidoc/" 경로에 생성되는 index.html 을 copy
 	from file("${asciidoctor.outputDir}")
 	// "src/main/resources/static/docs" 경로로 index.html 을 추가
-	into file("src/main/resources/static/docs")   // (8-3)
-}
-
-build {
-	// build task 가 실행되기 전에 copyDocument task 가 먼저 수행되도록
-	dependsOn copyDocument
+	into file("src/main/resources/static/docs")
 }
 
 // jar file name 변경

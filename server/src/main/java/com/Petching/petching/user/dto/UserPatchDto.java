@@ -23,5 +23,8 @@ public class UserPatchDto {
 
     private String address;
 
+    public UserPatchDto(){
+
+    }
 
 }
