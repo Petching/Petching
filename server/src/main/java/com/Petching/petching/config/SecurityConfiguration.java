@@ -1,12 +1,27 @@
 package com.Petching.petching.config;
 
+import com.Petching.petching.login.handler.UserAccessDeniedHandler;
+import com.Petching.petching.login.handler.UserAuthenticationEntryPoint;
+import com.Petching.petching.login.handler.UserAuthenticationFailureHandler;
+import com.Petching.petching.login.handler.UserAuthenticationSuccessHandler;
+import com.Petching.petching.login.jwt.filter.JwtAuthenticationProcessingFilter;
+import com.Petching.petching.login.jwt.filter.JwtVerificationFilter;
+import com.Petching.petching.login.jwt.service.JwtService;
+import com.Petching.petching.login.jwt.util.CustomAuthorityUtils;
+import com.Petching.petching.login.oauth.OAuth2UserSuccessHandler;
+import com.Petching.petching.login.service.UserLoginService;
+import com.Petching.petching.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -16,9 +31,12 @@ import java.util.Arrays;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
-@Configuration
+@Configuration @RequiredArgsConstructor
 @EnableWebSecurity(debug=false)
 public class SecurityConfiguration {
+    private final JwtService jwtService;
+    private final CustomAuthorityUtils authorityUtils;
+    private final OAuth2UserSuccessHandler oAuth2UserSuccessHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -29,11 +47,25 @@ public class SecurityConfiguration {
                         .cors(withDefaults())
                         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                         .and()
+                        .exceptionHandling()
+                        .authenticationEntryPoint(new UserAuthenticationEntryPoint())
+                        .accessDeniedHandler(new UserAccessDeniedHandler())
+                        .and()
+                        .apply(new CustomFilterConfigurer())
+                        .and()
                         .formLogin().disable()
                         .httpBasic().disable()
-                        .authorizeHttpRequests(authorize->authorize
-                                .anyRequest().permitAll()
-                        ).build();
+//                        .authorizeHttpRequests(authorize -> authorize
+//                                .anyRequest().permitAll()
+//                        )
+                        .authorizeHttpRequests()
+                        .antMatchers("/users/sign-up").permitAll()
+                        .anyRequest().authenticated()
+                        .and()
+                        .oauth2Login()
+                        .successHandler(oAuth2UserSuccessHandler)
+                        .and()
+                        .build();
     }
 
 
@@ -63,4 +95,23 @@ public class SecurityConfiguration {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
+    public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity> {
+        @Override
+        public void configure(HttpSecurity builder) throws Exception {
+            AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
+
+            JwtAuthenticationProcessingFilter jwtAuthenticationFilter = new
+                    JwtAuthenticationProcessingFilter(authenticationManager, jwtService);
+            jwtAuthenticationFilter.setFilterProcessesUrl("/users/login");
+            jwtAuthenticationFilter.setAuthenticationSuccessHandler(new UserAuthenticationSuccessHandler());
+            jwtAuthenticationFilter.setAuthenticationFailureHandler(new UserAuthenticationFailureHandler());
+
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtService, authorityUtils);
+
+            builder.addFilter(jwtAuthenticationFilter)
+                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationProcessingFilter.class)
+                    .addFilterAfter(jwtVerificationFilter, OAuth2LoginAuthenticationFilter.class);
+        }
+
+    }
 }
