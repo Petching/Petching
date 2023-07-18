@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/s3")
@@ -37,15 +39,18 @@ public class S3Controller {
 
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteFile(
+    public ResponseEntity<Map<String , String>> deleteFile(
             @Valid @RequestParam(value = "from") String from,
             @Valid @RequestParam(value = "url") String url ){
 
         String result = s3Service.deleteFile(from, url);
 
+        Map<String , String> map = new HashMap<>();
+        map.put("result", result);
+
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(result);
+                .body(map);
     }
 
 }

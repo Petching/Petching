@@ -6,6 +6,7 @@ import com.Petching.petching.global.api.s3.controller.S3Controller;
 import com.Petching.petching.global.aws.s3.dto.S3FileDto;
 import com.Petching.petching.global.aws.s3.service.S3Service;
 import com.Petching.petching.restDocs.global.helper.S3ControllerTestHelper;
+import com.Petching.petching.restDocs.global.helper.StubData;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,20 +17,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import java.io.FileInputStream;
 import java.util.List;
 
 import static com.Petching.petching.restDocs.global.utils.ApiDocumentUtils.getRequestPreProcessor;
@@ -38,7 +33,7 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -62,84 +57,29 @@ public class S3ControllerTest implements S3ControllerTestHelper {
 
     @DisplayName("Test - S3Controller - POST_UPLOAD")
     @Test
-    public void s3UploadTest() throws Exception {
+    public void postS3Test() throws Exception {
 
         // given
-        String name = "files";
-        String uploadTo = "boards";
-
-        String contentType = "multipart/form-data";
-        String path = "src/main/resources/static/temp";
+        // mock data setup
         String originalFileName01 = "1.png";
         String originalFileName02 = "2.png";
         String originalFileName03 = "3.jpg";
+        List<S3FileDto> expectedResponse = StubData.MockS3.getMultiResponseBody();
 
-        MockMultipartFile multipartFile01 = new MockMultipartFile(
-                name,
-                originalFileName01,
-                contentType,
-                (path + "/" + originalFileName01).getBytes()
-        );
-
-        MockMultipartFile multipartFile02 = new MockMultipartFile(
-                name,
-                originalFileName02,
-                contentType,
-                (path + "/" + originalFileName02).getBytes()
-        );
-
-        MockMultipartFile multipartFile03 = new MockMultipartFile(
-                name,
-                originalFileName03,
-                contentType,
-                (path + "/" + originalFileName03).getBytes()
-        );
-
-        S3FileDto s3FileDto1 =
-        S3FileDto.builder()
-                .originalFileName(originalFileName01)
-                .uploadFileName("randomUUID_01.png")
-                .uploadFilePath(uploadTo)
-                .uploadFileUrl("https://s3.{region-name}.amazonaws.com/{bucket-name}/{upload-to}/{yyyy-mm-dd}-randomUUID_01.png")
-                .build();
-        S3FileDto s3FileDto2 =
-                S3FileDto.builder()
-                        .originalFileName(originalFileName02)
-                        .uploadFileName("randomUUID_02.png")
-                        .uploadFilePath(uploadTo)
-                        .uploadFileUrl("https://s3.{region-name}.amazonaws.com/{bucket-name}/{upload-to}/{yyyy-mm-dd}-randomUUID_02.png")
-                        .build();
-        S3FileDto s3FileDto3 =
-                S3FileDto.builder()
-                        .originalFileName(originalFileName03)
-                        .uploadFileName("randomUUID_03.jpg")
-                        .uploadFilePath(uploadTo)
-                        .uploadFileUrl("https://s3.{region-name}.amazonaws.com/{bucket-name}/{upload-to}/{yyyy-mm-dd}-randomUUID_03.jpg")
-                        .build();
-
-        List<S3FileDto> expectedResponse = List.of(
-                s3FileDto1,s3FileDto2,s3FileDto3
-        );
+        MockMultipartHttpServletRequestBuilder mmhsrb = (MockMultipartHttpServletRequestBuilder) StubData.MockS3.getRequestBody(HttpMethod.POST);
 
 
         given(s3Service.uploadFiles(Mockito.any(String.class), Mockito.any(List.class))).willReturn(expectedResponse);
 
 
         // when
-
         ResultActions resultActions =
         mockMvc.perform(
-                RestDocumentationRequestBuilders.multipart("/api/s3/uploads")
-                        .file(multipartFile01)
-                        .file(multipartFile02)
-                        .file(multipartFile03)
-                        .param("uploadTo", uploadTo)
-                        .accept(MediaType.APPLICATION_JSON)
+                mmhsrb
         );
 
 
         // Then
-        System.out.println( resultActions.andReturn().getResponse().getContentAsString());
         resultActions
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON+";charset=UTF-8"))
@@ -174,6 +114,44 @@ public class S3ControllerTest implements S3ControllerTestHelper {
                                 fieldWithPath("[].uploadFileUrl").type(JsonFieldType.STRING).description("업로드된 파일의 Url")
                 )));
 
+
+
+    }
+    @DisplayName("Test - S3Controller - DELETE_DELETE")
+    @Test
+    public void deleteS3Test() throws Exception {
+
+        // given
+        // mock data setup
+        String result = "Success";
+
+        List<S3FileDto> expectedResponse =
+                StubData.MockS3.getMultiResponseBody();
+        MultiValueMap<String, String> params =
+                (MultiValueMap<String, String>) StubData.MockS3.getRequestBody(HttpMethod.DELETE);
+        MockMultipartHttpServletRequestBuilder mmhsrb = (MockMultipartHttpServletRequestBuilder) StubData.MockS3.getRequestBody(HttpMethod.POST);
+
+
+        given(s3Service.uploadFiles(Mockito.any(String.class), Mockito.any(List.class))).willReturn(expectedResponse);
+        given(s3Service.deleteFile(Mockito.any(String.class), Mockito.any(String.class))).willReturn(result);
+
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                deleteRequestBuilder(getDeleteUri(),params)
+        );
+
+        // then
+        actions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("result").value(result))
+                .andDo(document("delete-s3-delete",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        requestParameters(
+                                List.of(parameterWithName("url").description("삭제할 파일 객체의 URL"),parameterWithName("from").description("삭제할 파일의 공간. e.g. boards"))
+                        )
+                ));
 
 
     }

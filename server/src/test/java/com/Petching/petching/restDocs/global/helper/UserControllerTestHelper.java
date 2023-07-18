@@ -45,6 +45,12 @@ public interface UserControllerTestHelper extends ControllerTestHelper {
                 fieldWithPath("address").type(JsonFieldType.STRING).description("주소")
         );
     }
+    default List<FieldDescriptor> getDefaultMemberDeleteRequestDescriptors() {
+
+        return List.of(
+                fieldWithPath("userId").type(JsonFieldType.NUMBER).description("회원 식별자").ignored()
+        );
+    }
 
     default List<FieldDescriptor> getDefaultMemberResponseDescriptors(DataResponseType dataResponseType) {
         String parentPath = getDataParentPath(dataResponseType);
