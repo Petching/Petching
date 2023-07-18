@@ -101,6 +101,41 @@ include::{snippets}/patch-user/http-response.adoc[]
 
 `TODO: 오류 응답 종류 추가`
 
+---
+
+[[자랑하기-API]]
+= 자랑하기 API
+== Board Controller
+
+=== Board Post API
+[discrete]
+=== `Request`
+[source,http]
+----
+POST: /boards
+----
+[discrete]
+==== `Request Fields`
+include::{snippets}/post-board/request-fields.adoc[]
+[discrete]
+==== `Request Body`
+include::{snippets}/post-board/request-body.adoc[]
+[discrete]
+==== `Request Summary`
+include::{snippets}/post-board/http-request.adoc[]
+
+[discrete]
+=== `Response`
+[discrete]
+==== `Response Headers`
+include::{snippets}/post-board/response-headers.adoc[]
+[discrete]
+==== `Response Summary`
+include::{snippets}/post-board/http-response.adoc[]
+
+
+---
+
 [[S3-API]]
 = S3 API
 == S3 Controller
@@ -151,7 +186,6 @@ include::{snippets}/post-s3-upload/http-response.adoc[]
 
 `TODO: 오류 응답 종류 추가`
 
-
 === 파일 삭제 API
 [discrete]
 ==== `Request`
@@ -161,8 +195,22 @@ DELETE: /api/v1/delete
 ----
 
 [discrete]
+==== `Request parameters`
+include::{snippets}/delete-s3-delete/request-parameters.adoc[]
+
+
+[discrete]
 ===== `Request Summary`
-include::{snippets}/get-user/http-request.adoc[]
+include::{snippets}/delete-s3-delete/http-request.adoc[]
 
 [discrete]
 ==== `Response`
+
+[discrete]
+==== `Response body`
+include::{snippets}/delete-s3-delete/response-body.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/delete-s3-delete/http-response.adoc[]
+
