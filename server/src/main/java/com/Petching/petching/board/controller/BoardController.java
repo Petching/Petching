@@ -1,12 +1,12 @@
 package com.Petching.petching.board.controller;
 
-import com.Petching.petching.aws.s3.service.UploadToS3;
 import com.Petching.petching.board.dto.BoardDto;
 import com.Petching.petching.board.entity.Board;
 import com.Petching.petching.board.mapper.BoardMapper;
 import com.Petching.petching.board.service.BoardService;
-import com.Petching.petching.global.exception.BusinessLogicException;
 import com.Petching.petching.response.PageInfo;
+import com.Petching.petching.user.entity.User;
+import com.Petching.petching.user.service.UserService;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -14,14 +14,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,22 +32,25 @@ public class BoardController {
 
     private final BoardService boardService;
     private final BoardMapper mapper;
-    private final UploadToS3 uploadToS3;
+    private final UserService userService;
 
-    public BoardController(BoardService boardService, BoardMapper mapper, UploadToS3 uploadToS3) {
+    public BoardController(BoardService boardService, BoardMapper mapper, UserService userService) {
         this.boardService = boardService;
         this.mapper = mapper;
-        this.uploadToS3 = uploadToS3;
+        this.userService = userService;
     }
-
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+/**
+ * 아래는 글쓰는 요청 시 post Dto 와 File 을 한 번에 받을 수 있는 메서드
+ * 아직 미정
+ * */
+/*    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity postBoard(@RequestPart(required = false) MultipartFile img,
                                     @Valid @RequestPart BoardDto.Post requestBody){
 
         Board board = boardService.createBoard(mapper.boardPostDtoToBoard(requestBody));
 
         if(img!=null){
-            String imgUrl = uploadToS3.uploadImageToS3(img);
+            String imgUrl = s3Service.uploadImageToS3(img);
             board.setImgUrl(imgUrl);
             boardService.updateBoard(board);
         }
@@ -58,33 +60,77 @@ public class BoardController {
                 .build().toUri();
 
         return ResponseEntity.created(uri).build();
+    }*/
+
+    /* 글을 올리는 API
+     * userId 는 request header 로 요청받아서 유저를 검증하는 방법으로 리팩토링 필요
+     * */
+    @PostMapping
+    public ResponseEntity postBoard(@Valid @RequestBody BoardDto.Post requestBody){
+
+
+        Board board = mapper.boardPostDtoToBoard(requestBody);
+        User user = userService.findUser(requestBody.getUserId());
+        board.setUser(user);
+
+        Board savedBoard = boardService.createBoard(board);
+
+        URI uri = UriComponentsBuilder.newInstance()
+                .path("/boards/"+savedBoard.getBoardId())
+                .build().toUri();
+
+        return ResponseEntity.created(uri).build();
     }
 
-    @PatchMapping("/{board-id}")
-    public ResponseEntity patchBoard(@PathVariable("board-id") long id, @Valid @RequestBody BoardDto.Patch requestBody){
 
-        requestBody.setBoardId(id);
+    /* 글을 수정하는 API
+     * request header 로 요청받아서 유저를 검증하는 방법으로 리팩토링 필요
+     * */
+    @PatchMapping("/{boardId}")
+    public ResponseEntity patchBoard(@PathVariable("boardId") long id, @RequestBody BoardDto.Patch requestBody){
+
         Board board = mapper.boardPatchDtoToBoard(requestBody);
+        board.setBoardId(id);
+
         Board response = boardService.updateBoard(board);
 
         return new ResponseEntity<>(mapper.boardToBoardDetailDto(response), HttpStatus.OK);
+
     }
 
-    @DeleteMapping("/{board-id}")
-    public ResponseEntity deleteBoard(@PathVariable("board-id") long id){
+    /* 글을 삭제하는 API
+     * request header 로 요청받아서 유저를 검증하는 방법으로 리팩토링 필요
+     * */
 
-        boardService.deleteBoard(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @DeleteMapping("/{boardId}")
+    public ResponseEntity deleteBoard(@PathVariable("boardId") long boardId){
+
+        boardService.deleteBoard(boardId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
     // 전체 게시글 목록 조회
     @GetMapping
     public ResponseEntity getBoards(
-            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size
     ){
-        Pageable pageable = PageRequest.of(page, size);
+
+        Pageable pageable = PageRequest.of(page-1, size);
         Page<Board> boardPage = boardService.findBoards(pageable);
+        /** board service 에 넣을 것
+         * User 가 해당 게시물을 좋아하는 지 확인
+         * user 엔티티에서 LikedBoardList 추가 필요
+         * User user = userService.findUser(userId);
+         * List<Long> userLiked = user.getLikedBoardList()
+         * .stream()
+         * .filter( boardId -> boardId == id)
+         * .collect(Collectors.toList());
+         * if(!userLiked.isEmpty())
+         * board.setCheckLike(true);
+         * */
 
         List<BoardDto.Response> response = boardPage
                 .stream()
@@ -98,29 +144,64 @@ public class BoardController {
                 boardPage.getTotalElements(),
                 boardPage.getTotalPages()
         );
+
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-Page-Info", new Gson().toJson(pageInfo));
 
         return ResponseEntity.ok().headers(headers).body(response);
+
     }
 
-
     // 특정 게시글 조회
-    @GetMapping("/{board-id}")
-    public ResponseEntity getBoard(@PathVariable("board-id") long id){
+    @GetMapping("/{boardId}")
+    public ResponseEntity getBoard(@PathVariable("boardId") long id, @RequestParam long userId){
+
         Board board = boardService.findBoardByMK(id);
+
+        /**
+         * board service 에 넣을 것
+         * User 가 해당 게시물을 좋아하는 지 확인
+         * user 엔티티에서 LikedBoardList 추가 필요
+         * User user = userService.findUser(userId);
+         * List<Long> userLiked = user.getLikedBoardList()
+         * .stream()
+         * .filter( boardId -> boardId == id)
+         * .collect(Collectors.toList());
+         * if(!userLiked.isEmpty())
+         * board.setCheckLike(true);
+         * */
 
         BoardDto.Detail response = mapper.boardToBoardDetailDto(board);
 
         return ResponseEntity.ok(response);
+
     }
+
 
     // Board 에 존재하는 img 중 최대 4개를 랜덤으로 가져오는 API
     @GetMapping("/recently-created")
     public ResponseEntity<List<String >> getRecentlyBoardImg(){
-        List<String> randomImgList = boardService.findBoardRandomImg();
 
+        List<String> randomImgList = boardService.findBoardRandomImg();
         return new ResponseEntity<>(randomImgList, HttpStatus.OK);
     }
 
+    /* 글에 작성된 좋아요 수를 올리는 API
+    *  userId 는 request header 로 요청받아서 유저를 찾는 방법으로 리팩토링 필요
+    * */
+    @PostMapping("/{boardId}/like")
+    public ResponseEntity updateLike(@PathVariable("boardId") long boardId, @RequestParam long userId){
+
+        Board updatedBoard = boardService.updateBoardLike(boardId);
+
+        /**
+         *  User 가 좋아하는 게시글 저장
+         *  user service 에서 구현 필요.
+         *  User user = userService.findUser(userId);
+         *  user.addLikedBoard(updatedBoard.getBoardId());
+         *  userService.updateFromBoard(user);
+         * */
+
+        return new ResponseEntity(mapper.boardToBoardDetailDto(updatedBoard), HttpStatus.OK);
+    }
 }

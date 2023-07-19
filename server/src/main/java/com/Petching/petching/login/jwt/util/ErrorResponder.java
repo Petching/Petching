@@ -1,6 +1,6 @@
 package com.Petching.petching.login.jwt.util;
 
-import com.Petching.petching.exception.response.ErrorResponse;
+import com.Petching.petching.global.response.ErrorResponse;
 import com.google.gson.Gson;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

@@ -2,6 +2,8 @@ package com.Petching.petching.comment.entity;
 
 import com.Petching.petching.audit.BaseEntity;
 import com.Petching.petching.board.entity.Board;
+import com.Petching.petching.user.entity.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,8 +24,15 @@ public class Comment extends BaseEntity {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name="BOARD_ID")
+    @JoinColumn(name="board_id")
+    @JsonIgnore
     private Board board;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
+
 
     public long getBoardId(){
         return board.getBoardId();

@@ -1,0 +1,216 @@
+= API Documentation
+:sectnums:
+:toc: left
+:doctype: book
+:icons: font
+:sectlinks:
+:sectanchors:
+:source-highlighter: highlightjs
+:highlightjs-theme: github
+:toclevels: 3
+:snippets: ./build/generated-snippets
+
+[[User-API]]
+= User API
+
+== UserController
+
+
+=== 회원 등록 API
+[discrete]
+=== `Request`
+[source,http]
+----
+POST: /users/sign-up
+----
+[discrete]
+==== `Request fields`
+include::{snippets}/post-user/request-fields.adoc[]
+[discrete]
+===== `Request body`
+include::{snippets}/post-user/request-body.adoc[]
+
+
+[discrete]
+===== `Request Summary`
+include::{snippets}/post-user/http-request.adoc[]
+
+
+[discrete]
+=== `Response`
+
+성공적인 회원 등록의 경우 `201 Created` 응답과 함께,  +
+새로 생성된 회원 사용자 정보(`User 식별자 ID`) 가 header 에 담겨 반환됩니다.  +
+
+[discrete]
+==== `Response header`
+include::{snippets}/post-user/response-headers.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/post-user/http-response.adoc[]
+
+
+[discrete]
+==== 오류 응답
+
+`TODO: 오류 응답 종류 추가`
+
+
+=== 회원 수정 API
+[discrete]
+=== `Request`
+[source,http]
+----
+PATCH: /users/
+----
+[discrete]
+==== `Request fields`
+include::{snippets}/patch-user/request-fields.adoc[]
+[discrete]
+===== `Request body`
+include::{snippets}/patch-user/request-body.adoc[]
+
+
+[discrete]
+===== `Request Summary`
+include::{snippets}/patch-user/http-request.adoc[]
+
+
+[discrete]
+=== `Response`
+
+성공적인 회원 등록의 경우 `200 OK` 응답과 함께,  +
+업데이트된 회원 사용자 정보가 반환됩니다.  +
+
+[discrete]
+==== `Response fields`
+include::{snippets}/patch-user/response-fields.adoc[]
+
+[discrete]
+==== `Response body`
+include::{snippets}/patch-user/response-body.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/patch-user/http-response.adoc[]
+
+
+[discrete]
+==== 오류 응답
+
+`TODO: 오류 응답 종류 추가`
+
+---
+
+[[자랑하기-API]]
+= 자랑하기 API
+== Board Controller
+
+=== Board Post API
+[discrete]
+=== `Request`
+[source,http]
+----
+POST: /boards
+----
+[discrete]
+==== `Request Fields`
+include::{snippets}/post-board/request-fields.adoc[]
+[discrete]
+==== `Request Body`
+include::{snippets}/post-board/request-body.adoc[]
+[discrete]
+==== `Request Summary`
+include::{snippets}/post-board/http-request.adoc[]
+
+[discrete]
+=== `Response`
+[discrete]
+==== `Response Headers`
+include::{snippets}/post-board/response-headers.adoc[]
+[discrete]
+==== `Response Summary`
+include::{snippets}/post-board/http-response.adoc[]
+
+
+---
+
+[[S3-API]]
+= S3 API
+== S3 Controller
+
+=== 파일 업로드 API
+[discrete]
+=== `Request`
+[source,http]
+----
+POST: /api/v1/uploads
+----
+
+[discrete]
+==== `Request headers`
+include::{snippets}/post-s3-upload/request-headers.adoc[]
+[discrete]
+==== `Request parameter`
+include::{snippets}/post-s3-upload/request-parameters.adoc[]
+[discrete]
+==== `Request parts`
+include::{snippets}/post-s3-upload/request-parts.adoc[]
+
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/post-s3-upload/http-request.adoc[]
+
+
+
+[discrete]
+=== `Response`
+
+[discrete]
+==== `Response fields`
+include::{snippets}/post-s3-upload/response-fields.adoc[]
+
+[discrete]
+==== `Response body`
+include::{snippets}/post-s3-upload/response-body.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/post-s3-upload/http-response.adoc[]
+
+
+[discrete]
+==== 오류 응답
+
+`TODO: 오류 응답 종류 추가`
+
+=== 파일 삭제 API
+[discrete]
+==== `Request`
+[source,http]
+----
+DELETE: /api/v1/delete
+----
+
+[discrete]
+==== `Request parameters`
+include::{snippets}/delete-s3-delete/request-parameters.adoc[]
+
+
+[discrete]
+===== `Request Summary`
+include::{snippets}/delete-s3-delete/http-request.adoc[]
+
+[discrete]
+==== `Response`
+
+[discrete]
+==== `Response body`
+include::{snippets}/delete-s3-delete/response-body.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/delete-s3-delete/http-response.adoc[]
+

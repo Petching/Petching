@@ -2,6 +2,8 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.12'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	// asciidoc 파일을 변환해주고, build 폴더에 복사해주는 플러그인
+	id "org.asciidoctor.jvm.convert" version "3.3.2"
 }
 
 group = 'com.Petching'
@@ -12,21 +14,19 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+	// AsciiDoctor 에서 사용되는 의존 그룹 지정.
+	asciidoctorExtensions
 }
 
 repositories {
 	mavenCentral()
 }
 
-
-// jar file name 변경
-bootJar{
-	archiveFileName = 'petching.jar'
-}
-
-// springCloudVersion setting
 ext {
+	// springCloudVersion setting
 	set('springCloudVersion', "2021.0.8")
+	// API 문서 스니펫이 생성될 경로 지정
+	snippetsDir = file('build/generated-snippets')
 }
 
 // dependencyManagement setting
@@ -39,12 +39,19 @@ dependencyManagement {
 
 
 dependencies {
+
+	// rest docs
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	implementation 'org.springframework.restdocs:spring-restdocs-core:2.0.7.RELEASE'
+	testImplementation 'org.projectlombok:lombok:1.18.22'
+	asciidoctorExtensions  'org.springframework.restdocs:spring-restdocs-asciidoctor'
+	implementation 'org.asciidoctor:asciidoctorj:2.5.7'
+
 	// AWS paramStore 사용 Spring boot 버전 호환 상세 : https://spring.io/projects/spring-cloud
 	// S3 Client 활성화
 	implementation "org.springframework.cloud:spring-cloud-starter-aws-parameter-store-config:2.2.6.RELEASE"
 	implementation "io.awspring.cloud:spring-cloud-starter-aws-parameter-store-config:2.3.0"
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
 	// 애너테이션 프로세싱 기능 활성화
 	compileOnly 'org.projectlombok:lombok'
@@ -59,12 +66,10 @@ dependencies {
 	// Spring Data JPA 사용을 위함
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-  // 
-	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-
-
-	// Spring security
+	// security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
 	// 유효성 검증을 위한 dependency
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
@@ -80,16 +85,49 @@ dependencies {
 	// GSON 라이브러리 : Java 객체 <=> JSON
 	implementation 'com.google.code.gson:gson'
 
+	// TEST 라이브러리
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	// jwt (?)
+	// jwt
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	runtimeOnly	'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
-
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+	// test task 실행 시 API 문서 생성 스니펫 디렉토리 경로 설정
+	outputs.dir snippetsDir
+}
+tasks.named('asciidoctor') {
+/*	attributes \
+		'styledir': 'src/docs/asciidoc/stylesheets',
+		'stylesheet': 'src/docs/asciidoc/stylesheets/custom-ui.css'*/
+
+	// asciidoctor task 실행 시 Asciidoctor 기능을 사용하기 위한 asciidoctorExtensions configuration
+
+	inputs.dir snippetsDir
+	configurations "asciidoctorExtensions"
+	dependsOn test
+}
+
+// copyDocument task 실행 시 index.html 파일이 복사
+task copyDocument(type: Copy) {
+	// asciidoctor task 가 실행된 후에 task 가 실행되도록 의존성 설정
+	dependsOn asciidoctor
+	// "build/docs/asciidoc/" 경로에 생성되는 index.html 을 copy
+	from file("${asciidoctor.outputDir}")
+	// "src/main/resources/static/docs" 경로로 index.html 을 추가
+	into file("src/main/resources/static/docs")
+}
+
+// jar file name 변경
+bootJar{
+	// bootJar task 실행 전에 copyDocument task 가 실행되도록 의존성을 설정
+	dependsOn copyDocument
+	// Asciidoctor 실행으로 생성되는 index.html 파일을 jar 파일 안에 추가
+	from ("${asciidoctor.outputDir}/html5") {
+		into 'static/docs'
+	}
+	archiveFileName = 'petching.jar'
 }

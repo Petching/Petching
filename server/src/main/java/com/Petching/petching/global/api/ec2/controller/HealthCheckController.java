@@ -1,4 +1,4 @@
-package com.Petching.petching.aws.ec2;
+package com.Petching.petching.global.api.ec2.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -9,4 +9,5 @@ public class BusinessLoginException extends RuntimeException {
         super(exceptionCode.getMessage());
         this.exceptionCode = exceptionCode;
     }
+
 }
