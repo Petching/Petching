@@ -1,14 +1,14 @@
 import React from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
-// import { setCookie } from "../components/social/Cookie";
 import { useNavigate } from 'react-router-dom';
 
 const KakaoLogin = () => {
+  const navigate = useNavigate();
   const goToMain = () => {
     navigate('/');
   };
-  const navigate = useNavigate();
+
   const code: string | null = new URL(window.location.href).searchParams.get(
     'code',
   );
@@ -22,6 +22,7 @@ const KakaoLogin = () => {
         .then(response => {
           const data = response.data;
           if (data.message === 'success') {
+            console.log(data);
             localStorage.setItem('TOKEN', data.token);
             goToMain();
             alert('로그인 성공');

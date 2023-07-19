@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { CarouselComponent, Square } from '../Components/peacockComponent';
 import doctors from '../Style/doctors.jpg';
 import { LikeComponent } from '../Components/peacockComponent';
