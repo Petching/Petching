@@ -35,6 +35,7 @@ public class User extends Auditable {
 
     private String socialId;
 
+    private String profileImgUrl;
 
     public void passwordEncode (PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(this.password);

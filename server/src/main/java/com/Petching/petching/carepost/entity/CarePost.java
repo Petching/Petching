@@ -6,10 +6,7 @@ import com.Petching.petching.tag.conditionTag.CarePost_ConditionTag;
 import com.Petching.petching.tag.locationTag.CarePost_LocationTag;
 import com.Petching.petching.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -18,7 +15,7 @@ import java.util.List;
 
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor
+@Builder
 @Getter
 @Setter
 public class CarePost extends Auditable {
@@ -35,6 +32,8 @@ public class CarePost extends Auditable {
     @Column
     private String image;
 
+    @ElementCollection
+    private List<String > imgUrls;
 //    @Column
 //    private String address;
 //
@@ -73,4 +72,7 @@ public class CarePost extends Auditable {
         }
     }
 
+    public CarePost(){
+
+    }
 }

@@ -142,7 +142,8 @@ class UserControllerTest implements UserControllerTestHelper {
 
 
         // when
-        ResultActions actions = mockMvc.perform(patchRequestBuilder(getUrl(), content));
+        ResultActions actions = mockMvc.perform(
+                patchRequestBuilder(getUrl(), content));
 
 
         // then
