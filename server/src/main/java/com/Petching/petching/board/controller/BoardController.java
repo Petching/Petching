@@ -4,6 +4,7 @@ import com.Petching.petching.board.dto.BoardDto;
 import com.Petching.petching.board.entity.Board;
 import com.Petching.petching.board.mapper.BoardMapper;
 import com.Petching.petching.board.service.BoardService;
+import com.Petching.petching.response.MultiResponse;
 import com.Petching.petching.response.PageInfo;
 import com.Petching.petching.user.entity.User;
 import com.Petching.petching.user.service.UserService;
@@ -148,7 +149,7 @@ public class BoardController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-Page-Info", new Gson().toJson(pageInfo));
 
-        return ResponseEntity.ok().headers(headers).body(response);
+        return new ResponseEntity<>(new MultiResponse<>(response, boardPage), HttpStatus.OK);
 
     }
 

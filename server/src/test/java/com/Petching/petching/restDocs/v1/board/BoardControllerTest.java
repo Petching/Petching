@@ -38,6 +38,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -158,7 +160,7 @@ public class BoardControllerTest implements BoardControllerTestHelper {
                                 getRequestPreProcessor(),
                                 getResponsePreProcessor(),
                                 requestParameters(
-                                        getDefaultRequestParameterDescriptors()
+                                        getBoardRequestParameterDescriptors()
                                 ),
                                 responseFields(
                                         getFullResponseDescriptors(
@@ -173,31 +175,32 @@ public class BoardControllerTest implements BoardControllerTestHelper {
     public void getAllBoardTest() throws Exception {
 
         // given
-        long boardId = 1L;
-        long userId = 1L;
+        String page = "1";
+        String size = "10";
 
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", page);
+        queryParams.add("size", size);
 
         Page<Board> boardPage = StubData.MockBoard.getMultiResultBoard();
         PageInfo pageInfo = new PageInfo(
                 boardPage.getNumber(),
                 boardPage.getSize(),
-                boardPage.getTotalElements(),
-                boardPage.getTotalPages()
+                3,
+                1
         );
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-Page-Info", new Gson().toJson(pageInfo));
 
         List<BoardDto.Response> responseList = StubData.MockBoard.getMultiResponseBody();
 
-
         given(boardService.findBoards(Mockito.any(Pageable.class))).willReturn(boardPage);
         given(boardMapper.boardPageToBoardResponseListDto(Mockito.any(Page.class))).willReturn(responseList);
 
 
         // when
-        ResultActions actions = mockMvc.perform(
-                getRequestAllBuilder(getUrl(), pageInfo.getPage(),pageInfo.getSize(), headers)
-        );
+        ResultActions actions = mockMvc.perform(getRequestBuilder(getUrl(), queryParams));
+
 
 
         // then
@@ -207,14 +210,14 @@ public class BoardControllerTest implements BoardControllerTestHelper {
                         document("get-all-board",
                                 getRequestPreProcessor(),
                                 getResponsePreProcessor(),
-                                pathParameters(
-                                        getBoardRequestPathParameterDescriptor()
+                                requestParameters(
+                                        getDefaultRequestParameterDescriptors()
                                 ),
                                 responseFields(
-                                        getFullResponseDescriptors(
-                                                getDefaultBoardDetailDescriptors(DataResponseType.SINGLE))
+                                        getFullPageResponseDescriptors(
+                                                getDefaultBoardResponseDescriptors(DataResponseType.LIST))
                                 )
-                        ));
+                        )).andReturn();
 
     }
 
