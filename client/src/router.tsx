@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { createBrowserRouter } from 'react-router-dom';
 import { Router as RemixRouter } from '@remix-run/router/dist/router';
 import GeneralLayout from './Layout/GeneraLayout';
@@ -7,7 +8,7 @@ import SignIn from './Page/signIn';
 import User from './Page/User';
 import ChatList from './Page/chatList';
 import Chatting from './Page/chatting';
-import Kakao from './Components/Login/Kakao';
+import KakaoLogin from './Components/Login/KakaoLogin';
 import Peacock from './Page/Peacock';
 import PeacockDetail from './Page/peacockDetail';
 import Google from './Components/Login/Google';
@@ -23,8 +24,8 @@ export const routers: RemixRouter = createBrowserRouter([
         element: <Main />,
       },
       {
-        path: '/kakao',
-        element: <Kakao />,
+        path: '/kakaologin',
+        element: <KakaoLogin />,
       },
       {
         path: '/google',

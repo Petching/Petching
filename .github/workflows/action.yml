@@ -10,8 +10,8 @@ env:
   AWS_REGION: ap-northeast-2
   S3_BUCKET_NAME: petching.net
   API_SERVER: ${{ secrets.API_SERVER }}
-  REACT_APP_REST_API_KEY: ${{ secrets.REACT_APP_REST_API_KEY }}
-
+  REACT_APP_KAKAO_API_KEY: ${{ secrets.KAKAO_API_KEY }}
+  REACT_APP_KAKAO_REDIRECT_URL: ${{secrets.KAKAO_REDIRECT_URL}}
 jobs:
   build:
     runs-on: ubuntu-latest
