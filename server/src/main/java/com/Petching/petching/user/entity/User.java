@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity @Getter @Builder
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "USERS")
 public class User extends Auditable {
@@ -35,19 +35,12 @@ public class User extends Auditable {
 
     private String socialId;
 
+    private String profileImage;
 
-    public void passwordEncode (PasswordEncoder passwordEncoder) {
-        this.password = passwordEncoder.encode(this.password);
-    }
 
-//    @Enumerated(EnumType.STRING)
-//    private Role role;
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
-//    public void authorizeUser () {
-//        this.role = Role.USER;
-//    }
 
     public void updateNickName (String nickName) {
         this.nickName = nickName;

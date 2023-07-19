@@ -17,6 +17,7 @@ spring:
             scope:
               - profile_nickname
               - account_email
+              - profile_image
             client-authentication-method: POST
         provider:
           kakao:
