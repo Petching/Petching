@@ -35,7 +35,8 @@ public class User extends Auditable {
 
     private String socialId;
 
-    private String profileImage;
+    private String profileImgUrl;
+
 
 
     @ElementCollection(fetch = FetchType.EAGER)

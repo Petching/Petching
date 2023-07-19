@@ -48,7 +48,7 @@ public interface UserControllerTestHelper extends ControllerTestHelper {
     default List<FieldDescriptor> getDefaultMemberDeleteRequestDescriptors() {
 
         return List.of(
-                fieldWithPath("userId").type(JsonFieldType.NUMBER).description("회원 식별자").ignored()
+                fieldWithPath("user-id").type(JsonFieldType.NUMBER).description("회원 식별자").ignored()
         );
     }
 
