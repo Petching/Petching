@@ -97,8 +97,8 @@ public class CarePostService {
                 .ifPresent(findPost::setTitle);
         Optional.ofNullable(patch.getContent())
                 .ifPresent(findPost::setContent);
-        Optional.ofNullable(patch.getImage())
-                .ifPresent(findPost::setImage);
+        Optional.ofNullable(patch.getImgUrls())
+                .ifPresent(findPost::setImgUrls);
         Optional.ofNullable(patch.getStartDate())
                 .ifPresent(findPost::setStartDate);
         Optional.ofNullable(patch.getEndDate())

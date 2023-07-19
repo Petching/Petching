@@ -49,7 +49,7 @@ public class BoardService {
         if (!resultList.isEmpty()) {
             Object[] result = resultList.get(0);
             Board board = (Board) result[0];
-            Long commentCount = (Long) result[1];
+            int commentCount = (int) result[1];
             board.setCommentCount(commentCount);
             return board;
         } else {
@@ -112,7 +112,7 @@ public class BoardService {
 
         Board board = findBoardByMK(boardId);
 
-        long updateLike = board.getLikes() + 1;
+        int updateLike = board.getLikes() + 1;
         board.setLikes(updateLike);
 
         return boardRepository.save(board);

@@ -74,6 +74,7 @@ public class BoardController {
         board.setUser(user);
 
         Board savedBoard = boardService.createBoard(board);
+        System.out.println("board createdAt: " + board.getCreatedAt());
 
         URI uri = UriComponentsBuilder.newInstance()
                 .path("/boards/"+savedBoard.getBoardId())
@@ -120,6 +121,7 @@ public class BoardController {
 
         Pageable pageable = PageRequest.of(page-1, size);
         Page<Board> boardPage = boardService.findBoards(pageable);
+
         /** board service 에 넣을 것
          * User 가 해당 게시물을 좋아하는 지 확인
          * user 엔티티에서 LikedBoardList 추가 필요
@@ -132,10 +134,8 @@ public class BoardController {
          * board.setCheckLike(true);
          * */
 
-        List<BoardDto.Response> response = boardPage
-                .stream()
-                .map(board->mapper.boardToBoardResponseDto(board))
-                .collect(Collectors.toList());
+
+        List<BoardDto.Response> response = mapper.boardPageToBoardResponseListDto(boardPage);
 
         // 페이지 정보 헤더에 추가
         PageInfo pageInfo = new PageInfo(

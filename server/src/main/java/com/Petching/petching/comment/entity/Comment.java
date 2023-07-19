@@ -2,6 +2,7 @@ package com.Petching.petching.comment.entity;
 
 import com.Petching.petching.audit.BaseEntity;
 import com.Petching.petching.board.entity.Board;
+import com.Petching.petching.carepost.entity.CarePost;
 import com.Petching.petching.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
