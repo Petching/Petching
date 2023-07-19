@@ -1,11 +1,32 @@
 spring:
   profiles:
     active: dev
-  web:
-    resources:
-      add-mappings: 'false'
-  mvc:
-    throw-exception-if-no-handler-found: 'true'
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            authorization-grant-type: authorization_code
+            client-name: Google
+            scope:
+              - email
+              - profile
+          kakao:
+            authorization-grant-type: authorization_code
+            client-name: Kakao
+            scope:
+              - profile_nickname
+              - account_email
+            client-authentication-method: POST
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+        pathmatch:
+          matching-strategy: ant_path_matcher
+
 cloud:
   aws:
     s3:
@@ -15,6 +36,7 @@ cloud:
       static: ap-northeast-2
     stack:
       auto: false
+
 aws:
   paramstore:
     enabled: true
@@ -22,13 +44,6 @@ aws:
     defaultContext: ${spring.profiles.active}
     profileSeparator: _
 
-logging:
-  level:
-    server.petching: DEBUG
-    org:
-      springframework:
-        orm:
-          jpa: DEBUG
 server:
   servlet:
     encoding:
@@ -51,14 +66,26 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
-        show_sql: true
-        format_sql: true
+        show_sql: false
+        format_sql: false
   servlet:
     multipart:
       max-file-size: 10MB
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId:
+            clientSecret:
+            redirect-uri:
+          kakao:
+            clientId:
+            clientSecret:
+            redirect-uri:
 
 jwt:
   secretKey:
@@ -101,6 +128,18 @@ spring:
   servlet:
     multipart:
       max-file-size: 10MB
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId:
+            clientSecret:
+            redirect-uri:
+          kakao:
+            clientId:
+            clientSecret:
+            redirect-uri:
 
 aws:
   accessKeyId:
@@ -122,4 +161,11 @@ mail:
 config:
   domain :
 
+logging:
+  level:
+    server.petching: DEBUG
+    org:
+      springframework:
+        orm:
+          jpa: DEBUG
 ---

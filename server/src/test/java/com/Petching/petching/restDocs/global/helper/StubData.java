@@ -1,5 +1,8 @@
 package com.Petching.petching.restDocs.global.helper;
 
+import com.Petching.petching.board.dto.BoardDto;
+import com.Petching.petching.board.entity.Board;
+import com.Petching.petching.global.aws.s3.dto.S3FileDto;
 import com.Petching.petching.user.dto.UserPatchDto;
 import com.Petching.petching.user.dto.UserPostDto;
 import com.Petching.petching.user.dto.UserResponseDto;
@@ -9,14 +12,261 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpMethod;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 
 public class StubData {
+    public static class MockBoard {
+        private static Map<HttpMethod, Object> stubRequestBody;
+        static {
+            List<String> imgUrls = new ArrayList<>();
+            imgUrls.add("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png");
+            imgUrls.add("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_02.png");
+            imgUrls.add("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_03.jpg");
+
+            stubRequestBody = new HashMap<>();
+            BoardDto.Post postDto = BoardDto.Post.builder()
+                    .userId(1)
+                    .title("this is title1")
+                    .content("this is content1")
+                    .imgUrls(imgUrls)
+                    .build();
+
+            BoardDto.Patch patchDto = BoardDto.Patch.builder()
+                    .userId(1)
+                    .boardId(1)
+                    .title("this is title1")
+                    .content("this is content1")
+                    .imgUrls(imgUrls)
+                    .build();
+
+            stubRequestBody.put(HttpMethod.POST, postDto
+            );
+
+            stubRequestBody.put(HttpMethod.PATCH, patchDto);
+        }
+        public static Object getRequestBody(HttpMethod method) {
+            return stubRequestBody.get(method);
+        }
+
+        public static BoardDto.Response getSingleResponseBody() {
+            return BoardDto.Response.builder()
+                    .boardId(1)
+                    .title("this is title1")
+                    .profileImgUrl("https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png")
+                    .nickName("nickName1")
+                    .likes(0)
+                    .checkLike(false)
+                    .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png"))
+                    .build();
+        }
+
+        public static BoardDto.Detail getSingleDetailResponseBody() {
+            return BoardDto.Detail.builder()
+                    .boardId(1)
+                    .title("this is title1")
+                    .content("this is content1")
+                    .profileImgUrl("https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png")
+                    .nickName("nickName1")
+                    .likes(0)
+                    .checkLike(false)
+                    .comments(List.of())
+                    .commentCount(0)
+                    .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png"))
+                    .build();
+        }
+
+        public static List<BoardDto.Response> getMultiResponseBody() {
+
+            BoardDto.Response responseDto1 =
+                    BoardDto.Response.builder()
+                            .boardId(1)
+                            .title("this is title1")
+                            .profileImgUrl("https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png")
+                            .nickName("nickName1")
+                            .likes(0)
+                            .checkLike(false)
+                            .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png"))
+                            .build();
+            BoardDto.Response responseDto2 =
+                    BoardDto.Response.builder()
+                            .boardId(2)
+                            .title("this is title2")
+                            .profileImgUrl("https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_02.png")
+                            .nickName("nickName2")
+                            .likes(0)
+                            .checkLike(false)
+                            .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_02.png"))
+                            .build();
+            BoardDto.Response responseDto3 =
+                    BoardDto.Response.builder()
+                            .boardId(3)
+                            .title("this is title3")
+                            .profileImgUrl("https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_03.png")
+                            .nickName("nickName3")
+                            .likes(0)
+                            .checkLike(false)
+                            .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_03.png"))
+                            .build();
+            return List.of(responseDto1,responseDto2,responseDto3);
+        }
+
+        public static Board getSingleResultBoard() {
+
+            Board board = Board.builder()
+                    .boardId(1)
+                    .title("this is title1")
+                    .content("this is content1")
+                    .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png"))
+                    .likes(0L)
+                    .likedUserIds(List.of())
+                    .comments(List.of())
+                    .commentCount(0)
+                    .build();
+
+            return board;
+        }
+
+        public static Page<Board> getMultiResultBoard() {
+
+            Board board1 = Board.builder()
+                    .boardId(1)
+                    .title("this is title1")
+                    .content("this is content1")
+                    .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png"))
+                    .likes(0L)
+                    .likedUserIds(List.of())
+                    .comments(List.of())
+                    .commentCount(0)
+                    .build();
+
+            Board board2 = Board.builder()
+                    .boardId(2)
+                    .title("this is title2")
+                    .content("this is content2")
+                    .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_02.png"))
+                    .likes(0L)
+                    .likedUserIds(List.of())
+                    .comments(List.of())
+                    .commentCount(0)
+                    .build();
+
+            return new PageImpl<>(List.of(board1, board2),
+                    PageRequest.of(0, 10, Sort.by("boardId").descending()),
+                    2);
+        }
+
+        public static Board getSingleResultBoard(long boardId) {
+
+            Board board = Board.builder()
+                    .boardId(boardId)
+                    .title("this is title1")
+                    .content("this is content1")
+                    .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png"))
+                    .likes(0L)
+                    .likedUserIds(List.of())
+                    .comments(List.of())
+                    .commentCount(0)
+                    .build();
+
+            return board;
+        }
+    }
+
+    public static class MockS3 {
+        private static Map<HttpMethod, Object> stubRequestBody;
+        static {
+            String name = "files";
+            String uploadTo = "boards";
+            String contentType = "multipart/form-data";
+            String path = "src/main/resources/static/temp";
+            String originalFileName01 = "1.png";
+            String originalFileName02 = "2.png";
+            String originalFileName03 = "3.jpg";
+
+            MockMultipartFile multipartFile01 = new MockMultipartFile(
+                    name,
+                    originalFileName01,
+                    contentType,
+                    (path + "/" + originalFileName01).getBytes()
+            );
+
+            MockMultipartFile multipartFile02 = new MockMultipartFile(
+                    name,
+                    originalFileName02,
+                    contentType,
+                    (path + "/" + originalFileName02).getBytes()
+            );
+
+            MockMultipartFile multipartFile03 = new MockMultipartFile(
+                    name,
+                    originalFileName03,
+                    contentType,
+                    (path + "/" + originalFileName03).getBytes()
+            );
+
+            MockMultipartHttpServletRequestBuilder rrbs = (MockMultipartHttpServletRequestBuilder) RestDocumentationRequestBuilders
+                    .multipart("/api/s3/uploads")
+                    .file(multipartFile01)
+                    .file(multipartFile02)
+                    .file(multipartFile03)
+                    .param("uploadTo", uploadTo);
+            MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+            params.put("from", Collections.singletonList(getSingleResponseBody().getUploadFilePath()));
+            params.put("url", Collections.singletonList(getSingleResponseBody().getUploadFileUrl()));
+            stubRequestBody = new HashMap<>();
+            stubRequestBody.put(HttpMethod.POST, rrbs);
+            stubRequestBody.put(HttpMethod.DELETE, params);
+        }
+
+        public static Object getRequestBody(HttpMethod method) {
+            return stubRequestBody.get(method);
+        }
+
+        public static S3FileDto getSingleResponseBody() {
+            return S3FileDto.builder()
+                    .originalFileName("1.png")
+                    .uploadFileName("randomUUID_01.png")
+                    .uploadFilePath("boards")
+                    .uploadFileUrl("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png")
+                    .build();
+        }
+
+        public static List<S3FileDto> getMultiResponseBody() {
+            S3FileDto s3FileDto1 =
+                    S3FileDto.builder()
+                            .originalFileName("1.png")
+                            .uploadFileName("randomUUID_01.png")
+                            .uploadFilePath("boards")
+                            .uploadFileUrl("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png")
+                            .build();
+            S3FileDto s3FileDto2 =
+                    S3FileDto.builder()
+                            .originalFileName("2.png")
+                            .uploadFileName("randomUUID_02.png")
+                            .uploadFilePath("boards")
+                            .uploadFileUrl("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_02.png")
+                            .build();
+            S3FileDto s3FileDto3 =
+                    S3FileDto.builder()
+                            .originalFileName("3.jpg")
+                            .uploadFileName("randomUUID_03.jpg")
+                            .uploadFilePath("boards")
+                            .uploadFileUrl("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_03.jpg")
+                            .build();
+
+            return List.of(
+                    s3FileDto1,s3FileDto2,s3FileDto3
+            );
+        }
+    }
+
     public static class MockUser {
         private static Map<HttpMethod, Object> stubRequestBody;
         static {

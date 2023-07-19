@@ -5,6 +5,7 @@ import com.Petching.petching.comment.entity.Comment;
 import com.Petching.petching.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.lang.Nullable;
@@ -17,6 +18,7 @@ import java.util.List;
 @Setter
 @Entity
 @AllArgsConstructor
+@Builder
 public class Board extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,9 +29,6 @@ public class Board extends BaseEntity {
 
     @Column(columnDefinition = "TEXT")
     private String content;
-
-    @Column
-    private boolean checkLike;
 
     @Column(nullable = false)
     private Long likes;
