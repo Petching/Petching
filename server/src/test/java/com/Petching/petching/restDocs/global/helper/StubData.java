@@ -449,6 +449,7 @@ public class StubData {
                     .password("exPassword")
                     .email("email@example.com")
                     .address("exAddress")
+                    .roles(List.of("USER"))
                     .build();
 
             return user;

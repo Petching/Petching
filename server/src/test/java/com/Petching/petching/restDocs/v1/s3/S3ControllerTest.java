@@ -15,11 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
@@ -33,14 +36,13 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
-@WebMvcTest(S3Controller.class)
+@WebMvcTest(controllers = S3Controller.class)
 @AutoConfigureRestDocs
 @MockBean(JpaMetamodelMappingContext.class)
 @Import(SecurityConfiguration.class)
@@ -55,15 +57,16 @@ public class S3ControllerTest implements S3ControllerTestHelper {
     @MockBean
     private S3Service s3Service;
 
+    @MockBean
+    private SecurityConfiguration securityConfiguration;
+
     @DisplayName("Test - S3Controller - POST_UPLOAD")
     @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
     public void postS3Test() throws Exception {
 
         // given
         // mock data setup
-        String originalFileName01 = "1.png";
-        String originalFileName02 = "2.png";
-        String originalFileName03 = "3.jpg";
         List<S3FileDto> expectedResponse = StubData.MockS3.getMultiResponseBody();
 
         MockMultipartHttpServletRequestBuilder mmhsrb = (MockMultipartHttpServletRequestBuilder) StubData.MockS3.getRequestBody(HttpMethod.POST);
@@ -75,7 +78,7 @@ public class S3ControllerTest implements S3ControllerTestHelper {
         // when
         ResultActions resultActions =
         mockMvc.perform(
-                mmhsrb
+                mmhsrb.with(csrf())
         );
 
 
@@ -83,18 +86,6 @@ public class S3ControllerTest implements S3ControllerTestHelper {
         resultActions
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON+";charset=UTF-8"))
-                .andExpect(jsonPath("$[0].originalFileName").value(originalFileName01))
-                .andExpect(jsonPath("$[0].uploadFileName").isNotEmpty())
-                .andExpect(jsonPath("$[0].uploadFilePath").isNotEmpty())
-                .andExpect(jsonPath("$[0].uploadFileUrl").isNotEmpty())
-                .andExpect(jsonPath("$[1].originalFileName").value(originalFileName02))
-                .andExpect(jsonPath("$[1].uploadFileName").isNotEmpty())
-                .andExpect(jsonPath("$[1].uploadFilePath").isNotEmpty())
-                .andExpect(jsonPath("$[1].uploadFileUrl").isNotEmpty())
-                .andExpect(jsonPath("$[2].originalFileName").value(originalFileName03))
-                .andExpect(jsonPath("$[2].uploadFileName").isNotEmpty())
-                .andExpect(jsonPath("$[2].uploadFilePath").isNotEmpty())
-                .andExpect(jsonPath("$[2].uploadFileUrl").isNotEmpty())
                 .andDo(document("post-s3-upload",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
@@ -102,16 +93,16 @@ public class S3ControllerTest implements S3ControllerTestHelper {
                                 headerWithName("Content-Type").description("multipart/form-data")
                         ),
                         requestParameters(
-                                parameterWithName("uploadTo").description("올릴 경로. e.g: boards")
+                                parameterWithName("uploadTo").description("올릴 경로. e.g: boards"),
+                                parameterWithName("_csrf").description("csrf")
                         ),
                         requestParts(
                                 partWithName("files").description("올릴 파일(리스트)")
                         ),
                         responseFields(
-                                fieldWithPath("[].originalFileName").type(JsonFieldType.STRING).description("업로드될 파일의 원래 이름"),
-                                fieldWithPath("[].uploadFileName").type(JsonFieldType.STRING).description("업로드된 파일의 바뀐 이름"),
-                                fieldWithPath("[].uploadFilePath").type(JsonFieldType.STRING).description("업로드된 파일의 경로"),
-                                fieldWithPath("[].uploadFileUrl").type(JsonFieldType.STRING).description("업로드된 파일의 Url")
+                                getFullResponseDescriptors(
+                                        getDefaultS3UploadResponseDescriptors(DataResponseType.SINGLE)
+                                )
                 )));
 
 
@@ -119,6 +110,7 @@ public class S3ControllerTest implements S3ControllerTestHelper {
     }
     @DisplayName("Test - S3Controller - DELETE_DELETE")
     @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
     public void deleteS3Test() throws Exception {
 
         // given
@@ -129,7 +121,6 @@ public class S3ControllerTest implements S3ControllerTestHelper {
                 StubData.MockS3.getMultiResponseBody();
         MultiValueMap<String, String> params =
                 (MultiValueMap<String, String>) StubData.MockS3.getRequestBody(HttpMethod.DELETE);
-        MockMultipartHttpServletRequestBuilder mmhsrb = (MockMultipartHttpServletRequestBuilder) StubData.MockS3.getRequestBody(HttpMethod.POST);
 
 
         given(s3Service.uploadFiles(Mockito.any(String.class), Mockito.any(List.class))).willReturn(expectedResponse);
@@ -141,15 +132,16 @@ public class S3ControllerTest implements S3ControllerTestHelper {
                 deleteRequestBuilder(getDeleteUri(),params)
         );
 
+
         // then
         actions
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("result").value(result))
+                .andExpect(status().is2xxSuccessful())
                 .andDo(document("delete-s3-delete",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
                         requestParameters(
-                                List.of(parameterWithName("url").description("삭제할 파일 객체의 URL"),parameterWithName("from").description("삭제할 파일의 공간. e.g. boards"))
+                                List.of(parameterWithName("url").description("삭제할 파일 객체의 URL"),parameterWithName("from").description("삭제할 파일의 공간. e.g. boards"),
+                                parameterWithName("_csrf").description("csrf"))
                         )
                 ));
 

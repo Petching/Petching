@@ -12,6 +12,7 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
 import org.springframework.util.MultiValueMap;
 import java.util.Arrays;
@@ -75,7 +76,7 @@ public interface ControllerTestHelper<T> {
         return delete(url)
                 .params(
                         queryParams
-                );
+                ).with(csrf());
     }
     default String toJsonContent(T t) {
         Gson gson = new Gson();

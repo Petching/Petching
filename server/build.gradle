@@ -87,6 +87,7 @@ dependencies {
 
 	// TEST 라이브러리
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
 
 	// jwt
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
