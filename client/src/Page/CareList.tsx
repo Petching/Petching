@@ -1,35 +1,41 @@
-import React from 'react';
 import Card from '../Components/Care/Card';
 import TextEditor from '../Components/Care/TextEditor';
 
 const CareList = () => {
   return (
-    <div>
+    <div className="text-[1.2rem]">
       <div className="flex flex-col items-center bg-gray-100 mx-20">
         <div className="flex">
           <div className="mr-4">
-            <div>어느 지역을 찾으시나요?</div>
-            <input placeholder="동 이름을 검색하세요"></input>
+            <div className="leading-10 ">어느 지역을 찾으시나요?</div>
+            <div className="relative">
+              <input
+                placeholder="동 이름을 검색하세요"
+                className="w-60 h-10"
+              ></input>
+            </div>
           </div>
           <div>
-            <div>언제 맡기시나요?</div>
-            <input type="date"></input>
+            <div className="leading-10">언제 맡기시나요?</div>
+            <input type="date" className="w-60 h-10" />
           </div>
         </div>
         <div className="w-[15rem]">
-          <div className="text-center">원하시는 조건을 선택하세요</div>
-          <div className="flex justify-center">
-            <button className="w-[7rem] h-7 bg-white shadow-sm shadow-gray-400 rounded-full mr-1">
-              서울시서초구
+          <div className="text-center leading-10">
+            원하시는 조건을 선택하세요
+          </div>
+          <div className="flex justify-center mb-7">
+            <button className="w-[10rem] h-7 bg-white shadow-sm shadow-gray-400 rounded-full mr-1">
+              서울시
             </button>
-            <button className="w-[7rem] h-7 bg-white shadow-sm shadow-gray-400 rounded-full mr-1">
-              대형견 가능
+            <button className="w-[10rem] h-7 bg-white shadow-sm shadow-gray-400 rounded-full mr-1">
+              대형견
             </button>
-            <button className="w-[7rem] h-7 bg-white shadow-sm shadow-gray-400 rounded-full mr-1">
+            <button className="w-[10rem] h-7 bg-white shadow-sm shadow-gray-400 rounded-full mr-1">
               픽업 가능
             </button>
           </div>
-          <div className="flex justify-end">
+          <div className="flex justify-end mb-7">
             <button className="w-[7rem] h-7 bg-customGreen shadow-sm shadow-gray-400 rounded-full mr-1">
               검색
             </button>
