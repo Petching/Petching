@@ -17,9 +17,9 @@ const NextArrow = ({ onClick }: ArrowProps) => {
     <button
       onClick={onClick}
       type="button"
-      className="absolute top-1/2 right-0 bg-white p-2 rounded-full shadow-md z-40 transform -translate-y-1/2"
+      className="absolute text-[1.7rem] text-[#b5b4b4] top-1/2 right-0 p-2 rounded-full shadow-md z-40 transform -translate-y-1/2"
     >
-      ▷
+      {'>'}
     </button>
   );
 };
@@ -29,9 +29,9 @@ const PrevArrow = ({ onClick }: ArrowProps) => {
     <button
       onClick={onClick}
       type="button"
-      className="absolute top-1/2 left-0 bg-white p-2 rounded-full shadow-md z-40 transform -translate-y-1/2"
+      className="absolute text-[1.7rem] text-[#b5b4b4] top-1/2 left-0 p-2 rounded-full shadow-md z-40 transform -translate-y-1/2"
     >
-      ◁
+      {'<'}
     </button>
   );
 };
