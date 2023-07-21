@@ -36,6 +36,7 @@ import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.util.LinkedMultiValueMap;
@@ -84,10 +85,13 @@ public class BoardControllerTest implements BoardControllerTestHelper {
     @MockBean
     private UserService userService;
 
+    @MockBean
+    private SecurityConfiguration securityConfiguration;
 
 
     @DisplayName("Test - BoardController - POST")
     @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
     public void postBoardTest() throws Exception {
 
         // given
@@ -132,6 +136,7 @@ public class BoardControllerTest implements BoardControllerTestHelper {
 
     @DisplayName("Test - BoardController - GET")
     @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
     public void getBoardTest() throws Exception {
 
         // given
@@ -152,9 +157,9 @@ public class BoardControllerTest implements BoardControllerTestHelper {
         // then
         actions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.nickName").value(detail.getNickName()))
-                .andExpect(jsonPath("$.title").value(detail.getTitle()))
-                .andExpect(jsonPath("$.content").value(detail.getContent()))
+                .andExpect(jsonPath("$.data.nickName").value(detail.getNickName()))
+                .andExpect(jsonPath("$.data.title").value(detail.getTitle()))
+                .andExpect(jsonPath("$.data.content").value(detail.getContent()))
                 .andDo(
                         document("get-board",
                                 getRequestPreProcessor(),
@@ -172,6 +177,7 @@ public class BoardControllerTest implements BoardControllerTestHelper {
 
     @DisplayName("Test - BoardController - GET ALL")
     @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
     public void getAllBoardTest() throws Exception {
 
         // given
@@ -223,6 +229,7 @@ public class BoardControllerTest implements BoardControllerTestHelper {
 
     @DisplayName("Test - BoardController - PATCH")
     @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
     public void patchBoardTest() throws Exception {
 
         // given
@@ -239,16 +246,17 @@ public class BoardControllerTest implements BoardControllerTestHelper {
 
         // when
         ResultActions actions = mockMvc.perform(
-                patchRequestBuilder(getURI(), responseDto.getBoardId(), content));
+                patchRequestBuilder(getURI(), responseDto.getBoardId(), content)
+        );
 
 
 
         // then
         actions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value(patchDto.getTitle()))
-                .andExpect(jsonPath("$.content").value(patchDto.getContent()))
-                .andExpect(jsonPath("$.boardId").value(patchDto.getBoardId()))
+                .andExpect(jsonPath("$.data.title").value(patchDto.getTitle()))
+                .andExpect(jsonPath("$.data.content").value(patchDto.getContent()))
+                .andExpect(jsonPath("$.data.boardId").value(patchDto.getBoardId()))
                 .andDo(document("patch-board",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
@@ -265,9 +273,47 @@ public class BoardControllerTest implements BoardControllerTestHelper {
 
     @DisplayName("Test - BoardController - DELETE")
     @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
     public void deleteBoardTest() throws Exception {
+
+        // given
+        BoardDto.Post postDto = (BoardDto.Post) StubData.MockBoard.getRequestBody(HttpMethod.POST);
+
+        User user = new User();
+        user.setUserId(postDto.getUserId());
+
+        Board board = Board.builder()
+                .content(postDto.getContent())
+                .title(postDto.getTitle())
+                .imgUrls(postDto.getImgUrls())
+                .user(user)
+                .build();
+
+        given(boardService.createBoard(Mockito.any(Board.class))).willReturn(board);
+
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                deleteRequestBuilder(getURI(), user.getUserId())
+        );
+
+
+        actions.andExpect(status().is2xxSuccessful())
+                .andDo(document("delete-board",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        pathParameters(
+                                getBoardRequestPathParameterDescriptor()
+                        )
+
+                ));
 
     }
 
+    @DisplayName("Test - BoardController - Random ImgUrls LIMIT 4")
+    @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
+    public void getRecentlyBoardImg() throws Exception{
 
+    }
 }

@@ -12,6 +12,7 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.security.oauth2.jwt.JwsHeader.with;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
 import org.springframework.util.MultiValueMap;
@@ -26,14 +27,14 @@ public interface ControllerTestHelper<T> {
         return  post(url)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
+                .content(content).with(csrf());
     }
 
     default RequestBuilder patchRequestBuilder(String url, long resourceId, String content) {
         return patch(url, resourceId)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
+                .content(content).with(csrf());
 
     }
 
@@ -41,18 +42,18 @@ public interface ControllerTestHelper<T> {
         return patch(uri)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
+                .content(content).with(csrf());
 
     }
 
     default RequestBuilder getRequestBuilder(String url, long resourceId) {
         return get(url, resourceId)
-                .accept(MediaType.APPLICATION_JSON);
+                .accept(MediaType.APPLICATION_JSON).with(csrf());
     }
 
     default RequestBuilder getRequestBuilder(String uri) {
         return get(uri)
-                .accept(MediaType.APPLICATION_JSON);
+                .accept(MediaType.APPLICATION_JSON).with(csrf());
     }
 
     default RequestBuilder getRequestBuilder(String url, MultiValueMap<String, String> queryParams) {
@@ -60,15 +61,15 @@ public interface ControllerTestHelper<T> {
                 .params(
                         queryParams
                 )
-                .accept(MediaType.APPLICATION_JSON);
+                .accept(MediaType.APPLICATION_JSON).with(csrf());
     }
 
     default RequestBuilder deleteRequestBuilder(String url, long resourceId) {
-        return delete(url, resourceId);
+        return delete(url, resourceId).with(csrf());
     }
 
     default RequestBuilder deleteRequestBuilder(String uri) {
-        return delete(uri);
+        return delete(uri).with(csrf());
     }
 
 
@@ -125,7 +126,8 @@ public interface ControllerTestHelper<T> {
     default List<ParameterDescriptor> getDefaultRequestParameterDescriptors() {
         return List.of(
                 parameterWithName("page").description("Page 번호"),
-                parameterWithName("size").description("Page Size")
+                parameterWithName("size").description("Page Size"),
+                parameterWithName("_csrf").description("csrf")
         );
     }
     enum DataResponseType {
