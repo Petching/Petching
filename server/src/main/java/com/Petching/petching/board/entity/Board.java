@@ -4,21 +4,23 @@ import com.Petching.petching.audit.BaseEntity;
 import com.Petching.petching.comment.entity.Comment;
 import com.Petching.petching.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
-@AllArgsConstructor
-@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Board extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,8 +32,9 @@ public class Board extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @Column(nullable = false)
-    private Long likes;
+    @Column
+    @ColumnDefault("0")
+    private int likes;
 
     @ElementCollection
     private List<Long> likedUserIds;
@@ -41,7 +44,23 @@ public class Board extends BaseEntity {
     List<Comment> comments = new ArrayList<>();
 
     @Column
-    private long commentCount;
+    private int commentCount;
+
+
+    @Builder
+    public Board(long boardId, String title, String content, int likes, List<Long> likedUserIds, List<Comment> comments, int commentCount, @Nullable String imgUrl, List<String> imgUrls, User user) {
+        this.boardId = boardId;
+        this.title = title;
+        this.content = content;
+        this.likes = likes;
+        this.likedUserIds = likedUserIds;
+        this.comments = comments;
+        this.commentCount = commentCount;
+        this.imgUrl = imgUrl;
+        this.imgUrls = imgUrls;
+        this.user = user;
+    }
+
 
     @Column
     @Nullable
@@ -55,9 +74,6 @@ public class Board extends BaseEntity {
     @JsonIgnore
     private User user;
 
-    public Board() {
-        this.likes = 0L;
-    }
 
     public void addComment(Comment comment){comments.add(comment);}
 

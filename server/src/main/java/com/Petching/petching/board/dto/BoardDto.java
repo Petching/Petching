@@ -53,6 +53,9 @@ public class BoardDto {
         private String content;
 
         private List<String> imgUrls;
+        Patch(){
+
+        }
     }
 
     @Getter
@@ -64,13 +67,14 @@ public class BoardDto {
         private String title;
         private String profileImgUrl;
         private String nickName;
-        private long likes;
+        private int likes;
 
         private LocalDateTime createdAt;
-        private LocalDateTime modifiedAt;
+
+        private int commentCount;
 
         // 좋아요 눌렀는지 여부
-        private boolean checkLike =false;
+        private boolean checkLike;
 
         private List<String> imgUrls;
 
@@ -83,15 +87,14 @@ public class BoardDto {
         private long boardId;
         private String title;
         private String content;
-        private long likes;
+        private int likes;
         private String profileImgUrl;
         private String nickName;
         private LocalDateTime createdAt;
-        private LocalDateTime modifiedAt;
         // 좋아요 눌렀는지 여부
-        private boolean checkLike= false;
+        private boolean checkLike;
         private List<CommentDto.Response> comments;
-        private long commentCount;
+        private int commentCount;
 
         private List<String> imgUrls;
 
