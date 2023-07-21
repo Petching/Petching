@@ -14,6 +14,7 @@ import com.Petching.petching.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -55,12 +56,18 @@ public class SecurityConfiguration {
                         .and()
                         .formLogin().disable()
                         .httpBasic().disable()
-//                        .authorizeHttpRequests(authorize -> authorize
-//                                .anyRequest().permitAll()
-//                        )
                         .authorizeHttpRequests()
                         .antMatchers("/users/sign-up").permitAll()
-                        .anyRequest().authenticated()
+                        .antMatchers("/users/**").hasRole("USER")
+                        .antMatchers(HttpMethod.GET, "/carepost").permitAll()
+                        .antMatchers(HttpMethod.POST, "/carepost/**").hasRole("USER")
+                        .antMatchers(HttpMethod.PATCH, "/carepost/**").hasRole("USER")
+                        .antMatchers(HttpMethod.DELETE, "/carepost/**").hasRole("USER")
+                        .antMatchers(HttpMethod.GET, "/boards/**").permitAll()
+                        .antMatchers(HttpMethod.POST, "/boards/**").hasRole("USER")
+                        .antMatchers(HttpMethod.PATCH, "/boards/**").hasRole("USER")
+                        .antMatchers(HttpMethod.DELETE, "/boards/**").hasRole("USER")
+                        .anyRequest().permitAll()
                         .and()
                         .oauth2Login()
                         .successHandler(oAuth2UserSuccessHandler)
