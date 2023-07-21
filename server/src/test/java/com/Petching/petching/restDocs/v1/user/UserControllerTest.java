@@ -22,6 +22,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -34,7 +35,6 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -57,8 +57,12 @@ class UserControllerTest implements UserControllerTestHelper {
     @MockBean
     private UserMapper userMapper;
 
+    @MockBean
+    private SecurityConfiguration securityConfiguration;
+
     @DisplayName("Test - UserController - POST")
     @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
     public void postUserTest() throws Exception {
         // given
         UserPostDto post = (UserPostDto) StubData.MockUser.getRequestBody(HttpMethod.POST);
@@ -75,7 +79,8 @@ class UserControllerTest implements UserControllerTestHelper {
 
         // when
         ResultActions actions = mockMvc.perform(
-                postRequestBuilder(getUrl()+"sign-up", content));
+                postRequestBuilder(getUrl()+"sign-up", content)
+        );
 
         // then
         actions
@@ -95,6 +100,7 @@ class UserControllerTest implements UserControllerTestHelper {
 
     @DisplayName("Test - UserController - GET")
     @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
     public void getUserTest() throws Exception {
 
         // given
@@ -128,6 +134,7 @@ class UserControllerTest implements UserControllerTestHelper {
 
     @DisplayName("Test - UserController - PATCH")
     @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
     public void patchUserTest() throws Exception {
         // given
         long userId = 1L;
@@ -168,6 +175,7 @@ class UserControllerTest implements UserControllerTestHelper {
 
     @DisplayName("Test - UserController - DELETE")
     @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
     public void deleteUserTest() throws Exception {
 
         // given

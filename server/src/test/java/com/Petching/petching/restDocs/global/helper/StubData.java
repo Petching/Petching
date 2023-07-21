@@ -311,8 +311,7 @@ public class StubData {
                     .build();
 
             return new PageImpl<>(List.of(board1, board2,board3),
-                    PageRequest.of(1, 10, Sort.by("boardId").descending()),
-                    3);
+                    PageRequest.of(1, 10, Sort.by("boardId").descending()), 3);
         }
 
         public static Board getSingleResultBoard(long boardId) {
@@ -450,6 +449,7 @@ public class StubData {
                     .password("exPassword")
                     .email("email@example.com")
                     .address("exAddress")
+                    .roles(List.of("USER"))
                     .build();
 
             return user;
