@@ -97,7 +97,7 @@ public class S3ControllerTest implements S3ControllerTestHelper {
                                 parameterWithName("_csrf").description("csrf")
                         ),
                         requestParts(
-                                partWithName("files").description("올릴 파일(리스트)")
+                                partWithName("files").description("올릴 파일(배열)")
                         ),
                         responseFields(
                                 getFullResponseDescriptors(

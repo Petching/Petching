@@ -1,0 +1,124 @@
+[[User-API]]
+= User API
+
+== UserController
+=== 회원 등록 API
+
+[discrete]
+==== `Request`
+[source,http]
+----
+POST: /users/sign-up
+----
+
+.request-body
+include::{snippets}/post-user/request-body.adoc[]
+
+.request-fields
+include::{snippets}/post-user/request-fields.adoc[]
+
+[discrete]
+===== `Response`
+
+.response-headers
+include::{snippets}/post-user/response-headers.adoc[]
+
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/post-user/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/post-user/http-response.adoc[]
+
+
+---
+
+=== 회원 수정 API
+
+[discrete]
+==== `Request`
+[source,http]
+----
+PATCH: /users/
+----
+.request-body
+include::{snippets}/patch-user/request-body.adoc[]
+
+.request-fields
+include::{snippets}/patch-user/request-fields.adoc[]
+
+[discrete]
+==== `Response`
+.request-body
+include::{snippets}/patch-user/request-body.adoc[]
+
+.response-fields
+include::{snippets}/patch-user/response-fields.adoc[]
+
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/patch-user/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/patch-user/http-response.adoc[]
+
+
+---
+
+=== 회원 단일 조회 API
+
+[discrete]
+==== `Request`
+[source,http]
+----
+GET: /users/{user-id}
+----
+.path-parameters
+include::{snippets}/get-user/path-parameters.adoc[]
+
+[discrete]
+==== `Response`
+.request-body
+include::{snippets}/get-user/response-body.adoc[]
+
+.response-fields
+include::{snippets}/get-user/response-fields.adoc[]
+
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/get-user/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/get-user/http-response.adoc[]
+
+---
+
+=== 회원 삭제 API
+
+[discrete]
+==== `Request`
+[source,http]
+----
+DELETE: /users/{user-id}
+----
+.path-parameters
+include::{snippets}/delete-user/path-parameters.adoc[]
+
+[discrete]
+==== `Response`
+.http-response
+include::{snippets}/delete-user/http-response.adoc[]
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/delete-user/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/delete-user/http-response.adoc[]

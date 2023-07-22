@@ -47,8 +47,7 @@ import java.util.stream.Collectors;
 
 import static com.Petching.petching.restDocs.global.utils.ApiDocumentUtils.getRequestPreProcessor;
 import static com.Petching.petching.restDocs.global.utils.ApiDocumentUtils.getResponsePreProcessor;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -58,8 +57,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
-import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -166,6 +164,9 @@ public class BoardControllerTest implements BoardControllerTestHelper {
                                 getResponsePreProcessor(),
                                 requestParameters(
                                         getBoardRequestParameterDescriptors()
+                                ),
+                                pathParameters(
+                                        getBoardRequestPathParameterDescriptor()
                                 ),
                                 responseFields(
                                         getFullResponseDescriptors(
@@ -310,10 +311,74 @@ public class BoardControllerTest implements BoardControllerTestHelper {
 
     }
 
-    @DisplayName("Test - BoardController - Random ImgUrls LIMIT 4")
+    @DisplayName("Test - BoardController - GET - RecentlyBoardImgs")
     @Test
     @WithMockUser(username = "TestAdmin", roles = "admin")
     public void getRecentlyBoardImg() throws Exception{
 
+        // given
+        List<String> imgUrls = StubData.MockBoard.getRandomImageUrls();
+
+        given(boardService.findBoardRandomImg()).willReturn(imgUrls);
+
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                getBoardImgsRequestBuilder(getUrl()+"/recently-created")
+        );
+
+
+        // then
+        actions
+                .andExpect(status().is2xxSuccessful())
+                .andDo(document("get-board-random-imgUrls",
+                        getRequestPreProcessor(),
+                          getResponsePreProcessor(),
+                        responseFields(
+                                getFullResponseDescriptors(
+                                        getRandomImgUrlsFromBoardResponseDescriptors(DataResponseType.SINGLE)
+                                )
+                        )
+                ));
     }
+
+
+    @DisplayName("Test - BoardController - POST - updateLike")
+    @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
+    public void updateList() throws Exception{
+
+        // given
+        long boardId = 1L;
+        long userId = 1L;
+
+        Board board = StubData.MockBoard.getSingleResultBoard(boardId);
+
+        given(boardService.updateBoardLike(Mockito.anyLong())).willReturn(board);
+
+
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                postUpdateLikeRequestBuilder(getURI(),boardId, userId)
+        );
+
+
+
+        // then
+        actions
+                .andExpect(status().is2xxSuccessful())
+                .andDo(document("post-board-update-like",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        pathParameters(
+                                parameterWithName("boardId").description("Board 식별자 ID")
+                        ),
+                        requestParameters(
+                                getBoardPostUpdateLikeRequestParameterDescriptors()
+                        )
+                ));
+
+    }
+
 }

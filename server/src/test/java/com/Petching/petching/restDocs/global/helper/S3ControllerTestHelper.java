@@ -41,10 +41,10 @@ public interface S3ControllerTestHelper extends ControllerTestHelper {
         String parentPath = getDataParentPath(dataResponseType);
 
         return List.of(
-                fieldWithPath(parentPath.concat("[0].originalFileName")).type(JsonFieldType.STRING).description("업로드될 파일의 원래 이름"),
-                fieldWithPath(parentPath.concat("[0].uploadFileName")).type(JsonFieldType.STRING).description("업로드된 파일의 바뀐 이름"),
-                fieldWithPath(parentPath.concat("[0].uploadFilePath")).type(JsonFieldType.STRING).description("업로드된 파일의 경로"),
-                fieldWithPath(parentPath.concat("[0].uploadFileUrl")).type(JsonFieldType.STRING).description("업로드된 파일의 Url")
+                fieldWithPath(parentPath.concat("[].originalFileName")).type(JsonFieldType.STRING).description("업로드될 파일의 원래 이름"),
+                fieldWithPath(parentPath.concat("[].uploadFileName")).type(JsonFieldType.STRING).description("업로드된 파일의 바뀐 이름"),
+                fieldWithPath(parentPath.concat("[].uploadFilePath")).type(JsonFieldType.STRING).description("업로드된 파일의 경로"),
+                fieldWithPath(parentPath.concat("[].uploadFileUrl")).type(JsonFieldType.STRING).description("업로드된 파일의 Url")
         );
     }
 }
