@@ -4,7 +4,9 @@ import com.Petching.petching.board.dto.BoardDto;
 import com.Petching.petching.board.entity.Board;
 import com.Petching.petching.board.mapper.BoardMapper;
 import com.Petching.petching.board.service.BoardService;
+import com.Petching.petching.response.MultiResponse;
 import com.Petching.petching.response.PageInfo;
+import com.Petching.petching.response.SingleResponse;
 import com.Petching.petching.user.entity.User;
 import com.Petching.petching.user.service.UserService;
 import com.google.gson.Gson;
@@ -21,7 +23,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -95,7 +99,7 @@ public class BoardController {
 
         Board response = boardService.updateBoard(board);
 
-        return new ResponseEntity<>(mapper.boardToBoardDetailDto(response), HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponse<>(mapper.boardToBoardDetailDto(response)), HttpStatus.OK);
 
     }
 
@@ -108,7 +112,7 @@ public class BoardController {
 
         boardService.deleteBoard(boardId);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
 
@@ -148,7 +152,7 @@ public class BoardController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-Page-Info", new Gson().toJson(pageInfo));
 
-        return ResponseEntity.ok().headers(headers).body(response);
+        return new ResponseEntity<>(new MultiResponse<>(response, boardPage), HttpStatus.OK);
 
     }
 
@@ -173,17 +177,20 @@ public class BoardController {
 
         BoardDto.Detail response = mapper.boardToBoardDetailDto(board);
 
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>( new SingleResponse<>(response), HttpStatus.OK);
 
     }
 
 
     // Board 에 존재하는 img 중 최대 4개를 랜덤으로 가져오는 API
     @GetMapping("/recently-created")
-    public ResponseEntity<List<String >> getRecentlyBoardImg(){
+    public ResponseEntity getRecentlyBoardImg(){
 
         List<String> randomImgList = boardService.findBoardRandomImg();
-        return new ResponseEntity<>(randomImgList, HttpStatus.OK);
+        Map<String ,List<String >> map = new HashMap<>();
+        map.put("ImgUrls", randomImgList);
+
+        return new ResponseEntity<>(new SingleResponse<>(map), HttpStatus.OK);
     }
 
     /* 글에 작성된 좋아요 수를 올리는 API
@@ -200,8 +207,9 @@ public class BoardController {
          *  User user = userService.findUser(userId);
          *  user.addLikedBoard(updatedBoard.getBoardId());
          *  userService.updateFromBoard(user);
+         *
          * */
 
-        return new ResponseEntity(mapper.boardToBoardDetailDto(updatedBoard), HttpStatus.OK);
+        return new ResponseEntity( HttpStatus.OK);
     }
 }

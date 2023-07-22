@@ -36,16 +36,18 @@ import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.Petching.petching.restDocs.global.utils.ApiDocumentUtils.getRequestPreProcessor;
 import static com.Petching.petching.restDocs.global.utils.ApiDocumentUtils.getResponsePreProcessor;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -55,8 +57,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
-import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -82,10 +83,13 @@ public class BoardControllerTest implements BoardControllerTestHelper {
     @MockBean
     private UserService userService;
 
+    @MockBean
+    private SecurityConfiguration securityConfiguration;
 
 
     @DisplayName("Test - BoardController - POST")
     @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
     public void postBoardTest() throws Exception {
 
         // given
@@ -130,6 +134,7 @@ public class BoardControllerTest implements BoardControllerTestHelper {
 
     @DisplayName("Test - BoardController - GET")
     @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
     public void getBoardTest() throws Exception {
 
         // given
@@ -150,63 +155,16 @@ public class BoardControllerTest implements BoardControllerTestHelper {
         // then
         actions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.nickName").value(detail.getNickName()))
-                .andExpect(jsonPath("$.title").value(detail.getTitle()))
-                .andExpect(jsonPath("$.content").value(detail.getContent()))
+                .andExpect(jsonPath("$.data.nickName").value(detail.getNickName()))
+                .andExpect(jsonPath("$.data.title").value(detail.getTitle()))
+                .andExpect(jsonPath("$.data.content").value(detail.getContent()))
                 .andDo(
                         document("get-board",
                                 getRequestPreProcessor(),
                                 getResponsePreProcessor(),
                                 requestParameters(
-                                        getDefaultRequestParameterDescriptors()
+                                        getBoardRequestParameterDescriptors()
                                 ),
-                                responseFields(
-                                        getFullResponseDescriptors(
-                                                getDefaultBoardDetailDescriptors(DataResponseType.SINGLE))
-                                )
-                        ));
-
-    }
-
-    @DisplayName("Test - BoardController - GET ALL")
-    @Test
-    public void getAllBoardTest() throws Exception {
-
-        // given
-        long boardId = 1L;
-        long userId = 1L;
-
-
-        Page<Board> boardPage = StubData.MockBoard.getMultiResultBoard();
-        PageInfo pageInfo = new PageInfo(
-                boardPage.getNumber(),
-                boardPage.getSize(),
-                boardPage.getTotalElements(),
-                boardPage.getTotalPages()
-        );
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("X-Page-Info", new Gson().toJson(pageInfo));
-
-        List<BoardDto.Response> responseList = StubData.MockBoard.getMultiResponseBody();
-
-
-        given(boardService.findBoards(Mockito.any(Pageable.class))).willReturn(boardPage);
-        given(boardMapper.boardPageToBoardResponseListDto(Mockito.any(Page.class))).willReturn(responseList);
-
-
-        // when
-        ResultActions actions = mockMvc.perform(
-                getRequestAllBuilder(getUrl(), pageInfo.getPage(),pageInfo.getSize(), headers)
-        );
-
-
-        // then
-        actions
-                .andExpect(status().isOk())
-                .andDo(
-                        document("get-all-board",
-                                getRequestPreProcessor(),
-                                getResponsePreProcessor(),
                                 pathParameters(
                                         getBoardRequestPathParameterDescriptor()
                                 ),
@@ -218,8 +176,61 @@ public class BoardControllerTest implements BoardControllerTestHelper {
 
     }
 
+    @DisplayName("Test - BoardController - GET ALL")
+    @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
+    public void getAllBoardTest() throws Exception {
+
+        // given
+        String page = "1";
+        String size = "10";
+
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", page);
+        queryParams.add("size", size);
+
+        Page<Board> boardPage = StubData.MockBoard.getMultiResultBoard();
+        PageInfo pageInfo = new PageInfo(
+                boardPage.getNumber(),
+                boardPage.getSize(),
+                3,
+                1
+        );
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-Page-Info", new Gson().toJson(pageInfo));
+
+        List<BoardDto.Response> responseList = StubData.MockBoard.getMultiResponseBody();
+
+        given(boardService.findBoards(Mockito.any(Pageable.class))).willReturn(boardPage);
+        given(boardMapper.boardPageToBoardResponseListDto(Mockito.any(Page.class))).willReturn(responseList);
+
+
+        // when
+        ResultActions actions = mockMvc.perform(getRequestBuilder(getUrl(), queryParams));
+
+
+
+        // then
+        actions
+                .andExpect(status().isOk())
+                .andDo(
+                        document("get-all-board",
+                                getRequestPreProcessor(),
+                                getResponsePreProcessor(),
+                                requestParameters(
+                                        getDefaultRequestParameterDescriptors()
+                                ),
+                                responseFields(
+                                        getFullPageResponseDescriptors(
+                                                getDefaultBoardResponseDescriptors(DataResponseType.LIST))
+                                )
+                        )).andReturn();
+
+    }
+
     @DisplayName("Test - BoardController - PATCH")
     @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
     public void patchBoardTest() throws Exception {
 
         // given
@@ -236,16 +247,17 @@ public class BoardControllerTest implements BoardControllerTestHelper {
 
         // when
         ResultActions actions = mockMvc.perform(
-                patchRequestBuilder(getURI(), responseDto.getBoardId(), content));
+                patchRequestBuilder(getURI(), responseDto.getBoardId(), content)
+        );
 
 
 
         // then
         actions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value(patchDto.getTitle()))
-                .andExpect(jsonPath("$.content").value(patchDto.getContent()))
-                .andExpect(jsonPath("$.boardId").value(patchDto.getBoardId()))
+                .andExpect(jsonPath("$.data.title").value(patchDto.getTitle()))
+                .andExpect(jsonPath("$.data.content").value(patchDto.getContent()))
+                .andExpect(jsonPath("$.data.boardId").value(patchDto.getBoardId()))
                 .andDo(document("patch-board",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
@@ -262,9 +274,111 @@ public class BoardControllerTest implements BoardControllerTestHelper {
 
     @DisplayName("Test - BoardController - DELETE")
     @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
     public void deleteBoardTest() throws Exception {
+
+        // given
+        BoardDto.Post postDto = (BoardDto.Post) StubData.MockBoard.getRequestBody(HttpMethod.POST);
+
+        User user = new User();
+        user.setUserId(postDto.getUserId());
+
+        Board board = Board.builder()
+                .content(postDto.getContent())
+                .title(postDto.getTitle())
+                .imgUrls(postDto.getImgUrls())
+                .user(user)
+                .build();
+
+        given(boardService.createBoard(Mockito.any(Board.class))).willReturn(board);
+
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                deleteRequestBuilder(getURI(), user.getUserId())
+        );
+
+
+        actions.andExpect(status().is2xxSuccessful())
+                .andDo(document("delete-board",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        pathParameters(
+                                getBoardRequestPathParameterDescriptor()
+                        )
+
+                ));
 
     }
 
+    @DisplayName("Test - BoardController - GET - RecentlyBoardImgs")
+    @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
+    public void getRecentlyBoardImg() throws Exception{
+
+        // given
+        List<String> imgUrls = StubData.MockBoard.getRandomImageUrls();
+
+        given(boardService.findBoardRandomImg()).willReturn(imgUrls);
+
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                getBoardImgsRequestBuilder(getUrl()+"/recently-created")
+        );
+
+
+        // then
+        actions
+                .andExpect(status().is2xxSuccessful())
+                .andDo(document("get-board-random-imgUrls",
+                        getRequestPreProcessor(),
+                          getResponsePreProcessor(),
+                        responseFields(
+                                getFullResponseDescriptors(
+                                        getRandomImgUrlsFromBoardResponseDescriptors(DataResponseType.SINGLE)
+                                )
+                        )
+                ));
+    }
+
+
+    @DisplayName("Test - BoardController - POST - updateLike")
+    @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
+    public void updateList() throws Exception{
+
+        // given
+        long boardId = 1L;
+        long userId = 1L;
+
+        Board board = StubData.MockBoard.getSingleResultBoard(boardId);
+
+        given(boardService.updateBoardLike(Mockito.anyLong())).willReturn(board);
+
+
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                postUpdateLikeRequestBuilder(getURI(),boardId, userId)
+        );
+
+
+
+        // then
+        actions
+                .andExpect(status().is2xxSuccessful())
+                .andDo(document("post-board-update-like",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        pathParameters(
+                                parameterWithName("boardId").description("Board 식별자 ID")
+                        ),
+                        requestParameters(
+                                getBoardPostUpdateLikeRequestParameterDescriptors()
+                        )
+                ));
+
+    }
 
 }

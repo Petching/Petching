@@ -168,7 +168,9 @@ public class StubData {
     public static class MockBoard {
         private static Map<HttpMethod, Object> stubRequestBody;
 
-        private static List<String> imgUrls = Arrays.asList("https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_01.png","https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_02.png","https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_03.jpg");
+        private static List<String> imgUrls = Arrays.asList("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png",
+                "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_02.png",
+                "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_03.jpg");
 
         static {
 
@@ -311,8 +313,7 @@ public class StubData {
                     .build();
 
             return new PageImpl<>(List.of(board1, board2,board3),
-                    PageRequest.of(1, 10, Sort.by("boardId").descending()),
-                    3);
+                    PageRequest.of(1, 10, Sort.by("boardId").descending()), 3);
         }
 
         public static Board getSingleResultBoard(long boardId) {
@@ -328,6 +329,14 @@ public class StubData {
                     .build();
 
             return board;
+        }
+
+        public static List<String> getRandomImageUrls(){
+
+           return Arrays.asList("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png"
+                    ,"https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_02.png"
+                    ,"https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_03.jpg",
+                    "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_04.jpg");
         }
     }
 
@@ -450,6 +459,7 @@ public class StubData {
                     .password("exPassword")
                     .email("email@example.com")
                     .address("exAddress")
+                    .roles(List.of("USER"))
                     .build();
 
             return user;

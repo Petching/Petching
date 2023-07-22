@@ -87,6 +87,7 @@ dependencies {
 
 	// TEST 라이브러리
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
 
 	// jwt
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
@@ -98,6 +99,7 @@ dependencies {
 tasks.named('test') {
 	// test task 실행 시 API 문서 생성 스니펫 디렉토리 경로 설정
 	outputs.dir snippetsDir
+	useJUnitPlatform()
 }
 tasks.named('asciidoctor') {
 /*	attributes \
@@ -105,10 +107,16 @@ tasks.named('asciidoctor') {
 		'stylesheet': 'src/docs/asciidoc/stylesheets/custom-ui.css'*/
 
 	// asciidoctor task 실행 시 Asciidoctor 기능을 사용하기 위한 asciidoctorExtensions configuration
-
-	inputs.dir snippetsDir
-	configurations "asciidoctorExtensions"
 	dependsOn test
+	configurations "asciidoctorExtensions"
+	inputs.dir snippetsDir
+	baseDirFollowsSourceFile()
+
+}
+
+// static/docs 폴더 비우기
+asciidoctor.doFirst {
+	delete file('src/main/resources/static/docs')
 }
 
 // copyDocument task 실행 시 index.html 파일이 복사
@@ -120,7 +128,10 @@ task copyDocument(type: Copy) {
 	// "src/main/resources/static/docs" 경로로 index.html 을 추가
 	into file("src/main/resources/static/docs")
 }
-
+// build 의 의존작업 명시
+build {
+	dependsOn copyDocument
+}
 // jar file name 변경
 bootJar{
 	// bootJar task 실행 전에 copyDocument task 가 실행되도록 의존성을 설정

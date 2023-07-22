@@ -1,0 +1,67 @@
+[[S3-API]]
+= S3 API
+== S3 Controller
+
+=== 파일 업로드 API
+
+[discrete]
+==== `Request`
+[source,http]
+----
+POST: /api/v1/uploads
+----
+
+.request-headers
+include::{snippets}/post-s3-upload/request-headers.adoc[]
+.request-parameters
+include::{snippets}/post-s3-upload/request-parameters.adoc[]
+.request-parts
+include::{snippets}/post-s3-upload/request-parts.adoc[]
+
+
+
+[discrete]
+==== `Response`
+
+.response-body
+include::{snippets}/post-s3-upload/response-body.adoc[]
+.response-fields
+include::{snippets}/post-s3-upload/response-fields.adoc[]
+
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/post-s3-upload/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/post-s3-upload/http-response.adoc[]
+
+---
+
+=== 파일 삭제 API
+
+[discrete]
+==== `Request`
+[source,http]
+----
+DELETE: /api/v1/delete
+----
+
+.request-parameters
+include::{snippets}/delete-s3-delete/request-parameters.adoc[]
+
+
+[discrete]
+==== `Response`
+.http-response
+include::{snippets}/delete-s3-delete/http-response.adoc[]
+
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/delete-s3-delete/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/delete-s3-delete/http-response.adoc[]
