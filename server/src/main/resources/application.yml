@@ -37,6 +37,8 @@ cloud:
       static: ap-northeast-2
     stack:
       auto: false
+    credentials:
+      use-default-aws-credentials-chain: true
 
 aws:
   paramstore:
