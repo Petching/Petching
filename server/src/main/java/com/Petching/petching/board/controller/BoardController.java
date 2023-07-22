@@ -23,7 +23,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -185,7 +187,10 @@ public class BoardController {
     public ResponseEntity getRecentlyBoardImg(){
 
         List<String> randomImgList = boardService.findBoardRandomImg();
-        return new ResponseEntity<>(new SingleResponse<>(randomImgList), HttpStatus.OK);
+        Map<String ,List<String >> map = new HashMap<>();
+        map.put("ImgUrls", randomImgList);
+
+        return new ResponseEntity<>(new SingleResponse<>(map), HttpStatus.OK);
     }
 
     /* 글에 작성된 좋아요 수를 올리는 API
@@ -202,6 +207,7 @@ public class BoardController {
          *  User user = userService.findUser(userId);
          *  user.addLikedBoard(updatedBoard.getBoardId());
          *  userService.updateFromBoard(user);
+         *
          * */
 
         return new ResponseEntity( HttpStatus.OK);

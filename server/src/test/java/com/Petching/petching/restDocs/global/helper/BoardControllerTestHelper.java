@@ -11,8 +11,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
 public interface BoardControllerTestHelper extends ControllerTestHelper{
     String BOARD_URL = "/boards";
@@ -69,7 +71,36 @@ public interface BoardControllerTestHelper extends ControllerTestHelper{
                 .headers(httpHeader)
                 .accept(MediaType.APPLICATION_JSON);
     }
+    default RequestBuilder getBoardImgsRequestBuilder(String uri) {
+        return get(uri)
+                .accept(MediaType.APPLICATION_JSON);
 
+    }
+
+    default RequestBuilder postUpdateLikeRequestBuilder(String url,
+                                              long boardId, long userId) {
+        return  post(url+"/like",boardId)
+                .param("userId",String.valueOf(userId))
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(csrf());
+    }
+
+    default List<ParameterDescriptor> getBoardPostUpdateLikeRequestParameterDescriptors() {
+        return List.of(
+                parameterWithName("userId").description("USER 식별자 ID"),
+                parameterWithName("_csrf").description("csrf")
+
+        );
+    }
+
+    default List<FieldDescriptor> getRandomImgUrlsFromBoardResponseDescriptors(DataResponseType dataResponseType) {
+
+        String parentPath = getDataParentPath(dataResponseType);
+
+        return List.of(
+                fieldWithPath(parentPath.concat("ImgUrls")).type(JsonFieldType.ARRAY).description("Board에 있는 image를 random으로 최대 4개 가져옴")
+        );
+    }
     default List<ParameterDescriptor> getBoardRequestParameterDescriptors() {
         return List.of(
                 parameterWithName("userId").description("USER 식별자 ID")
