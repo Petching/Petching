@@ -1,6 +1,7 @@
 package com.Petching.petching.restDocs.v1.user;
 
 import com.Petching.petching.config.SecurityConfiguration;
+import com.Petching.petching.global.aws.s3.config.S3Configuration;
 import com.Petching.petching.restDocs.global.helper.UserControllerTestHelper;
 import com.Petching.petching.user.dto.UserPatchDto;
 import com.Petching.petching.user.dto.UserResponseDto;
@@ -43,7 +44,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(UserController.class)
 @MockBean(JpaMetamodelMappingContext.class)
 @AutoConfigureRestDocs
-@Import(SecurityConfiguration.class)
+@Import({SecurityConfiguration.class,
+    S3Configuration.class
+})
 class UserControllerTest implements UserControllerTestHelper {
     @Autowired
     private MockMvc mockMvc;
