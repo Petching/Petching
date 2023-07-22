@@ -6,6 +6,7 @@ import com.Petching.petching.board.entity.Board;
 import com.Petching.petching.board.mapper.BoardMapper;
 import com.Petching.petching.board.service.BoardService;
 import com.Petching.petching.config.SecurityConfiguration;
+import com.Petching.petching.global.aws.s3.config.S3Configuration;
 import com.Petching.petching.response.PageInfo;
 import com.Petching.petching.restDocs.global.helper.BoardControllerTestHelper;
 import com.Petching.petching.restDocs.global.helper.StubData;
@@ -65,7 +66,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @MockBean(JpaMetamodelMappingContext.class)
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc
-@Import(SecurityConfiguration.class)
+@Import({
+        SecurityConfiguration.class,
+        S3Configuration.class
+})
 public class BoardControllerTest implements BoardControllerTestHelper {
 
     @Autowired

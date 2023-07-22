@@ -3,6 +3,7 @@ package com.Petching.petching.restDocs.v1.s3;
 
 import com.Petching.petching.config.SecurityConfiguration;
 import com.Petching.petching.global.api.s3.controller.S3Controller;
+import com.Petching.petching.global.aws.s3.config.S3Configuration;
 import com.Petching.petching.global.aws.s3.dto.S3FileDto;
 import com.Petching.petching.global.aws.s3.service.S3Service;
 import com.Petching.petching.restDocs.global.helper.S3ControllerTestHelper;
@@ -45,7 +46,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = S3Controller.class)
 @AutoConfigureRestDocs
 @MockBean(JpaMetamodelMappingContext.class)
-@Import(SecurityConfiguration.class)
+@Import({
+        SecurityConfiguration.class,
+        S3Configuration.class
+})
 public class S3ControllerTest implements S3ControllerTestHelper {
 
     @Autowired
