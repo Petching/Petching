@@ -44,8 +44,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(UserController.class)
 @MockBean(JpaMetamodelMappingContext.class)
 @AutoConfigureRestDocs
-@Import({SecurityConfiguration.class,
-    S3Configuration.class
+@Import({
+        SecurityConfiguration.class,
+        S3Configuration.class
 })
 class UserControllerTest implements UserControllerTestHelper {
     @Autowired
