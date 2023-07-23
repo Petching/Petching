@@ -38,7 +38,7 @@ public interface UserControllerTestHelper extends ControllerTestHelper {
     default List<FieldDescriptor> getDefaultMemberPatchRequestDescriptors() {
 
         return List.of(
-                fieldWithPath("userId").type(JsonFieldType.NUMBER).description("회원 식별자").ignored(),
+                fieldWithPath("userId").type(JsonFieldType.NUMBER).description("회원 식별자"),
                 fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
                 fieldWithPath("nickName").type(JsonFieldType.STRING).description("닉네임"),
                 fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호"),
@@ -48,7 +48,7 @@ public interface UserControllerTestHelper extends ControllerTestHelper {
     default List<FieldDescriptor> getDefaultMemberDeleteRequestDescriptors() {
 
         return List.of(
-                fieldWithPath("user-id").type(JsonFieldType.NUMBER).description("회원 식별자").ignored()
+                fieldWithPath("user-id").type(JsonFieldType.NUMBER).description("회원 식별자")
         );
     }
 
