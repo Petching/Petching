@@ -1,21 +1,27 @@
 import axios from 'axios';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-export const authenticate = async (email: string, password: number) => {
+export const authenticate = async (email: string, password: string) => {
   try {
     const response = await axios.post(
-      'https://5ad6-118-32-224-80.ngrok-free.app/users/login',
+      `${BASE_URL}/login`,
       { email, password },
       {
         headers: {
           'Content-Type': 'application/json',
-          'ngrok-skip-browser-warning': '69420',
         },
       },
     );
 
-    return response.status === 200;
+    if (response.status === 200) {
+      if (response.headers['authorization']) {
+        const token = response.headers['authorization'];
+
+        localStorage.setItem('TOKEN', token);
+        return true;
+      }
+    }
   } catch (error) {
-    // Handle error if the request fails
     console.error(error);
     throw error;
   }

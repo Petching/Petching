@@ -10,7 +10,7 @@ import Google from './Google';
 const SignInComponent: React.FC = () => {
   const [message, setMessage] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState(1234);
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleButtonClick = async () => {
@@ -32,6 +32,7 @@ const SignInComponent: React.FC = () => {
             type="email"
             className="ml-4  border border-gray-300 p-2 rounded-lg mr-2"
             placeholder="이메일을 입력해주세요"
+            onChange={event => setEmail(event.target.value)}
           />
 
           <div className="text-red-500">{message}</div>
@@ -42,6 +43,7 @@ const SignInComponent: React.FC = () => {
           type="password"
           className="ml-4 mr-7 border border-gray-300 p-2 rounded-lg"
           placeholder="비밀번호를 입력해주세요"
+          onChange={event => setPassword(event.target.value)}
         />
         <br></br>
         <button
