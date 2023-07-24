@@ -7,17 +7,21 @@ import {
   signUpUser,
 } from '../../API/signUp';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+
 const SignComponent: React.FC = () => {
   const [message, setMessage] = useState('');
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState(1234);
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordCheckMsg, setPasswordCheckMsg] = useState('');
 
   const navigate = useNavigate();
 
   const handleSignup = async () => {
     try {
-      const data = { email, password, nickName: nickname };
+      const data = { email, password, nickname };
       const response = await signUpUser(data);
       console.log(response);
       navigate('/signin');
@@ -26,6 +30,16 @@ const SignComponent: React.FC = () => {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    if (password && confirmPassword) {
+      if (password !== confirmPassword) {
+        setPasswordCheckMsg('비밀번호가 일치하지 않습니다');
+      } else {
+        setPasswordCheckMsg('비밀번호가 일치합니다');
+      }
+    }
+  }, [password, confirmPassword]);
 
   //중복 아이디, 중복 닉네임 확인은 다른 함수로 각각 만들어야함
   const handleCheck = async () => {
@@ -82,12 +96,30 @@ const SignComponent: React.FC = () => {
         <input
           className="ml-4  mr-7 border border-gray-300 p-2 rounded-lg"
           placeholder="비밀번호를 입력해주세요"
+          onChange={e => setPassword(e.target.value)}
+          value={password}
         />
         <div className="ml-4 text-left text-gray-300">비밀번호 확인</div>
         <input
           className="ml-4 mr-7 border border-gray-300 p-2 rounded-lg"
           placeholder="비밀번호를 다시 입력해주세요"
+          onChange={e => {
+            setConfirmPassword(e.target.value);
+          }}
+          value={confirmPassword}
         />
+        <div
+          className={`flex flex-col items-center ${
+            passwordCheckMsg === '비밀번호가 일치하지 않습니다'
+              ? 'text-red-300'
+              : passwordCheckMsg === '비밀번호가 일치합니다'
+              ? 'text-blue-300'
+              : ''
+          }`}
+        >
+          {passwordCheckMsg}
+        </div>
+
         <div className="ml-4  text-left text-gray-300">닉네임</div>
         <div className="flex w-full items-center">
           <input
