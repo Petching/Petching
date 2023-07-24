@@ -1,5 +1,6 @@
 import { User, SignupData } from '../Util/types';
 import axios from 'axios';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const checkUser = async () => {
   // 백엔드 API 호출하여 DB에서 유저 정보 가져오기
@@ -10,16 +11,11 @@ export const checkUser = async () => {
 
 export const signUpUser = async (data: SignupData) => {
   try {
-    const response = await axios.post(
-      'https://5ad6-118-32-224-80.ngrok-free.app/users/sign-up',
-      data,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'ngrok-skip-browser-warning': '69420',
-        },
+    const response = await axios.post(`${BASE_URL}/users/sign-up`, data, {
+      headers: {
+        'Content-Type': 'application/json',
       },
-    );
+    });
     return response;
   } catch (error) {
     console.error(error);
@@ -30,12 +26,11 @@ export const signUpUser = async (data: SignupData) => {
 export const checkEmail = async (email: string) => {
   try {
     const response = await axios.post(
-      'https://fcf3-118-32-224-80.ngrok-free.app/users/sign-up',
+      `${BASE_URL}/users/sign-up`,
       { email },
       {
         headers: {
           'Content-Type': 'application/json',
-          'ngrok-skip-browser-warning': '69420',
         },
       },
     );
@@ -51,7 +46,7 @@ export const checkEmail = async (email: string) => {
 export const checkNickname = async (nickname: string) => {
   try {
     const response = await axios.post(
-      'https://fcf3-118-32-224-80.ngrok-free.app/users/sign-up',
+      `${BASE_URL}/users/sign-up`,
       { nickname },
       {
         headers: {
