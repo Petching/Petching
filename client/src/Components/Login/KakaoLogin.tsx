@@ -37,7 +37,7 @@ const KakaoLogin = () => {
     }
   }, [code, navigate]);
 
-  return <div>kakaologin</div>;
+  return <div>kakaoLogin</div>;
 };
 
 export default KakaoLogin;
