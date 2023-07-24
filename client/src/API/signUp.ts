@@ -37,7 +37,6 @@ export const checkEmail = async (email: string) => {
 
     return response.data.isDuplicate;
   } catch (error) {
-    // Handle error if the request fails
     console.error(error);
     throw error;
   }
@@ -57,7 +56,6 @@ export const checkNickname = async (nickname: string) => {
 
     return response.data.isDuplicate;
   } catch (error) {
-    // Handle error if the request fails
     console.error(error);
     throw error;
   }
