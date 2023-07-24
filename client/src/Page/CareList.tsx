@@ -1,3 +1,4 @@
+import Board from '../Components/Care/Board';
 import Card from '../Components/Care/Card';
 import TextEditor from '../Components/Care/TextEditor';
 
@@ -53,6 +54,7 @@ const CareList = () => {
       <div>
         <TextEditor></TextEditor>
       </div>
+      <Board></Board>
     </div>
   );
 };
