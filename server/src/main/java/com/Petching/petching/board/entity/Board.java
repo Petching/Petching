@@ -44,7 +44,7 @@ public class Board extends BaseEntity {
     List<Comment> comments = new ArrayList<>();
 
     @Column
-    private int commentCount;
+    private int commentCount = comments.size();
 
 
     @Builder
@@ -76,7 +76,6 @@ public class Board extends BaseEntity {
 
 
     public void addComment(Comment comment){comments.add(comment);}
-
 
 
 
