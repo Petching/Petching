@@ -11,4 +11,8 @@ public class GenerateName {
         String uniqueFileName = UUID.randomUUID().toString().replace("-", "");
         return uniqueFileName + extension;
     }
+
+    public String generateRandomName(){
+        return UUID.randomUUID().toString();
+    }
 }

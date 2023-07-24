@@ -129,7 +129,7 @@ public class BoardControllerTest implements BoardControllerTestHelper {
                                 getDefaultBoardPostRequestDescriptors()
                         ),
                         responseHeaders(
-                                headerWithName(HttpHeaders.LOCATION).description("Location header. 등록된 User의 URI")
+                                headerWithName(HttpHeaders.LOCATION).description("Location header. 등록된 Board의 URI")
                         )
                 ));
 
@@ -302,6 +302,7 @@ public class BoardControllerTest implements BoardControllerTestHelper {
         );
 
 
+        // then
         actions.andExpect(status().is2xxSuccessful())
                 .andDo(document("delete-board",
                         getRequestPreProcessor(),

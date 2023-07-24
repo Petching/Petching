@@ -6,8 +6,14 @@ import com.Petching.petching.comment.dto.CommentDto;
 import com.Petching.petching.comment.entity.Comment;
 import com.Petching.petching.comment.mapper.CommentMapper;
 import com.Petching.petching.comment.service.CommentService;
+import com.Petching.petching.response.MultiResponse;
+import com.Petching.petching.response.PageInfo;
+import com.Petching.petching.response.SingleResponse;
 import com.Petching.petching.user.entity.User;
 import com.Petching.petching.user.service.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +50,9 @@ public class CommentController {
 
         commentService.createComment(comment);
 
+        board.setCommentCount(board.getCommentCount() + 1);
+        boardService.updateBoard(board);
+
         URI uri = UriComponentsBuilder.newInstance()
                 .path("/"+boardId+"/" + comment.getCommentId())
                 .build().toUri();
@@ -61,28 +70,43 @@ public class CommentController {
 
         Comment response = commentService.updateComment(comment);
 
-        return new ResponseEntity<>(mapper.commentToCommentResponseDto(response), HttpStatus.OK);
+        CommentDto.Response responseDto = mapper.commentToCommentResponseDto(response);
+
+        return new ResponseEntity<>(new SingleResponse<>(responseDto), HttpStatus.OK);
     }
 
     @DeleteMapping("/{commentId}")
     public ResponseEntity deleteComment(
+            @PathVariable("boardId") long boardId,
             @PathVariable("commentId") long commentId) {
 
         commentService.deleteComment(commentId);
+        Board board = boardService.findBoardByMK(boardId);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        board.setCommentCount(board.getCommentCount() - 1);
+        boardService.updateBoard(board);
+
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/comments")
-    public ResponseEntity getComments() {
-        List<Comment> comments = commentService.findComments();
+    public ResponseEntity getComments(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+
+
+        Pageable pageable = PageRequest.of(page-1, size);
+        Page<Comment> commentPage = commentService.findComments(pageable);
+
 
         List<CommentDto.Response> responses =
-                comments.stream()
-                        .map(comment -> mapper.commentToCommentResponseDto(comment))
-                        .collect(Collectors.toList());
+                mapper.commentPageToCommentResponseListDto(commentPage);
 
-        return new ResponseEntity<>(responses, HttpStatus.OK);
+
+
+        return new ResponseEntity<>(new MultiResponse<>(responses, commentPage), HttpStatus.OK);
     }
 
     @GetMapping("{commentId}")
@@ -90,6 +114,8 @@ public class CommentController {
             @PathVariable("commentId") Long commentId) {
         Comment comment = commentService.findComment(commentId);
 
-        return new ResponseEntity<>(mapper.commentToCommentResponseDto(comment), HttpStatus.OK);
+        CommentDto.Response responseDto = mapper.commentToCommentResponseDto(comment);
+
+        return new ResponseEntity<>(new SingleResponse<>(responseDto), HttpStatus.OK);
     }
 }
