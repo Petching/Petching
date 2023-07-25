@@ -4,7 +4,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 export const authenticate = async (email: string, password: string) => {
   try {
     const response = await axios.post(
-      `${BASE_URL}/login`,
+      `https://server.petching.net/login`,
       { email, password },
       {
         headers: {

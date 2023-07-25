@@ -11,11 +11,15 @@ export const checkUser = async () => {
 
 export const signUpUser = async (data: SignupData) => {
   try {
-    const response = await axios.post(`${BASE_URL}/users/sign-up`, data, {
-      headers: {
-        'Content-Type': 'application/json',
+    const response = await axios.post(
+      `https://server.petching.net/users/sign-up`,
+      data,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
       },
-    });
+    );
     return response;
   } catch (error) {
     console.error(error);
@@ -26,7 +30,7 @@ export const signUpUser = async (data: SignupData) => {
 export const checkEmail = async (email: string) => {
   try {
     const response = await axios.post(
-      `${BASE_URL}/users/sign-up`,
+      `https://server.petching.net/users/sign-up`,
       { email },
       {
         headers: {
@@ -45,7 +49,7 @@ export const checkEmail = async (email: string) => {
 export const checkNickname = async (nickname: string) => {
   try {
     const response = await axios.post(
-      `${BASE_URL}/users/sign-up`,
+      `https://server.petching.net/users/sign-up`,
       { nickname },
       {
         headers: {
