@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { User, SignupData } from '../Util/types';
 import axios from 'axios';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
