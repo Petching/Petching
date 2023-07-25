@@ -31,7 +31,7 @@ const TextEditor = () => {
           ],
           ckfinder: {
             // 이미지 업로드 기능을 서버측 API를 사용하여 설정합니다.
-            uploadUrl: 'https://server.petching.net/',
+            uploadUrl: 'https://server.petching.net/api/s3/uploads',
           },
         }}
         onReady={(editor: any) => handleInit(editor)}
