@@ -1,7 +1,7 @@
 import Board from '../Components/Care/Board';
 import Card from '../Components/Care/Card';
 import TextEditor from '../Components/Care/TextEditor';
-
+import DatePicker from '../Components/Care/DatePicker';
 const CareList = () => {
   return (
     <div className="text-[1.2rem]">
@@ -49,12 +49,13 @@ const CareList = () => {
       <div className="flex flex-wrap justify-center">
         <Card />
         <Card />
-        <Card />
       </div>
       <div>
         <TextEditor></TextEditor>
       </div>
-      <Board></Board>
+      <div>
+        <DatePicker></DatePicker>
+      </div>
     </div>
   );
 };

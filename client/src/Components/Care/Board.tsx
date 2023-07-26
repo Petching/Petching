@@ -4,6 +4,7 @@ import axios from 'axios';
 interface Post {
   boardId: number;
   title: string;
+  imgUrls: string;
 }
 
 const Board = () => {
@@ -19,16 +20,7 @@ const Board = () => {
     fetchPosts();
   }, []);
 
-  return (
-    <div>
-      <h1>게시판</h1>
-      <ul>
-        {posts.map(post => (
-          <li key={post.boardId}>{post.title}</li>
-        ))}
-      </ul>
-    </div>
-  );
+  return;
 };
 
 export default Board;
