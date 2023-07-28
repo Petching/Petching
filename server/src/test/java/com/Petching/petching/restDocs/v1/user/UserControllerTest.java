@@ -120,8 +120,9 @@ class UserControllerTest implements UserControllerTestHelper {
         // then
         actions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.email").value(response.getEmail()))
-                .andExpect(jsonPath("$.nickName").value(response.getNickName()))
+                .andExpect(jsonPath("$.data.email").value(response.getEmail()))
+                .andExpect(jsonPath("$.data.nickName").value(response.getNickName()))
+                .andExpect(jsonPath("$.data.address").value(response.getAddress()))
                 .andDo(
                         document("get-user",
                                 getRequestPreProcessor(),
@@ -161,9 +162,9 @@ class UserControllerTest implements UserControllerTestHelper {
         actions
                 .andExpect(status().isOk())
                 //.andExpect(jsonPath("$.userId").value(patch.getUserId()))
-                .andExpect(jsonPath("$.nickName").value(patch.getNickName()))
-                .andExpect(jsonPath("$.email").value(patch.getEmail()))
-                .andExpect(jsonPath("$.address").value(patch.getAddress()))
+                .andExpect(jsonPath("$.data.nickName").value(patch.getNickName()))
+                .andExpect(jsonPath("$.data.email").value(patch.getEmail()))
+                .andExpect(jsonPath("$.data.address").value(patch.getAddress()))
                 .andDo(document("patch-user",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
