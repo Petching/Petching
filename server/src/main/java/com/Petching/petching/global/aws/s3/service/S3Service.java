@@ -1,5 +1,6 @@
 package com.Petching.petching.global.aws.s3.service;
 
+import com.Petching.petching.global.aws.s3.config.S3Configuration;
 import com.Petching.petching.global.aws.s3.dto.S3FileDto;
 import com.Petching.petching.global.exception.BusinessLogicException;
 import com.Petching.petching.global.exception.ExceptionCode;
@@ -26,10 +27,11 @@ public class S3Service{
 
     private final GenerateName generateName;
 
+    private final S3Configuration s3Configuration;
 
-
-    public S3Service(GenerateName generateName) {
+    public S3Service(GenerateName generateName, S3Configuration s3Configuration) {
         this.generateName = generateName;
+        this.s3Configuration = s3Configuration;
     }
 
     public List<S3FileDto> uploadFiles(String uploadTo, List<MultipartFile> multipartFiles) {

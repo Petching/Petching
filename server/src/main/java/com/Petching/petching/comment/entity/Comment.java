@@ -5,14 +5,10 @@ import com.Petching.petching.board.entity.Board;
 import com.Petching.petching.carepost.entity.CarePost;
 import com.Petching.petching.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -29,12 +25,20 @@ public class Comment extends BaseEntity {
     @JsonIgnore
     private Board board;
 
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
 
 
+    @Builder
+    public Comment(long commentId, String content, Board board, User user) {
+        this.commentId = commentId;
+        this.content = content;
+        this.board = board;
+        this.user = user;
+    }
     public long getBoardId(){
         return board.getBoardId();
     }

@@ -19,4 +19,6 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @Query(nativeQuery = true, value = "SELECT b.img_url FROM board b WHERE b.img_url IS NOT NULL ORDER BY RAND() LIMIT 4")
     Optional<List<String>> findRandomBoardImages();
 
+    @Query(value = "SELECT * FROM Board ORDER BY RAND() LIMIT 4", nativeQuery = true)
+    List<Board> findRandomBoards();
 }

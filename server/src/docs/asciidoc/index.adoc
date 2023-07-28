@@ -33,3 +33,4 @@ include::자랑하기-API.adoc[]
 
 include::S3-API.adoc[]
 
+include::Comment-API.adoc[]

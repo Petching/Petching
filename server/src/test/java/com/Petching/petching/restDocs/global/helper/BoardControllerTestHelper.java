@@ -110,7 +110,7 @@ public interface BoardControllerTestHelper extends ControllerTestHelper{
     default List<FieldDescriptor> getDefaultBoardPatchRequestDescriptors() {
 
         return List.of(
-                fieldWithPath("userId").type(JsonFieldType.NUMBER).description("회원 식별자").ignored(),
+                fieldWithPath("userId").type(JsonFieldType.NUMBER).description("회원 식별자"),
                 fieldWithPath("boardId").type(JsonFieldType.NUMBER).description("Board 식별자"),
                 fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
                 fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),

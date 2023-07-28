@@ -8,7 +8,7 @@
 ==== `Request`
 [source,http]
 ----
-POST: /api/v1/uploads
+POST: /api/s3/uploads
 ----
 
 .request-headers
@@ -45,7 +45,7 @@ include::{snippets}/post-s3-upload/http-response.adoc[]
 ==== `Request`
 [source,http]
 ----
-DELETE: /api/v1/delete
+DELETE: /api/s3/delete
 ----
 
 .request-parameters
