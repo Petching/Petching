@@ -1,7 +1,7 @@
 import Board from '../Components/Care/Board';
 import Card from '../Components/Care/Card';
 import TextEditor from '../Components/Care/TextEditor';
-import DatePicker from '../Components/Care/DatePicker';
+import ReactCalendar from '../Components/Care/ReactCalendar';
 const CareList = () => {
   return (
     <div className="text-[1.2rem]">
@@ -54,7 +54,7 @@ const CareList = () => {
         <TextEditor></TextEditor>
       </div>
       <div>
-        <DatePicker></DatePicker>
+        <ReactCalendar></ReactCalendar>
       </div>
     </div>
   );
