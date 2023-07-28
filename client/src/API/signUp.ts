@@ -31,7 +31,7 @@ export const signUpUser = async (data: SignupData) => {
 export const checkEmail = async (email: string) => {
   try {
     const response = await axios.post(
-      `https://server.petching.net/users/sign-up`,
+      `https://server.petching.net/users/check-id`,
       { email },
       {
         headers: {
@@ -39,8 +39,8 @@ export const checkEmail = async (email: string) => {
         },
       },
     );
-
-    return response.data.isDuplicate;
+    console.log(response);
+    return response.data;
   } catch (error) {
     console.error(error);
     throw error;
@@ -50,7 +50,7 @@ export const checkEmail = async (email: string) => {
 export const checkNickname = async (nickname: string) => {
   try {
     const response = await axios.post(
-      `https://server.petching.net/users/sign-up`,
+      `https://server.petching.net/users/check-nick`,
       { nickname },
       {
         headers: {
@@ -58,8 +58,8 @@ export const checkNickname = async (nickname: string) => {
         },
       },
     );
-
-    return response.data.isDuplicate;
+    console.log(response);
+    return response.data;
   } catch (error) {
     console.error(error);
     throw error;
