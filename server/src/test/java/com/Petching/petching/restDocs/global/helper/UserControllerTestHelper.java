@@ -55,9 +55,9 @@ public interface UserControllerTestHelper extends ControllerTestHelper {
     default List<FieldDescriptor> getDefaultMemberResponseDescriptors(DataResponseType dataResponseType) {
         String parentPath = getDataParentPath(dataResponseType);
         return List.of(
-                fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
-                fieldWithPath("nickName").type(JsonFieldType.STRING).description("닉네임"),
-                fieldWithPath("address").type(JsonFieldType.STRING).description("주소")
+                fieldWithPath(parentPath.concat("email")).type(JsonFieldType.STRING).description("이메일"),
+                fieldWithPath(parentPath.concat("nickName")).type(JsonFieldType.STRING).description("닉네임"),
+                fieldWithPath(parentPath.concat("address")).type(JsonFieldType.STRING).description("주소")
         );
     }
 }
