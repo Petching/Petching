@@ -4,6 +4,9 @@ import com.Petching.petching.board.dto.BoardDto;
 import com.Petching.petching.board.entity.Board;
 import com.Petching.petching.board.mapper.BoardMapper;
 import com.Petching.petching.board.service.BoardService;
+import com.Petching.petching.comment.mapper.CommentMapper;
+import com.Petching.petching.login.jwt.service.JwtService;
+import com.Petching.petching.login.service.UserLoginService;
 import com.Petching.petching.response.MultiResponse;
 import com.Petching.petching.response.PageInfo;
 import com.Petching.petching.response.SingleResponse;
@@ -17,16 +20,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 
 @RestController
@@ -38,10 +40,16 @@ public class BoardController {
     private final BoardMapper mapper;
     private final UserService userService;
 
-    public BoardController(BoardService boardService, BoardMapper mapper, UserService userService) {
+    private final JwtService jwtService;
+
+    private final CommentMapper commentMapper;
+
+    public BoardController(BoardService boardService, BoardMapper mapper, UserService userService, JwtService jwtService, CommentMapper commentMapper) {
         this.boardService = boardService;
         this.mapper = mapper;
         this.userService = userService;
+        this.jwtService = jwtService;
+        this.commentMapper = commentMapper;
     }
 /**
  * 아래는 글쓰는 요청 시 post Dto 와 File 을 한 번에 받을 수 있는 메서드
@@ -66,19 +74,26 @@ public class BoardController {
         return ResponseEntity.created(uri).build();
     }*/
 
+    @GetMapping("/test")
+    public void test(@AuthenticationPrincipal UserLoginService.UserDetail userDetail){
+        System.out.println(userDetail.getUsername());
+        System.out.println(userDetail.getAuthorities());
+    }
+
     /* 글을 올리는 API
      * userId 는 request header 로 요청받아서 유저를 검증하는 방법으로 리팩토링 필요
      * */
     @PostMapping
-    public ResponseEntity postBoard(@Valid @RequestBody BoardDto.Post requestBody){
+    public ResponseEntity postBoard(@Valid @RequestBody BoardDto.Post requestBody,
+                                    @RequestHeader("Authorization") String authorization){
 
+        Long userId = jwtService.getUserIdFromAuthHeader(authorization);
+        User user = userService.findUser(userId);
 
         Board board = mapper.boardPostDtoToBoard(requestBody);
-        User user = userService.findUser(requestBody.getUserId());
         board.setUser(user);
 
         Board savedBoard = boardService.createBoard(board);
-        System.out.println("board createdAt: " + board.getCreatedAt());
 
         URI uri = UriComponentsBuilder.newInstance()
                 .path("/boards/"+savedBoard.getBoardId())
@@ -176,6 +191,7 @@ public class BoardController {
          * */
 
         BoardDto.Detail response = mapper.boardToBoardDetailDto(board);
+        response.setComments(commentMapper.commentListToCommentResponseListDto(board.getComments()));
 
         return new ResponseEntity<>( new SingleResponse<>(response), HttpStatus.OK);
 
@@ -200,6 +216,7 @@ public class BoardController {
     public ResponseEntity updateLike(@PathVariable("boardId") long boardId, @RequestParam long userId){
 
         Board updatedBoard = boardService.updateBoardLike(boardId);
+
 
         /**
          *  User 가 좋아하는 게시글 저장
