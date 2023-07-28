@@ -24,7 +24,7 @@ const MainPeacock = () => {
         </button>
       </div>
       <div className="flex ml-32">
-        {MainData &&
+        {/* {MainData &&
           MainData.map((img, idx) => (
             <div
               className={`w-10 h-10 md:w-60 md:h-60 relative ${
@@ -38,7 +38,7 @@ const MainPeacock = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-          ))}
+          ))} */}
       </div>
     </div>
   );

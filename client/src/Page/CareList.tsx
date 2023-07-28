@@ -47,8 +47,8 @@ const CareList = () => {
         </div>
       </div>
       <div className="flex flex-wrap justify-center">
-        <Card />
-        <Card />
+        {/* <Card />
+        <Card /> */}
       </div>
       <div>
         <TextEditor></TextEditor>
