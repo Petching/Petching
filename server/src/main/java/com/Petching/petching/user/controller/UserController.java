@@ -1,5 +1,7 @@
 package com.Petching.petching.user.controller;
 
+import com.Petching.petching.response.SingleResponse;
+import com.Petching.petching.user.dto.CheckDto;
 import com.Petching.petching.user.dto.UserPatchDto;
 import com.Petching.petching.user.dto.UserPostDto;
 import com.Petching.petching.user.entity.User;
@@ -35,16 +37,31 @@ public class UserController {
 
         return ResponseEntity.created(uri).build();
     }
+    @PostMapping("check-id")
+    public String doubleCheckId (@RequestBody CheckDto dto) {
+        String result = service.checkId(dto);
+
+        return result;
+    }
+
+    @PostMapping("check-nick")
+    public String doubleCheckNick (@RequestBody CheckDto dto) {
+        String result = service.checkNick(dto);
+
+        return result;
+    }
+
     @PatchMapping
     public ResponseEntity patchUser (@RequestBody @Valid UserPatchDto patchDto) {
 
         User update = service.updatedUser(patchDto);
-        return new ResponseEntity(mapper.EntityToResponseDto(update), HttpStatus.OK);
+        return new ResponseEntity(new SingleResponse<>(mapper.EntityToResponseDto(update)), HttpStatus.OK);
     }
+
     @GetMapping("{users-id}")
     public ResponseEntity getUser (@PathVariable("users-id") @Positive long usersId) {
 
-        return new ResponseEntity(mapper.EntityToResponseDto(service.findUser(usersId)), HttpStatus.OK);
+        return new ResponseEntity(new SingleResponse<>(mapper.EntityToResponseDto(service.findUser(usersId))), HttpStatus.OK);
     }
 
     @DeleteMapping("{users-id}")
