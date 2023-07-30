@@ -15,6 +15,7 @@ export const authenticate = async (email: string, password: string) => {
     );
 
     if (response.status === 200) {
+      console.log(response);
       if (response.headers['authorization']) {
         const token = response.headers['authorization'];
 
