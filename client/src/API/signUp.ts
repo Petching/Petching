@@ -39,6 +39,7 @@ export const checkEmail = async (email: string) => {
         },
       },
     );
+
     console.log(response);
     return response.data;
   } catch (error) {

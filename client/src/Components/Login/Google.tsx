@@ -3,8 +3,8 @@ import React from 'react';
 const Google = () => {
   const googleAuthUrl =
     'https://accounts.google.com/o/oauth2/auth?' +
-    'client_id={73964203045-8phlgt4m3rgdjktnja713ebmmkmm45fk.apps.googleusercontent.com}&' +
-    'redirect_uri={http://localhost:3000}&' +
+    'client_id={111496604370-11ht3vfphnj2ut653h21g5ghu23gsu1p.apps.googleusercontent.com}&' +
+    'redirect_uri={https://server.petching.net/login/oauth2/code/google}&' +
     'response_type=token&' +
     'scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile';
   const loginHandler = () => {
