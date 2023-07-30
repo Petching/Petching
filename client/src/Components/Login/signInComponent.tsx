@@ -16,7 +16,7 @@ const SignInComponent: React.FC = () => {
   const handleButtonClick = async () => {
     const success = await authenticate(email, password);
     if (success) {
-      window.location.href = '/main';
+      window.location.href = '/';
     } else {
       setMessage('아이디와 비밀번호를 다시 확인해주세요');
     }
