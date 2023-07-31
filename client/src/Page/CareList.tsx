@@ -2,6 +2,7 @@ import Board from '../Components/Care/Board';
 import Card from '../Components/Care/Card';
 import TextEditor from '../Components/Care/TextEditor';
 import ReactCalendar from '../Components/Care/ReactCalendar';
+import Postcode from '../Components/Care/Postcode';
 const CareList = () => {
   return (
     <div className="text-[1.2rem]">
@@ -55,6 +56,9 @@ const CareList = () => {
       </div>
       <div>
         <ReactCalendar></ReactCalendar>
+      </div>
+      <div>
+        <Postcode></Postcode>
       </div>
     </div>
   );
