@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Board from '../Components/Care/Board';
 import Card from '../Components/Care/Card';
 import TextEditor from '../Components/Care/TextEditor';

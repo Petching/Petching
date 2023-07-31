@@ -11,7 +11,7 @@ import Chatting from './Page/chatting';
 import KakaoLogin from './Components/Login/KakaoLogin';
 import Peacock from './Page/Peacock';
 import PeacockDetail from './Page/peacockDetail';
-import Google from './Components/Login/Google';
+import GoogleLogin from './Components/Login/GoogleLogin';
 import CareList from './Page/CareList';
 
 export const routers: RemixRouter = createBrowserRouter([
@@ -29,7 +29,7 @@ export const routers: RemixRouter = createBrowserRouter([
       },
       {
         path: '/google',
-        element: <Google />,
+        element: <GoogleLogin />,
       },
       {
         path: '/signup',
