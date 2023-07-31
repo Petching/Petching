@@ -56,8 +56,10 @@ const SignComponent: React.FC = () => {
   const handleEmaileCheck = async () => {
     const isDuplicate = await checkEmail(email);
     if (isDuplicate) {
+      //참일시
       setMessage('중복입니다');
     } else {
+      //거짓일시
       setMessage('사용 가능');
     }
   };
