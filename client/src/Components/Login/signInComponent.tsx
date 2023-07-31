@@ -65,7 +65,10 @@ const SignInComponent: React.FC = () => {
           onChange={event => setPassword(event.target.value)}
         />
         <br></br>
-        <button className="ml-4 flex-2 bg-customGreen border border-gray-300 p-3 rounded text-gray-500 mr-7 hover:bg-green-500">
+        <button
+          onClick={handleButtonClick}
+          className="ml-4 flex-2 bg-customGreen border border-gray-300 p-3 rounded text-gray-500 mr-7 hover:bg-green-500"
+        >
           로그인하기
         </button>
         <div className="flex justify-between ">
