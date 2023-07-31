@@ -1,25 +1,27 @@
+/* eslint-disable */
 import Board from '../Components/Care/Board';
 import Card from '../Components/Care/Card';
 import TextEditor from '../Components/Care/TextEditor';
 import ReactCalendar from '../Components/Care/ReactCalendar';
 import Postcode from '../Components/Care/Postcode';
+
+
 const CareList = () => {
   return (
     <div className="text-[1.2rem]">
-      <div className="flex flex-col items-center bg-gray-100 mx-20">
-        <div className="flex">
-          <div className="mr-4">
-            <div className="leading-10 ">어느 지역을 찾으시나요?</div>
-            <div className="relative">
-              <input
-                placeholder="동 이름을 검색하세요"
-                className="w-60 h-10"
-              ></input>
+      <div className="flex flex-col w-full items-center bg-gray-100 ">
+      <div> 
+      <div className="flex flex-col items-center">
+            <div className="text-center leading-10 ">어느 지역을 찾으시나요?</div>
+            <div className="flex items-center">
+              <Postcode />
             </div>
           </div>
-          <div>
-            <div className="leading-10">언제 맡기시나요?</div>
-            <input type="date" className="w-60 h-10" />
+          <div className="flex flex-col items-center"> 
+            <div className="text-center leading-10">언제 맡기시나요?</div>
+            <div className="flex items-center"> 
+            <ReactCalendar />
+          </div>
           </div>
         </div>
         <div className="w-[15rem]">
@@ -53,12 +55,6 @@ const CareList = () => {
       </div>
       <div>
         <TextEditor></TextEditor>
-      </div>
-      <div>
-        <ReactCalendar></ReactCalendar>
-      </div>
-      <div>
-        <Postcode></Postcode>
       </div>
     </div>
   );

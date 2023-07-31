@@ -45,14 +45,17 @@ const Postcode = () => {
   }, [address]);
   return (
     <>
-      <input
-        type="text"
-        value={address}
-        onClick={handleClick}
-        readOnly
-        placeholder="주소를 검색해주세요"
-      />
-      {open && <DaumPostcodeEmbed onComplete={handleComplete} />}
+      <div className="relative">
+        <input
+          className="w-[8.5rem] h-[2rem] text-sm"
+          type="text"
+          value={address}
+          onClick={handleClick}
+          readOnly
+          placeholder="주소를 검색해주세요"
+        />
+        {open && <DaumPostcodeEmbed onComplete={handleComplete} />}
+      </div>
     </>
   );
 };
