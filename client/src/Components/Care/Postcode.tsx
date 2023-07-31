@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import DaumPostcodeEmbed from 'react-daum-postcode';
 
@@ -29,21 +29,20 @@ const Postcode = () => {
       fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
     }
 
-    console.log(fullAddress);
-
     try {
       const response = await axios.post('https://server.petching.net/address', {
         address: fullAddress,
       });
-
       console.log(response.data);
-      setAddress(fullAddress);
+      setAddress(response.data.address);
       handleClose();
     } catch (error) {
       console.error(error);
     }
   };
-
+  useEffect(() => {
+    console.log(address);
+  }, [address]);
   return (
     <>
       <input
