@@ -7,6 +7,7 @@ const MainPeacock = () => {
   const toPeacock = () => {
     navigate('/peacock');
   };
+
   return (
     <div className="w-full h-full flex flex-col justify-center items-center md:flex-row">
       <div className="w-1/5 -mt-20">
@@ -24,8 +25,8 @@ const MainPeacock = () => {
         </button>
       </div>
       <div className="flex ml-32">
-        {/* {MainData &&
-          MainData.map((img, idx) => (
+        {MainData &&
+          MainData.ImgUrls.map((img, idx) => (
             <div
               className={`w-10 h-10 md:w-60 md:h-60 relative ${
                 idx % 2 === 0 ? '-top-10' : 'top-10'

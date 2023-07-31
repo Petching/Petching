@@ -1,21 +1,33 @@
+/* eslint-disable */
 import axios from 'axios';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-export const authenticate = async (email: string, password: number) => {
+export const authenticate = async (email: string, password: string) => {
   try {
     const response = await axios.post(
-      'https://5ad6-118-32-224-80.ngrok-free.app/users/login',
+      `https://server.petching.net/users/login`,
       { email, password },
       {
         headers: {
           'Content-Type': 'application/json',
-          'ngrok-skip-browser-warning': '69420',
         },
       },
     );
 
-    return response.status === 200;
+    if (response.status === 200) {
+      console.log(response);
+      if (response.headers['authorization']) {
+        const accessToken = response.headers['authorization'];
+        const refreshToken = response.headers['refresh'];
+        localStorage.setItem('ACCESSTOKEN', accessToken);
+        const date = new Date();
+        //쿠키 만료시간 7일뒤
+        date.setDate(date.getDate() + 7);
+        document.cookie = `refreshToken=${refreshToken}; expires=${date.toUTCString()}; path=/`;
+        return true;
+      }
+    }
   } catch (error) {
-    // Handle error if the request fails
     console.error(error);
     throw error;
   }

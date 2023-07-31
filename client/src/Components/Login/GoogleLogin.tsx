@@ -12,12 +12,11 @@ const GoogleLogin = () => {
   const code: string | null = new URL(window.location.href).searchParams.get(
     'code',
   );
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   useEffect(() => {
     const google = async () => {
       return await axios
-        .get(`${BASE_URL}/api/v1/members/kakaoLogin?code=${code}`)
+        .get(`https://server.petching.net/kakaoLogin?code=${code}`)
 
         .then(response => {
           const data = response.data;

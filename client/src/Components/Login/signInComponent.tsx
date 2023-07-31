@@ -10,13 +10,14 @@ import Google from './Google';
 const SignInComponent: React.FC = () => {
   const [message, setMessage] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState(1234);
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleButtonClick = async () => {
     const success = await authenticate(email, password);
     if (success) {
-      window.location.href = '/main';
+      alert('로그인 성공');
+      window.location.href = '/';
     } else {
       setMessage('아이디와 비밀번호를 다시 확인해주세요');
     }
@@ -32,6 +33,7 @@ const SignInComponent: React.FC = () => {
             type="email"
             className="ml-4  border border-gray-300 p-2 rounded-lg mr-2"
             placeholder="이메일을 입력해주세요"
+            onChange={event => setEmail(event.target.value)}
           />
 
           <div className="text-red-500">{message}</div>
@@ -42,6 +44,7 @@ const SignInComponent: React.FC = () => {
           type="password"
           className="ml-4 mr-7 border border-gray-300 p-2 rounded-lg"
           placeholder="비밀번호를 입력해주세요"
+          onChange={event => setPassword(event.target.value)}
         />
         <br></br>
         <button

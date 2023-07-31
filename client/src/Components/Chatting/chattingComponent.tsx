@@ -26,7 +26,6 @@ const ChatComponent: React.FC = () => {
 
     socketRef.current?.on('chat', (data: ChatEvent) => {
       console.log('Received chat event:', data);
-      // setMessages(messages => [...messages, data]);
       setMessages(messages => [
         ...messages,
         { ...data, createdAt: new Date() },

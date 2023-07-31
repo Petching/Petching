@@ -6,7 +6,7 @@ const app = express();
 app.use(cors());
 
 const mongoose = require("mongoose");
-const Message = require("./message"); // Import the model you created
+const Message = require("./message");
 
 const PORT = process.env.PORT || 4000;
 const MONGODB_URI = "mongodb://localhost:27017/chatting";
