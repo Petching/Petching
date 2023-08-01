@@ -4,12 +4,14 @@ import googleLogo from '../../Style/googleLogo.png';
 import kakaoLogo from '../../Style/kakaoLogo.png';
 import { authenticate } from '../../API/signIn';
 import { useNavigate } from 'react-router-dom';
+import useLoginStore from '../../store/login';
 
 const SignInComponent: React.FC = () => {
   const [message, setMessage] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const { setLogin } = useLoginStore();
 
   const Google = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -34,12 +36,13 @@ const SignInComponent: React.FC = () => {
   const handleButtonClick = async () => {
     const success = await authenticate(email, password);
     if (success) {
-      alert('로그인 성공');
-      window.location.href = '/';
+      navigate('/');
+      setLogin();
     } else {
       setMessage('아이디와 비밀번호를 다시 확인해주세요');
     }
   };
+
 
   return (
     <>
