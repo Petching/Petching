@@ -38,17 +38,13 @@ public class UserController {
         return ResponseEntity.created(uri).build();
     }
     @PostMapping("check-id")
-    public String doubleCheckId (@RequestBody CheckDto dto) {
-        String result = service.checkId(dto);
-
-        return result;
+    public boolean doubleCheckId (@RequestBody @Valid CheckDto dto) {
+        return service.checkId(dto);
     }
 
     @PostMapping("check-nick")
-    public String doubleCheckNick (@RequestBody CheckDto dto) {
-        String result = service.checkNick(dto);
-
-        return result;
+    public boolean doubleCheckNick (@RequestBody @Valid CheckDto dto) {
+        return service.checkNick(dto);
     }
 
     @PatchMapping
