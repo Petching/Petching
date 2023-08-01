@@ -4,9 +4,13 @@ import Card from '../Components/Care/Card';
 import TextEditor from '../Components/Care/TextEditor';
 import ReactCalendar from '../Components/Care/ReactCalendar';
 import Postcode from '../Components/Care/Postcode';
-
+import { useNavigate } from 'react-router-dom';
 
 const CareList = () => {
+  const navigate = useNavigate();
+  const toCareListDetail = () => {
+    navigate('/carelistdetail');
+  };
   return (
     <div className="text-[1.2rem]">
       <div className="flex flex-col w-full items-center bg-gray-100 ">
@@ -43,7 +47,7 @@ const CareList = () => {
             <button className="w-[7rem] h-7 bg-customGreen shadow-sm shadow-gray-400 rounded-full mr-1">
               검색
             </button>
-            <button className="w-[7rem] h-7 bg-customGreen shadow-sm shadow-gray-400 rounded-full mr-1">
+            <button className="w-[7rem] h-7 bg-customGreen shadow-sm shadow-gray-400 rounded-full mr-1" onClick={toCareListDetail}>
               글작성
             </button>
           </div>

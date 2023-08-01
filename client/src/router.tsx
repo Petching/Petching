@@ -13,6 +13,7 @@ import Peacock from './Page/Peacock';
 import PeacockDetail from './Page/peacockDetail';
 import Google from './Components/Login/Google';
 import CareList from './Page/CareList';
+import CareListDetail from './Page/CareListDetail';
 
 export const routers: RemixRouter = createBrowserRouter([
   {
@@ -58,6 +59,10 @@ export const routers: RemixRouter = createBrowserRouter([
       {
         path: '/carelist',
         element: <CareList />,
+      },
+      {
+        path: '/carelistdetail',
+        element: <CareListDetail />,
       },
     ],
   },
