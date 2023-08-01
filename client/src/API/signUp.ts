@@ -48,11 +48,11 @@ export const checkEmail = async (email: string) => {
   }
 };
 
-export const checkNickname = async (nickname: string) => {
+export const checkNickname = async (nickName: string) => {
   try {
     const response = await axios.post(
       `https://server.petching.net/users/check-nick`,
-      { nickname },
+      { nickName },
       {
         headers: {
           'Content-Type': 'application/json',

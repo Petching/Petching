@@ -24,7 +24,7 @@ export const routers: RemixRouter = createBrowserRouter([
         element: <Main />,
       },
       {
-        path: '/kakaologin',
+        path: '/kakao',
         element: <KakaoLogin />,
       },
       {

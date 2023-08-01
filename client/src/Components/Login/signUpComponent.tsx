@@ -16,12 +16,13 @@ const SignComponent: React.FC = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordCheckMsg, setPasswordCheckMsg] = useState('');
+  const [emailMessage, setEmailMessage] = useState('');
 
   const navigate = useNavigate();
 
   const handleSignup = async () => {
     try {
-      const data = { email, password, nickName: nickname };
+      const data = { email, password, nickname };
       const response = await signUpUser(data);
       console.log(response);
       navigate('/signin');
@@ -57,19 +58,19 @@ const SignComponent: React.FC = () => {
     const isDuplicate = await checkEmail(email);
     if (isDuplicate) {
       //참일시
-      setMessage('중복입니다');
+      setEmailMessage('중복된 이메일입니다');
     } else {
       //거짓일시
-      setMessage('사용 가능');
+      setEmailMessage('사용가능한 이메일입니다');
     }
   };
 
   const handleNicknameCheck = async () => {
     const isDuplicate = await checkNickname(nickname);
     if (isDuplicate) {
-      setMessage('중복입니다');
+      setMessage('중복된 닉네임입니다');
     } else {
-      setMessage('사용 가능');
+      setMessage('사용가능한 닉네임입니다');
     }
   };
 
@@ -91,7 +92,17 @@ const SignComponent: React.FC = () => {
           >
             중복확인
           </button>
-          <div>{message}</div>
+          <div
+            className={
+              emailMessage === '중복된 이메일입니다'
+                ? 'text-red-400'
+                : emailMessage === '사용가능한 이메일입니다'
+                ? 'text-blue-400'
+                : 'text-black'
+            }
+          >
+            {emailMessage}
+          </div>
         </div>
 
         <div className="ml-4  text-left text-gray-300">비밀번호</div>
@@ -138,10 +149,10 @@ const SignComponent: React.FC = () => {
           </button>
           <div
             className={`${
-              message === '중복입니다'
-                ? 'text-red-500'
-                : message === '사용 가능'
-                ? 'text-blue-500'
+              message === '중복된 닉네임입니다'
+                ? 'text-red-400'
+                : message === '사용가능한 닉네임입니다'
+                ? 'text-blue-400'
                 : 'text-black'
             }`}
           >
