@@ -102,4 +102,9 @@ public class UserService {
         return find;
     }
 
+
+    public User updatedByBoardLike (User user) {
+
+        return repository.save(user);
+    }
 }
