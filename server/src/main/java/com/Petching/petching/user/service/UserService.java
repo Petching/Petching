@@ -60,18 +60,18 @@ public class UserService {
         return user;
     }
 
-    public String checkId (CheckDto dto) {
-        if (repository.findByEmail(dto.getCheckEmail()).isPresent()) {
-            return ExceptionCode.USER_EXIST.getMessage();
+    public boolean checkId (CheckDto dto) {
+        if (repository.findByEmail(dto.getEmail()).isPresent()) {
+            return true;
         }
-        return "사용 가능한 이메일입니다.";
+        return false;
     }
 
-    public String checkNick (CheckDto dto) {
-        if (repository.findByNickName(dto.getCheckNickName()).isPresent()) {
-            return ExceptionCode.NICKNAME_EXIST.getMessage();
+    public boolean checkNick (CheckDto dto) {
+        if (repository.findByNickName(dto.getNickName()).isPresent()) {
+            return true;
         }
-        return "사용 가능한 닉네임입니다.";
+        return false;
     }
 
     public void deletedUser (long userId) {
