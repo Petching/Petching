@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-const Explan = () => {
+const Explain = () => {
   const navigate = useNavigate();
   const toCareList = () => {
     navigate('/carelist');
@@ -41,4 +41,4 @@ const Explan = () => {
   );
 };
 
-export default Explan;
+export default Explain;

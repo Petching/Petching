@@ -11,3 +11,9 @@ export interface SignupData {
   password: string;
   nickname: string;
 }
+
+export interface UserToken {
+  userId: number;
+  exp: number;
+  iat: number;
+}

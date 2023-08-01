@@ -2,7 +2,8 @@
 import Board from '../Components/Care/Board';
 import Card from '../Components/Care/Card';
 import TextEditor from '../Components/Care/TextEditor';
-
+import ReactCalendar from '../Components/Care/ReactCalendar';
+import Postcode from '../Components/Care/Postcode';
 const CareList = () => {
   return (
     <div className="text-[1.2rem]">
@@ -48,14 +49,18 @@ const CareList = () => {
         </div>
       </div>
       <div className="flex flex-wrap justify-center">
-        <Card />
-        <Card />
-        <Card />
+        {/* <Card />
+        <Card /> */}
       </div>
       <div>
         <TextEditor></TextEditor>
       </div>
-      <Board></Board>
+      <div>
+        <ReactCalendar></ReactCalendar>
+      </div>
+      <div>
+        <Postcode></Postcode>
+      </div>
     </div>
   );
 };

@@ -1,32 +1,47 @@
-import { useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RxHamburgerMenu } from 'react-icons/rx';
+import useLoginStore from '../../store/login';
+import { getUserIdFromToken } from '../../Util/getUserIdFromToken';
+import { useGetUserProfile } from '../../Hook/useGetUserProfile';
 
 const GNB = () => {
   const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState<boolean>(false);
   const [userIcon, setUserIcon] = useState<boolean>(false);
   const [menu, setMenu] = useState<boolean>(false);
+  const { isLogin, setLogin, setLogout } = useLoginStore();
+  const token = localStorage.getItem('ACCESSTOKEN');
+
+  const userId = getUserIdFromToken(isLogin, token);
+  const { UserProfile } = useGetUserProfile(`${userId}`);
+
+  useEffect(() => {
+    if (token) {
+      setLogin();
+    } else {
+      setLogout();
+    }
+  }, [isLogin]);
+
   const userOpen = () => {
     setUserIcon(prev => !prev);
   };
   const menuOpen = () => {
     setMenu(prev => !prev);
   };
-  const toSignIn = () => {
-    navigate('/signin');
+  const moveHandler = (e: MouseEvent<HTMLButtonElement>) => {
+    const { name } = e.currentTarget;
+    switch (name) {
+      case 'mypage':
+        return navigate(`/user/${userId}`);
+      default:
+        return navigate(`/${name}`);
+    }
   };
-  const toSignUp = () => {
-    navigate('/signup');
-  };
-  const toCareList = () => {
-    navigate('/carelist');
-  };
-  const toPeacock = () => {
-    navigate('/peacock');
-  };
-  const tempLogout = () => {
-    setIsLogin(false);
+  const logoutHandler = () => {
+    localStorage.removeItem('ACCESSTOKEN');
+    setLogout();
+    navigate('/');
     setUserIcon(false);
   };
 
@@ -35,13 +50,15 @@ const GNB = () => {
       <div className="absolute right-0 md:right-10 flex justify-center items-center">
         <button
           className="mx-3 hidden md:block hover:text-customGreen"
-          onClick={toCareList}
+          name="carelist"
+          onClick={moveHandler}
         >
           돌봄리스트
         </button>
         <button
           className="mx-3 hidden md:block hover:text-customGreen"
-          onClick={toPeacock}
+          name="peacock"
+          onClick={moveHandler}
         >
           자랑하기
         </button>
@@ -50,6 +67,8 @@ const GNB = () => {
             <button className="mx-3" onClick={userOpen}>
               <img
                 src="https://cdn.pixabay.com/photo/2023/06/14/10/02/pied-flycatcher-8062744_640.jpg"
+                // 추후 유저 이미지 들어오면 유저 이미지로 변경
+                // src={UserProfile.ImgUrl}
                 alt="유저 메뉴 버튼"
                 className="w-10 h-10 rounded-full"
               />
@@ -59,13 +78,15 @@ const GNB = () => {
           <>
             <button
               className="mx-3 hidden md:block hover:text-customGreen"
-              onClick={toSignIn}
+              name="signin"
+              onClick={moveHandler}
             >
               로그인
             </button>
             <button
               className="mx-3 hidden md:block hover:text-customGreen"
-              onClick={toSignUp}
+              name="signup"
+              onClick={moveHandler}
             >
               회원가입
             </button>
@@ -76,38 +97,58 @@ const GNB = () => {
         )}
       </div>
       {userIcon && (
-        <ul className="bg-slate-400 absolute right-0 top-14 w-40 text-center rounded-b">
-          <li className="h-10 leading-10">abc@def.com</li>
+        <ul className="bg-slate-400 absolute right-0 top-[4.5rem] w-40 text-center rounded-b">
+          <li className="h-10 leading-10">{UserProfile?.email}</li>
           <li className="h-10 leading-10 hover:bg-white block md:hidden">
-            <button>돌봄리스트</button>
+            <button
+              className="w-full h-full"
+              name="carelist"
+              onClick={moveHandler}
+            >
+              돌봄리스트
+            </button>
           </li>
           <li className="h-10 leading-10 hover:bg-white block md:hidden">
-            <button>자랑하기</button>
+            <button
+              className="w-full h-full"
+              name="peacock"
+              onClick={moveHandler}
+            >
+              자랑하기
+            </button>
           </li>
           <li className="h-10 leading-10 hover:bg-white">
-            <button>마이 페이지</button>
+            <button
+              className="w-full h-full"
+              name="mypage"
+              onClick={moveHandler}
+            >
+              마이 페이지
+            </button>
           </li>
           <li className="h-10 leading-10 hover:bg-white">
-            <button>문의 내역</button>
+            <button className="w-full h-full">문의 내역</button>
           </li>
           <li className="h-10 leading-10 hover:bg-white">
-            <button onClick={tempLogout}>로그아웃</button>
+            <button className="w-full h-full" onClick={logoutHandler}>
+              로그아웃
+            </button>
           </li>
         </ul>
       )}
       {menu && (
         <ul className="bg-slate-400 absolute right-0 top-14 w-40 text-center rounded-b">
           <li className="h-10 leading-10 hover:bg-white">
-            <button>돌봄리스트</button>
+            <button className="w-full h-full">돌봄리스트</button>
           </li>
           <li className="h-10 leading-10 hover:bg-white">
-            <button>자랑하기</button>
+            <button className="w-full h-full">자랑하기</button>
           </li>
           <li className="h-10 leading-10 hover:bg-white">
-            <button>로그인</button>
+            <button className="w-full h-full">로그인</button>
           </li>
           <li className="h-10 leading-10 hover:bg-white">
-            <button>회원가입</button>
+            <button className="w-full h-full">회원가입</button>
           </li>
         </ul>
       )}
