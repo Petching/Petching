@@ -21,13 +21,13 @@ public class Comment extends BaseEntity {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name="board_id")
+    @JoinColumn(name="boardId")
     @JsonIgnore
     private Board board;
 
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     @JsonIgnore
     private User user;
 

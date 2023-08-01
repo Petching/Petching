@@ -86,4 +86,25 @@ public class UserService {
 
         return find;
     }
+
+
+    public User findUserByEmail (String email) {
+        User user = verifiedUser(email);
+
+        return user;
+    }
+
+    public User verifiedUser (String email) {
+
+        Optional<User> optional = repository.findByEmail(email);
+        User find = optional.orElseThrow(() -> new BusinessLoginException(ExceptionCode.MEMBER_NOT_FOUND));
+
+        return find;
+    }
+
+
+    public User updatedByBoardLike (User user) {
+
+        return repository.save(user);
+    }
 }
