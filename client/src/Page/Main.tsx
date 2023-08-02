@@ -3,6 +3,7 @@ import Info from '../Components/Main/Info';
 import Explain from '../Components/Main/Explain';
 import MainPeacock from '../Components/Main/MainPeacock';
 import MainMember from '../Components/Main/MainMember';
+import KakaoLogin from '../Components/Login/KakaoLogin';
 
 const Main = () => {
   const options = {
@@ -16,6 +17,7 @@ const Main = () => {
 
   return (
     <>
+      <KakaoLogin />
       <SectionsContainer {...options}>
         <Section>
           <Info />
