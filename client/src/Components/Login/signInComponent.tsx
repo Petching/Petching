@@ -81,7 +81,7 @@ const SignInComponent: React.FC = () => {
 
         <button
           onClick={Kakao}
-          className="ml-4 bg-customGreen border border-gray-300 p-3 rounded text-kakaoText  flex items-center justify-center mr-7 hover:bg-yellow-300"
+          className="ml-4 bg-kakaoYellow border border-gray-300 p-3 rounded text-kakaoText  flex items-center justify-center mr-7 hover:bg-yellow-300"
         >
           <img src={kakaoLogo} alt="kakao Image" className="h-7 w-7 mr-4 " />
           카카오톡 로그인

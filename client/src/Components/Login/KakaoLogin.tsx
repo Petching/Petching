@@ -22,7 +22,7 @@ const KakaoLogin = () => {
     navigate('/', { replace: true });
   }, [navigate]);
 
-  return <div>Redirecting...</div>;
+  return <div></div>;
 };
 
 export default KakaoLogin;
