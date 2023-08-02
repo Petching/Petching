@@ -1,15 +1,14 @@
 package com.Petching.petching.myPet.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.Petching.petching.audit.Auditable;
+import com.Petching.petching.user.entity.User;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Entity @Getter @Builder
+@Entity @Getter @Builder @Setter
 @NoArgsConstructor @AllArgsConstructor
-public class MyPet {
+public class MyPet extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long myPetId;
@@ -31,6 +30,10 @@ public class MyPet {
 
     @Column
     private String petImgUrl;
+
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
+    private User user;
 
     public void updateName (String name) {
         this.name = name;
