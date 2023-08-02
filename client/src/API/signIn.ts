@@ -19,11 +19,11 @@ export const authenticate = async (email: string, password: string) => {
       if (response.headers['authorization']) {
         const accessToken = response.headers['authorization'];
         const refreshToken = response.headers['refresh'];
-        localStorage.setItem('ACCESSTOKEN', accessToken);
+        localStorage.setItem('ACCESS_TOKEN', accessToken);
         const date = new Date();
         //쿠키 만료시간 7일뒤
         date.setDate(date.getDate() + 7);
-        document.cookie = `refreshToken=${refreshToken}; expires=${date.toUTCString()}; path=/`;
+        document.cookie = `REFRESH_TOKEN=${refreshToken}; expires=${date.toUTCString()}; path=/`;
         return true;
       }
     }

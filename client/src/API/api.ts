@@ -8,7 +8,7 @@ export const Axios = axios.create({
 //request 중간
 axios.interceptors.request.use(
   function (config) {
-    const accessToken = localStorage.getItem('ACCESSTOKEN');
+    const accessToken = localStorage.getItem('ACCESS_TOKEN');
     if (accessToken) {
       config.headers['Authorization'] = `Bearer ${accessToken}`;
     }
