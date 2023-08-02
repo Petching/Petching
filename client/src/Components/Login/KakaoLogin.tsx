@@ -12,7 +12,7 @@ const KakaoLogin = () => {
   const code: string | null = new URL(window.location.href).searchParams.get(
     'code',
   );
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
+  const BASE_URL = process.env.REACT_API_SERVER;
 
   useEffect(() => {
     const kakao = async () => {
@@ -38,6 +38,7 @@ const KakaoLogin = () => {
         });
     };
     if (code) {
+      navigate('/', { replace: true });
       kakao();
     }
   }, [code, navigate]);
