@@ -14,7 +14,37 @@ import java.util.stream.Collectors;
 public interface CommentMapper {
     Comment commentPostDtoToComment(CommentDto.Post postDto);
     Comment commentPatchDtoToComment(CommentDto.Patch patchDto);
-    CommentDto.Response commentToCommentResponseDto(Comment comment);
+
+    default CommentDto.Response commentToCommentResponseDto(Comment comment) {
+        if ( comment == null ) {
+            return null;
+        }
+
+        CommentDto.Response.ResponseBuilder response = CommentDto.Response.builder();
+
+        response.commentId( comment.getCommentId() );
+        response.content( comment.getContent() );
+        response.boardId( comment.getBoardId() );
+        response.createdAt( comment.getCreatedAt() );
+
+        response.nickName( comment.getUser().getNickName() );
+        response.profileImgUrl( comment.getUser().getProfileImgUrl() );
+
+        return response.build();
+    }
+
+    default List<CommentDto.Response> commentListToCommentResponseListDto(List<Comment> commentList){
+
+        if(commentList == null)
+            return null;
+
+        List<CommentDto.Response> response =  commentList
+                .stream()
+                .map(comment->commentToCommentResponseDto(comment))
+                .collect(Collectors.toList());
+
+        return response;
+    }
 
     default List<CommentDto.Response> commentPageToCommentResponseListDto(Page<Comment> commentPage){
 
