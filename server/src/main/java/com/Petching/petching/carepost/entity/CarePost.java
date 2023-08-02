@@ -33,11 +33,15 @@ public class CarePost extends Auditable {
 
     @ElementCollection
     private List<String > imgUrls;
-//    @Column
-//    private String address;
-//
-//    @Column
-//    private String condition;
+
+    @Column
+    private String memo;
+    @Column
+    private String petSize;
+    @Column
+    private String conditionTag;
+    @Column
+    private String locationTag;
 
     @Column
     private Integer startDay;

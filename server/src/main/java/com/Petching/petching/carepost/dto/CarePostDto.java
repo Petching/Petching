@@ -32,11 +32,15 @@ public class CarePostDto {
         private Map<String,Integer> startDate;
         private Map<String,Integer> endDate;
 
-        private List<String> conditionTags;
-        private List<String> locationTags;
-//        public Post(){
-//
-//        }
+//        private List<String> conditionTags;
+//        private List<String> locationTags;
+        private String conditionTag;
+        private String locationTag;
+        private String petSize;
+        private String memo;
+        public Post(){
+
+        }
     }
 
     @Getter @Setter
@@ -57,12 +61,16 @@ public class CarePostDto {
         private Map<String,Integer> startDate;
         private Map<String,Integer> endDate;
 
-        private List<String> conditionTags;
-        private List<String> locationTags;
+//        private List<String> conditionTags;
+//        private List<String> locationTags;
+        private String conditionTag;
+        private String locationTag;
+        private String petSize;
+        private String memo;
 
-//        public Patch(){
-//
-//        }
+        public Patch(){
+
+        }
     }
 
     @Getter @Setter
@@ -73,7 +81,7 @@ public class CarePostDto {
         private String title;
         private String content;
 
-        private List<String > imgUrls;
+        private List<String> imgUrls;
 
         private String nickName;
 
@@ -82,11 +90,15 @@ public class CarePostDto {
         private Map<String,Integer> startDate;
         private Map<String,Integer> endDate;
 
-        private List<String> conditionTags;
-        private List<String> locationTags;
+//        private List<String> conditionTags;
+//        private List<String> locationTags;
+        private String conditionTag;
+        private String locationTag;
+        private String petSize;
+        private String memo;
 
-//        public Response() {
-//        }
+        public Response() {
+        }
     }
     @Getter @Setter
     @AllArgsConstructor
@@ -106,12 +118,15 @@ public class CarePostDto {
         private Map<String,Integer> startDate;
         private Map<String,Integer> endDate;
 
-        private List<String> conditionTags;
-        private List<String> locationTags;
+//        private List<String> conditionTags;
+//        private List<String> locationTags;
+        private String conditionTag;
+        private String locationTag;
+        private String petSize;
 
-//        public Detail(){
-//
-//        }
+        public Detail(){
+
+        }
     }
 
 }

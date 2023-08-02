@@ -49,39 +49,39 @@ public class CarePostService {
 
         CarePost savePost = repository.save(newPost);
 
-        if (post.getConditionTags() != null) {
-            for (String tagName : post.getConditionTags()) {
-                ConditionTag tag = conditionTagRepository.findByBody(tagName);
-                CarePost_ConditionTag pt = new CarePost_ConditionTag();
-                if (tag == null) {
-                    ConditionTag ct = new ConditionTag();
-                    ct.setBody(tagName);
-                    pt.setConditionTag(ct);
-                }
-                if (pt.getConditionTag() == null) {
-                    pt.setConditionTag(tag);
-                }
-                pt.setCarePost(savePost);
-                carePostConditionTagRepository.save(pt);
-            }
-        }
-
-        if (post.getLocationTags() != null) {
-            for (String tagName : post.getLocationTags()) {
-                LocationTag tag = locationTagRepository.findByBody(tagName);
-                CarePost_LocationTag pt = new CarePost_LocationTag();
-                if (tag == null) {
-                    LocationTag ct = new LocationTag();
-                    ct.setBody(tagName);
-                    pt.setLocationTag(ct);
-                }
-                if (pt.getLocationTag() == null) {
-                    pt.setLocationTag(tag);
-                }
-                pt.setCarePost(savePost);
-                carePostLocationTagRepository.save(pt);
-            }
-        }
+//        if (post.getConditionTags() != null) {
+//            for (String tagName : post.getConditionTags()) {
+//                ConditionTag tag = conditionTagRepository.findByBody(tagName);
+//                CarePost_ConditionTag pt = new CarePost_ConditionTag();
+//                if (tag == null) {
+//                    ConditionTag ct = new ConditionTag();
+//                    ct.setBody(tagName);
+//                    pt.setConditionTag(ct);
+//                }
+//                if (pt.getConditionTag() == null) {
+//                    pt.setConditionTag(tag);
+//                }
+//                pt.setCarePost(savePost);
+//                carePostConditionTagRepository.save(pt);
+//            }
+//        }
+//
+//        if (post.getLocationTags() != null) {
+//            for (String tagName : post.getLocationTags()) {
+//                LocationTag tag = locationTagRepository.findByBody(tagName);
+//                CarePost_LocationTag pt = new CarePost_LocationTag();
+//                if (tag == null) {
+//                    LocationTag ct = new LocationTag();
+//                    ct.setBody(tagName);
+//                    pt.setLocationTag(ct);
+//                }
+//                if (pt.getLocationTag() == null) {
+//                    pt.setLocationTag(tag);
+//                }
+//                pt.setCarePost(savePost);
+//                carePostLocationTagRepository.save(pt);
+//            }
+//        }
 
         return savePost;
     }
@@ -113,52 +113,60 @@ public class CarePostService {
                 .ifPresent(findPost::setEndMonth);
         Optional.ofNullable(patch.getEndDate().get("year"))
                 .ifPresent(findPost::setEndYear);
+        Optional.ofNullable(patch.getPetSize())
+                .ifPresent(findPost::setPetSize);
+        Optional.ofNullable(patch.getMemo())
+                .ifPresent(findPost::setMemo);
+        Optional.ofNullable(patch.getConditionTag())
+                .ifPresent(findPost::setConditionTag);
+        Optional.ofNullable(patch.getLocationTag())
+                .ifPresent(findPost::setLocationTag);
 
-        carePostConditionTagRepository.deleteAllByCarePost_PostId(postId);
-        carePostLocationTagRepository.deleteAllByCarePost_PostId(postId);
-
-
-        // conditionTag
-        Optional.ofNullable(patch.getConditionTags()).ifPresent((TagList) -> {
-            List<CarePost_ConditionTag> newCarePost_Condition_TagList = new ArrayList<>();
-            for (String tagTemp : patch.getConditionTags()) {  //태그 저장
-                ConditionTag findTag = conditionTagRepository.findByBody(tagTemp);
-                if (findTag == null) {
-                    ConditionTag newTag = new ConditionTag(tagTemp);
-                    findTag =  conditionTagRepository.save(newTag);
-                }
-                CarePost_ConditionTag newCarePost_Condition_Tag = new CarePost_ConditionTag(findPost, findTag);
-
-                carePostConditionTagRepository.save(newCarePost_Condition_Tag);
-
-                newCarePost_Condition_TagList.add(newCarePost_Condition_Tag);
-
-            }
-            findPost.setPostConditionTags(newCarePost_Condition_TagList);
-
-        });
-
-//        location tag
-        Optional.ofNullable(patch.getLocationTags()).ifPresent((TagList) -> {
-
-
-            List<CarePost_LocationTag> newCarePost_Location_TagList = new ArrayList<>();
-            for (String tagTemp : patch.getLocationTags()) {  //태그 저장
-                LocationTag findTag = locationTagRepository.findByBody(tagTemp);
-                if (findTag == null) {
-                    LocationTag newTag = new LocationTag(tagTemp);
-                    findTag =  locationTagRepository.save(newTag);
-                }
-                CarePost_LocationTag newCarePost_Location_Tag = new CarePost_LocationTag(findPost, findTag);
-
-                carePostLocationTagRepository.save(newCarePost_Location_Tag);
-
-                newCarePost_Location_TagList.add(newCarePost_Location_Tag);
-
-            }
-            findPost.setPostLocationTags(newCarePost_Location_TagList);
-
-        });
+//        carePostConditionTagRepository.deleteAllByCarePost_PostId(postId);
+//        carePostLocationTagRepository.deleteAllByCarePost_PostId(postId);
+//
+//
+//        // conditionTag
+//        Optional.ofNullable(patch.getConditionTags()).ifPresent((TagList) -> {
+//            List<CarePost_ConditionTag> newCarePost_Condition_TagList = new ArrayList<>();
+//            for (String tagTemp : patch.getConditionTags()) {  //태그 저장
+//                ConditionTag findTag = conditionTagRepository.findByBody(tagTemp);
+//                if (findTag == null) {
+//                    ConditionTag newTag = new ConditionTag(tagTemp);
+//                    findTag =  conditionTagRepository.save(newTag);
+//                }
+//                CarePost_ConditionTag newCarePost_Condition_Tag = new CarePost_ConditionTag(findPost, findTag);
+//
+//                carePostConditionTagRepository.save(newCarePost_Condition_Tag);
+//
+//                newCarePost_Condition_TagList.add(newCarePost_Condition_Tag);
+//
+//            }
+//            findPost.setPostConditionTags(newCarePost_Condition_TagList);
+//
+//        });
+//
+////        location tag
+//        Optional.ofNullable(patch.getLocationTags()).ifPresent((TagList) -> {
+//
+//
+//            List<CarePost_LocationTag> newCarePost_Location_TagList = new ArrayList<>();
+//            for (String tagTemp : patch.getLocationTags()) {  //태그 저장
+//                LocationTag findTag = locationTagRepository.findByBody(tagTemp);
+//                if (findTag == null) {
+//                    LocationTag newTag = new LocationTag(tagTemp);
+//                    findTag =  locationTagRepository.save(newTag);
+//                }
+//                CarePost_LocationTag newCarePost_Location_Tag = new CarePost_LocationTag(findPost, findTag);
+//
+//                carePostLocationTagRepository.save(newCarePost_Location_Tag);
+//
+//                newCarePost_Location_TagList.add(newCarePost_Location_Tag);
+//
+//            }
+//            findPost.setPostLocationTags(newCarePost_Location_TagList);
+//
+//        });
         return repository.save(findPost);
     }
 
