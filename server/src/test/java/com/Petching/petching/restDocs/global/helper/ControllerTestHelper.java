@@ -2,10 +2,13 @@ package com.Petching.petching.restDocs.global.helper;
 
 import com.google.gson.Gson;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.headers.HeaderDescriptor;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.request.ParameterDescriptor;
 import org.springframework.test.web.servlet.RequestBuilder;
+
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
@@ -27,6 +30,7 @@ public interface ControllerTestHelper<T> {
         return  post(url)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "{AccessToken}")
                 .content(content).with(csrf());
     }
 
@@ -34,6 +38,7 @@ public interface ControllerTestHelper<T> {
         return patch(url, resourceId)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "{AccessToken}")
                 .content(content).with(csrf());
 
     }
@@ -42,17 +47,20 @@ public interface ControllerTestHelper<T> {
         return patch(uri)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "{AccessToken}")
                 .content(content).with(csrf());
 
     }
 
     default RequestBuilder getRequestBuilder(String url, long resourceId) {
         return get(url, resourceId)
+                .header("Authorization", "{AccessToken}")
                 .accept(MediaType.APPLICATION_JSON).with(csrf());
     }
 
     default RequestBuilder getRequestBuilder(String uri) {
         return get(uri)
+                .header("Authorization", "{AccessToken}")
                 .accept(MediaType.APPLICATION_JSON).with(csrf());
     }
 
@@ -61,15 +69,20 @@ public interface ControllerTestHelper<T> {
                 .params(
                         queryParams
                 )
+                .header("Authorization", "{AccessToken}")
                 .accept(MediaType.APPLICATION_JSON).with(csrf());
     }
 
     default RequestBuilder deleteRequestBuilder(String url, long resourceId) {
-        return delete(url, resourceId).with(csrf());
+        return delete(url, resourceId)
+                .header("Authorization", "{AccessToken}")
+                .with(csrf());
     }
 
     default RequestBuilder deleteRequestBuilder(String uri) {
-        return delete(uri).with(csrf());
+        return delete(uri)
+                .header("Authorization", "{AccessToken}")
+                .with(csrf());
     }
 
 
@@ -77,14 +90,20 @@ public interface ControllerTestHelper<T> {
         return delete(url)
                 .params(
                         queryParams
-                ).with(csrf());
+                )
+                .header("Authorization", "{AccessToken}")
+                .with(csrf());
     }
     default String toJsonContent(T t) {
         Gson gson = new Gson();
         String content = gson.toJson(t);
         return content;
     }
-
+    default List<HeaderDescriptor> getDefaultRequestHeaderDescriptors() {
+        return List.of(
+                headerWithName("Authorization").description("Request User의 access token")
+        );
+    }
     default String getDataParentPath(DataResponseType dataResponseType) {
         return dataResponseType == DataResponseType.SINGLE ? "data." : "data[].";
     }

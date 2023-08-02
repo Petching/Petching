@@ -54,6 +54,7 @@ public interface CommentControllerTestHelper extends ControllerTestHelper{
         return  post(url, boardId)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "{AccessToken}")
                 .content(content).with(csrf());
     }
 

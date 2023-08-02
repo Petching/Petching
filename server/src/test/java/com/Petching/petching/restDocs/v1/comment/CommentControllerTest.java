@@ -10,6 +10,7 @@ import com.Petching.petching.comment.mapper.CommentMapper;
 import com.Petching.petching.comment.service.CommentService;
 import com.Petching.petching.config.SecurityConfiguration;
 import com.Petching.petching.global.aws.s3.config.S3Configuration;
+import com.Petching.petching.login.oauth.userInfo.JwtToken;
 import com.Petching.petching.restDocs.global.helper.CommentControllerTestHelper;
 import com.Petching.petching.restDocs.global.helper.StubData;
 import com.Petching.petching.user.entity.User;
@@ -84,6 +85,8 @@ public class CommentControllerTest implements CommentControllerTestHelper {
     @MockBean
     private UserService userService;
 
+    @MockBean
+    private JwtToken jwtToken;
 
     @DisplayName("Test - CommentController - POST")
     @Test

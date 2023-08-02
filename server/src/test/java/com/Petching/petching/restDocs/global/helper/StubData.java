@@ -34,7 +34,6 @@ public class StubData {
         static{
             CommentDto.Post postDto = CommentDto.Post.builder()
                     .content("this is content1")
-                    .userId(1L)
                     .build();
 
             CommentDto.Patch patchDto = CommentDto.Patch.builder()
@@ -253,6 +252,7 @@ public class StubData {
 
             return carePost;
         }
+
         public static Page<CarePost> getMultiResultBoard() {
 
             CarePost carePost1 = CarePost.builder()
@@ -289,15 +289,12 @@ public class StubData {
 
             stubRequestBody = new HashMap<>();
             BoardDto.Post postDto = BoardDto.Post.builder()
-                    .userId(1)
                     .title("this is title1")
                     .content("this is content1")
                     .imgUrls(imgUrls)
                     .build();
 
             BoardDto.Patch patchDto = BoardDto.Patch.builder()
-                    .userId(1)
-                    .boardId(1)
                     .title("this is title1")
                     .content("this is content1")
                     .imgUrls(imgUrls)
@@ -334,7 +331,7 @@ public class StubData {
                     .createdAt(LocalDateTime.now())
                     .likes(0)
                     .checkLike(false)
-                    .comments(List.of())
+                    .comments(new ArrayList<>())
                     .commentCount(0)
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png"))
                     .build();
@@ -386,7 +383,7 @@ public class StubData {
                     .content("this is content1")
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png"))
                     .likes(0)
-                    .likedUserIds(List.of())
+                    .likedUserIds(new ArrayList<>())
                     .commentCount(0)
                     .build();
 
@@ -401,7 +398,7 @@ public class StubData {
                     .content("this is content1")
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png"))
                     .likes(0)
-                    .likedUserIds(List.of())
+                    .likedUserIds(new ArrayList<>())
                     .commentCount(0)
                     .build();
 
@@ -411,7 +408,7 @@ public class StubData {
                     .content("this is content2")
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_02.png"))
                     .likes(0)
-                    .likedUserIds(List.of())
+                    .likedUserIds(new ArrayList<>())
                     .commentCount(0)
                     .build();
 
@@ -421,7 +418,7 @@ public class StubData {
                     .content("this is content3")
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_03.jpg"))
                     .likes(0)
-                    .likedUserIds(List.of())
+                    .likedUserIds(new ArrayList<>())
                     .commentCount(0)
                     .build();
 
@@ -437,7 +434,7 @@ public class StubData {
                     .content("this is content1")
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png"))
                     .likes(0)
-                    .likedUserIds(List.of())
+                    .likedUserIds(new ArrayList<>())
                     .commentCount(0)
                     .build();
 
@@ -566,6 +563,12 @@ public class StubData {
         }
 
         public static User getSingleResultUser() {
+
+            List<Long> likedBoardList = new ArrayList<>();
+            likedBoardList.add(1L);
+            likedBoardList.add(2L);
+            likedBoardList.add(3L);
+
             User user = User.builder()
                     .userId(1L)
                     .nickName("exNickName")
@@ -573,6 +576,7 @@ public class StubData {
                     .email("email@example.com")
                     .address("exAddress")
                     .roles(List.of("USER"))
+                    .likedBoardList(likedBoardList)
                     .build();
 
             return user;
