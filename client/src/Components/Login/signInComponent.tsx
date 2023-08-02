@@ -4,24 +4,45 @@ import googleLogo from '../../Style/googleLogo.png';
 import kakaoLogo from '../../Style/kakaoLogo.png';
 import { authenticate } from '../../API/signIn';
 import { useNavigate } from 'react-router-dom';
-import Kakao from './Kakao';
-import Google from './Google';
+import useLoginStore from '../../store/login';
 
 const SignInComponent: React.FC = () => {
   const [message, setMessage] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const { setLogin } = useLoginStore();
+
+  const Google = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const googleAuthUrl =
+      'https://accounts.google.com/o/oauth2/auth?' +
+      `client_id=${process.env.REACT_APP_GOOGLE_API_KEY}&` +
+      `redirect_uri=${process.env.REACT_APP_GOOGLE_API_KEY}&` +
+      'response_type=token&' +
+      'scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile';
+    window.location.href = googleAuthUrl;
+  };
+
+  const Kakao = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const restApiKey = process.env.REACT_APP_KAKAO_API_KEY;
+    const redirectUrl = process.env.REACT_APP_KAKAO_REDIRECT_URL;
+    const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${restApiKey}&redirect_uri=${redirectUrl}&response_type=code`;
+
+    window.location.href = kakaoAuthUrl;
+  };
 
   const handleButtonClick = async () => {
     const success = await authenticate(email, password);
     if (success) {
-      alert('로그인 성공');
-      window.location.href = '/';
+      navigate('/');
+      setLogin();
     } else {
       setMessage('아이디와 비밀번호를 다시 확인해주세요');
     }
   };
+
 
   return (
     <>
@@ -58,13 +79,20 @@ const SignInComponent: React.FC = () => {
           <div className="m-1.5 fonr-semibold text-gray-400">또는</div>
           <div className="m-4 h-0.5 bg-gray-300 w-52"></div>
         </div>
-        <button className="ml-4 bg-kakaoYellow border border-gray-300 p-3 rounded text-kakaoText  flex items-center justify-center mr-7 hover:bg-yellow-300">
+        <button
+          onClick={Kakao}
+          className="ml-4 bg-kakaoYellow border border-gray-300 p-3 rounded text-kakaoText  flex items-center justify-center mr-7 hover:bg-yellow-300"
+        >
           <img src={kakaoLogo} alt="kakao Image" className="h-7 w-7 mr-4 " />
-          <Kakao />
+          카카오톡 로그인
         </button>
-        <button className="ml-4 bg-white border border-gray-300 p-3 rounded text-black  flex items-center justify-center mr-7 hover:bg-gray-200">
+
+        <button
+          onClick={Google}
+          className="ml-4 bg-white border border-gray-300 p-3 rounded text-black  flex items-center justify-center mr-7 hover:bg-gray-200"
+        >
           <img src={googleLogo} alt="google Image" className="h-5 w-5 mr-4" />
-          <Google />
+          구글 로그인
         </button>
         <button
           onClick={() => navigate('/signup')}

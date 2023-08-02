@@ -9,5 +9,11 @@ export interface ChattingRoom {
 export interface SignupData {
   email: string;
   password: string;
-  nickName: string;
+  nickname: string;
+}
+
+export interface UserToken {
+  userId: number;
+  exp: number;
+  iat: number;
 }
