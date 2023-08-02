@@ -9,7 +9,7 @@ defaults:
 env:
   AWS_REGION: ap-northeast-2
   S3_BUCKET_NAME: petching.net
-  API_SERVER: ${{ secrets.API_SERVER }}
+  REACT_APP_API_SERVER: ${{ secrets.API_SERVER }}
   REACT_APP_KAKAO_API_KEY: ${{ secrets.KAKAO_API_KEY }}
   REACT_APP_KAKAO_REDIRECT_URL: ${{secrets.KAKAO_REDIRECT_URL}}
   REACT_APP_GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
