@@ -25,9 +25,9 @@ public class CarePost_ConditionTag {
 
     public void setCarePost(CarePost carePost) {
         this.carePost = carePost;
-        if(!this.carePost.getPostConditionTags().contains(this)) {
-            this.carePost.setCarePost_ConditionTag(this);
-        }
+//        if(!this.carePost.getPostConditionTags().contains(this)) {
+//            this.carePost.setCarePost_ConditionTag(this);
+//        }
     }
     public CarePost_ConditionTag(CarePost carePost, ConditionTag conditionTag) {
         this.carePost = carePost;

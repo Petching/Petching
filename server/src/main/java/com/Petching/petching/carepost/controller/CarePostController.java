@@ -5,6 +5,7 @@ import com.Petching.petching.carepost.dto.CarePostDto;
 import com.Petching.petching.carepost.entity.CarePost;
 import com.Petching.petching.carepost.mapper.CarePostMapper;
 import com.Petching.petching.carepost.repository.CarePostRepository;
+import com.Petching.petching.response.MultiResponse;
 import com.Petching.petching.response.PageInfo;
 import com.Petching.petching.response.SingleResponse;
 import com.Petching.petching.carepost.service.CarePostService;
@@ -80,7 +81,8 @@ public class CarePostController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-Page-Info", new Gson().toJson(pageInfo));
 
-        return ResponseEntity.ok().headers(headers).body(response);
+        return ResponseEntity.ok().headers(headers).body(new MultiResponse<>(response,postPage));
+
     }
 
     @GetMapping("/{post-id}")

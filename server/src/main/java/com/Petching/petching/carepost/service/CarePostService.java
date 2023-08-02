@@ -101,10 +101,18 @@ public class CarePostService {
                 .ifPresent(findPost::setContent);
         Optional.ofNullable(patch.getImgUrls())
                 .ifPresent(findPost::setImgUrls);
-        Optional.ofNullable(patch.getStartDate())
-                .ifPresent(findPost::setStartDate);
-        Optional.ofNullable(patch.getEndDate())
-                .ifPresent(findPost::setEndDate);
+        Optional.ofNullable(patch.getStartDate().get("day"))
+                .ifPresent(findPost::setStartDay);
+        Optional.ofNullable(patch.getStartDate().get("month"))
+                .ifPresent(findPost::setStartMonth);
+        Optional.ofNullable(patch.getStartDate().get("year"))
+                .ifPresent(findPost::setStartYear);
+        Optional.ofNullable(patch.getEndDate().get("day"))
+                .ifPresent(findPost::setEndDay);
+        Optional.ofNullable(patch.getEndDate().get("month"))
+                .ifPresent(findPost::setEndMonth);
+        Optional.ofNullable(patch.getEndDate().get("year"))
+                .ifPresent(findPost::setEndYear);
 
         carePostConditionTagRepository.deleteAllByCarePost_PostId(postId);
         carePostLocationTagRepository.deleteAllByCarePost_PostId(postId);

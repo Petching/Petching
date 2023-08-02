@@ -6,14 +6,34 @@ import com.Petching.petching.tag.conditionTag.CarePost_ConditionTag;
 import com.Petching.petching.tag.locationTag.CarePost_LocationTag;
 import org.mapstruct.Mapper;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface CarePostMapper {
-    CarePost carePostPostDtoToCarePost(CarePostDto.Post requestBody);
+//    CarePost carePostPostDtoToCarePost(CarePostDto.Post requestBody);
+    default CarePost carePostPostDtoToCarePost(CarePostDto.Post requestBody) {
+        if ( requestBody == null ) {
+            return null;
+        }
+
+        CarePost.CarePostBuilder carePost = CarePost.builder();
+
+        carePost.title( requestBody.getTitle() );
+        carePost.content( requestBody.getContent() );
+        List<String> list = requestBody.getImgUrls();
+        if ( list != null ) {
+            carePost.imgUrls( new ArrayList<String>( list ) );
+        }
+        carePost.startDay( requestBody.getStartDate().get("day") );
+        carePost.startMonth( requestBody.getStartDate().get("month") );
+        carePost.startYear( requestBody.getStartDate().get("year") );
+        carePost.endDay( requestBody.getEndDate().get("day") );
+        carePost.endMonth( requestBody.getEndDate().get("month") );
+        carePost.endYear( requestBody.getEndDate().get("year") );
+
+        return carePost.build();
+    }
 
     CarePost carePostPatchDtoToCarePost(CarePostDto.Patch requestBody);
 
@@ -28,21 +48,45 @@ public interface CarePostMapper {
         String title = null;
         String content = null;
         List<String> imgUrls = new ArrayList<>();
-        Date startDate = null;
-        Date endDate = null;
+        Integer startDay = null;
+        Integer startMonth = null;
+        Integer startYear = null;
+        Integer endDay = null;
+        Integer endMonth = null;
+        Integer endYear = null;
+
 
         title = carePost.getTitle();
         content = carePost.getContent();
         imgUrls = carePost.getImgUrls();
-        startDate = carePost.getStartDate();
-        endDate = carePost.getEndDate();
+        startDay = carePost.getStartDay();
+        startMonth = carePost.getStartMonth();
+        startYear = carePost.getStartYear();
+        endDay = carePost.getEndDay();
+        endMonth = carePost.getEndMonth();
+        endYear = carePost.getEndYear();
+
 
         List<String> conditionTags = postConditionTagDtoResponse(postConditionTags);
         List<String> locationTags = postLocationTagDtoResponse(postLocationTags);
 
+        // enddate 및 startdate 정의 및 초기화
+        Map<String,Integer> startDate = new HashMap<>();
+        Map<String,Integer> endDate = new HashMap<>();
+
+        // enddate 및 statrdate 값 넣기
+        startDate.put("day",startDay);
+        startDate.put("month",startMonth);
+        startDate.put("year",startYear);
+        endDate.put("day",endDay);
+        endDate.put("month",endMonth);
+        endDate.put("year",endYear);
+
+
         CarePostDto.Response response =
                 CarePostDto.Response.builder()
                         .title(title)
+                        .content(content)
                         .imgUrls(imgUrls)
                         .startDate(startDate)
                         .endDate(endDate)
@@ -67,4 +111,5 @@ public interface CarePostMapper {
                 .collect(Collectors.toList());
         return tagName;
     }
+
 }

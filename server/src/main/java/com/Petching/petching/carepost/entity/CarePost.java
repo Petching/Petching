@@ -40,16 +40,24 @@ public class CarePost extends Auditable {
 //    private String condition;
 
     @Column
-    private Date startDate;
+    private Integer startDay;
+    @Column
+    private Integer startMonth;
+    @Column
+    private Integer startYear;
 
     @Column
-    private Date endDate;
+    private Integer endDay;
+    @Column
+    private Integer endMonth;
+    @Column
+    private Integer endYear;
 
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany(mappedBy = "carePost", cascade = CascadeType.ALL)
     private List<CarePost_ConditionTag> postConditionTags = new ArrayList<>();
 
