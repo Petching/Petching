@@ -12,19 +12,19 @@ const CareListDetail = () => {
       <div className="bg-white mt-10">
         <div>펫을 맡기시나요?</div>
         <div>
-          <button>펫시터에요</button>
-          <button>집사에요</button>
+          <button className="bg-customGreen rounded-lg">펫시터에요</button>
+          <button className="bg-customGreen rounded-lg">집사에요</button>
         </div>
         <div>펫의 크기를 지정해주세요</div>
         <div>
-          <button>소형</button>
-          <button>중형</button>
-          <button>대형</button>
+          <button className="bg-customGreen rounded-lg">소형</button>
+          <button className="bg-customGreen rounded-lg">중형</button>
+          <button className="bg-customGreen rounded-lg">대형</button>
         </div>
         <div>추가사항을 적어주세요</div>
         <input></input>
       </div>
-      <button>게시</button>
+      <button className="bg-customGreen rounded-lg">게시</button>
     </div>
   );
 };
