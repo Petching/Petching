@@ -4,6 +4,7 @@ import Explain from '../Components/Main/Explain';
 import MainPeacock from '../Components/Main/MainPeacock';
 import MainMember from '../Components/Main/MainMember';
 import KakaoLogin from '../Components/Login/KakaoLogin';
+import { urlencoded } from 'express';
 
 const Main = () => {
   const options = {

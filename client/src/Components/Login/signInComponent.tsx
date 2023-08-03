@@ -16,12 +16,13 @@ const SignInComponent: React.FC = () => {
   const Google = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const googleAuthUrl =
-      'https://accounts.google.com/o/oauth2/auth?' +
+      'https://accounts.google.com/o/oauth2/v2/auth?' +
       `client_id=${process.env.REACT_APP_GOOGLE_API_KEY}&` +
       `redirect_uri=${process.env.REACT_APP_GOOGLE_API_KEY}&` +
       'response_type=token&' +
       'scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile';
-    window.location.href = googleAuthUrl;
+    window.location.href =
+      'https://server.petching.net/oauth2/authorization/google';
   };
 
   const Kakao = async () => {
