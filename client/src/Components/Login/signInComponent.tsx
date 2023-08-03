@@ -24,13 +24,13 @@ const SignInComponent: React.FC = () => {
     window.location.href = googleAuthUrl;
   };
 
-  const Kakao = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const Kakao = async () => {
     const restApiKey = process.env.REACT_APP_KAKAO_API_KEY;
     const redirectUrl = process.env.REACT_APP_KAKAO_REDIRECT_URL;
     const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${restApiKey}&redirect_uri=${redirectUrl}&response_type=code`;
 
-    window.location.href = kakaoAuthUrl;
+    window.location.href =
+      'https://server.petching.net/oauth2/authorization/kakao';
   };
 
   const handleButtonClick = async () => {
@@ -42,7 +42,6 @@ const SignInComponent: React.FC = () => {
       setMessage('아이디와 비밀번호를 다시 확인해주세요');
     }
   };
-
 
   return (
     <>
@@ -79,6 +78,7 @@ const SignInComponent: React.FC = () => {
           <div className="m-1.5 fonr-semibold text-gray-400">또는</div>
           <div className="m-4 h-0.5 bg-gray-300 w-52"></div>
         </div>
+
         <button
           onClick={Kakao}
           className="ml-4 bg-kakaoYellow border border-gray-300 p-3 rounded text-kakaoText  flex items-center justify-center mr-7 hover:bg-yellow-300"
