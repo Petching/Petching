@@ -61,4 +61,8 @@ public class User extends Auditable {
     public void addLikedBoard(Long boardId){
         likedBoardList.add(boardId);
     }
+
+    public void updateProfileUmgUrl (String imgUrl) {
+        this.profileImgUrl = profileImgUrl;
+    }
 }
