@@ -176,6 +176,14 @@ public class CarePostService {
 
     }
 
+    public List<CarePost> searchPost(String conditionTag, int startDay, int startMonth, int startYear,
+                                     int endDay, int endMonth, int endYear) {
+
+            return repository.findByLocationTagAndStartDayAndStartMonthAndStartYearAndEndDayAndEndMonthAndEndYear(
+                    conditionTag, startDay, startMonth, startYear,
+                    endDay, endMonth, endYear);
+    }
+
     public Page<CarePost> findAllPost(Pageable pageable) {
 
         return repository.findAll(pageable);
