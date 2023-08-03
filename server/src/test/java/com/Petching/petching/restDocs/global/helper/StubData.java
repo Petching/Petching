@@ -322,6 +322,7 @@ public class StubData {
         }
 
         public static BoardDto.Detail getSingleDetailResponseBody() {
+
             return BoardDto.Detail.builder()
                     .boardId(1)
                     .title("this is title1")
@@ -377,6 +378,8 @@ public class StubData {
 
         public static Board getSingleResultBoard() {
 
+            List<Comment> comments = new ArrayList<>();
+
             Board board = Board.builder()
                     .boardId(1)
                     .title("this is title1")
@@ -384,6 +387,7 @@ public class StubData {
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png"))
                     .likes(0)
                     .likedUserIds(new ArrayList<>())
+                    .comments(comments)
                     .commentCount(0)
                     .build();
 
@@ -392,6 +396,11 @@ public class StubData {
 
         public static Page<Board> getMultiResultBoard() {
 
+            List<Comment> comments1 = new ArrayList<>();
+            List<Comment> comments2 = new ArrayList<>();
+            List<Comment> comments3 = new ArrayList<>();
+
+
             Board board1 = Board.builder()
                     .boardId(1)
                     .title("this is title1")
@@ -399,6 +408,7 @@ public class StubData {
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png"))
                     .likes(0)
                     .likedUserIds(new ArrayList<>())
+                    .comments(comments1)
                     .commentCount(0)
                     .build();
 
@@ -409,6 +419,7 @@ public class StubData {
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_02.png"))
                     .likes(0)
                     .likedUserIds(new ArrayList<>())
+                    .comments(comments2)
                     .commentCount(0)
                     .build();
 
@@ -419,6 +430,7 @@ public class StubData {
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_03.jpg"))
                     .likes(0)
                     .likedUserIds(new ArrayList<>())
+                    .comments(comments3)
                     .commentCount(0)
                     .build();
 
@@ -428,6 +440,8 @@ public class StubData {
 
         public static Board getSingleResultBoard(long boardId) {
 
+            List<Comment> comments = new ArrayList<>();
+
             Board board = Board.builder()
                     .boardId(boardId)
                     .title("this is title1")
@@ -435,6 +449,7 @@ public class StubData {
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png"))
                     .likes(0)
                     .likedUserIds(new ArrayList<>())
+                    .comments(comments)
                     .commentCount(0)
                     .build();
 

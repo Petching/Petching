@@ -101,9 +101,16 @@ public interface ControllerTestHelper<T> {
     }
     default List<HeaderDescriptor> getDefaultRequestHeaderDescriptors() {
         return List.of(
+                headerWithName("Authorization").description("Request User의 access token").optional()
+        );
+    }
+    default List<HeaderDescriptor> getOptionalRequestHeaderDescriptors() {
+        return List.of(
                 headerWithName("Authorization").description("Request User의 access token")
         );
     }
+
+
     default String getDataParentPath(DataResponseType dataResponseType) {
         return dataResponseType == DataResponseType.SINGLE ? "data." : "data[].";
     }

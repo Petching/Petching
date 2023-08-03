@@ -530,9 +530,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h4 id="_request_summary" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /users/sign-up?_csrf=d93db3ab-58df-45df-b4e2-1b29217e82ce HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /users/sign-up?_csrf=13fb78aa-a552-4fe8-a11b-d82ea16c351c HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
+Authorization: {AccessToken}
 Content-Length: 97
 Host: server.petching.net
 
@@ -666,17 +667,17 @@ X-Frame-Options: DENY</code></pre>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.email</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">이메일</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nickName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.nickName</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">닉네임</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>address</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.address</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">주소</p></td>
 </tr>
@@ -685,9 +686,10 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="_request_summary_2" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">PATCH /users/?_csrf=adc1277c-4ae1-4a9c-b6b1-de422dce025b HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">PATCH /users/?_csrf=a69c05d2-ca4c-4956-952a-48cc34edc7e4 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
+Authorization: {AccessToken}
 Content-Length: 142
 Host: server.petching.net
 
@@ -714,12 +716,14 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 95
+Content-Length: 120
 
 {
-  "nickName" : "exNickName",
-  "email" : "email@example.com",
-  "address" : "exAddress"
+  "data" : {
+    "nickName" : "exNickName",
+    "email" : "email@example.com",
+    "address" : "exAddress"
+  }
 }</code></pre>
 </div>
 </div>
@@ -757,9 +761,11 @@ Content-Length: 95
 <div class="title">request-body</div>
 <div class="content">
 <pre class="highlight nowrap"><code>{
-  "nickName" : "exNickName",
-  "email" : "email@example.com",
-  "address" : "exAddress"
+  "data" : {
+    "nickName" : "exNickName",
+    "email" : "email@example.com",
+    "address" : "exAddress"
+  }
 }</code></pre>
 </div>
 </div>
@@ -779,17 +785,17 @@ Content-Length: 95
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.email</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">이메일</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nickName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.nickName</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">닉네임</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>address</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.address</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">주소</p></td>
 </tr>
@@ -798,7 +804,8 @@ Content-Length: 95
 <h4 id="_request_summary_3" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /users/1?_csrf=3394f13c-c07e-4a80-a2be-c8b1dc10ce78 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /users/1?_csrf=4e3f46d0-5240-4ae2-a836-b3cad4db049a HTTP/1.1
+Authorization: {AccessToken}
 Accept: application/json
 Host: server.petching.net</code></pre>
 </div>
@@ -817,12 +824,14 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 95
+Content-Length: 120
 
 {
-  "nickName" : "exNickName",
-  "email" : "email@example.com",
-  "address" : "exAddress"
+  "data" : {
+    "nickName" : "exNickName",
+    "email" : "email@example.com",
+    "address" : "exAddress"
+  }
 }</code></pre>
 </div>
 </div>
@@ -874,7 +883,8 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="_request_summary_4" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /users/1?_csrf=45daa772-a6a1-4241-ae94-2dfc088b3dc2 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /users/1?_csrf=6b06eeb7-a9d8-4388-80bb-f58a9f14858e HTTP/1.1
+Authorization: {AccessToken}
 Host: server.petching.net</code></pre>
 </div>
 </div>

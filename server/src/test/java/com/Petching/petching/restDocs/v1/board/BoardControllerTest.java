@@ -180,7 +180,7 @@ public class BoardControllerTest implements BoardControllerTestHelper {
                                 getRequestPreProcessor(),
                                 getResponsePreProcessor(),
                                 requestHeaders(
-                                        getDefaultRequestHeaderDescriptors()
+                                        getOptionalRequestHeaderDescriptors()
                                 ),
                                 pathParameters(
                                         getBoardRequestPathParameterDescriptor()
@@ -239,7 +239,7 @@ public class BoardControllerTest implements BoardControllerTestHelper {
                                 getRequestPreProcessor(),
                                 getResponsePreProcessor(),
                                 requestHeaders(
-                                        getDefaultRequestHeaderDescriptors()
+                                        getOptionalRequestHeaderDescriptors()
                                 ),
                                 requestParameters(
                                         getDefaultRequestParameterDescriptors()

@@ -85,20 +85,21 @@ public interface CommentControllerTestHelper extends ControllerTestHelper{
         return patch(url, boardId, commentId)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "{AccessToken}")
                 .content(content).with(csrf());
 
     }
 
     default RequestBuilder deleteCommentRequestBuilder(String url, long boardId, long commentId) {
         return delete(url, boardId, commentId)
+                .header("Authorization", "{AccessToken}")
                 .with(csrf());
     }
 
     default List<FieldDescriptor> getCommentPostRequestDescriptors() {
 
         return List.of(
-                fieldWithPath("content").type(JsonFieldType.STRING).description("댓글 내용"),
-                fieldWithPath("userId").type(JsonFieldType.NUMBER).description("User 고유 식별자")
+                fieldWithPath("content").type(JsonFieldType.STRING).description("댓글 내용")
         );
 
     }
