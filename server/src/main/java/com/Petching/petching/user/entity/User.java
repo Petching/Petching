@@ -2,7 +2,6 @@ package com.Petching.petching.user.entity;
 
 import com.Petching.petching.audit.Auditable;
 import lombok.*;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -37,6 +36,9 @@ public class User extends Auditable {
 
     private String profileImgUrl;
 
+    @Transient
+    private boolean userDivision;
+
 
     @ElementCollection
     private List<Long> likedBoardList = new ArrayList<>();
@@ -62,7 +64,7 @@ public class User extends Auditable {
         likedBoardList.add(boardId);
     }
 
-    public void updateProfileUmgUrl (String imgUrl) {
+    public void updateProfileImgUrl(String imgUrl) {
         this.profileImgUrl = imgUrl;
     }
 }
