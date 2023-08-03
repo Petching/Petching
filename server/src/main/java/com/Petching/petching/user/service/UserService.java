@@ -9,11 +9,13 @@ import com.Petching.petching.user.dto.UserPostDto;
 import com.Petching.petching.user.entity.User;
 import com.Petching.petching.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service @Transactional
@@ -39,7 +41,7 @@ public class UserService {
                 .email(postDto.getEmail())
                 .password(passwordEncoder.encode(postDto.getPassword()))
                 .roles(roles)
-//                .profileImgUrl(postDto.getImgUrl())
+                .profileImgUrl("https://s3.ap-northeast-2.amazonaws.com/petching.image/dog-5960092_1920.jpg")
                 .build();
 
          return repository.save(user);
@@ -52,9 +54,11 @@ public class UserService {
         Optional.ofNullable(patchDto.getAddress()).ifPresent(adr -> findUser.updateAddress(adr));
         Optional.ofNullable(patchDto.getPassword())
                 .ifPresent(pw -> findUser.updatePassword(passwordEncoder.encode(pw)));
+        Optional.ofNullable(patchDto.getProfileImgUrl()).ifPresent(img -> findUser.updateProfileUmgUrl(img));
 
         return repository.save(findUser);
     }
+    @Transactional(readOnly = true)
     public User findUser (long userId) {
         User user = verifiedUser(userId);
         return user;
@@ -85,5 +89,31 @@ public class UserService {
         User find = optional.orElseThrow(() -> new BusinessLoginException(ExceptionCode.MEMBER_NOT_FOUND));
 
         return find;
+    }
+
+
+    public User findUserByEmail (String email) {
+        User user = verifiedUser(email);
+
+        return user;
+    }
+
+    public User verifiedUser (String email) {
+
+        Optional<User> optional = repository.findByEmail(email);
+        User find = optional.orElseThrow(() -> new BusinessLoginException(ExceptionCode.MEMBER_NOT_FOUND));
+
+        return find;
+    }
+
+
+    public User updatedByBoardLike (User user) {
+
+        return repository.save(user);
+    }
+
+    public Long findSecurityContextHolderUserId() {
+        Map principal = (Map) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return (Long) principal.get("userId");
     }
 }

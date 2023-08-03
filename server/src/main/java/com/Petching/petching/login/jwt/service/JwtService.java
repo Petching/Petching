@@ -1,5 +1,7 @@
 package com.Petching.petching.login.jwt.service;
 
+import com.Petching.petching.global.exception.BusinessLogicException;
+import com.Petching.petching.global.exception.ExceptionCode;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -12,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
@@ -100,4 +103,5 @@ public class JwtService {
 
         return key;
     }
+
 }

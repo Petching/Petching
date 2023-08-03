@@ -60,10 +60,12 @@ public class SecurityConfiguration {
                         .antMatchers("/users/sign-up").permitAll()
                         .antMatchers("/users/check-id").permitAll()
                         .antMatchers("/users/check-nick").permitAll()
+                        .antMatchers(HttpMethod.GET, "/users/**").permitAll()
+                        .antMatchers("/users/login").permitAll()
                         .antMatchers("/users/**").hasRole("USER")
 
-                        .antMatchers(HttpMethod.GET, "/carepost").permitAll()
-                        .antMatchers("/carepost/**").hasRole("USER")
+                        .antMatchers(HttpMethod.GET, "/careposts").permitAll()
+                        .antMatchers("/careposts/**").hasRole("USER")
 
                         .antMatchers(HttpMethod.GET, "/boards/**").permitAll()
                         .antMatchers("/boards/**").hasRole("USER")

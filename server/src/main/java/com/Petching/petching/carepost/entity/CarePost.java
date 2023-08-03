@@ -1,6 +1,5 @@
 package com.Petching.petching.carepost.entity;
 
-
 import com.Petching.petching.audit.Auditable;
 import com.Petching.petching.tag.conditionTag.CarePost_ConditionTag;
 import com.Petching.petching.tag.locationTag.CarePost_LocationTag;
@@ -34,23 +33,35 @@ public class CarePost extends Auditable {
 
     @ElementCollection
     private List<String > imgUrls;
-//    @Column
-//    private String address;
-//
-//    @Column
-//    private String condition;
 
     @Column
-    private Date startDate;
+    private String memo;
+    @Column
+    private String petSize;
+    @Column
+    private String conditionTag;
+    @Column
+    private String locationTag;
 
     @Column
-    private Date endDate;
+    private Integer startDay;
+    @Column
+    private Integer startMonth;
+    @Column
+    private Integer startYear;
+
+    @Column
+    private Integer endDay;
+    @Column
+    private Integer endMonth;
+    @Column
+    private Integer endYear;
 
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany(mappedBy = "carePost", cascade = CascadeType.ALL)
     private List<CarePost_ConditionTag> postConditionTags = new ArrayList<>();
 

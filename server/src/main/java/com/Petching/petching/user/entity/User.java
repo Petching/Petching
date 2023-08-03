@@ -38,6 +38,8 @@ public class User extends Auditable {
     private String profileImgUrl;
 
 
+    @ElementCollection
+    private List<Long> likedBoardList = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
@@ -54,5 +56,9 @@ public class User extends Auditable {
     }
     public void updateAddress (String address) {
         this.address = address;
+    }
+
+    public void addLikedBoard(Long boardId){
+        likedBoardList.add(boardId);
     }
 }
