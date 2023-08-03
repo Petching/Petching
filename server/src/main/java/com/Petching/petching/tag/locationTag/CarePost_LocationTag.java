@@ -27,9 +27,9 @@ public class CarePost_LocationTag {
 
     public void setCarePost(CarePost carePost) {
         this.carePost = carePost;
-        if(!this.carePost.getPostLocationTags().contains(this)) {
-            this.carePost.setCarePost_LocationTag(this);
-        }
+//        if(!this.carePost.getPostLocationTags().contains(this)) {
+//            this.carePost.setCarePost_LocationTag(this);
+//        }
 
     }
 

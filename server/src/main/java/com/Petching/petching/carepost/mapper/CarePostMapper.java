@@ -6,14 +6,39 @@ import com.Petching.petching.tag.conditionTag.CarePost_ConditionTag;
 import com.Petching.petching.tag.locationTag.CarePost_LocationTag;
 import org.mapstruct.Mapper;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface CarePostMapper {
-    CarePost carePostPostDtoToCarePost(CarePostDto.Post requestBody);
+//    CarePost carePostPostDtoToCarePost(CarePostDto.Post requestBody);
+    default CarePost carePostPostDtoToCarePost(CarePostDto.Post requestBody) {
+        if ( requestBody == null ) {
+            return null;
+        }
+
+        CarePost.CarePostBuilder carePost = CarePost.builder();
+
+        carePost.title( requestBody.getTitle() );
+        carePost.content( requestBody.getContent() );
+        List<String> list = requestBody.getImgUrls();
+        if ( list != null ) {
+            carePost.imgUrls( new ArrayList<String>( list ) );
+        }
+        carePost.startDay( requestBody.getStartDate().get("day") );
+        carePost.startMonth( requestBody.getStartDate().get("month") );
+        carePost.startYear( requestBody.getStartDate().get("year") );
+        carePost.endDay( requestBody.getEndDate().get("day") );
+        carePost.endMonth( requestBody.getEndDate().get("month") );
+        carePost.endYear( requestBody.getEndDate().get("year") );
+        carePost.petSize(requestBody.getPetSize());
+        carePost.memo(requestBody.getMemo());
+        carePost.conditionTag(requestBody.getConditionTag());
+        carePost.locationTag(requestBody.getLocationTag());
+
+
+        return carePost.build();
+    }
 
     CarePost carePostPatchDtoToCarePost(CarePostDto.Patch requestBody);
 
@@ -22,32 +47,75 @@ public interface CarePostMapper {
             return null;
         }
 
-        List<CarePost_ConditionTag> postConditionTags = carePost.getPostConditionTags();
-        List<CarePost_LocationTag> postLocationTags = carePost.getPostLocationTags();
+//        List<CarePost_ConditionTag> postConditionTags = carePost.getPostConditionTags();
+//        List<CarePost_LocationTag> postLocationTags = carePost.getPostLocationTags();
 
         String title = null;
         String content = null;
         List<String> imgUrls = new ArrayList<>();
-        Date startDate = null;
-        Date endDate = null;
+        Integer startDay = null;
+        Integer startMonth = null;
+        Integer startYear = null;
+        Integer endDay = null;
+        Integer endMonth = null;
+        Integer endYear = null;
+        String petSize = null;
+        String memo = null;
+        String conditionTag = null;
+        String locationTag = null;
+        String nickName = null;
+        String profileImgUrl = null;
+
 
         title = carePost.getTitle();
         content = carePost.getContent();
         imgUrls = carePost.getImgUrls();
-        startDate = carePost.getStartDate();
-        endDate = carePost.getEndDate();
+        startDay = carePost.getStartDay();
+        startMonth = carePost.getStartMonth();
+        startYear = carePost.getStartYear();
+        endDay = carePost.getEndDay();
+        endMonth = carePost.getEndMonth();
+        endYear = carePost.getEndYear();
+        petSize = carePost.getPetSize();
+        memo = carePost.getMemo();
+        conditionTag = carePost.getConditionTag();
+        locationTag = carePost.getLocationTag();
+        nickName = carePost.getUser().getNickName();
+        profileImgUrl = carePost.getUser().getProfileImgUrl();
 
-        List<String> conditionTags = postConditionTagDtoResponse(postConditionTags);
-        List<String> locationTags = postLocationTagDtoResponse(postLocationTags);
+
+
+//        List<String> conditionTags = postConditionTagDtoResponse(postConditionTags);
+//        List<String> locationTags = postLocationTagDtoResponse(postLocationTags);
+
+        // enddate 및 startdate 정의 및 초기화
+        Map<String,Integer> startDate = new HashMap<>();
+        Map<String,Integer> endDate = new HashMap<>();
+
+        // enddate 및 statrdate 값 넣기
+        startDate.put("day",startDay);
+        startDate.put("month",startMonth);
+        startDate.put("year",startYear);
+        endDate.put("day",endDay);
+        endDate.put("month",endMonth);
+        endDate.put("year",endYear);
+
 
         CarePostDto.Response response =
                 CarePostDto.Response.builder()
                         .title(title)
+                        .content(content)
                         .imgUrls(imgUrls)
                         .startDate(startDate)
                         .endDate(endDate)
-                        .conditionTags(conditionTags)
-                        .locationTags(locationTags)
+                        .conditionTag(conditionTag)
+                        .locationTag(locationTag)
+                        .nickName(nickName)
+                        .profileImgUrl(profileImgUrl)
+//                        .conditionTags(conditionTags)
+//                        .locationTags(locationTags)
+                        .petSize(petSize)
+                        .memo(memo)
                         .build();
 
         return response;
@@ -67,4 +135,5 @@ public interface CarePostMapper {
                 .collect(Collectors.toList());
         return tagName;
     }
+
 }

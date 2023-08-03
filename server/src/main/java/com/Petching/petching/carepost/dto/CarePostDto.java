@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 public class CarePostDto {
@@ -28,11 +29,15 @@ public class CarePostDto {
 
         private List<String > imgUrls;
 
-        private Date startDate;
-        private Date endDate;
+        private Map<String,Integer> startDate;
+        private Map<String,Integer> endDate;
 
-        private List<String> conditionTags;
-        private List<String> locationTags;
+//        private List<String> conditionTags;
+//        private List<String> locationTags;
+        private String conditionTag;
+        private String locationTag;
+        private String petSize;
+        private String memo;
         public Post(){
 
         }
@@ -53,11 +58,15 @@ public class CarePostDto {
 
         private List<String > imgUrls;
 
-        private Date startDate;
-        private Date endDate;
+        private Map<String,Integer> startDate;
+        private Map<String,Integer> endDate;
 
-        private List<String> conditionTags;
-        private List<String> locationTags;
+//        private List<String> conditionTags;
+//        private List<String> locationTags;
+        private String conditionTag;
+        private String locationTag;
+        private String petSize;
+        private String memo;
 
         public Patch(){
 
@@ -70,18 +79,23 @@ public class CarePostDto {
     public static class Response {
 
         private String title;
+        private String content;
 
-        private List<String > imgUrls;
+        private List<String> imgUrls;
 
         private String nickName;
 
         private String profileImgUrl;
 
-        private Date startDate;
-        private Date endDate;
+        private Map<String,Integer> startDate;
+        private Map<String,Integer> endDate;
 
-        private List<String> conditionTags;
-        private List<String> locationTags;
+//        private List<String> conditionTags;
+//        private List<String> locationTags;
+        private String conditionTag;
+        private String locationTag;
+        private String petSize;
+        private String memo;
 
         public Response() {
         }
@@ -101,11 +115,14 @@ public class CarePostDto {
 
         private String nickName;
 
-        private Date startDate;
-        private Date endDate;
+        private Map<String,Integer> startDate;
+        private Map<String,Integer> endDate;
 
-        private List<String> conditionTags;
-        private List<String> locationTags;
+//        private List<String> conditionTags;
+//        private List<String> locationTags;
+        private String conditionTag;
+        private String locationTag;
+        private String petSize;
 
         public Detail(){
 
