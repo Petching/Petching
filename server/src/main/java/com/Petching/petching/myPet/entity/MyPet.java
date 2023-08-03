@@ -50,4 +50,7 @@ public class MyPet extends Auditable {
     public void updateImgUrl (String imgUrl) {
         this.petImgUrl = imgUrl;
     }
+    public void updateGender (String gender) {
+        this.gender = gender;
+    }
 }

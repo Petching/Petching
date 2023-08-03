@@ -4,14 +4,18 @@ import com.Petching.petching.myPet.dto.MyPetDto;
 import com.Petching.petching.myPet.entity.MyPet;
 import com.Petching.petching.myPet.mapper.MyPetMapper;
 import com.Petching.petching.myPet.service.MyPetService;
+import com.Petching.petching.response.SingleResponse;
 import com.Petching.petching.user.service.UserService;
 import com.Petching.petching.utils.URICreator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users/pet")
@@ -29,17 +33,23 @@ public class MyPetController {
     }
 
     @PatchMapping
-    public ResponseEntity patchPet (@RequestBody MyPetDto.Patch patch) {
-        return null;
+    public ResponseEntity patchPet (@RequestBody @Valid MyPetDto.Patch patch) {
+        MyPet myPet = petService.updatePet(petMapper.PatchToEntity(patch));
+
+        return new ResponseEntity<>(new SingleResponse<>(petMapper.EntityToResponse(myPet)), HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity getAllPet () {
-        return null;
+    @GetMapping("/{user-id}")
+    public ResponseEntity getAllPet (@PathVariable("user-id") @Positive long userId) {
+        List<MyPet> pet = petService.findAllPet(userId);
+
+        return new ResponseEntity(petMapper.ListEntityToListDto(pet), HttpStatus.OK);
     }
 
-    @DeleteMapping
-    public ResponseEntity deletePet() {
-        return null;
+    @DeleteMapping("/{petId}")
+    public ResponseEntity deletePet(@PathVariable("petId") @Positive long petId) {
+        petService.deletePet(petId);
+
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

@@ -1,9 +1,11 @@
 package com.Petching.petching.myPet.dto;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Getter
 public class MyPetDto {
@@ -27,18 +29,23 @@ public class MyPetDto {
 
     @Getter
     public static class Patch {
+        @Positive
+        private long myPetId;
         private String name;
         private String species;
         private int age;
         private String significant;
+        private String gender;
+        private String petImgUrl;
     }
 
-    @Getter
+    @Getter @Setter
     public static class Response {
         private String name;
         private String species;
         private String gender;
         private int age;
         private String significant;
+        private String petUmgUrl;
     }
 }
