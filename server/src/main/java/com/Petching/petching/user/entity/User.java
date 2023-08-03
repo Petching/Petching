@@ -63,6 +63,6 @@ public class User extends Auditable {
     }
 
     public void updateProfileUmgUrl (String imgUrl) {
-        this.profileImgUrl = profileImgUrl;
+        this.profileImgUrl = imgUrl;
     }
 }
