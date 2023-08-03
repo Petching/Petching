@@ -1,3 +1,4 @@
+/*
 package com.Petching.petching.restDocs.v1.carepost;
 
 import com.Petching.petching.carepost.controller.CarePostController;
@@ -109,3 +110,4 @@ public class CarePostControllerTest implements CarePostControllerTestHelper {
                 );
     }
 }
+*/

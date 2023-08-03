@@ -58,6 +58,8 @@ public class SecurityConfiguration {
                         .httpBasic().disable()
                         .authorizeHttpRequests()
                         .antMatchers("/users/sign-up").permitAll()
+                        .antMatchers("/users/check-id").permitAll()
+                        .antMatchers("/users/check-nick").permitAll()
                         .antMatchers("/users/**").hasRole("USER")
 
                         .antMatchers(HttpMethod.GET, "/carepost").permitAll()

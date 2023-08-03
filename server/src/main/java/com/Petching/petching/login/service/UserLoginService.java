@@ -27,7 +27,7 @@ public class UserLoginService implements UserDetailsService {
         return new UserDetail(user);
     }
 
-    private final class UserDetail extends User implements UserDetails {
+    public class UserDetail extends User implements UserDetails {
         // todo : 수정
         UserDetail(User user) {
             setUserId(user.getUserId());
@@ -42,7 +42,7 @@ public class UserLoginService implements UserDetailsService {
 //                    .password(user.getPassword())
 //                    .roles(user.getRoles())
 //                    .build();
-    }
+        }
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -44,7 +44,7 @@ public class Board extends BaseEntity {
     List<Comment> comments = new ArrayList<>();
 
     @Column
-    private int commentCount;
+    private int commentCount = comments.size();
 
 
     @Builder
@@ -77,8 +77,9 @@ public class Board extends BaseEntity {
 
     public void addComment(Comment comment){comments.add(comment);}
 
+    public void addLikedUserId(Long boardId){likedUserIds.add(boardId);}
 
-
+    public void setCommentCount(){commentCount = comments.size();}
 
 
     // N : 1(Member) 양방향 매핑

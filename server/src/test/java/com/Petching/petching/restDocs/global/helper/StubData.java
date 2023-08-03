@@ -4,6 +4,8 @@ import com.Petching.petching.board.dto.BoardDto;
 import com.Petching.petching.board.entity.Board;
 import com.Petching.petching.carepost.dto.CarePostDto;
 import com.Petching.petching.carepost.entity.CarePost;
+import com.Petching.petching.comment.dto.CommentDto;
+import com.Petching.petching.comment.entity.Comment;
 import com.Petching.petching.global.aws.s3.dto.S3FileDto;
 import com.Petching.petching.user.dto.UserPatchDto;
 import com.Petching.petching.user.dto.UserPostDto;
@@ -25,6 +27,117 @@ import java.util.*;
 
 
 public class StubData {
+
+    public static class MockComment{
+        private static Map<HttpMethod, Object> stubRequestBody;
+
+        static{
+            CommentDto.Post postDto = CommentDto.Post.builder()
+                    .content("this is content1")
+                    .userId(1L)
+                    .build();
+
+            CommentDto.Patch patchDto = CommentDto.Patch.builder()
+                    .content("this is content1")
+                    .build();
+
+            stubRequestBody = new HashMap<>();
+            stubRequestBody.put(HttpMethod.POST, postDto);
+            stubRequestBody.put(HttpMethod.PATCH, patchDto);
+        }
+        public static Object getRequestBody(HttpMethod method) {
+            return stubRequestBody.get(method);
+        }
+
+        public static CommentDto.Response getSingleResponseBody() {
+            return CommentDto.Response.builder()
+                    .commentId(1L)
+                    .content("this is content1")
+                    .boardId(1L)
+                    .createdAt(LocalDateTime.now())
+                    .nickName("nickName1")
+                    .profileImgUrl("https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png")
+                    .build();
+        }
+
+
+        public static List<CommentDto.Response> getMultiResponseBody() {
+
+
+            CommentDto.Response responseDto1 = CommentDto.Response.builder()
+                    .commentId(1L)
+                    .content("this is content1")
+                    .boardId(1L)
+                    .createdAt(LocalDateTime.now())
+                    .nickName("nickName1")
+                    .profileImgUrl("https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png")                    .build();
+
+            CommentDto.Response responseDto2 = CommentDto.Response.builder()
+                    .commentId(2L)
+                    .content("this is content2")
+                    .boardId(1L)
+                    .createdAt(LocalDateTime.now())
+                    .nickName("nickName2")
+                    .profileImgUrl("https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_02.png")
+                    .build();
+
+            CommentDto.Response responseDto3 = CommentDto.Response.builder()
+                    .commentId(3L)
+                    .content("this is content3")
+                    .boardId(1L)
+                    .createdAt(LocalDateTime.now())
+                    .nickName("nickName3")
+                    .profileImgUrl("https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_03.jpg")
+                    .build();
+
+
+
+            return List.of(responseDto1,responseDto2,responseDto3);
+        }
+
+        public static Comment getSingleResultComment() {
+
+            Comment comment = Comment.builder()
+                    .commentId(1L)
+                    .content("this is content1")
+                    .build();
+
+            return comment;
+        }
+
+        public static Page<Comment> getMultiResultComment() {
+
+            Comment comment1 = Comment.builder()
+                    .commentId(1L)
+                    .content("this is content1")
+                    .build();
+
+            Comment comment2 = Comment.builder()
+                    .commentId(1L)
+                    .content("this is content1")
+                    .build();
+
+            Comment comment3 = Comment.builder()
+                    .commentId(1L)
+                    .content("this is content1")
+                    .build();
+
+            return new PageImpl<>(List.of(comment1, comment2,comment3),
+                    PageRequest.of(0, 10, Sort.by("commentId").descending()), 3);
+        }
+
+        public static Comment getSingleResultComment(long commentId) {
+
+            Comment comment = Comment.builder()
+                    .commentId(commentId)
+                    .content("this is content1")
+                    .build();
+
+            return comment;
+        }
+    }
+
+
     public static class MockCarePost{
         private static List<String> imgUrls = Arrays.asList("https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_01.png","https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_02.png","https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_03.jpg");
 
@@ -157,7 +270,7 @@ public class StubData {
                     .build();
 
             return new PageImpl<>(List.of(carePost1, carePost2),
-                    PageRequest.of(1, 10, Sort.by("postId").descending()),
+                    PageRequest.of(0, 10, Sort.by("postId").descending()),
                     2);
         }
 
@@ -168,7 +281,9 @@ public class StubData {
     public static class MockBoard {
         private static Map<HttpMethod, Object> stubRequestBody;
 
-        private static List<String> imgUrls = Arrays.asList("https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_01.png","https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_02.png","https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_03.jpg");
+        private static List<String> imgUrls = Arrays.asList("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png",
+                "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_02.png",
+                "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_03.jpg");
 
         static {
 
@@ -311,8 +426,7 @@ public class StubData {
                     .build();
 
             return new PageImpl<>(List.of(board1, board2,board3),
-                    PageRequest.of(1, 10, Sort.by("boardId").descending()),
-                    3);
+                    PageRequest.of(0, 10, Sort.by("boardId").descending()), 3);
         }
 
         public static Board getSingleResultBoard(long boardId) {
@@ -328,6 +442,14 @@ public class StubData {
                     .build();
 
             return board;
+        }
+
+        public static List<String> getRandomImageUrls(){
+
+           return Arrays.asList("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png"
+                    ,"https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_02.png"
+                    ,"https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_03.jpg",
+                    "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_04.jpg");
         }
     }
 
@@ -450,6 +572,7 @@ public class StubData {
                     .password("exPassword")
                     .email("email@example.com")
                     .address("exAddress")
+                    .roles(List.of("USER"))
                     .build();
 
             return user;
@@ -474,7 +597,7 @@ public class StubData {
 
 
             return new PageImpl<>(List.of(user1, user2),
-                    PageRequest.of(1, 10, Sort.by("userId").descending()),
+                    PageRequest.of(0, 10, Sort.by("userId").descending()),
                     2);
         }
 

@@ -21,8 +21,8 @@ public class BoardDto {
     @Builder
     public static class Post{
         // TODO: JWT 구현 이후 userId 삭제 후 token 을 받아 요청한 유저를 찾아 Board 객체에 유저 지정
-        @NotNull(message = "userId not null, JWT 구현이후 token 으로 바꿀 예정입니다.")
-        private long userId;
+/*        @NotNull(message = "userId not null, JWT 구현이후 token 으로 바꿀 예정입니다.")
+        private long userId;*/
         @NotBlank(message = "title not null")
         private String title;
         @NotBlank(message = "content not null")
@@ -42,11 +42,12 @@ public class BoardDto {
     @Builder
     public static class Patch{
 
-        // TODO: JWT 구현 이후 userId 삭제 후 token 을 받아 요청한 유저가 글을 작성한 유저인지 검증
+/*        // TODO: JWT 구현 이후 userId 삭제 후 token 을 받아 요청한 유저가 글을 작성한 유저인지 검증
         @NotNull(message = "userId not null, JWT 구현이후 token 으로 바꿀 예정입니다.")
         private long userId;
 
-        private long boardId;
+        private long boardId;*/
+
         @NotBlank(message = "title not null")
         private String title;
         @NotBlank(message = "content not null")

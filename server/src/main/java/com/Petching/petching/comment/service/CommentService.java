@@ -7,7 +7,10 @@ import com.Petching.petching.comment.entity.Comment;
 import com.Petching.petching.comment.repository.CommentRepository;
 import com.Petching.petching.global.exception.BusinessLogicException;
 import com.Petching.petching.global.exception.ExceptionCode;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -40,8 +43,9 @@ public class CommentService {
 
         commentRepository.delete(comment);
     }
-    public List<Comment> findComments(){
-        return commentRepository.findAll();
+    public Page<Comment> findComments(Pageable pageable){
+
+        return commentRepository.findAll(pageable);
     }
 
     public Comment findComment(Long commentId) {

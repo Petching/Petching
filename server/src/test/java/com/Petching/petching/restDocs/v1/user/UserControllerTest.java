@@ -1,6 +1,7 @@
 package com.Petching.petching.restDocs.v1.user;
 
 import com.Petching.petching.config.SecurityConfiguration;
+import com.Petching.petching.global.aws.s3.config.S3Configuration;
 import com.Petching.petching.restDocs.global.helper.UserControllerTestHelper;
 import com.Petching.petching.user.dto.UserPatchDto;
 import com.Petching.petching.user.dto.UserResponseDto;
@@ -22,6 +23,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -34,7 +36,6 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -43,7 +44,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(UserController.class)
 @MockBean(JpaMetamodelMappingContext.class)
 @AutoConfigureRestDocs
-@Import(SecurityConfiguration.class)
+@Import({
+        SecurityConfiguration.class,
+        S3Configuration.class
+})
 class UserControllerTest implements UserControllerTestHelper {
     @Autowired
     private MockMvc mockMvc;
@@ -57,8 +61,12 @@ class UserControllerTest implements UserControllerTestHelper {
     @MockBean
     private UserMapper userMapper;
 
+    @MockBean
+    private SecurityConfiguration securityConfiguration;
+
     @DisplayName("Test - UserController - POST")
     @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
     public void postUserTest() throws Exception {
         // given
         UserPostDto post = (UserPostDto) StubData.MockUser.getRequestBody(HttpMethod.POST);
@@ -75,7 +83,8 @@ class UserControllerTest implements UserControllerTestHelper {
 
         // when
         ResultActions actions = mockMvc.perform(
-                postRequestBuilder(getUrl()+"sign-up", content));
+                postRequestBuilder(getUrl()+"sign-up", content)
+        );
 
         // then
         actions
@@ -95,6 +104,7 @@ class UserControllerTest implements UserControllerTestHelper {
 
     @DisplayName("Test - UserController - GET")
     @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
     public void getUserTest() throws Exception {
 
         // given
@@ -110,8 +120,9 @@ class UserControllerTest implements UserControllerTestHelper {
         // then
         actions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.email").value(response.getEmail()))
-                .andExpect(jsonPath("$.nickName").value(response.getNickName()))
+                .andExpect(jsonPath("$.data.email").value(response.getEmail()))
+                .andExpect(jsonPath("$.data.nickName").value(response.getNickName()))
+                .andExpect(jsonPath("$.data.address").value(response.getAddress()))
                 .andDo(
                         document("get-user",
                                 getRequestPreProcessor(),
@@ -128,6 +139,7 @@ class UserControllerTest implements UserControllerTestHelper {
 
     @DisplayName("Test - UserController - PATCH")
     @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
     public void patchUserTest() throws Exception {
         // given
         long userId = 1L;
@@ -150,9 +162,9 @@ class UserControllerTest implements UserControllerTestHelper {
         actions
                 .andExpect(status().isOk())
                 //.andExpect(jsonPath("$.userId").value(patch.getUserId()))
-                .andExpect(jsonPath("$.nickName").value(patch.getNickName()))
-                .andExpect(jsonPath("$.email").value(patch.getEmail()))
-                .andExpect(jsonPath("$.address").value(patch.getAddress()))
+                .andExpect(jsonPath("$.data.nickName").value(patch.getNickName()))
+                .andExpect(jsonPath("$.data.email").value(patch.getEmail()))
+                .andExpect(jsonPath("$.data.address").value(patch.getAddress()))
                 .andDo(document("patch-user",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
@@ -168,6 +180,7 @@ class UserControllerTest implements UserControllerTestHelper {
 
     @DisplayName("Test - UserController - DELETE")
     @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
     public void deleteUserTest() throws Exception {
 
         // given

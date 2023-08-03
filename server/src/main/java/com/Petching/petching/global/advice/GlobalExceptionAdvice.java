@@ -90,7 +90,7 @@ public class GlobalExceptionAdvice {
         return new ResponseEntity<>(ErrorResponse.of(response , info), HttpStatus.METHOD_NOT_ALLOWED);
     }
 
-    @ExceptionHandler
+    @ExceptionHandler(BusinessLogicException.class)
     public ResponseEntity handleBusinessLogicException(BusinessLogicException e) {
 
         log.error("# handleBusinessLogicException", e);

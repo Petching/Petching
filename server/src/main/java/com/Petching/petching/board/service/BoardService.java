@@ -1,10 +1,12 @@
 package com.Petching.petching.board.service;
 
+import com.Petching.petching.board.dto.BoardDto;
 import com.Petching.petching.board.entity.Board;
 import com.Petching.petching.board.repository.BoardRepository;
 import com.Petching.petching.global.aws.s3.service.S3Service;
 import com.Petching.petching.global.exception.BusinessLogicException;
 import com.Petching.petching.global.exception.ExceptionCode;
+import com.Petching.petching.user.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -118,4 +120,22 @@ public class BoardService {
         return boardRepository.save(board);
     }
 
+    public void extracted(List<BoardDto.Response> response, List<Long> userLiked) {
+        for (BoardDto.Response el : response) {
+            if(userLiked.contains(el.getBoardId())){
+                el.setCheckLike(true);
+            }
+        }
+    }
+
+
+    public Board updateBoardLike(long boardId, User requestUser) {
+        Board board = findBoardByMK(boardId);
+
+        int updateLike = board.getLikes() + 1;
+        board.setLikes(updateLike);
+        board.addLikedUserId(requestUser.getUserId());
+
+        return boardRepository.save(board);
+    }
 }

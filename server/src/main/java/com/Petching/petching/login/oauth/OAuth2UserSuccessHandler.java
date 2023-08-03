@@ -1,19 +1,17 @@
 package com.Petching.petching.login.oauth;
 
-import com.Petching.petching.global.exception.BusinessLogicException;
-import com.Petching.petching.global.exception.ExceptionCode;
 import com.Petching.petching.login.jwt.util.CustomAuthorityUtils;
 import com.Petching.petching.login.oauth.userInfo.JwtToken;
+import com.Petching.petching.user.entity.SocialType;
 import com.Petching.petching.user.entity.User;
 import com.Petching.petching.user.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
@@ -26,35 +24,79 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@Slf4j
 @Component @RequiredArgsConstructor
-public class OAuth2UserSuccessHandler implements AuthenticationSuccessHandler {
+public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final JwtToken jwtToken;
     private final UserRepository userRepository;
+    private final CustomAuthorityUtils customAuthorityUtils;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
         OAuth2User oAuth2User = ((OAuth2User) authentication.getPrincipal());
-        String userEmail = oAuth2User.getAttribute("email");
-        if (userEmail == null) {
-            Map<String, Object> email = (Map<String, Object>) oAuth2User.getAttributes().get("kakao_account");
-            userEmail = (String) email.get("email");
-        }
-        User user = userRepository.findByEmail(userEmail).orElseThrow();
 
+        String type = ((OAuth2AuthenticationToken) authentication).getAuthorizedClientRegistrationId(); // oauth 타입
+        String email;
+        String nickName;
+        String proImg;
+        SocialType oauth;
+
+        if ("google".equals(type)) {
+            email = String.valueOf(oAuth2User.getAttributes().get("email"));
+            nickName = String.valueOf(oAuth2User.getAttributes().get("name"));
+            proImg = String.valueOf(oAuth2User.getAttributes().get("image"));
+            oauth = SocialType.GOOGLE;
+        }
+        else {
+            Map<String, Object> attributes = oAuth2User.getAttributes();
+            Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
+            email = (String) kakaoAccount.get("email");
+            Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
+            nickName = (String) profile.get("nickname");
+            proImg = (String) profile.get("profile_image_url");
+            oauth = SocialType.KAKAO;
+        }
+
+        User user;
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        user = userOptional.orElseGet(() -> saveUser(email, oauth, nickName, proImg));
+
+        redirect(request, response, user);
+    }
+    private User saveUser (String email, SocialType oauth, String name, String profileImg) {
+        User user = new User();
+        user.setEmail(email);
+        user.setSocialType(oauth);
+        user.setNickName(name);
+        user.setProfileImgUrl(profileImg);
+        user.setRoles(customAuthorityUtils.createRoles(email));
+
+        return userRepository.save(user);
+    }
+
+    private void redirect (HttpServletRequest request, HttpServletResponse response, User user) throws IOException{
         String accessToken = jwtToken.delegateAccessToken(user);
         String refreshToken = jwtToken.delegateRefreshToken(user);
 
-        Map<String, String> tokens = new HashMap<>();
-        tokens.put("access_token", accessToken);
-        tokens.put("refresh_token", refreshToken);
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.setStatus(HttpServletResponse.SC_OK);
-        new ObjectMapper().writeValue(response.getOutputStream(), tokens);
+        String uri = createURI(accessToken, refreshToken).toString();
+        getRedirectStrategy().sendRedirect(request, response, uri);
+    }
+    private URI createURI(String accessToken, String refreshToken) {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("access_token", accessToken);
+        queryParams.add("refresh_token", refreshToken);
+
+        return UriComponentsBuilder
+                .newInstance()
+                .scheme("https")
+                .host("petching.net")
+//                .port(80)
+//                .path("/receive-token.html")
+                .queryParams(queryParams)
+                .build()
+                .toUri();
     }
 }

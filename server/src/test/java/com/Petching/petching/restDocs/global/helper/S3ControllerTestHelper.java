@@ -38,11 +38,13 @@ public interface S3ControllerTestHelper extends ControllerTestHelper {
 
     default List<FieldDescriptor> getDefaultS3UploadResponseDescriptors(DataResponseType dataResponseType) {
 
+        String parentPath = getDataParentPath(dataResponseType);
+
         return List.of(
-                fieldWithPath("originalFileName").type(JsonFieldType.STRING).description("업로드될 파일의 원래 이름"),
-                fieldWithPath("uploadFileName").type(JsonFieldType.STRING).description("업로드된 파일의 바뀐 이름"),
-                fieldWithPath("uploadFilePath").type(JsonFieldType.STRING).description("업로드된 파일의 경로"),
-                fieldWithPath("uploadFileUrl").type(JsonFieldType.STRING).description("업로드된 파일의 Url")
+                fieldWithPath(parentPath.concat("[].originalFileName")).type(JsonFieldType.STRING).description("업로드될 파일의 원래 이름"),
+                fieldWithPath(parentPath.concat("[].uploadFileName")).type(JsonFieldType.STRING).description("업로드된 파일의 바뀐 이름"),
+                fieldWithPath(parentPath.concat("[].uploadFilePath")).type(JsonFieldType.STRING).description("업로드된 파일의 경로"),
+                fieldWithPath(parentPath.concat("[].uploadFileUrl")).type(JsonFieldType.STRING).description("업로드된 파일의 Url")
         );
     }
 }
