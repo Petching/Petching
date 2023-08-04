@@ -1,13 +1,52 @@
 /* eslint-disable */
+import React, { useState } from 'react';
 import Board from '../Components/Care/Board';
 import Card from '../Components/Care/Card';
 import TextEditor from '../Components/Care/TextEditor';
 import ReactCalendar from '../Components/Care/ReactCalendar';
 import Postcode from '../Components/Care/Postcode';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+interface Date {
+  year: number;
+  month: number;
+  day: number;
+}
 
 const CareList = () => {
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [locationTag, setLocationTag] = useState('');
   const navigate = useNavigate();
+
+  const onDateSelected = (value: any) => {
+    if (value.from && value.to) {
+      setStartDate({ year: value.from.year, month: value.from.month, day: value.from.day });
+      setEndDate({ year: value.to.year, month: value.to.month, day: value.to.day });
+    }
+  };
+  const onAddressSelected = (address: string) => {
+    setLocationTag(address);
+  }
+
+  const handleSubmit = async() => {
+    if(startDate && endDate && locationTag){
+      try{
+        const response = await axios.get("https://server.petching.net/search",{
+          params:{
+            startDate,
+            endDate,
+            locationTag,
+          },
+        });
+        console.log(response.data);
+      }catch(error){
+        console.error(error);
+      }
+    }
+  };
+
   const toCareListDetail = () => {
     navigate('/carelistdetail');
   };
@@ -18,13 +57,19 @@ const CareList = () => {
       <div className="flex flex-col items-center">
             <div className="text-center leading-10 ">어느 지역을 찾으시나요?</div>
             <div className="flex items-center">
-              <Postcode />
+              <div>
+              <Postcode onAddressSelected={onAddressSelected}/>
+              </div>
+              
             </div>
           </div>
           <div className="flex flex-col items-center"> 
             <div className="text-center leading-10">언제 맡기시나요?</div>
             <div className="flex items-center"> 
-            <ReactCalendar />
+            <div>
+            <ReactCalendar onDateSelected={onDateSelected}/>
+            </div>
+            
           </div>
           </div>
         </div>
@@ -44,7 +89,7 @@ const CareList = () => {
             </button>
           </div>
           <div className="flex justify-end mb-7">
-            <button className="w-[7rem] h-7 bg-customGreen shadow-sm shadow-gray-400 rounded-full mr-1">
+            <button className="w-[7rem] h-7 bg-customGreen shadow-sm shadow-gray-400 rounded-full mr-1" onClick={handleSubmit}>
               검색
             </button>
             <button className="w-[7rem] h-7 bg-customGreen shadow-sm shadow-gray-400 rounded-full mr-1" onClick={toCareListDetail}>
@@ -54,12 +99,10 @@ const CareList = () => {
         </div>
       </div>
       <div className="flex flex-wrap justify-center">
-        {/* <Card />
-        <Card /> */}
+        <Card />
+        <Card />
       </div>
-      <div>
-        <TextEditor></TextEditor>
-      </div>
+
     </div>
   );
 };

@@ -3,33 +3,19 @@ import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
 import DatePicker, {
   DayRange,
 } from '@hassanmojab/react-modern-calendar-datepicker';
-import axios from 'axios';
 
-const ReactCalendar = () => {
+interface ReactCalendarProps {
+  onDateSelected: (value: DayRange) => void;
+}
+const ReactCalendar: React.FC<ReactCalendarProps> = ({ onDateSelected }) => {
   const [selectedDayRange, setSelectedDayRange] = useState<DayRange>({
     from: null,
     to: null,
   });
 
-  const handleSubmit = async (value: DayRange) => {
-    if (value.from && value.to) {
-      try {
-        const response = await axios.post('https://server.petching.net/date', {
-          startDate: value.from,
-          endDate: value.to,
-        });
-        console.log(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  };
-
   const handleDayRangeChange = (value: DayRange) => {
     setSelectedDayRange(value);
-    if (value.from && value.to) {
-      handleSubmit(value);
-    }
+    onDateSelected(value);
   };
 
   return (
