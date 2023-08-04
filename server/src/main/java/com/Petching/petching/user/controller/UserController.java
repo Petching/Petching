@@ -8,10 +8,8 @@ import com.Petching.petching.user.entity.User;
 import com.Petching.petching.user.mapper.UserMapper;
 import com.Petching.petching.user.service.UserService;
 import com.Petching.petching.utils.URICreator;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -57,7 +55,8 @@ public class UserController {
     @GetMapping("{users-id}")
     public ResponseEntity getUser (@PathVariable("users-id") @Positive long usersId) {
 
-        return new ResponseEntity(new SingleResponse<>(mapper.EntityToResponseDto(service.findUser(usersId))), HttpStatus.OK);
+        return new ResponseEntity(new SingleResponse<>
+                (mapper.EntityToGetResponseDto(service.findUser(usersId))), HttpStatus.OK);
     }
 
     @DeleteMapping("{users-id}")

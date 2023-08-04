@@ -451,24 +451,27 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h4 id="_request" class="discrete"><code>Request</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-http" data-lang="http">POST: /api/v1/uploads</code></pre>
+<pre class="highlight"><code class="language-http" data-lang="http">POST: /api/s3/uploads</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. request-headers</caption>
 <colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">필수값 여부</th>
+<th class="tableblock halign-left valign-top">설명</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Content-Type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">multipart/form-data</p></td>
 </tr>
 </tbody>
@@ -594,7 +597,7 @@ boards
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Content-Disposition: form-data; name=_csrf
 
-9bdb3670-2c45-4915-89b8-e25197896a5e
+38891d5e-aec8-4055-8c5b-eb9618ff6fa9
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Content-Disposition: form-data; name=files; filename=1.png
 Content-Type: multipart/form-data
@@ -653,7 +656,7 @@ Content-Length: 733
 <h4 id="_request_2" class="discrete"><code>Request</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-http" data-lang="http">DELETE: /api/v1/delete</code></pre>
+<pre class="highlight"><code class="language-http" data-lang="http">DELETE: /api/s3/delete</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -704,7 +707,8 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="_request_summary_2" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/s3/delete?from=boards&amp;url=https%3A%2F%2Fs3.%7Bregion-name%7D.amazonaws.com%2F%7Bbucket-name%7D%2Fboards%2F%7Byyyy-mm-dd%7D-randomUUID_01.png&amp;_csrf=35451223-e8c5-484a-aa0b-604502016428 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/s3/delete?from=boards&amp;url=https%3A%2F%2Fs3.%7Bregion-name%7D.amazonaws.com%2F%7Bbucket-name%7D%2Fboards%2F%7Byyyy-mm-dd%7D-randomUUID_01.png&amp;_csrf=3c3676a9-772f-4cb3-aae5-acdeab180c14 HTTP/1.1
+Authorization: {AccessToken}
 Host: server.petching.net</code></pre>
 </div>
 </div>
@@ -725,7 +729,7 @@ X-Frame-Options: DENY</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-07-23 02:41:05 +0900
+Last updated 2023-07-24 11:04:29 +0900
 </div>
 </div>
 </body>

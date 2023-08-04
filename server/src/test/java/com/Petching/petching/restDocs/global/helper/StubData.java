@@ -34,7 +34,6 @@ public class StubData {
         static{
             CommentDto.Post postDto = CommentDto.Post.builder()
                     .content("this is content1")
-                    .userId(1L)
                     .build();
 
             CommentDto.Patch patchDto = CommentDto.Patch.builder()
@@ -137,7 +136,7 @@ public class StubData {
         }
     }
 
-
+/*
     public static class MockCarePost{
         private static List<String> imgUrls = Arrays.asList("https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_01.png","https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_02.png","https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_03.jpg");
 
@@ -253,6 +252,7 @@ public class StubData {
 
             return carePost;
         }
+
         public static Page<CarePost> getMultiResultBoard() {
 
             CarePost carePost1 = CarePost.builder()
@@ -277,7 +277,7 @@ public class StubData {
 
 
     }
-
+*/
     public static class MockBoard {
         private static Map<HttpMethod, Object> stubRequestBody;
 
@@ -289,15 +289,12 @@ public class StubData {
 
             stubRequestBody = new HashMap<>();
             BoardDto.Post postDto = BoardDto.Post.builder()
-                    .userId(1)
                     .title("this is title1")
                     .content("this is content1")
                     .imgUrls(imgUrls)
                     .build();
 
             BoardDto.Patch patchDto = BoardDto.Patch.builder()
-                    .userId(1)
-                    .boardId(1)
                     .title("this is title1")
                     .content("this is content1")
                     .imgUrls(imgUrls)
@@ -325,6 +322,7 @@ public class StubData {
         }
 
         public static BoardDto.Detail getSingleDetailResponseBody() {
+
             return BoardDto.Detail.builder()
                     .boardId(1)
                     .title("this is title1")
@@ -334,7 +332,7 @@ public class StubData {
                     .createdAt(LocalDateTime.now())
                     .likes(0)
                     .checkLike(false)
-                    .comments(List.of())
+                    .comments(new ArrayList<>())
                     .commentCount(0)
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png"))
                     .build();
@@ -380,13 +378,16 @@ public class StubData {
 
         public static Board getSingleResultBoard() {
 
+            List<Comment> comments = new ArrayList<>();
+
             Board board = Board.builder()
                     .boardId(1)
                     .title("this is title1")
                     .content("this is content1")
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png"))
                     .likes(0)
-                    .likedUserIds(List.of())
+                    .likedUserIds(new ArrayList<>())
+                    .comments(comments)
                     .commentCount(0)
                     .build();
 
@@ -395,13 +396,19 @@ public class StubData {
 
         public static Page<Board> getMultiResultBoard() {
 
+            List<Comment> comments1 = new ArrayList<>();
+            List<Comment> comments2 = new ArrayList<>();
+            List<Comment> comments3 = new ArrayList<>();
+
+
             Board board1 = Board.builder()
                     .boardId(1)
                     .title("this is title1")
                     .content("this is content1")
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png"))
                     .likes(0)
-                    .likedUserIds(List.of())
+                    .likedUserIds(new ArrayList<>())
+                    .comments(comments1)
                     .commentCount(0)
                     .build();
 
@@ -411,7 +418,8 @@ public class StubData {
                     .content("this is content2")
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_02.png"))
                     .likes(0)
-                    .likedUserIds(List.of())
+                    .likedUserIds(new ArrayList<>())
+                    .comments(comments2)
                     .commentCount(0)
                     .build();
 
@@ -421,7 +429,8 @@ public class StubData {
                     .content("this is content3")
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_03.jpg"))
                     .likes(0)
-                    .likedUserIds(List.of())
+                    .likedUserIds(new ArrayList<>())
+                    .comments(comments3)
                     .commentCount(0)
                     .build();
 
@@ -431,13 +440,16 @@ public class StubData {
 
         public static Board getSingleResultBoard(long boardId) {
 
+            List<Comment> comments = new ArrayList<>();
+
             Board board = Board.builder()
                     .boardId(boardId)
                     .title("this is title1")
                     .content("this is content1")
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png"))
                     .likes(0)
-                    .likedUserIds(List.of())
+                    .likedUserIds(new ArrayList<>())
+                    .comments(comments)
                     .commentCount(0)
                     .build();
 
@@ -547,7 +559,7 @@ public class StubData {
             stubRequestBody = new HashMap<>();
             stubRequestBody.put(HttpMethod.POST, new UserPostDto("email@example.com","exPassword",
                     "exNickName"));
-            stubRequestBody.put(HttpMethod.PATCH, new UserPatchDto(1, "email@example.com","exPassword", "exNickName","exAddress"));
+            stubRequestBody.put(HttpMethod.PATCH, new UserPatchDto(1, "email@example.com","exPassword", "exNickName","exAddress", "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png"));
         }
 
         public static Object getRequestBody(HttpMethod method) {
@@ -555,17 +567,28 @@ public class StubData {
         }
 
         public static UserResponseDto getSingleResponseBody() {
-            return new UserResponseDto("exNickName", "email@example.com", "exAddress");
+            return new UserResponseDto("exNickName", "email@example.com", "exAddress","https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png");
         }
+
+        public static UserResponseDto.UserGetResponseDto getSingleGetResponseBody() {
+            return new UserResponseDto.UserGetResponseDto(true,"exNickName", "email@example.com", "exAddress","https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png");
+        }
+
 
         public static List<UserResponseDto> getMultiResponseBody() {
             return List.of(
-                    new UserResponseDto("exNickName1", "email1@example.com", "exAddress1"),
-                    new UserResponseDto("exNickName2", "email2@example.com", "exAddress2")
+                    new UserResponseDto("exNickName1", "email1@example.com", "exAddress1","https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png"),
+                    new UserResponseDto("exNickName2", "email2@example.com", "exAddress2","https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png")
             );
         }
 
         public static User getSingleResultUser() {
+
+            List<Long> likedBoardList = new ArrayList<>();
+            likedBoardList.add(1L);
+            likedBoardList.add(2L);
+            likedBoardList.add(3L);
+
             User user = User.builder()
                     .userId(1L)
                     .nickName("exNickName")
@@ -573,6 +596,7 @@ public class StubData {
                     .email("email@example.com")
                     .address("exAddress")
                     .roles(List.of("USER"))
+                    .likedBoardList(likedBoardList)
                     .build();
 
             return user;

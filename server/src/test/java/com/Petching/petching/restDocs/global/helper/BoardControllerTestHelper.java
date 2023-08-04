@@ -2,6 +2,7 @@ package com.Petching.petching.restDocs.global.helper;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.headers.HeaderDescriptor;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.request.ParameterDescriptor;
@@ -10,6 +11,7 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
@@ -29,13 +31,15 @@ public interface BoardControllerTestHelper extends ControllerTestHelper{
     }
 
     default List<ParameterDescriptor> getBoardRequestPathParameterDescriptor() {
-        return Arrays.asList(parameterWithName("boardId").description("Board 식별자 ID"));
+        return Arrays.asList(
+                parameterWithName("boardId").description("Board 식별자 ID")
+        );
     }
+
 
     default List<FieldDescriptor> getDefaultBoardPostRequestDescriptors() {
 
         return List.of(
-                fieldWithPath("userId").type(JsonFieldType.NUMBER).description("User 고유 식별자"),
                 fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
                 fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
                 fieldWithPath("imgUrls").type(JsonFieldType.ARRAY).description("첨부될 이미지").optional().type("배열")
@@ -78,16 +82,15 @@ public interface BoardControllerTestHelper extends ControllerTestHelper{
     }
 
     default RequestBuilder postUpdateLikeRequestBuilder(String url,
-                                              long boardId, long userId) {
+                                              long boardId) {
         return  post(url+"/like",boardId)
-                .param("userId",String.valueOf(userId))
                 .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "{AccessToken}")
                 .with(csrf());
     }
 
     default List<ParameterDescriptor> getBoardPostUpdateLikeRequestParameterDescriptors() {
         return List.of(
-                parameterWithName("userId").description("USER 식별자 ID"),
                 parameterWithName("_csrf").description("csrf")
 
         );
@@ -110,8 +113,6 @@ public interface BoardControllerTestHelper extends ControllerTestHelper{
     default List<FieldDescriptor> getDefaultBoardPatchRequestDescriptors() {
 
         return List.of(
-                fieldWithPath("userId").type(JsonFieldType.NUMBER).description("회원 식별자"),
-                fieldWithPath("boardId").type(JsonFieldType.NUMBER).description("Board 식별자"),
                 fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
                 fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
                 fieldWithPath("imgUrls").type(JsonFieldType.ARRAY).description("첨부된 이미지")

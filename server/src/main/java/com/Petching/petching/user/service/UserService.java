@@ -9,11 +9,15 @@ import com.Petching.petching.user.dto.UserPostDto;
 import com.Petching.petching.user.entity.User;
 import com.Petching.petching.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service @Transactional
@@ -39,7 +43,7 @@ public class UserService {
                 .email(postDto.getEmail())
                 .password(passwordEncoder.encode(postDto.getPassword()))
                 .roles(roles)
-//                .profileImgUrl(postDto.getImgUrl())
+                .profileImgUrl("https://s3.ap-northeast-2.amazonaws.com/petching.image/dog-5960092_1920.jpg")
                 .build();
 
          return repository.save(user);
@@ -52,11 +56,20 @@ public class UserService {
         Optional.ofNullable(patchDto.getAddress()).ifPresent(adr -> findUser.updateAddress(adr));
         Optional.ofNullable(patchDto.getPassword())
                 .ifPresent(pw -> findUser.updatePassword(passwordEncoder.encode(pw)));
+        Optional.ofNullable(patchDto.getProfileImgUrl()).ifPresent(img -> findUser.updateProfileImgUrl(img));
 
         return repository.save(findUser);
     }
+    @Transactional(readOnly = true)
     public User findUser (long userId) {
         User user = verifiedUser(userId);
+        if (findSecurityContextHolderUserId() != null) {
+            User requestUser = verifiedUser(findSecurityContextHolderUserId());
+            if (requestUser == user) {
+                user.setUserDivision(true);
+            }
+        } else user.setUserDivision(false);
+
         return user;
     }
 
@@ -106,5 +119,14 @@ public class UserService {
     public User updatedByBoardLike (User user) {
 
         return repository.save(user);
+    }
+
+    public Long findSecurityContextHolderUserId() {
+        try {
+            Map principal = (Map) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            return (Long) principal.get("userId");
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

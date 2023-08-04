@@ -13,4 +13,6 @@ public interface UserMapper {
 
     User userPatchDtoToUser(UserPatchDto userPatchDto);
 
+    UserResponseDto.UserGetResponseDto EntityToGetResponseDto (User user);
+
 }

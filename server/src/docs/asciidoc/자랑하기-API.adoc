@@ -11,6 +11,9 @@
 POST: /boards
 ----
 
+.request-headers
+include::{snippets}/post-board/request-headers.adoc[]
+
 .request-body
 include::{snippets}/post-board/request-body.adoc[]
 
@@ -42,6 +45,10 @@ include::{snippets}/post-board/http-response.adoc[]
 PATCH: /boards/{boardId}
 ----
 
+
+.request-headers
+include::{snippets}/patch-board/request-headers.adoc[]
+
 .request-body
 include::{snippets}/patch-board/request-body.adoc[]
 
@@ -72,6 +79,9 @@ include::{snippets}/patch-board/http-response.adoc[]
 ----
 GET: /boards/{boardId}
 ----
+
+.request-headers
+include::{snippets}/get-board/request-headers.adoc[]
 
 .path-parameters
 include::{snippets}/get-board/path-parameters.adoc[]
@@ -105,6 +115,10 @@ include::{snippets}/get-board/http-response.adoc[]
 GET: /boards?page={default:1}&size={default:10}
 ----
 
+.request-headers
+include::{snippets}/get-all-board/request-headers.adoc[]
+
+
 .request-parameters
 include::{snippets}/get-all-board/request-parameters.adoc[]
 
@@ -134,6 +148,9 @@ include::{snippets}/get-all-board/http-response.adoc[]
 DELETE: /boards/{boardId}
 ----
 
+.request-headers
+include::{snippets}/delete-board/request-headers.adoc[]
+
 .request-parameters
 include::{snippets}/delete-board/path-parameters.adoc[]
 
@@ -161,6 +178,9 @@ include::{snippets}/delete-board/http-response.adoc[]
 ----
 POST: /boards/{boardId}/like?userId={userId}
 ----
+
+.request-headers
+include::{snippets}/post-board-update-like/request-headers.adoc[]
 
 .path-parameters
 include::{snippets}/post-board-update-like/path-parameters.adoc[]

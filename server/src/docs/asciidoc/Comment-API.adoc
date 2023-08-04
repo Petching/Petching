@@ -11,6 +11,9 @@
 POST: /boards/{boardId}
 ----
 
+.request-headers
+include::{snippets}/post-comment/request-headers.adoc[]
+
 .path-parameters
 include::{snippets}/post-comment/path-parameters.adoc[]
 
@@ -44,6 +47,10 @@ include::{snippets}/post-comment/http-response.adoc[]
 ----
 PATCH: /boards/{boardId}/{commentId}
 ----
+
+.request-headers
+include::{snippets}/patch-comment/request-headers.adoc[]
+
 
 .path-parameters
 include::{snippets}/patch-comment/path-parameters.adoc[]
@@ -140,6 +147,10 @@ include::{snippets}/get-all-comment/http-response.adoc[]
 ----
 DELETE: /boards/{boardId}/{commentId}
 ----
+
+.request-headers
+include::{snippets}/delete-comment/request-headers.adoc[]
+
 
 .path-parameters
 include::{snippets}/delete-comment/path-parameters.adoc[]

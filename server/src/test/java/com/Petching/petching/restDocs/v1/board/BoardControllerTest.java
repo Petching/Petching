@@ -5,8 +5,10 @@ import com.Petching.petching.board.dto.BoardDto;
 import com.Petching.petching.board.entity.Board;
 import com.Petching.petching.board.mapper.BoardMapper;
 import com.Petching.petching.board.service.BoardService;
+import com.Petching.petching.comment.mapper.CommentMapper;
 import com.Petching.petching.config.SecurityConfiguration;
 import com.Petching.petching.global.aws.s3.config.S3Configuration;
+import com.Petching.petching.login.oauth.userInfo.JwtToken;
 import com.Petching.petching.response.PageInfo;
 import com.Petching.petching.restDocs.global.helper.BoardControllerTestHelper;
 import com.Petching.petching.restDocs.global.helper.StubData;
@@ -52,8 +54,7 @@ import static org.hamcrest.Matchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
-import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
+import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
@@ -87,6 +88,12 @@ public class BoardControllerTest implements BoardControllerTestHelper {
     private UserService userService;
 
     @MockBean
+    private JwtToken jwtToken;
+
+    @MockBean
+    private CommentMapper commentMapper;
+
+    @MockBean
     private SecurityConfiguration securityConfiguration;
 
 
@@ -107,7 +114,7 @@ public class BoardControllerTest implements BoardControllerTestHelper {
                 .build();
         board.setBoardId(1L);
 
-        User user = StubData.MockUser.getSingleResultUser(postDto.getUserId());
+        User user = StubData.MockUser.getSingleResultUser(1L);
 
         given(userService.findUser(Mockito.anyLong())).willReturn(user);
         given(boardService.createBoard(Mockito.any(Board.class))).willReturn(board);
@@ -125,6 +132,9 @@ public class BoardControllerTest implements BoardControllerTestHelper {
                 .andDo(document( "post-board",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
+                        requestHeaders(
+                                getDefaultRequestHeaderDescriptors()
+                        ),
                         requestFields(
                                 getDefaultBoardPostRequestDescriptors()
                         ),
@@ -146,12 +156,16 @@ public class BoardControllerTest implements BoardControllerTestHelper {
 
         BoardDto.Detail detail = StubData.MockBoard.getSingleDetailResponseBody();
 
+        User user = StubData.MockUser.getSingleResultUser();
+
         given(boardService.findBoardByMK(Mockito.anyLong())).willReturn(Board.builder().build());
         given(boardMapper.boardToBoardDetailDto(Mockito.any(Board.class))).willReturn(detail);
+        given(userService.findUser(Mockito.anyLong())).willReturn(user);
+
 
         // when
         ResultActions actions = mockMvc.perform(
-                getRequestBuilder(getURI(), boardId, userId)
+                getRequestBuilder(getURI(), boardId)
         );
 
 
@@ -165,8 +179,8 @@ public class BoardControllerTest implements BoardControllerTestHelper {
                         document("get-board",
                                 getRequestPreProcessor(),
                                 getResponsePreProcessor(),
-                                requestParameters(
-                                        getBoardRequestParameterDescriptors()
+                                requestHeaders(
+                                        getOptionalRequestHeaderDescriptors()
                                 ),
                                 pathParameters(
                                         getBoardRequestPathParameterDescriptor()
@@ -203,13 +217,17 @@ public class BoardControllerTest implements BoardControllerTestHelper {
         headers.add("X-Page-Info", new Gson().toJson(pageInfo));
 
         List<BoardDto.Response> responseList = StubData.MockBoard.getMultiResponseBody();
+        User user = StubData.MockUser.getSingleResultUser();
+
 
         given(boardService.findBoards(Mockito.any(Pageable.class))).willReturn(boardPage);
         given(boardMapper.boardPageToBoardResponseListDto(Mockito.any(Page.class))).willReturn(responseList);
-
+        given(userService.findUser(Mockito.anyLong())).willReturn(user);
 
         // when
-        ResultActions actions = mockMvc.perform(getRequestBuilder(getUrl(), queryParams));
+        ResultActions actions = mockMvc.perform(
+                getRequestBuilder(getUrl(), queryParams)
+        );
 
 
 
@@ -220,6 +238,9 @@ public class BoardControllerTest implements BoardControllerTestHelper {
                         document("get-all-board",
                                 getRequestPreProcessor(),
                                 getResponsePreProcessor(),
+                                requestHeaders(
+                                        getOptionalRequestHeaderDescriptors()
+                                ),
                                 requestParameters(
                                         getDefaultRequestParameterDescriptors()
                                 ),
@@ -241,10 +262,15 @@ public class BoardControllerTest implements BoardControllerTestHelper {
         String content = toJsonContent(patchDto);
 
         BoardDto.Detail responseDto = StubData.MockBoard.getSingleDetailResponseBody();
+        Board board = StubData.MockBoard.getSingleResultBoard();
+        User user = StubData.MockUser.getSingleResultUser();
+        board.setUser(user);
 
         given(boardMapper.boardPatchDtoToBoard(Mockito.any(BoardDto.Patch.class))).willReturn(Board.builder().build());
         given(boardService.updateBoard(Mockito.any(Board.class))).willReturn(Board.builder().build());
         given(boardMapper.boardToBoardDetailDto(Mockito.any(Board.class))).willReturn(responseDto);
+        given(boardService.findBoardByMK(Mockito.anyLong())).willReturn(board);
+        given(userService.findUser(Mockito.anyLong())).willReturn(user);
 
 
 
@@ -260,10 +286,12 @@ public class BoardControllerTest implements BoardControllerTestHelper {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.title").value(patchDto.getTitle()))
                 .andExpect(jsonPath("$.data.content").value(patchDto.getContent()))
-                .andExpect(jsonPath("$.data.boardId").value(patchDto.getBoardId()))
                 .andDo(document("patch-board",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
+                        requestHeaders(
+                                getDefaultRequestHeaderDescriptors()
+                        ),
                         requestFields(
                                 getDefaultBoardPatchRequestDescriptors()
                         ),
@@ -283,9 +311,7 @@ public class BoardControllerTest implements BoardControllerTestHelper {
         // given
         BoardDto.Post postDto = (BoardDto.Post) StubData.MockBoard.getRequestBody(HttpMethod.POST);
 
-        User user = new User();
-        user.setUserId(postDto.getUserId());
-
+        User user = StubData.MockUser.getSingleResultUser();
         Board board = Board.builder()
                 .content(postDto.getContent())
                 .title(postDto.getTitle())
@@ -293,8 +319,10 @@ public class BoardControllerTest implements BoardControllerTestHelper {
                 .user(user)
                 .build();
 
-        given(boardService.createBoard(Mockito.any(Board.class))).willReturn(board);
 
+        given(boardService.createBoard(Mockito.any(Board.class))).willReturn(board);
+        given(boardService.findBoardByMK(Mockito.anyLong())).willReturn(board);
+        given(userService.findUser(Mockito.anyLong())).willReturn(user);
 
         // when
         ResultActions actions = mockMvc.perform(
@@ -307,6 +335,9 @@ public class BoardControllerTest implements BoardControllerTestHelper {
                 .andDo(document("delete-board",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
+                        requestHeaders(
+                                getDefaultRequestHeaderDescriptors()
+                        ),
                         pathParameters(
                                 getBoardRequestPathParameterDescriptor()
                         )
@@ -357,14 +388,18 @@ public class BoardControllerTest implements BoardControllerTestHelper {
         long userId = 1L;
 
         Board board = StubData.MockBoard.getSingleResultBoard(boardId);
+        User user = StubData.MockUser.getSingleResultUser();
+        board.setUser(user);
+        board.addLikedUserId(user.getUserId());
+        board.setLikes(board.getLikes()+1);
 
+        given(userService.findUser(Mockito.anyLong())).willReturn(user);
         given(boardService.updateBoardLike(Mockito.anyLong())).willReturn(board);
-
 
 
         // when
         ResultActions actions = mockMvc.perform(
-                postUpdateLikeRequestBuilder(getURI(),boardId, userId)
+                postUpdateLikeRequestBuilder(getURI(),boardId)
         );
 
 
@@ -375,6 +410,9 @@ public class BoardControllerTest implements BoardControllerTestHelper {
                 .andDo(document("post-board-update-like",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
+                        requestHeaders(
+                                getDefaultRequestHeaderDescriptors()
+                        ),
                         pathParameters(
                                 parameterWithName("boardId").description("Board 식별자 ID")
                         ),
