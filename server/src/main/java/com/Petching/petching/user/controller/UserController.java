@@ -55,7 +55,8 @@ public class UserController {
     @GetMapping("{users-id}")
     public ResponseEntity getUser (@PathVariable("users-id") @Positive long usersId) {
 
-        return new ResponseEntity(new SingleResponse<>(mapper.EntityToResponseDto(service.findUser(usersId))), HttpStatus.OK);
+        return new ResponseEntity(new SingleResponse<>
+                (mapper.EntityToGetResponseDto(service.findUser(usersId))), HttpStatus.OK);
     }
 
     @DeleteMapping("{users-id}")
