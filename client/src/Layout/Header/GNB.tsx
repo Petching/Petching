@@ -10,7 +10,7 @@ const GNB = () => {
   const [userIcon, setUserIcon] = useState<boolean>(false);
   const [menu, setMenu] = useState<boolean>(false);
   const { isLogin, setLogin, setLogout } = useLoginStore();
-  const token = localStorage.getItem('ACCESSTOKEN');
+  const token = localStorage.getItem('ACCESS_TOKEN');
 
   const userId = getUserIdFromToken(isLogin, token);
   const { UserProfile } = useGetUserProfile(`${userId}`);
@@ -39,7 +39,7 @@ const GNB = () => {
     }
   };
   const logoutHandler = () => {
-    localStorage.removeItem('ACCESSTOKEN');
+    localStorage.removeItem('ACCESS_TOKEN');
     setLogout();
     navigate('/');
     setUserIcon(false);
@@ -65,13 +65,13 @@ const GNB = () => {
         {isLogin ? (
           <>
             <button className="mx-3" onClick={userOpen}>
-              <img
-                src="https://cdn.pixabay.com/photo/2023/06/14/10/02/pied-flycatcher-8062744_640.jpg"
-                // 추후 유저 이미지 들어오면 유저 이미지로 변경
-                // src={UserProfile.ImgUrl}
-                alt="유저 메뉴 버튼"
-                className="w-10 h-10 rounded-full"
-              />
+              {UserProfile && (
+                <img
+                  src={UserProfile!.profileImgUrl}
+                  alt="유저 메뉴 버튼"
+                  className="w-10 h-10 rounded-full"
+                />
+              )}
             </button>
           </>
         ) : (
