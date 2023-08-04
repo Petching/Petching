@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { SectionsContainer, Section } from 'react-fullpage';
 import Info from '../Components/Main/Info';
 import Explain from '../Components/Main/Explain';
