@@ -101,12 +101,12 @@ public interface ControllerTestHelper<T> {
     }
     default List<HeaderDescriptor> getDefaultRequestHeaderDescriptors() {
         return List.of(
-                headerWithName("Authorization").description("Request User의 access token").optional()
+                headerWithName("Authorization").description("Request User의 access token")
         );
     }
     default List<HeaderDescriptor> getOptionalRequestHeaderDescriptors() {
         return List.of(
-                headerWithName("Authorization").description("Request User의 access token")
+                headerWithName("Authorization").description("Request User의 access token").optional()
         );
     }
 
@@ -151,9 +151,9 @@ public interface ControllerTestHelper<T> {
 
     default List<ParameterDescriptor> getDefaultRequestParameterDescriptors() {
         return List.of(
-                parameterWithName("page").description("Page 번호"),
-                parameterWithName("size").description("Page Size"),
-                parameterWithName("_csrf").description("csrf")
+                parameterWithName("page").description("Page 번호").optional(),
+                parameterWithName("size").description("Page Size").optional(),
+                parameterWithName("_csrf").description("csrf").optional()
         );
     }
     enum DataResponseType {

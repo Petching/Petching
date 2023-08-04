@@ -29,6 +29,7 @@ import java.util.*;
 public class StubData {
 
     public static class MockComment{
+
         private static Map<HttpMethod, Object> stubRequestBody;
 
         static{
@@ -136,21 +137,44 @@ public class StubData {
         }
     }
 
-/*
-    public static class MockCarePost{
-        private static List<String> imgUrls = Arrays.asList("https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_01.png","https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_02.png","https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_03.jpg");
 
-        private static Map<HttpMethod, Object> stubRequestBody;
+    public static class MockCarePost{
+        private static List<String> imgUrls = Arrays.asList(
+                "https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_01.png",
+                "https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_02.png",
+                "https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_03.jpg"
+        );
+
+        private static final Map<HttpMethod, Object> stubRequestBody;
+
+        private static final Map<String,Integer> stubStartDate;
+        private static final Map<String,Integer> stubEndDate;
+
 
         static {
+
+            stubStartDate = new HashMap<>();
+            stubStartDate.put("day", 13);
+            stubStartDate.put("month", 7);
+            stubStartDate.put("year", 2023);
+
+            stubEndDate = new HashMap<>();
+            stubEndDate.put("day", 20);
+            stubEndDate.put("month", 7);
+            stubEndDate.put("year", 2023);
+
 
             CarePostDto.Post postDto = CarePostDto.Post.builder()
                     .userId(1L)
                     .title("this is title1")
                     .content("this is content1")
                     .imgUrls(imgUrls)
-                    .conditionTags(List.of("강아지", "고양이"))
-                    .locationTags(List.of("서울시", "강남구"))
+                    .startDate(stubStartDate)
+                    .endDate(stubEndDate)
+                    .conditionTag("펫시터예요")
+                    .locationTag("서울시 노원구")
+                    .petSize("중형")
+                    .memo("특이사항 없습니다.")
                     .build();
 
             CarePostDto.Patch patchDto = CarePostDto.Patch.builder()
@@ -158,8 +182,12 @@ public class StubData {
                     .title("this is title1")
                     .content("this is content1")
                     .imgUrls(imgUrls)
-                    .conditionTags(List.of("강아지", "고양이"))
-                    .locationTags(List.of("서울시", "강남구"))
+                    .startDate(stubStartDate)
+                    .endDate(stubEndDate)
+                    .conditionTag("펫시터예요")
+                    .locationTag("서울시 노원구")
+                    .petSize("중형")
+                    .memo("특이사항 없습니다.")
                     .build();
 
             stubRequestBody = new HashMap<>();
@@ -171,14 +199,43 @@ public class StubData {
             return stubRequestBody.get(method);
         }
 
+        public static Map<String, Integer> getStubStartDate() {
+            return stubStartDate;
+        }
+        public static Map<String, Integer> getStubEndDate() {
+            return stubEndDate;
+        }
+
         public static CarePostDto.Response getSingleResponseBody() {
             return CarePostDto.Response.builder()
                     .title("this is title1")
+                    .content("this is content1")
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_01.png"))
                     .nickName("nickName1")
                     .profileImgUrl("https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png")
-                    .conditionTags(List.of("강아지", "고양이"))
-                    .locationTags(List.of("서울시", "강남구"))
+                    .startDate(stubStartDate)
+                    .endDate(stubEndDate)
+                    .conditionTag("펫시터예요")
+                    .locationTag("서울시 노원구")
+                    .petSize("중형")
+                    .memo("삶은 소고기를 못 먹어요.")
+                    .build();
+        }
+
+        public static CarePostDto.Response getSingleResponseTwoBody() {
+
+            return CarePostDto.Response.builder()
+                    .title("this is title2")
+                    .content("this is content2")
+                    .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_02.png"))
+                    .nickName("nickName2")
+                    .profileImgUrl("https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_02.png")
+                    .startDate(stubStartDate)
+                    .endDate(stubEndDate)
+                    .conditionTag("펫시터예요")
+                    .locationTag("서울시 성북구")
+                    .petSize("소형")
+                    .memo("특이사항 없습니다.")
                     .build();
         }
 
@@ -189,8 +246,11 @@ public class StubData {
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_01.png"))
                     .nickName("nickName1")
                     .profileImgUrl("https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png")
-                    .conditionTags(List.of("강아지", "고양이"))
-                    .locationTags(List.of("서울시", "강남구"))
+                    .startDate(stubStartDate)
+                    .endDate(stubEndDate)
+                    .conditionTag("펫시터예요")
+                    .locationTag("서울시 노원구")
+                    .petSize("중형")
                     .build();
         }
 
@@ -199,43 +259,68 @@ public class StubData {
             CarePostDto.Response responseDto1 =
                     CarePostDto.Response.builder()
                             .title("this is title1")
+                            .content("this is content1")
                             .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_01.png"))
                             .nickName("nickName1")
                             .profileImgUrl("https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png")
-                            .conditionTags(List.of("강아지", "고양이"))
-                            .locationTags(List.of("서울시", "강남구"))
+                            .startDate(stubStartDate)
+                            .endDate(stubEndDate)
+                            .conditionTag("펫시터예요")
+                            .locationTag("서울시 노원구")
+                            .petSize("중형")
+                            .memo("삶은 소고기를 못 먹어요.")
                             .build();
 
             CarePostDto.Response responseDto2 =
                     CarePostDto.Response.builder()
                             .title("this is title2")
+                            .content("this is content2")
                             .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_02.png"))
                             .nickName("nickName2")
                             .profileImgUrl("https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_02.png")
-                            .conditionTags(List.of("강아지", "고양이"))
-                            .locationTags(List.of("서울시", "강남구"))
+                            .startDate(stubStartDate)
+                            .endDate(stubEndDate)
+                            .conditionTag("펫시터예요")
+                            .locationTag("서울시 성북구")
+                            .petSize("소형")
+                            .memo("특이사항 없습니다.")
                             .build();
 
             CarePostDto.Response responseDto3 =
                     CarePostDto.Response.builder()
                             .title("this is title3")
+                            .content("this is content3")
                             .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_03.png"))
                             .nickName("nickName3")
                             .profileImgUrl("https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_03.png")
-                            .conditionTags(List.of("강아지", "고양이"))
-                            .locationTags(List.of("서울시", "강남구"))
+                            .startDate(stubStartDate)
+                            .endDate(stubEndDate)
+                            .conditionTag("펫시터예요")
+                            .locationTag("서울시 노원구")
+                            .petSize("소형")
+                            .memo("모르는 사람 경계가 심해요.")
                             .build();
 
             return List.of(responseDto1,responseDto2,responseDto3);
         }
 
-        public static CarePost getSingleResultBoard() {
+        public static CarePost getSingleResultCarePost() {
 
             CarePost carePost = CarePost.builder()
                     .postId(1)
                     .title("this is title1")
                     .content("this is content1")
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_01.png"))
+                    .memo("특이사항 없습니다.")
+                    .petSize("소형")
+                    .conditionTag("펫시터예요")
+                    .locationTag("서울시 노원구")
+                    .startDay(stubStartDate.get("day"))
+                    .startMonth(stubStartDate.get("month"))
+                    .startYear(stubStartDate.get("year"))
+                    .endDay(stubEndDate.get("day"))
+                    .endMonth(stubEndDate.get("month"))
+                    .endYear(stubEndDate.get("year"))
                     .build();
 
             return carePost;
@@ -243,11 +328,22 @@ public class StubData {
 
         public static CarePost getSingleResultCarePost(long postId) {
 
+
             CarePost carePost = CarePost.builder()
                     .postId(postId)
                     .title("this is title1")
                     .content("this is content1")
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_01.png"))
+                    .memo("특이사항 없습니다.")
+                    .petSize("소형")
+                    .conditionTag("펫시터예요")
+                    .locationTag("서울시 노원구")
+                    .startDay(stubStartDate.get("day"))
+                    .startMonth(stubStartDate.get("month"))
+                    .startYear(stubStartDate.get("year"))
+                    .endDay(stubEndDate.get("day"))
+                    .endMonth(stubEndDate.get("month"))
+                    .endYear(stubEndDate.get("year"))
                     .build();
 
             return carePost;
@@ -260,6 +356,16 @@ public class StubData {
                     .title("this is title1")
                     .content("this is content1")
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_01.png"))
+                    .memo("특이사항 없습니다.")
+                    .petSize("소형")
+                    .conditionTag("펫시터예요")
+                    .locationTag("서울시 노원구")
+                    .startDay(stubStartDate.get("day"))
+                    .startMonth(stubStartDate.get("month"))
+                    .startYear(stubStartDate.get("year"))
+                    .endDay(stubEndDate.get("day"))
+                    .endMonth(stubEndDate.get("month"))
+                    .endYear(stubEndDate.get("year"))
                     .build();
 
             CarePost carePost2 = CarePost.builder()
@@ -267,6 +373,16 @@ public class StubData {
                     .title("this is title2")
                     .content("this is content2")
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_02.png"))
+                    .memo("특이사항 없습니다.")
+                    .petSize("대형")
+                    .conditionTag("펫시터예요")
+                    .locationTag("서울시 강남구")
+                    .startDay(stubStartDate.get("day"))
+                    .startMonth(stubStartDate.get("month"))
+                    .startYear(stubStartDate.get("year"))
+                    .endDay(stubEndDate.get("day"))
+                    .endMonth(stubEndDate.get("month"))
+                    .endYear(stubEndDate.get("year"))
                     .build();
 
             return new PageImpl<>(List.of(carePost1, carePost2),
@@ -277,7 +393,7 @@ public class StubData {
 
 
     }
-*/
+
     public static class MockBoard {
         private static Map<HttpMethod, Object> stubRequestBody;
 

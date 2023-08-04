@@ -292,6 +292,9 @@ public class BoardControllerTest implements BoardControllerTestHelper {
                         requestHeaders(
                                 getDefaultRequestHeaderDescriptors()
                         ),
+                        pathParameters(
+                                getBoardRequestPathParameterDescriptor()
+                        ),
                         requestFields(
                                 getDefaultBoardPatchRequestDescriptors()
                         ),
@@ -414,7 +417,7 @@ public class BoardControllerTest implements BoardControllerTestHelper {
                                 getDefaultRequestHeaderDescriptors()
                         ),
                         pathParameters(
-                                parameterWithName("boardId").description("Board 식별자 ID")
+                                getBoardRequestPathParameterDescriptor()
                         ),
                         requestParameters(
                                 getBoardPostUpdateLikeRequestParameterDescriptors()
