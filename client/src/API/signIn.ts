@@ -5,7 +5,7 @@ const BASE_URL = process.env.REACT_APP_API_SERVER;
 export const authenticate = async (email: string, password: string) => {
   try {
     const response = await axios.post(
-      `${BASE_URL}/login`,
+      `${BASE_URL}/users/login`,
       { email, password },
       {
         headers: {
