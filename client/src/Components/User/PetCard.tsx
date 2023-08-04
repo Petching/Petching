@@ -6,28 +6,29 @@ import { usePatchMyPet } from '../../Hook/usePatchMyPet';
 const PetCard: React.FC<MyPetsType> = ({
   // img,
   name,
-  kind,
+  species,
   gender,
   age,
-  weight,
-  vaccination,
-  etc,
+  petUmgUrl,
+  significant,
+  // weight,
+  // vaccination,
+  // etc,
 }) => {
   const { handlerPatchMyPet } = usePatchMyPet();
   const { handlerDeleteMyPet } = useDeleteMyPet();
   const [onEdit, setOnEdit] = useState<boolean>(false);
-  const [changeImg, setChangeImg] = useState<string>(
-    'https://cdn.pixabay.com/photo/2017/07/25/01/22/cat-2536662_1280.jpg',
-  );
+  const [changeImg, setChangeImg] = useState<string>(petUmgUrl);
   const [changeName, setChangeName] = useState<string>(name);
-  const [changeKind, setChangeKind] = useState<string>(kind);
+  const [changeSpecies, setChangeSpecies] = useState<string>(species);
   const [changeGender, setChangeGender] = useState<string>(gender);
-  const [changeAge, setChangeAge] = useState<string>(age);
-  const [changeWeight, setChangeWeight] = useState<string>(weight || '');
-  const [changeVaccination, setChangeVaccination] = useState<string>(
-    vaccination || '',
-  );
-  const [changeEtc, setChangeEtc] = useState<string>(etc || '');
+  const [changeAge, setChangeAge] = useState<number>(age);
+  // const [changeWeight, setChangeWeight] = useState<string>(weight || '');
+  // const [changeVaccination, setChangeVaccination] = useState<string>(
+  //   vaccination || '',
+  // );
+  const [changeSignificant, setChangeSignificant] =
+    useState<string>(significant);
 
   const changeImgHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.currentTarget;
@@ -45,18 +46,18 @@ const PetCard: React.FC<MyPetsType> = ({
     switch (name) {
       case 'name':
         return setChangeName(value);
-      case 'kind':
-        return setChangeKind(value);
+      case 'species':
+        return setChangeSpecies(value);
       case 'age':
-        return setChangeAge(value);
+        return setChangeAge(Number(value));
       case 'gender':
         return setChangeGender(value);
-      case 'weight':
-        return setChangeWeight(value);
-      case 'vaccination':
-        return setChangeVaccination(value);
-      case 'etc':
-        return setChangeEtc(value);
+      // case 'weight':
+      //   return setChangeWeight(value);
+      // case 'vaccination':
+      //   return setChangeVaccination(value);
+      case 'significant':
+        return setChangeSignificant(value);
       default:
         return;
     }
@@ -65,12 +66,14 @@ const PetCard: React.FC<MyPetsType> = ({
   const submitHandler = () => {
     handlerPatchMyPet({
       name: changeName,
-      kind: changeKind,
+      species: changeSpecies,
       gender: changeGender,
       age: changeAge,
-      weight: changeWeight,
-      vaccination: changeVaccination,
-      etc: changeEtc,
+      petUmgUrl: changeImg,
+      significant: changeSignificant,
+      // weight: changeWeight,
+      // vaccination: changeVaccination,
+      // etc: changeSignificant,
     });
     setOnEdit(false);
   };
@@ -102,7 +105,7 @@ const PetCard: React.FC<MyPetsType> = ({
           </label>
         ) : (
           <img
-            src="https://cdn.pixabay.com/photo/2017/07/25/01/22/cat-2536662_1280.jpg"
+            src={petUmgUrl}
             alt="반려동물의 이미지"
             className="w-32 h-32 rounded"
           />
@@ -126,13 +129,13 @@ const PetCard: React.FC<MyPetsType> = ({
           <p className="text-left text-gray-500 text-xs">종</p>
           {onEdit ? (
             <input
-              value={changeKind}
-              name="kind"
+              value={changeSpecies}
+              name="species"
               onChange={changeHandler}
               className="border border-gray-300 rounded mr-2 block"
             />
           ) : (
-            <p>{kind}</p>
+            <p>{species}</p>
           )}
         </label>
         <label className="flex flex-col">
@@ -154,6 +157,7 @@ const PetCard: React.FC<MyPetsType> = ({
             <input
               value={changeAge}
               name="age"
+              type="number"
               onChange={changeHandler}
               className="border border-gray-300 rounded mr-2 block"
             />
@@ -161,7 +165,7 @@ const PetCard: React.FC<MyPetsType> = ({
             <p>{age}</p>
           )}
         </label>
-        <label className="flex flex-col">
+        {/* <label className="flex flex-col">
           <p className="text-left text-gray-500 text-xs">몸무게</p>
           {onEdit ? (
             <input
@@ -173,8 +177,8 @@ const PetCard: React.FC<MyPetsType> = ({
           ) : (
             <p>{weight}</p>
           )}
-        </label>
-        <label className="flex flex-col">
+        </label> */}
+        {/* <label className="flex flex-col">
           <p className="text-left text-gray-500 text-xs">백신여부</p>
           {onEdit ? (
             <input
@@ -186,18 +190,18 @@ const PetCard: React.FC<MyPetsType> = ({
           ) : (
             <p>{vaccination}</p>
           )}
-        </label>
+        </label> */}
         <label className="flex flex-col">
           <p className="text-left text-gray-500 text-xs">그외사항</p>
           {onEdit ? (
             <input
-              value={changeEtc}
-              name="etc"
+              value={changeSignificant}
+              name="significant"
               onChange={changeHandler}
               className="border border-gray-300 rounded mr-2 block"
             />
           ) : (
-            <p>{etc}</p>
+            <p>{significant}</p>
           )}
         </label>
       </form>

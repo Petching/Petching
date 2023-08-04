@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import { MyPetsType } from '../Components/User/MyPets';
+import axios from 'axios';
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const useGetMyPets = (userId: string) => {
   const {
@@ -10,9 +12,10 @@ export const useGetMyPets = (userId: string) => {
   } = useQuery<MyPetsType[], Error>({
     queryKey: ['MyPets', userId],
     queryFn: async () => {
-      const data = await axios.get(
-        `https://server.petching.net/users/${userId}`,
-      );
+      const token = localStorage.getItem('ACCESS_TOKEN');
+      const data = await axios.get(`${BASE_URL}/users/pet/${userId}`, {
+        headers: { Authorization: token },
+      });
       return data.data;
     },
     onError: () => {
