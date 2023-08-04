@@ -4,9 +4,12 @@ import axios from 'axios';
 type UserProfile = {
   nickName: string;
   email: string;
-  img?: string;
+  profileImgUrl: string;
+  userDivision: boolean;
   address?: string;
 };
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const useGetUserProfile = (userId: string) => {
   const {
@@ -16,13 +19,11 @@ export const useGetUserProfile = (userId: string) => {
   } = useQuery<UserProfile, Error>({
     queryKey: ['UserProfile', userId],
     queryFn: async () => {
-      const token = localStorage.getItem('ACCESSTOKEN');
-      const data = await axios.get(
-        `https://server.petching.net/users/${userId}`,
-        {
-          headers: { Authorization: token },
-        },
-      );
+      const token = localStorage.getItem('ACCESS_TOKEN');
+      const data = await axios.get(`${BASE_URL}/users/${userId}`, {
+        headers: { Authorization: token },
+      });
+      console.log(data.data.data);
       return data.data.data;
     },
     onError: () => {
