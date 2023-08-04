@@ -23,7 +23,6 @@ export const useGetUserProfile = (userId: string) => {
       const data = await axios.get(`${BASE_URL}/users/${userId}`, {
         headers: { Authorization: token },
       });
-      console.log(data.data.data);
       return data.data.data;
     },
     onError: () => {
