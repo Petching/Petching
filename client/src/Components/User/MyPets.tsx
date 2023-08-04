@@ -5,18 +5,26 @@ import { useGetMyPets } from '../../Hook/useGetMyPets';
 
 export type MyPetsType = {
   // img: string;
+  // name: string;
+  // kind: string;
+  // gender: string;
+  // age: string;
+  // weight?: string;
+  // vaccination?: string;
+  // etc?: string;
+
   name: string;
-  kind: string;
+  species: string;
   gender: string;
-  age: string;
-  weight?: string;
-  vaccination?: string;
-  etc?: string;
+  age: number;
+  significant: string;
+  petUmgUrl: string;
 };
 
 const MyPets: React.FC<{ userId: string }> = ({ userId }) => {
   const [open, setOpen] = useState<boolean>(false);
   const { MyPets } = useGetMyPets(userId);
+  console.log(MyPets);
   return (
     <div className="relative py-8 w-full">
       <button
@@ -32,24 +40,22 @@ const MyPets: React.FC<{ userId: string }> = ({ userId }) => {
             <PetCard
               key={idx}
               name={ele.name}
-              kind={ele.kind}
+              species={ele.species}
               gender={ele.gender}
               age={ele.age}
-              weight={ele.weight}
-              vaccination={ele.vaccination}
-              etc={ele.etc}
+              petUmgUrl={ele.petUmgUrl}
+              significant={ele.significant}
             />
           ))}
         {/* 디자인을 보기 위해 만든 임시 카드. 추후 데이터를 받아오면 지울 것. */}
-        <PetCard
+        {/* <PetCard
           name="이름"
-          kind="종"
+          species="종"
           gender="성별"
-          age="나이"
-          weight="무게"
-          vaccination="백신"
-          etc="기타"
-        />
+          age={1}
+          petUmgUrl="백신"
+          significant="기타"
+        /> */}
       </div>
       <AddPet open={open} setOpen={setOpen} />
     </div>

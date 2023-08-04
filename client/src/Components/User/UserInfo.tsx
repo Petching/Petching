@@ -4,6 +4,7 @@ import { AiOutlineUser, AiOutlineHome, AiOutlineMail } from 'react-icons/ai';
 import { usePatchUserProfile } from '../../Hook/usePatchUserProfile';
 import { useDeleteUserProfile } from '../../Hook/useDeleteUserProfile';
 import { useNavigate } from 'react-router-dom';
+import { checkNickname } from '../../API/signUp';
 
 const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
   const navigate = useNavigate();
@@ -16,7 +17,6 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
   const { UserProfile } = useGetUserProfile(userId);
   const { handlerPatchProfile } = usePatchUserProfile(userId);
   const { handlerDeleteUserProfile } = useDeleteUserProfile(userId);
-
   const [changeNickName, setChangeNickName] = useState<string>(
     UserProfile?.nickName || '',
   );
@@ -54,7 +54,8 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
       userId,
       nickname: changeNickName,
       address: changeAddress,
-      // img: changeImg,
+      profileImgUrl: changeImg,
+      password: '123123',
     });
     setOnEdit(false);
   };
@@ -88,7 +89,7 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
           </label>
         ) : (
           <img
-            src={UserProfile?.img}
+            src={UserProfile?.profileImgUrl}
             alt="유저의 프로필 이미지"
             className="w-32 h-32 rounded"
           />

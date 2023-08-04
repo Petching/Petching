@@ -1,30 +1,37 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 import { MyPetsType } from '../Components/User/MyPets';
+import axios from 'axios';
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const usePatchMyPet = () => {
   const queryClient = useQueryClient();
   const { mutate: patchMyPetMutation } = useMutation(
     async ({
-      // img,
       name,
-      kind,
+      species,
       gender,
       age,
-      weight,
-      vaccination,
-      etc,
+      significant,
+      petUmgUrl,
     }: MyPetsType) => {
-      await axios.patch(`https://server.petching.net/`, {
-        // img,
-        name,
-        kind,
-        gender,
-        age,
-        weight,
-        vaccination,
-        etc,
-      });
+      // ! : 마이펫 아이디 요청하기
+      // ! : 이미지 안들어오는거 문의하기
+      const token = localStorage.getItem('ACCESS_TOKEN');
+      await axios.patch(
+        `${BASE_URL}/users/pet`,
+        {
+          name,
+          species,
+          gender,
+          age,
+          significant,
+          petUmgUrl,
+        },
+        {
+          headers: { Authorization: token },
+        },
+      );
     },
     {
       onError: error => {
@@ -37,24 +44,20 @@ export const usePatchMyPet = () => {
     },
   );
   const handlerPatchMyPet = async ({
-    // img,
     name,
-    kind,
+    species,
     gender,
     age,
-    weight,
-    vaccination,
-    etc,
+    significant,
+    petUmgUrl,
   }: MyPetsType) => {
     patchMyPetMutation({
-      // img,
       name,
-      kind,
+      species,
       gender,
       age,
-      weight,
-      vaccination,
-      etc,
+      significant,
+      petUmgUrl,
     });
   };
   return { patchMyPetMutation, handlerPatchMyPet };
