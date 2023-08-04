@@ -26,6 +26,7 @@ import javax.transaction.Transactional;
 import javax.validation.constraints.Positive;
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -92,9 +93,25 @@ public class CarePostController {
         return new ResponseEntity(new SingleResponse<>(mapper.carePostToCarePostResponseDto(find)),HttpStatus.OK);
     }
 
-    @DeleteMapping("/{post-id}/{member-id}")
+    @GetMapping("/search")
+    public ResponseEntity searchCarePost(@RequestParam("locationTag") String locationTag,
+                                         @RequestParam("startDate.day") int startDay,
+                                         @RequestParam("startDate.month") int startMonth,
+                                         @RequestParam("startDate.year") int startYear,
+                                         @RequestParam("endDate.day") int endDay,
+                                         @RequestParam("endDate.month") int endMonth,
+                                         @RequestParam("endDate.year") int endYear) {
+        List<CarePost> searchPost = service.searchPost(
+                locationTag, startDay, startMonth, startYear,
+                endDay, endMonth, endYear
+                );
+
+        return new ResponseEntity(mapper.carePostsToCarePostResponseDtos(searchPost),HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{post-id}/{user-id}")
     public ResponseEntity deleteCarePost(@PathVariable("post-id") @Positive long postId,
-                                         @PathVariable("member-id") @Positive long userId) {
+                                         @PathVariable("user-id") @Positive long userId) {
         service.deletePost(postId,userId);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
