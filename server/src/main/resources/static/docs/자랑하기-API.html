@@ -521,8 +521,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>imgUrls</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>배열</code></p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">첨부될 이미지</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -551,7 +551,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h4 id="_request_summary" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /boards?_csrf=080cd8c7-86a1-4691-a06c-6044d0d819ed HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /boards?_csrf=2300e90a-5e08-4f44-b9fa-aa1afbf6cce7 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Authorization: {AccessToken}
@@ -589,7 +589,26 @@ X-Frame-Options: DENY</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 4. request-headers</caption>
+<caption class="title">Table 4. /boards/{boardId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boardId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board 식별자 ID</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -621,7 +640,7 @@ X-Frame-Options: DENY</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 5. request-fields</caption>
+<caption class="title">Table 6. request-fields</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 20%;">
@@ -656,7 +675,7 @@ X-Frame-Options: DENY</code></pre>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>imgUrls</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">첨부된 이미지</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -674,7 +693,7 @@ X-Frame-Options: DENY</code></pre>
     "likes" : 0,
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png",
     "nickName" : "nickName1",
-    "createdAt" : "2023-08-04T11:11:56.6115939",
+    "createdAt" : "2023-08-04T17:55:15.1611804",
     "checkLike" : false,
     "comments" : [ ],
     "commentCount" : 0,
@@ -684,7 +703,7 @@ X-Frame-Options: DENY</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 6. response-fields</caption>
+<caption class="title">Table 7. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -758,7 +777,7 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="_request_summary_2" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">PATCH /boards/1?_csrf=cf8476dd-8d94-494e-ac17-f5212750343f HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">PATCH /boards/1?_csrf=ea42045d-9e92-409a-8eff-09b3a43f97a2 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Authorization: {AccessToken}
@@ -793,7 +812,7 @@ Content-Length: 519
     "likes" : 0,
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png",
     "nickName" : "nickName1",
-    "createdAt" : "2023-08-04T11:11:56.6115939",
+    "createdAt" : "2023-08-04T17:55:15.1611804",
     "checkLike" : false,
     "comments" : [ ],
     "commentCount" : 0,
@@ -813,7 +832,26 @@ Content-Length: 519
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 7. request-headers</caption>
+<caption class="title">Table 8. /boards/{boardId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boardId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board 식별자 ID</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 9. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -834,25 +872,6 @@ Content-Length: 519
 </tr>
 </tbody>
 </table>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 8. /boards/{boardId}</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boardId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Board 식별자 ID</p></td>
-</tr>
-</tbody>
-</table>
 <h4 id="_response_3" class="discrete"><code>Response</code></h4>
 <div class="listingblock">
 <div class="title">response-body</div>
@@ -865,7 +884,7 @@ Content-Length: 519
     "likes" : 0,
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png",
     "nickName" : "nickName1",
-    "createdAt" : "2023-08-04T11:11:56.6712948",
+    "createdAt" : "2023-08-04T17:55:16.4082366",
     "checkLike" : false,
     "comments" : [ ],
     "commentCount" : 0,
@@ -875,7 +894,7 @@ Content-Length: 519
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 9. response-fields</caption>
+<caption class="title">Table 10. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -949,7 +968,7 @@ Content-Length: 519
 <h4 id="_request_summary_3" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /boards/1?_csrf=8fb11509-c2f0-41b8-baba-e228fdf81479 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /boards/1?_csrf=47e40288-0db0-40b2-8659-90c4c8275b0d HTTP/1.1
 Authorization: {AccessToken}
 Accept: application/json
 Host: server.petching.net</code></pre>
@@ -976,7 +995,7 @@ Content-Length: 519
     "likes" : 0,
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png",
     "nickName" : "nickName1",
-    "createdAt" : "2023-08-04T11:11:56.6712948",
+    "createdAt" : "2023-08-04T17:55:16.4082366",
     "checkLike" : false,
     "comments" : [ ],
     "commentCount" : 0,
@@ -996,7 +1015,7 @@ Content-Length: 519
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 10. request-headers</caption>
+<caption class="title">Table 11. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1018,7 +1037,7 @@ Content-Length: 519
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 11. request-parameters</caption>
+<caption class="title">Table 12. request-parameters</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1034,17 +1053,17 @@ Content-Length: 519
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Page 번호</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Page Size</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>_csrf</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">csrf</p></td>
 </tr>
 </tbody>
@@ -1060,7 +1079,7 @@ Content-Length: 519
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png",
     "nickName" : "nickName1",
     "likes" : 0,
-    "createdAt" : "2023-08-04T11:11:56.7744451",
+    "createdAt" : "2023-08-04T17:55:16.7853571",
     "commentCount" : 0,
     "checkLike" : false,
     "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png" ]
@@ -1070,7 +1089,7 @@ Content-Length: 519
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_02.png",
     "nickName" : "nickName2",
     "likes" : 0,
-    "createdAt" : "2023-08-04T11:11:56.7744451",
+    "createdAt" : "2023-08-04T17:55:16.7853571",
     "commentCount" : 0,
     "checkLike" : false,
     "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_02.png" ]
@@ -1080,7 +1099,7 @@ Content-Length: 519
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_03.png",
     "nickName" : "nickName3",
     "likes" : 0,
-    "createdAt" : "2023-08-04T11:11:56.7744451",
+    "createdAt" : "2023-08-04T17:55:16.7853571",
     "commentCount" : 0,
     "checkLike" : false,
     "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_03.png" ]
@@ -1095,7 +1114,7 @@ Content-Length: 519
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 12. response-fields</caption>
+<caption class="title">Table 13. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1184,7 +1203,7 @@ Content-Length: 519
 <h4 id="_request_summary_4" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /boards?page=1&amp;size=10&amp;_csrf=062afb0a-01cb-45eb-b41b-ab2537cbc5fe HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /boards?page=1&amp;size=10&amp;_csrf=7036460d-d56f-4618-ab4e-93d598dec953 HTTP/1.1
 Authorization: {AccessToken}
 Accept: application/json
 Host: server.petching.net</code></pre>
@@ -1210,7 +1229,7 @@ Content-Length: 1458
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png",
     "nickName" : "nickName1",
     "likes" : 0,
-    "createdAt" : "2023-08-04T11:11:56.7744451",
+    "createdAt" : "2023-08-04T17:55:16.7853571",
     "commentCount" : 0,
     "checkLike" : false,
     "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png" ]
@@ -1220,7 +1239,7 @@ Content-Length: 1458
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_02.png",
     "nickName" : "nickName2",
     "likes" : 0,
-    "createdAt" : "2023-08-04T11:11:56.7744451",
+    "createdAt" : "2023-08-04T17:55:16.7853571",
     "commentCount" : 0,
     "checkLike" : false,
     "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_02.png" ]
@@ -1230,7 +1249,7 @@ Content-Length: 1458
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_03.png",
     "nickName" : "nickName3",
     "likes" : 0,
-    "createdAt" : "2023-08-04T11:11:56.7744451",
+    "createdAt" : "2023-08-04T17:55:16.7853571",
     "commentCount" : 0,
     "checkLike" : false,
     "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_03.png" ]
@@ -1255,7 +1274,26 @@ Content-Length: 1458
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 13. request-headers</caption>
+<caption class="title">Table 14. /boards/{boardId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boardId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board 식별자 ID</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 15. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1276,25 +1314,6 @@ Content-Length: 1458
 </tr>
 </tbody>
 </table>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 14. /boards/{boardId}</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boardId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Board 식별자 ID</p></td>
-</tr>
-</tbody>
-</table>
 <h4 id="_response_5" class="discrete"><code>Response</code></h4>
 <div class="listingblock">
 <div class="title">http-response</div>
@@ -1311,7 +1330,7 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="_request_summary_5" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /boards/1?_csrf=79559ee3-98a8-40b5-b2df-5c8ac443b7cc HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /boards/1?_csrf=965df2fc-67eb-474c-b34f-85853bd92ed0 HTTP/1.1
 Authorization: {AccessToken}
 Host: server.petching.net</code></pre>
 </div>
@@ -1335,31 +1354,9 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="_request_6" class="discrete"><code>Request</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-http" data-lang="http">POST: /boards/{boardId}/like?userId={userId}</code></pre>
+<pre class="highlight"><code class="language-http" data-lang="http">POST: /boards/{boardId}/like</code></pre>
 </div>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 15. request-headers</caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">필드명</th>
-<th class="tableblock halign-left valign-top">필수값 여부</th>
-<th class="tableblock halign-left valign-top">설명</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Request User의 access token</p></td>
-</tr>
-</tbody>
-</table>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 16. /boards/{boardId}/like</caption>
 <colgroup>
@@ -1380,7 +1377,7 @@ X-Frame-Options: DENY</code></pre>
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 17. request-parameters</caption>
+<caption class="title">Table 17. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1388,16 +1385,16 @@ X-Frame-Options: DENY</code></pre>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">파라미터명</th>
+<th class="tableblock halign-left valign-top">필드명</th>
 <th class="tableblock halign-left valign-top">필수값 여부</th>
 <th class="tableblock halign-left valign-top">설명</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_csrf</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">csrf</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Request User의 access token</p></td>
 </tr>
 </tbody>
 </table>
@@ -1422,7 +1419,7 @@ Content-Type: application/json;charset=UTF-8
 Authorization: {AccessToken}
 Host: server.petching.net
 
-_csrf=68fe1cd8-21e7-4b0d-b4d5-78f42945a1b9</code></pre>
+_csrf=061ac6ba-a3e1-4b52-8aad-9a79d0283b84</code></pre>
 </div>
 </div>
 <h4 id="_response_summary_6" class="discrete"><code>Response Summary</code></h4>
@@ -1514,7 +1511,7 @@ Content-Length: 419
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-08-03 12:23:20 +0900
+Last updated 2023-08-04 17:30:50 +0900
 </div>
 </div>
 </body>

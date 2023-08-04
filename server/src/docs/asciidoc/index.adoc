@@ -15,12 +15,12 @@ endif::[]
 Team. Petching +
 Manki Cho <dokeycho@gmail.com>
 
-v1.0.0, 2023.07
+v1.0.1, 2023.08
 
 ***
 
 CAUTION: `_csrf=812a*!-@#$~` 으로 작성된 parameter는 security 기본 설정으로 인해 생긴 parameter로 현재는 무시하셔도 됩니다. (ex. `/users/1?_csrf=81f68daa-43b2-40e9-bf32-33421841355c` ) +
-추후 userId는 모두 request header에 담기는 token으로 바꿀 예정이니 참고해주시길 바랍니다. +
+ +
 이 외 문의사항은 관리자에게 문의해주세요.
 
 ***
@@ -31,6 +31,8 @@ include::User-API.adoc[]
 
 include::자랑하기-API.adoc[]
 
-include::S3-API.adoc[]
-
 include::Comment-API.adoc[]
+
+include::CarePost-API.adoc[]
+
+include::S3-API.adoc[]

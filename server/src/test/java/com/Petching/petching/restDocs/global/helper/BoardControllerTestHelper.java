@@ -42,7 +42,7 @@ public interface BoardControllerTestHelper extends ControllerTestHelper{
         return List.of(
                 fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
                 fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
-                fieldWithPath("imgUrls").type(JsonFieldType.ARRAY).description("첨부될 이미지").optional().type("배열")
+                fieldWithPath("imgUrls").type(JsonFieldType.ARRAY).description("첨부될 이미지").optional()
         );
     }
 
@@ -91,7 +91,7 @@ public interface BoardControllerTestHelper extends ControllerTestHelper{
 
     default List<ParameterDescriptor> getBoardPostUpdateLikeRequestParameterDescriptors() {
         return List.of(
-                parameterWithName("_csrf").description("csrf")
+                parameterWithName("_csrf").description("csrf").ignored()
 
         );
     }
@@ -115,7 +115,7 @@ public interface BoardControllerTestHelper extends ControllerTestHelper{
         return List.of(
                 fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
                 fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
-                fieldWithPath("imgUrls").type(JsonFieldType.ARRAY).description("첨부된 이미지")
+                fieldWithPath("imgUrls").type(JsonFieldType.ARRAY).description("첨부된 이미지").optional()
         );
 
     }
