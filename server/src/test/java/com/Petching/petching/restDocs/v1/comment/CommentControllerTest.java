@@ -10,6 +10,7 @@ import com.Petching.petching.comment.mapper.CommentMapper;
 import com.Petching.petching.comment.service.CommentService;
 import com.Petching.petching.config.SecurityConfiguration;
 import com.Petching.petching.global.aws.s3.config.S3Configuration;
+import com.Petching.petching.login.oauth.userInfo.JwtToken;
 import com.Petching.petching.restDocs.global.helper.CommentControllerTestHelper;
 import com.Petching.petching.restDocs.global.helper.StubData;
 import com.Petching.petching.user.entity.User;
@@ -44,8 +45,7 @@ import static com.Petching.petching.restDocs.global.utils.ApiDocumentUtils.getRe
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
-import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
+import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
@@ -84,6 +84,8 @@ public class CommentControllerTest implements CommentControllerTestHelper {
     @MockBean
     private UserService userService;
 
+    @MockBean
+    private JwtToken jwtToken;
 
     @DisplayName("Test - CommentController - POST")
     @Test
@@ -103,6 +105,8 @@ public class CommentControllerTest implements CommentControllerTestHelper {
         User user = StubData.MockUser.getSingleResultUser();
         comment.setUser(user);
         comment.setBoard(board);
+        board.addComment(comment);
+        board.setLikes(board.getLikes());
 
         given(userService.findUser(Mockito.anyLong())).willReturn(user);
         given(boardService.findBoardByMK(Mockito.anyLong())).willReturn(board);
@@ -125,6 +129,9 @@ public class CommentControllerTest implements CommentControllerTestHelper {
                 .andDo(document( "post-comment",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
+                        requestHeaders(
+                                getDefaultRequestHeaderDescriptors()
+                        ),
                         pathParameters(
                                 getCommentPostRequestPathParameterDescriptor()
                         ),
@@ -149,9 +156,14 @@ public class CommentControllerTest implements CommentControllerTestHelper {
         String content = toJsonContent(patchDto);
 
         CommentDto.Response responseDto = StubData.MockComment.getSingleResponseBody();
+        Comment comment = StubData.MockComment.getSingleResultComment();
+        User user = StubData.MockUser.getSingleResultUser();
+        comment.setUser(user);
 
-        given(mapper.commentPatchDtoToComment(Mockito.any(CommentDto.Patch.class))).willReturn(Comment.builder().build());
-        given(commentService.updateComment(Mockito.any(Comment.class))).willReturn(Comment.builder().build());
+        given(commentService.findComment(Mockito.anyLong())).willReturn(comment);
+        given(userService.findUser(Mockito.anyLong())).willReturn(user);
+        given(mapper.commentPatchDtoToComment(Mockito.any(CommentDto.Patch.class))).willReturn(comment);
+        given(commentService.updateComment(Mockito.any(Comment.class))).willReturn(comment);
         given(mapper.commentToCommentResponseDto(Mockito.any(Comment.class))).willReturn(responseDto);
 
 
@@ -169,6 +181,9 @@ public class CommentControllerTest implements CommentControllerTestHelper {
                 .andDo(document("patch-comment",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
+                        requestHeaders(
+                                getDefaultRequestHeaderDescriptors()
+                        ),
                         pathParameters(
                                 getCommentRequestPathParameterDescriptor()
                         ),
@@ -191,9 +206,14 @@ public class CommentControllerTest implements CommentControllerTestHelper {
         // given
         Comment comment = StubData.MockComment.getSingleResultComment(1L);
         Board board = StubData.MockBoard.getSingleResultBoard(1L);
+        User user = StubData.MockUser.getSingleResultUser();
         board.setCommentCount(1);
         comment.setBoard(board);
+        board.setUser(user);
+        comment.setUser(user);
 
+        given(commentService.findComment(Mockito.anyLong())).willReturn(comment);
+        given(userService.findUser(Mockito.anyLong())).willReturn(user);
         given(boardService.findBoardByMK(Mockito.anyLong())).willReturn(board);
         given(commentService.createComment(Mockito.any(Comment.class))).willReturn(comment);
 
@@ -209,6 +229,9 @@ public class CommentControllerTest implements CommentControllerTestHelper {
                 .andDo(document("delete-comment",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
+                        requestHeaders(
+                                getDefaultRequestHeaderDescriptors()
+                        ),
                         pathParameters(
                                 getCommentRequestPathParameterDescriptor()
                         )
