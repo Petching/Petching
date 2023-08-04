@@ -136,7 +136,7 @@ public class StubData {
         }
     }
 
-
+/*
     public static class MockCarePost{
         private static List<String> imgUrls = Arrays.asList("https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_01.png","https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_02.png","https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_03.jpg");
 
@@ -277,7 +277,7 @@ public class StubData {
 
 
     }
-
+*/
     public static class MockBoard {
         private static Map<HttpMethod, Object> stubRequestBody;
 
@@ -559,7 +559,7 @@ public class StubData {
             stubRequestBody = new HashMap<>();
             stubRequestBody.put(HttpMethod.POST, new UserPostDto("email@example.com","exPassword",
                     "exNickName"));
-            stubRequestBody.put(HttpMethod.PATCH, new UserPatchDto(1, "email@example.com","exPassword", "exNickName","exAddress"));
+            stubRequestBody.put(HttpMethod.PATCH, new UserPatchDto(1, "email@example.com","exPassword", "exNickName","exAddress", "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png"));
         }
 
         public static Object getRequestBody(HttpMethod method) {
@@ -567,13 +567,13 @@ public class StubData {
         }
 
         public static UserResponseDto getSingleResponseBody() {
-            return new UserResponseDto("exNickName", "email@example.com", "exAddress");
+            return new UserResponseDto("exNickName", "email@example.com", "exAddress","https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png");
         }
 
         public static List<UserResponseDto> getMultiResponseBody() {
             return List.of(
-                    new UserResponseDto("exNickName1", "email1@example.com", "exAddress1"),
-                    new UserResponseDto("exNickName2", "email2@example.com", "exAddress2")
+                    new UserResponseDto("exNickName1", "email1@example.com", "exAddress1","https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png"),
+                    new UserResponseDto("exNickName2", "email2@example.com", "exAddress2","https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png")
             );
         }
 
