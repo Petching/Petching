@@ -42,7 +42,8 @@ public interface UserControllerTestHelper extends ControllerTestHelper {
                 fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
                 fieldWithPath("nickName").type(JsonFieldType.STRING).description("닉네임"),
                 fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호"),
-                fieldWithPath("address").type(JsonFieldType.STRING).description("주소")
+                fieldWithPath("address").type(JsonFieldType.STRING).description("주소"),
+                fieldWithPath("profileImgUrl").type(JsonFieldType.STRING).description("프로필 이미지 주소")
         );
     }
     default List<FieldDescriptor> getDefaultMemberDeleteRequestDescriptors() {
@@ -57,7 +58,19 @@ public interface UserControllerTestHelper extends ControllerTestHelper {
         return List.of(
                 fieldWithPath(parentPath.concat("email")).type(JsonFieldType.STRING).description("이메일"),
                 fieldWithPath(parentPath.concat("nickName")).type(JsonFieldType.STRING).description("닉네임"),
-                fieldWithPath(parentPath.concat("address")).type(JsonFieldType.STRING).description("주소")
+                fieldWithPath(parentPath.concat("address")).type(JsonFieldType.STRING).description("주소"),
+                fieldWithPath(parentPath.concat("profileImgUrl")).type(JsonFieldType.STRING).description("프로필 이미지 주소")
+        );
+    }
+
+    default List<FieldDescriptor> getMemberGetResponseDescriptors(DataResponseType dataResponseType) {
+        String parentPath = getDataParentPath(dataResponseType);
+        return List.of(
+                fieldWithPath(parentPath.concat("userDivision")).type(JsonFieldType.BOOLEAN).description("요청하는 유저와 조회되는 유저가 일치하는지 여부"),
+                fieldWithPath(parentPath.concat("email")).type(JsonFieldType.STRING).description("이메일"),
+                fieldWithPath(parentPath.concat("nickName")).type(JsonFieldType.STRING).description("닉네임"),
+                fieldWithPath(parentPath.concat("address")).type(JsonFieldType.STRING).description("주소"),
+                fieldWithPath(parentPath.concat("profileImgUrl")).type(JsonFieldType.STRING).description("프로필 이미지 주소")
         );
     }
 }
