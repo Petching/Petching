@@ -22,7 +22,7 @@ const SignComponent: React.FC = () => {
 
   const handleSignup = async () => {
     try {
-      const data = { email, password, nickname };
+      const data = { email, password, nickName: nickname };
       const response = await signUpUser(data);
       console.log(response);
       navigate('/signin');
