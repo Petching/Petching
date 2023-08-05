@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import DaumPostcodeEmbed from '@actbase/react-daum-postcode';
 
-// 타입 정의 추가
 interface AddressData {
   address: string;
   addressType: string;
@@ -27,10 +25,9 @@ const Postcode: React.FC<PostcodeProps> = ({ onAddressSelected }) => {
     setOpen(false);
   };
   const handleError = () => {
-    // 원하는 오류 처리 작업을 여기에 구현합니다.
+    console.error();
   };
   const handleComplete = (data: AddressData) => {
-    // 타입 적용
     let fullAddress = data.address;
     if (data.addressType === 'R') {
       let extraAddress = '';
@@ -41,8 +38,11 @@ const Postcode: React.FC<PostcodeProps> = ({ onAddressSelected }) => {
       fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
     }
 
-    setAddress(fullAddress);
-    onAddressSelected(fullAddress);
+    // 맨 앞 두 단어만 전달하려면 아래 코드를 사용하세요.
+    const firstTwoWords = fullAddress.split(' ').slice(0, 2).join(' ');
+
+    setAddress(firstTwoWords);
+    onAddressSelected(firstTwoWords);
     handleClose();
   };
 

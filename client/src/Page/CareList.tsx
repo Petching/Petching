@@ -64,7 +64,6 @@ const CareList = () => {
               <div>
               <Postcode onAddressSelected={onAddressSelected}/>
               </div>
-              
             </div>
           </div>
           <div className="flex flex-col items-center"> 
