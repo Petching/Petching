@@ -58,7 +58,7 @@ const Postcode: React.FC<PostcodeProps> = ({ onAddressSelected }) => {
           </div>
         )}
         <input
-          className="w-[8.5rem] h-[2rem] text-sm"
+          className="w-[8.5rem] h-[2rem] text-sm text-center border-2"
           type="text"
           value={address}
           onClick={handleClick}
