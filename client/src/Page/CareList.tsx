@@ -33,11 +33,15 @@ const CareList = () => {
   const handleSubmit = async() => {
     if(startDate && endDate && locationTag){
       try{
-        const response = await axios.get("https://server.petching.net/search",{
+        const response = await axios.get("https://server.petching.net/careposts/search",{
           params:{
-            startDate,
-            endDate,
             locationTag,
+            'startDate.day':startDate.day,
+            'startDate.month':startDate.month,
+            'startDate.year':startDate.year,
+            'endDate.day':endDate.day,
+            'endDate.month':endDate.month,
+            'endDate.year':endDate.year,
           },
         });
         console.log(response.data);
