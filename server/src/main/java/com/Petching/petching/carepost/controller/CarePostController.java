@@ -128,10 +128,14 @@ public class CarePostController {
         return new ResponseEntity(mapper.carePostsToCarePostResponseDtos(searchPost),HttpStatus.OK);
     }
 
-    @DeleteMapping("/{post-id}/{user-id}")
+    @DeleteMapping("/{post-id}")
     public ResponseEntity deleteCarePost(@PathVariable("post-id") @Positive long postId,
-                                         @PathVariable("user-id") @Positive long userId) {
-        service.deletePost(postId,userId);
+                                         @RequestHeader("Authorization") String authorization) {
+
+        authorization = authorization.replaceAll("Bearer ","");
+        User user = userService.findUser(jwtToken.extractUserIdFromToken(authorization));
+
+        service.deletePost(postId,user.getUserId());
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
