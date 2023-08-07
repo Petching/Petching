@@ -8,6 +8,9 @@ type PatchUserProfile = {
   address?: string;
   profileImgUrl?: string;
 };
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 export const usePatchUserProfile = (userId: string) => {
   const queryClient = useQueryClient();
   const { mutate: patchUserProfileMutation } = useMutation(
@@ -20,7 +23,7 @@ export const usePatchUserProfile = (userId: string) => {
     }: PatchUserProfile) => {
       const token = localStorage.getItem('ACCESS_TOKEN');
       await axios.patch(
-        `https://server.petching.net/users/`,
+        `${BASE_URL}/users/`,
         {
           userId,
           nickname,
