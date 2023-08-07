@@ -4,9 +4,9 @@ import { getCookie } from '../Util/getCookie';
 const BASE_URL = process.env.REACT_APP_API_SERVER;
 
 export const Axios = axios.create({
-  baseURL: process.env.API_SERVER,
-  timeout: 10000,
-  withCredentials: true,
+  baseURL: 'https://server.petching.net',
+  //   timeout: 10000,
+  //   withCredentials: true,
 });
 //request 소매치기
 Axios.interceptors.request.use(
@@ -18,16 +18,12 @@ Axios.interceptors.request.use(
       // 로그아웃 후 refreshToken은 있고, accessToken은 없음
       //refreshtoken만 보내줌
       try {
-        const response = await axios.post(
-          '<URL>',
-          {},
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              Refresh: refreshToken,
-            },
+        const response = await Axios.post(`/api/jwt`, {
+          headers: {
+            'Content-Type': 'application/json',
+            Refresh: refreshToken,
           },
-        );
+        });
         //응답이 성공적이면 헤더에 새로운 accessToken 받아오기
         if (response.status === 200) {
           const newAccessToken = response.data.accessToken;
@@ -37,9 +33,6 @@ Axios.interceptors.request.use(
       } catch (error) {
         console.error(error);
       }
-    } else {
-      // 둘 다 없음. 로그인 요청 필요
-      window.location.href = `${BASE_URL}/signin`;
     }
 
     return config;

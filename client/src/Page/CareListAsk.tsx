@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState } from 'react';
 import axios from 'axios';
 import ImageUploader from '../Components/Care/ImageUploader';
