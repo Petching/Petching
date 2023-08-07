@@ -109,13 +109,16 @@ class UserControllerTest implements UserControllerTestHelper {
 
         // given
         long userId = 1L;
-        UserResponseDto response = StubData.MockUser.getSingleResponseBody();
+        UserResponseDto.UserGetResponseDto response = StubData.MockUser.getSingleGetResponseBody();
+        User user = StubData.MockUser.getSingleResultUser(userId);
 
-        given(userService.findUser(Mockito.anyLong())).willReturn(User.builder().build());
-        given(userMapper.EntityToResponseDto(Mockito.any(User.class))).willReturn(response);
+        given(userService.findUser(Mockito.anyLong())).willReturn(user);
+        given(userMapper.EntityToGetResponseDto(Mockito.any(User.class))).willReturn(response);
 
         // when
-        ResultActions actions = mockMvc.perform(getRequestBuilder(getURI(), userId));
+        ResultActions actions = mockMvc.perform(
+                getRequestBuilder(getURI(), userId)
+        );
 
         // then
         actions
@@ -132,7 +135,7 @@ class UserControllerTest implements UserControllerTestHelper {
                                 ),
                                 responseFields(
                                         getFullResponseDescriptors(
-                                                getDefaultMemberResponseDescriptors(DataResponseType.SINGLE))
+                                                getMemberGetResponseDescriptors(DataResponseType.SINGLE))
                                 )
                         ));
     }
@@ -155,7 +158,8 @@ class UserControllerTest implements UserControllerTestHelper {
 
         // when
         ResultActions actions = mockMvc.perform(
-                patchRequestBuilder(getUrl(), content));
+                patchRequestBuilder(getUrl(), content)
+        );
 
 
         // then

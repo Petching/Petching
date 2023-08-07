@@ -10,4 +10,13 @@ public class UserResponseDto {
     private String nickName;
     private String email;
     private String address;
+    private String profileImgUrl;
+    @Getter @AllArgsConstructor
+    public static class UserGetResponseDto {
+        private boolean userDivision;
+        private String nickName;
+        private String email;
+        private String address;
+        private String profileImgUrl;
+    }
 }
