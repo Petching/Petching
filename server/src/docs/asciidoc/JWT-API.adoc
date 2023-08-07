@@ -1,0 +1,30 @@
+[[JWT-API]]
+= JWT API
+== JWT Controller
+
+=== Access token 재발급 API
+
+[discrete]
+==== `Request`
+[source,http]
+----
+POST: /api/jwt
+----
+.request-headers
+include::{snippets}/post-jwt/request-headers.adoc[]
+
+[discrete]
+==== `Response`
+.response-body
+include::{snippets}/post-jwt/response-body.adoc[]
+
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/post-jwt/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/post-jwt/http-response.adoc[]
+
+---

@@ -11,6 +11,8 @@
 POST: /careposts
 ----
 
+.request-headers
+include::{snippets}/post-carePost/request-headers.adoc[]
 .request-body
 include::{snippets}/post-carePost/request-body.adoc[]
 .request-fields
@@ -40,8 +42,11 @@ include::{snippets}/post-carePost/http-response.adoc[]
 ----
 PATCH: /careposts/{post-id}
 ----
+
 .path-parameters
 include::{snippets}/patch-carePost/path-parameters.adoc[]
+.request-headers
+include::{snippets}/patch-carePost/request-headers.adoc[]
 .request-body
 include::{snippets}/patch-carePost/request-body.adoc[]
 .request-fields
@@ -105,9 +110,10 @@ include::{snippets}/get-all-carePost/request-parameters.adoc[]
 
 [discrete]
 ==== `Response`
-.request-body
+
+.response-body
 include::{snippets}/get-all-carePost/response-body.adoc[]
-.request-fields
+.response-fields
 include::{snippets}/get-all-carePost/response-fields.adoc[]
 
 [discrete]
@@ -118,29 +124,37 @@ include::{snippets}/get-all-carePost/http-request.adoc[]
 ==== `Response Summary`
 include::{snippets}/get-all-carePost/http-response.adoc[]
 
----
 
-=== 게시물 삭제 API
+---
+=== 게시물 날짜별 조회 API
+
 [discrete]
 ==== `Request`
 [source,http]
 ----
-DELETE: /careposts/{post-id}/{member-id}
+GET: /careposts/search?locationTag=...&startDate.day=...&이하생략
 ----
-.path-parameters
-include::{snippets}/delete-carePost/path-parameters.adoc[]
+
+.request-parameters
+include::{snippets}/get-carePost-search/request-parameters.adoc[]
+
 
 [discrete]
 ==== `Response`
-.http-response
-include::{snippets}/delete-carePost/http-response.adoc[]
+
+.response-body
+include::{snippets}/get-carePost-search/response-body.adoc[]
+
+.response-fields
+include::{snippets}/get-carePost-search/response-fields.adoc[]
 
 [discrete]
 ==== `Request Summary`
-include::{snippets}/delete-carePost/http-request.adoc[]
+include::{snippets}/get-carePost-search/http-request.adoc[]
 
 [discrete]
 ==== `Response Summary`
-include::{snippets}/delete-carePost/http-response.adoc[]
+include::{snippets}/get-carePost-search/http-response.adoc[]
 
 ---
+

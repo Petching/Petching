@@ -8,8 +8,11 @@ import com.Petching.petching.carepost.repository.CarePostRepository;
 import com.Petching.petching.carepost.service.CarePostService;
 import com.Petching.petching.config.SecurityConfiguration;
 import com.Petching.petching.global.aws.s3.config.S3Configuration;
+import com.Petching.petching.login.oauth.userInfo.JwtToken;
 import com.Petching.petching.restDocs.global.helper.CarePostControllerTestHelper;
 import com.Petching.petching.restDocs.global.helper.StubData;
+import com.Petching.petching.user.entity.User;
+import com.Petching.petching.user.service.UserService;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,6 +34,9 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import java.util.List;
+import java.util.Map;
+
 import static com.Petching.petching.restDocs.global.utils.ApiDocumentUtils.getRequestPreProcessor;
 import static com.Petching.petching.restDocs.global.utils.ApiDocumentUtils.getResponsePreProcessor;
 import static org.hamcrest.Matchers.is;
@@ -42,6 +48,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.requestF
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(CarePostController.class)
@@ -72,6 +79,11 @@ public class CarePostControllerTest implements CarePostControllerTestHelper {
     @MockBean
     private SecurityConfiguration securityConfiguration;
 
+    @MockBean
+    private UserService userService;
+
+    @MockBean
+    private JwtToken jwtToken;
 
     @DisplayName("Test - CarePostController - POST")
     @Test
@@ -82,7 +94,11 @@ public class CarePostControllerTest implements CarePostControllerTestHelper {
         CarePostDto.Post postDto = (CarePostDto.Post) StubData.MockCarePost.getRequestBody(HttpMethod.POST);
         CarePost post = StubData.MockCarePost.getSingleResultCarePost();
 
-        given(carePostService.savePost(Mockito.any(CarePostDto.Post.class))).willReturn(post);
+        User user = StubData.MockUser.getSingleResultUser(1L);
+
+        given(carePostMapper.carePostPostDtoToCarePost(Mockito.any(CarePostDto.Post.class))).willReturn(post);
+        given(userService.findUser(Mockito.anyLong())).willReturn(user);
+        given(carePostService.savePost(Mockito.any(CarePost.class))).willReturn(post);
 
         String content = toJsonContent(postDto);
 
@@ -121,9 +137,11 @@ public class CarePostControllerTest implements CarePostControllerTestHelper {
         CarePostDto.Response responseDto = StubData.MockCarePost.getSingleResponseBody();
         CarePostDto.Patch patchDto = (CarePostDto.Patch) StubData.MockCarePost.getRequestBody(HttpMethod.PATCH);
         String content = toJsonContent(patchDto);
+        User user = StubData.MockUser.getSingleResultUser(1L);
 
-
-        given(carePostService.updatePost(Mockito.any(CarePostDto.Patch.class), Mockito.anyLong())).willReturn(updatedPost);
+        given(userService.findUser(Mockito.anyLong())).willReturn(user);
+        given(carePostMapper.carePostPatchDtoToCarePost(Mockito.any(CarePostDto.Patch.class))).willReturn(updatedPost);
+        given(carePostService.updatePost(Mockito.any(CarePost.class), Mockito.anyLong())).willReturn(updatedPost);
         given(carePostMapper.carePostToCarePostResponseDto(Mockito.any(CarePost.class))).willReturn(responseDto);
 
         // when
@@ -215,15 +233,6 @@ public class CarePostControllerTest implements CarePostControllerTestHelper {
         given(carePostService.findAllPost(Mockito.any(Pageable.class))).willReturn(carePostPage);
         given(carePostMapper.carePostToCarePostResponseDto(Mockito.any(CarePost.class))).willReturn(responseDto1);
 
-/*
-        given(carePostPage
-                .stream()
-                .map(post->
-                        carePostMapper.carePostToCarePostResponseDto(post))
-                .collect(Collectors.toList())
-        ).willReturn(responseList);
-*/
-
 
         // when
         ResultActions actions = mockMvc.perform(
@@ -262,12 +271,14 @@ public class CarePostControllerTest implements CarePostControllerTestHelper {
         Long postId = 1L;
 
         CarePost carePost = StubData.MockCarePost.getSingleResultCarePost();
+        User user = StubData.MockUser.getSingleResultUser(1L);
 
+        given(userService.findUser(Mockito.anyLong())).willReturn(user);
         given(carePostService.existsPost(Mockito.anyLong())).willReturn(carePost);
 
         // when
         ResultActions actions = mockMvc.perform(
-                deleteRequestBuilder(getDeleteURI(), postId, userId)
+                deleteRequestBuilder(getURI(), postId)
         );
 
 
@@ -277,11 +288,55 @@ public class CarePostControllerTest implements CarePostControllerTestHelper {
                 .andDo(document("delete-carePost",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
+                        requestHeaders(
+                                getDefaultRequestHeaderDescriptors()
+                        ),
                         pathParameters(
                                 getCarePostDeleteRequestPathParameterDescriptor()
                         )
 
                 ));
 
+    }
+
+    @DisplayName("Test - CarePostController - GET /search")
+    @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
+    public void searchCarePostTest() throws Exception{
+
+        // given
+        Map<String,Integer> startDate = StubData.MockCarePost.getStubStartDate();
+        Map<String,Integer> endDate = StubData.MockCarePost.getStubEndDate();
+        String locationTag = "전남 광양시";
+
+        List<CarePost> searchPostList = StubData.MockCarePost.getMultiResultBoard().toList();
+        List<CarePostDto.Response> searchPostResponse = StubData.MockCarePost.getMultiResponseBody();
+
+        given(carePostService.searchPost(Mockito.any(String.class), Mockito.anyInt(),Mockito.anyInt(),Mockito.anyInt(),Mockito.anyInt(),Mockito.anyInt(),Mockito.anyInt())).willReturn(searchPostList);
+        given(carePostMapper.carePostsToCarePostResponseDtos(Mockito.anyList())).willReturn(searchPostResponse);
+
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                getRequestBuilder(getUrl().concat("/search"), locationTag, startDate, endDate)
+        );
+
+
+        // then
+        actions.andExpect(status().isOk())
+                .andDo(document(
+                        "get-carePost-search",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        requestParameters(
+                                getCarePostGetSearchRequestParamsDescriptors()
+                        ),
+                        responseFields(
+                                getFullResponseDescriptors(
+                                        getDefaultCarePostSearchResponseDescriptors(DataResponseType.LIST))
+
+                        )
+                        )
+                );
     }
 }

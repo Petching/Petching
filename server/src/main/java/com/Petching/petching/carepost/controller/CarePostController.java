@@ -113,19 +113,23 @@ public class CarePostController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity searchCarePost(@RequestParam("locationTag") String locationTag,
-                                         @RequestParam("startDate.day") int startDay,
-                                         @RequestParam("startDate.month") int startMonth,
-                                         @RequestParam("startDate.year") int startYear,
-                                         @RequestParam("endDate.day") int endDay,
-                                         @RequestParam("endDate.month") int endMonth,
-                                         @RequestParam("endDate.year") int endYear) {
+    public ResponseEntity searchCarePost(
+            @RequestParam("locationTag") String locationTag,
+            @RequestParam("startDate.day") int startDay,
+            @RequestParam("startDate.month") int startMonth,
+            @RequestParam("startDate.year") int startYear,
+            @RequestParam("endDate.day") int endDay,
+            @RequestParam("endDate.month") int endMonth,
+            @RequestParam("endDate.year") int endYear) {
+
         List<CarePost> searchPost = service.searchPost(
                 locationTag, startDay, startMonth, startYear,
                 endDay, endMonth, endYear
                 );
 
-        return new ResponseEntity(mapper.carePostsToCarePostResponseDtos(searchPost),HttpStatus.OK);
+        List<CarePostDto.Response> responseList = mapper.carePostsToCarePostResponseDtos(searchPost);
+
+        return new ResponseEntity(new SingleResponse<>(responseList),HttpStatus.OK);
     }
 
     @DeleteMapping("/{post-id}")
