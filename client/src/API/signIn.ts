@@ -1,11 +1,13 @@
 /* eslint-disable */
 import axios from 'axios';
 const BASE_URL = process.env.REACT_APP_API_SERVER;
+import { Axios } from '../API/api';
 
 export const authenticate = async (email: string, password: string) => {
   try {
     const response = await axios.post(
-      `${BASE_URL}/users/login`,
+      // `${BASE_URL}/users/login`,
+      'https://server.petching.net/users/login',
       { email, password },
       {
         headers: {
