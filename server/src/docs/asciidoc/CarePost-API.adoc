@@ -1,0 +1,146 @@
+[[CarePost-API]]
+= 돌봄리스트 API
+== CarePost Controller
+
+=== 게시물 등록 API
+
+[discrete]
+==== `Request`
+[source,http]
+----
+POST: /careposts
+----
+
+.request-body
+include::{snippets}/post-carePost/request-body.adoc[]
+.request-fields
+include::{snippets}/post-carePost/request-fields.adoc[]
+
+
+[discrete]
+==== `Response`
+.response-headers
+include::{snippets}/post-carePost/response-headers.adoc[]
+
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/post-carePost/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/post-carePost/http-response.adoc[]
+
+---
+
+=== 게시물 수정 API
+[discrete]
+==== `Request`
+[source,http]
+----
+PATCH: /careposts/{post-id}
+----
+.path-parameters
+include::{snippets}/patch-carePost/path-parameters.adoc[]
+.request-body
+include::{snippets}/patch-carePost/request-body.adoc[]
+.request-fields
+include::{snippets}/patch-carePost/request-fields.adoc[]
+
+[discrete]
+==== `Response`
+.response-body
+include::{snippets}/patch-carePost/response-body.adoc[]
+.response-fields
+include::{snippets}/patch-carePost/response-fields.adoc[]
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/patch-carePost/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/patch-carePost/http-response.adoc[]
+
+---
+
+=== 게시물 단일 조회 API
+[discrete]
+==== `Request`
+[source,http]
+----
+GET: /careposts/{post-id}
+----
+.path-parameters
+include::{snippets}/get-carePost/path-parameters.adoc[]
+
+
+[discrete]
+==== `Response`
+.response-body
+include::{snippets}/get-carePost/response-body.adoc[]
+.response-fields
+include::{snippets}/get-carePost/response-fields.adoc[]
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/get-carePost/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/get-carePost/http-response.adoc[]
+
+---
+
+=== 게시물 전체 조회 API
+[discrete]
+==== `Request`
+[source,http]
+----
+GET: /careposts?page={default:1}&size={default:10}
+----
+.request-parameters
+include::{snippets}/get-all-carePost/request-parameters.adoc[]
+
+
+[discrete]
+==== `Response`
+.request-body
+include::{snippets}/get-all-carePost/response-body.adoc[]
+.request-fields
+include::{snippets}/get-all-carePost/response-fields.adoc[]
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/get-all-carePost/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/get-all-carePost/http-response.adoc[]
+
+---
+
+=== 게시물 삭제 API
+[discrete]
+==== `Request`
+[source,http]
+----
+DELETE: /careposts/{post-id}/{member-id}
+----
+.path-parameters
+include::{snippets}/delete-carePost/path-parameters.adoc[]
+
+[discrete]
+==== `Response`
+.http-response
+include::{snippets}/delete-carePost/http-response.adoc[]
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/delete-carePost/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/delete-carePost/http-response.adoc[]
+
+---

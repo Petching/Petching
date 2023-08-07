@@ -5,11 +5,14 @@ import com.Petching.petching.global.exception.ExceptionCode;
 import com.Petching.petching.login.jwt.service.JwtService;
 import com.Petching.petching.user.entity.User;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 
+import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,12 +65,27 @@ public class JwtToken {
         return null;
     }
 
+    public String  extractUserEmailFromToken(String requestToken){
+
+        if(!StringUtils.isEmpty(requestToken)) {
+
+            Jws<Claims> claims =
+                    jwtService.getClaims(requestToken, jwtService.encodeBase64SecretKey(jwtService.getSecretKey()));
+
+            if(Optional.ofNullable(claims.getBody().get("sub")).isPresent()){
+                return String.valueOf(claims.getBody().get("sub"));
+            }
+
+        }
+        return null;
+    }
+
     public boolean verifyTokenExpiration(String requestToken) {
 
         if (!StringUtils.isEmpty(requestToken)) {
             Jws<Claims> claims = jwtService.getClaims(requestToken, jwtService.encodeBase64SecretKey(jwtService.getSecretKey()));
             Date expiration = null;
-
+            //System.out.println("claims: "+claims.getBody());
             if(Optional.ofNullable(claims.getBody().getExpiration()).isPresent()) {
                 expiration = claims.getBody().getExpiration();
                 Date now = new Date();
