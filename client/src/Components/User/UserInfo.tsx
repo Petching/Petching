@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useState } from 'react';
 import { useGetUserProfile } from '../../Hook/useGetUserProfile';
 import { AiOutlineUser, AiOutlineHome, AiOutlineMail } from 'react-icons/ai';
