@@ -26,6 +26,7 @@ public class S3Controller {
 
     @PostMapping("/uploads")
     public ResponseEntity uploadFiles(
+
             @RequestParam(value = "uploadTo") String uploadTo,
             @RequestPart(value = "files") List<MultipartFile> multipartFiles) {
 

@@ -18,7 +18,6 @@ public class CarePostDto {
     @Builder
     @AllArgsConstructor
     public static class Post {
-        private Long userId;
 
         @NotBlank(message = "제목은 필수 입력 사항입니다.")
         @Size(max = 250, message = "제목은 250자를 넘을 수 없습니다.")
@@ -47,7 +46,6 @@ public class CarePostDto {
     @Builder
     @AllArgsConstructor
     public static class Patch {
-        private Long userId;
 
         @NotBlank(message = "제목은 필수 입력 사항입니다.")
         @Size(max = 250, message = "제목은 250자를 넘을 수 없습니다.")

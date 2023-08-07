@@ -165,7 +165,6 @@ public class StubData {
 
 
             CarePostDto.Post postDto = CarePostDto.Post.builder()
-                    .userId(1L)
                     .title("this is title1")
                     .content("this is content1")
                     .imgUrls(imgUrls)
@@ -178,7 +177,6 @@ public class StubData {
                     .build();
 
             CarePostDto.Patch patchDto = CarePostDto.Patch.builder()
-                    .userId(1L)
                     .title("this is title1")
                     .content("this is content1")
                     .imgUrls(imgUrls)
@@ -756,5 +754,14 @@ public class StubData {
 
     }
 
+    public static class MockToken {
 
+        public static String getSingleResultRefreshToken() {
+            return "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJlbWFpbEBleGFtcGxlLmNvbSIsImlhdCI6MTY5MTM3MjYyNywiZXhwIjo4OTQ4OTcyNjI3fQ.8W-F0OPPXU19JZSZIAit_Zysf0MDZFHwy12CXUVOdHNhfXXkdWsqBfxIkbfaZeS8";
+        }
+
+        public static String getSingleResultAccessToken() {
+            return "Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJJZCI6MSwiZW1haWwiOiJlbWFpbEBleGFtcGxlLmNvbSIsInN1YiI6ImVtYWlsQGV4YW1wbGUuY29tIiwiaWF0IjoxNjkxMzc0MzMzLCJleHAiOjg5NDg5NzQzMzN9.i2nAArZsZLjU17VW8pJdmoiyzwTNOkc_jXus51xgZd4GLhYo38syG7FZ15vr3kEq";
+        }
+    }
 }

@@ -40,7 +40,34 @@ public interface CarePostMapper {
         return carePost.build();
     }
 
-    CarePost carePostPatchDtoToCarePost(CarePostDto.Patch requestBody);
+//    CarePost carePostPatchDtoToCarePost(CarePostDto.Patch requestBody);
+
+    default CarePost carePostPatchDtoToCarePost(CarePostDto.Patch requestBody) {
+        if ( requestBody == null ) {
+            return null;
+        }
+
+        CarePost.CarePostBuilder carePost = CarePost.builder();
+
+        carePost.title( requestBody.getTitle() );
+        carePost.content( requestBody.getContent() );
+        List<String> list = requestBody.getImgUrls();
+        if ( list != null ) {
+            carePost.imgUrls( new ArrayList<String>( list ) );
+        }
+        carePost.startDay( requestBody.getStartDate().get("day") );
+        carePost.startMonth( requestBody.getStartDate().get("month") );
+        carePost.startYear( requestBody.getStartDate().get("year") );
+        carePost.endDay( requestBody.getEndDate().get("day") );
+        carePost.endMonth( requestBody.getEndDate().get("month") );
+        carePost.endYear( requestBody.getEndDate().get("year") );
+        carePost.memo( requestBody.getMemo() );
+        carePost.petSize( requestBody.getPetSize() );
+        carePost.conditionTag( requestBody.getConditionTag() );
+        carePost.locationTag( requestBody.getLocationTag() );
+
+        return carePost.build();
+    }
 
     default  CarePostDto.Response carePostToCarePostResponseDto(CarePost carePost) {
         if ( carePost == null ) {
