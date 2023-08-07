@@ -60,7 +60,7 @@ const CareList = () => {
   };
 
   const toCareListDetail = () => {
-    navigate('/carelistdetail');
+    navigate('/carelistpost', { state: { startDate, endDate, locationTag } });
   };
   return (
     <div className="text-[1.2rem]">
