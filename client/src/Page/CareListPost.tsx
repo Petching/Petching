@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import ImageUploader from '../Components/Care/ImageUploader';
+import ReactCalendar from '../Components/Care/ReactCalendar';
+import Postcode from '../Components/Care/Postcode';
 
-const CareListDetail = () => {
+const CareListPost = () => {
   const [location, setLocation] = useState('');
   const [timeRange, setTimeRange] = useState('');
   const [isPetsitter, setIsPetsitter] = useState(false);
@@ -96,4 +98,4 @@ const CareListDetail = () => {
   );
 };
 
-export default CareListDetail;
+export default CareListPost;
