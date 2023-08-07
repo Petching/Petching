@@ -39,15 +39,13 @@ public class CarePostService {
     private final CarePostMapper mapper;
     private final UserService userService;
 
-    public CarePost savePost(CarePostDto.Post post) {
+    public CarePost savePost(CarePost post) {
 
-        User user = userService.verifiedUser(post.getUserId());
+        User user = userService.verifiedUser(post.getUser().getUserId());
 
-        CarePost newPost = mapper.carePostPostDtoToCarePost(post);
+        post.setUser(user);
 
-        newPost.setUser(user);
-
-        CarePost savePost = repository.save(newPost);
+        CarePost savePost = repository.save(post);
 
 //        if (post.getConditionTags() != null) {
 //            for (String tagName : post.getConditionTags()) {
@@ -87,9 +85,9 @@ public class CarePostService {
     }
 
     //fixme 태그 업데이트 수정 요망!
-    public CarePost updatePost(CarePostDto.Patch patch,Long postId)   {
+    public CarePost updatePost(CarePost patch,Long postId)   {
 
-        User user = userService.verifiedUser(patch.getUserId());
+        User user = userService.verifiedUser(patch.getUser().getUserId());
 
         CarePost findPost = repository.findByPostId(postId);
 
@@ -101,17 +99,17 @@ public class CarePostService {
                 .ifPresent(findPost::setContent);
         Optional.ofNullable(patch.getImgUrls())
                 .ifPresent(findPost::setImgUrls);
-        Optional.ofNullable(patch.getStartDate().get("day"))
+        Optional.ofNullable(patch.getStartDay())
                 .ifPresent(findPost::setStartDay);
-        Optional.ofNullable(patch.getStartDate().get("month"))
+        Optional.ofNullable(patch.getStartMonth())
                 .ifPresent(findPost::setStartMonth);
-        Optional.ofNullable(patch.getStartDate().get("year"))
+        Optional.ofNullable(patch.getStartYear())
                 .ifPresent(findPost::setStartYear);
-        Optional.ofNullable(patch.getEndDate().get("day"))
+        Optional.ofNullable(patch.getEndDay())
                 .ifPresent(findPost::setEndDay);
-        Optional.ofNullable(patch.getEndDate().get("month"))
+        Optional.ofNullable(patch.getEndMonth())
                 .ifPresent(findPost::setEndMonth);
-        Optional.ofNullable(patch.getEndDate().get("year"))
+        Optional.ofNullable(patch.getEndYear())
                 .ifPresent(findPost::setEndYear);
         Optional.ofNullable(patch.getPetSize())
                 .ifPresent(findPost::setPetSize);
@@ -176,11 +174,11 @@ public class CarePostService {
 
     }
 
-    public List<CarePost> searchPost(String conditionTag, int startDay, int startMonth, int startYear,
+    public List<CarePost> searchPost(String locationTag, int startDay, int startMonth, int startYear,
                                      int endDay, int endMonth, int endYear) {
 
             return repository.findByLocationTagAndStartDayAndStartMonthAndStartYearAndEndDayAndEndMonthAndEndYear(
-                    conditionTag, startDay, startMonth, startYear,
+                    locationTag, startDay, startMonth, startYear,
                     endDay, endMonth, endYear);
     }
 
