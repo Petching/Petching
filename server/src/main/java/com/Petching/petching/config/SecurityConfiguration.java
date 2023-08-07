@@ -64,7 +64,7 @@ public class SecurityConfiguration {
                         .antMatchers("/users/login").permitAll()
                         .antMatchers("/users/**").hasRole("USER")
 
-                        .antMatchers(HttpMethod.GET, "/careposts").permitAll()
+                        .antMatchers(HttpMethod.GET, "/careposts/**").permitAll()
                         .antMatchers("/careposts/**").hasRole("USER")
 
                         .antMatchers(HttpMethod.GET, "/boards/**").permitAll()
