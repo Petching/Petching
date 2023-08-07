@@ -18,7 +18,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users/pet")
+@RequestMapping("/users/pets")
 @RequiredArgsConstructor
 public class MyPetController {
     private final MyPetService petService;
@@ -27,7 +27,7 @@ public class MyPetController {
     @PostMapping
     public ResponseEntity postPet (@RequestBody @Valid MyPetDto.Post post) {
         MyPet myPet = petService.savedPet(petMapper.PostToEntity(post));
-        URI uri = URICreator.createUri("/users/pet", myPet.getMyPetId());
+        URI uri = URICreator.createUri("/users/pets", myPet.getMyPetId());
 
         return ResponseEntity.created(uri).build();
     }
