@@ -1,30 +1,35 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 import { MyPetsType } from '../Components/User/MyPets';
+import axios from 'axios';
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const usePostMyPets = () => {
   const queryClient = useQueryClient();
   const { mutate: postUserCommentMutation } = useMutation(
     async ({
-      // img,
       name,
-      kind,
+      species,
       gender,
       age,
-      weight,
-      vaccination,
-      etc,
+      significant,
+      petUmgUrl,
     }: MyPetsType) => {
-      await axios.post(`https://server.petching.net/`, {
-        // img,
-        name,
-        kind,
-        gender,
-        age,
-        weight,
-        vaccination,
-        etc,
-      });
+      const token = localStorage.getItem('ACCESS_TOKEN');
+      await axios.post(
+        `${BASE_URL}/users/pet`,
+        {
+          name,
+          species,
+          gender,
+          age,
+          significant,
+          petUmgUrl,
+        },
+        {
+          headers: { Authorization: token },
+        },
+      );
     },
     {
       onError: error => {
@@ -37,24 +42,20 @@ export const usePostMyPets = () => {
     },
   );
   const handlerPostMyPet = async ({
-    // img,
     name,
-    kind,
+    species,
     gender,
     age,
-    weight,
-    vaccination,
-    etc,
+    significant,
+    petUmgUrl,
   }: MyPetsType) => {
     postUserCommentMutation({
-      // img,
       name,
-      kind,
+      species,
       gender,
       age,
-      weight,
-      vaccination,
-      etc,
+      significant,
+      petUmgUrl,
     });
   };
   return { handlerPostMyPet };

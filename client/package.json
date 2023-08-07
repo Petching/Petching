@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@actbase/react-daum-postcode": "^1.0.4",
     "@ckeditor/ckeditor5-build-classic": "^38.1.1",
     "@ckeditor/ckeditor5-react": "^6.1.0",
     "@hassanmojab/react-modern-calendar-datepicker": "^3.1.7",

@@ -1,8 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import DaumPostcodeEmbed from 'react-daum-postcode';
+import React, { useState } from 'react';
+import DaumPostcodeEmbed from '@actbase/react-daum-postcode';
 
-const Postcode = () => {
+interface AddressData {
+  address: string;
+  addressType: string;
+  bname: string;
+  buildingName: string;
+}
+
+interface PostcodeProps {
+  onAddressSelected: (address: string) => void;
+  onError?: () => void;
+}
+
+const Postcode: React.FC<PostcodeProps> = ({ onAddressSelected }) => {
   const [open, setOpen] = useState(false);
   const [address, setAddress] = useState('');
 
@@ -13,47 +24,55 @@ const Postcode = () => {
   const handleClose = () => {
     setOpen(false);
   };
-
-  const handleComplete = async (data: any) => {
+  const handleError = () => {
+    console.error();
+  };
+  const handleComplete = (data: AddressData) => {
     let fullAddress = data.address;
-    let extraAddress = '';
-
     if (data.addressType === 'R') {
-      if (data.bname !== '') {
-        extraAddress += data.bname;
-      }
-      if (data.buildingName !== '') {
+      let extraAddress = '';
+      if (data.bname !== '') extraAddress += data.bname;
+      if (data.buildingName !== '')
         extraAddress +=
           extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
-      }
       fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
     }
 
-    try {
-      const response = await axios.post('https://server.petching.net/address', {
-        address: fullAddress,
-      });
-      console.log(response.data);
-      setAddress(response.data.address);
-      handleClose();
-    } catch (error) {
-      console.error(error);
-    }
+    // 맨 앞 두 단어만 전달하려면 아래 코드를 사용하세요.
+    const firstTwoWords = fullAddress.split(' ').slice(0, 2).join(' ');
+
+    setAddress(firstTwoWords);
+    onAddressSelected(firstTwoWords);
+    handleClose();
   };
-  useEffect(() => {
-    console.log(address);
-  }, [address]);
+
   return (
-    <>
-      <input
-        type="text"
-        value={address}
-        onClick={handleClick}
-        readOnly
-        placeholder="주소를 검색해주세요"
-      />
-      {open && <DaumPostcodeEmbed onComplete={handleComplete} />}
-    </>
+    <div>
+      <div className="relative">
+        {open && (
+          <div
+            className="absolute top-0 right-0 bg-white z-10 p-1 m-1 text-black rounded-full cursor-pointer"
+            onClick={handleClose}
+          >
+            X
+          </div>
+        )}
+        <input
+          className="w-[8.5rem] h-[2rem] text-sm text-center border-2"
+          type="text"
+          value={address}
+          onClick={handleClick}
+          readOnly
+          placeholder="주소를 검색해주세요"
+        />
+        {open && (
+          <DaumPostcodeEmbed
+            onSelected={handleComplete}
+            onError={handleError}
+          />
+        )}
+      </div>
+    </div>
   );
 };
 

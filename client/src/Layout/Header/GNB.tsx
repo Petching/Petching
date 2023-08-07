@@ -10,7 +10,7 @@ const GNB = () => {
   const [userIcon, setUserIcon] = useState<boolean>(false);
   const [menu, setMenu] = useState<boolean>(false);
   const { isLogin, setLogin, setLogout } = useLoginStore();
-  const token = localStorage.getItem('ACCESSTOKEN');
+  const token = localStorage.getItem('ACCESS_TOKEN');
 
   const userId = getUserIdFromToken(isLogin, token);
   const { UserProfile } = useGetUserProfile(`${userId}`);
@@ -33,15 +33,20 @@ const GNB = () => {
     const { name } = e.currentTarget;
     switch (name) {
       case 'mypage':
+        setMenu(false);
+        setUserIcon(false);
         return navigate(`/user/${userId}`);
       default:
+        setMenu(false);
+        setUserIcon(false);
         return navigate(`/${name}`);
     }
   };
   const logoutHandler = () => {
-    localStorage.removeItem('ACCESSTOKEN');
+    localStorage.removeItem('ACCESS_TOKEN');
     setLogout();
     navigate('/');
+    setMenu(false);
     setUserIcon(false);
   };
 
@@ -65,13 +70,13 @@ const GNB = () => {
         {isLogin ? (
           <>
             <button className="mx-3" onClick={userOpen}>
-              <img
-                src="https://cdn.pixabay.com/photo/2023/06/14/10/02/pied-flycatcher-8062744_640.jpg"
-                // 추후 유저 이미지 들어오면 유저 이미지로 변경
-                // src={UserProfile.ImgUrl}
-                alt="유저 메뉴 버튼"
-                className="w-10 h-10 rounded-full"
-              />
+              {UserProfile && (
+                <img
+                  src={UserProfile!.profileImgUrl}
+                  alt="유저 메뉴 버튼"
+                  className="w-10 h-10 rounded-full"
+                />
+              )}
             </button>
           </>
         ) : (
@@ -139,16 +144,40 @@ const GNB = () => {
       {menu && (
         <ul className="bg-slate-400 absolute right-0 top-14 w-40 text-center rounded-b">
           <li className="h-10 leading-10 hover:bg-white">
-            <button className="w-full h-full">돌봄리스트</button>
+            <button
+              className="w-full h-full"
+              name="carelist"
+              onClick={moveHandler}
+            >
+              돌봄리스트
+            </button>
           </li>
           <li className="h-10 leading-10 hover:bg-white">
-            <button className="w-full h-full">자랑하기</button>
+            <button
+              className="w-full h-full"
+              name="peacock"
+              onClick={moveHandler}
+            >
+              자랑하기
+            </button>
           </li>
           <li className="h-10 leading-10 hover:bg-white">
-            <button className="w-full h-full">로그인</button>
+            <button
+              className="w-full h-full"
+              name="signin"
+              onClick={moveHandler}
+            >
+              로그인
+            </button>
           </li>
           <li className="h-10 leading-10 hover:bg-white">
-            <button className="w-full h-full">회원가입</button>
+            <button
+              className="w-full h-full"
+              name="signup"
+              onClick={moveHandler}
+            >
+              회원가입
+            </button>
           </li>
         </ul>
       )}
