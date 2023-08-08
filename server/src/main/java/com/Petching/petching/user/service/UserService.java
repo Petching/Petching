@@ -87,6 +87,11 @@ public class UserService {
         return false;
     }
 
+    public boolean checkPassword (CheckDto dto) {
+        User user = verifiedUser(findSecurityContextHolderUserId());
+        return passwordEncoder.matches(dto.getPassword(),user.getPassword());
+    }
+
     public void deletedUser (long userId) {
         User user = verifiedUser(userId);
 
