@@ -4,22 +4,29 @@ import { getCookie } from '../Util/getCookie';
 const BASE_URL = process.env.REACT_APP_API_SERVER;
 
 export const Axios = axios.create({
-  baseURL: process.env.API_SERVER,
-  timeout: 10000,
-  withCredentials: true,
+  baseURL: 'https://server.petching.net',
+  //   timeout: 10000,
+  //   withCredentials: true,
 });
+
+// 새로운 액세스 토큰을 받아오는 작업을 수행하는 별도의 Axios 인스턴스
+const AxiosForTokenRefresh = axios.create({
+  baseURL: 'https://server.petching.net',
+});
+
 //request 소매치기
 Axios.interceptors.request.use(
   async function (config) {
     const accessToken = localStorage.getItem('ACCESS_TOKEN');
     const refreshToken = getCookie('REFRESH_TOKEN');
-
+    console.log(refreshToken);
     if (!accessToken && refreshToken) {
       // 로그아웃 후 refreshToken은 있고, accessToken은 없음
       //refreshtoken만 보내줌
       try {
-        const response = await axios.post(
-          '<URL>',
+        // 새로운 액세스 토큰을 받아오는 작업은 별도의 Axios 인스턴스를 사용하여 수행
+        const response = await AxiosForTokenRefresh.post(
+          `/api/jwt`,
           {},
           {
             headers: {
@@ -29,7 +36,7 @@ Axios.interceptors.request.use(
           },
         );
         //응답이 성공적이면 헤더에 새로운 accessToken 받아오기
-        if (response.status === 200) {
+        if (response.status === 201) {
           const newAccessToken = response.data.accessToken;
           localStorage.setItem('ACCESS_TOKEN', newAccessToken);
           config.headers['Authorization'] = `Bearer ${newAccessToken}`;
@@ -38,8 +45,7 @@ Axios.interceptors.request.use(
         console.error(error);
       }
     } else {
-      // 둘 다 없음. 로그인 요청 필요
-      window.location.href = `${BASE_URL}/signin`;
+      console.log('아무것도 아닙니다');
     }
 
     return config;
@@ -56,6 +62,8 @@ Axios.interceptors.response.use(
   function (error) {
     if (error.response.status === 401) {
       window.location.href = `${BASE_URL}/signin`;
+    } else {
+      console.log('에러가 아닌 무언가');
     }
     return Promise.reject(error);
   },

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useState } from 'react';
 import { useGetUserProfile } from '../../Hook/useGetUserProfile';
 import { AiOutlineUser, AiOutlineHome, AiOutlineMail } from 'react-icons/ai';
@@ -5,16 +6,19 @@ import { usePatchUserProfile } from '../../Hook/usePatchUserProfile';
 import { useDeleteUserProfile } from '../../Hook/useDeleteUserProfile';
 import { useNavigate } from 'react-router-dom';
 import { checkNickname } from '../../API/signUp';
+import { postImgHandler } from '../../Util/postImg';
 
 const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
   const navigate = useNavigate();
+  const { UserProfile } = useGetUserProfile(userId);
+
   const [onEdit, setOnEdit] = useState(false);
   const [changeImg, setChangeImg] = useState<string>(
-    'https://cdn.pixabay.com/photo/2023/06/14/10/02/pied-flycatcher-8062744_640.jpg',
+    UserProfile?.profileImgUrl ||
+      'https://s3.ap-northeast-2.amazonaws.com/petching.image/dog-5960092_1920.jpg',
   );
   const [isDuplication, setIsDuplication] = useState<boolean>(false);
 
-  const { UserProfile } = useGetUserProfile(userId);
   const { handlerPatchProfile } = usePatchUserProfile(userId);
   const { handlerDeleteUserProfile } = useDeleteUserProfile(userId);
   const [changeNickName, setChangeNickName] = useState<string>(
@@ -34,15 +38,14 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
     }
   };
 
-  const changeImgHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeImgHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.currentTarget;
     const files = (target.files as FileList)[0];
     if (!files) return;
     const reader = new FileReader();
-    reader.onloadend = () => {
-      setChangeImg(reader.result as string);
-    };
     reader.readAsDataURL(files);
+    const data = await postImgHandler(files, 'profiles');
+    setChangeImg(data);
   };
 
   const nickNameCheckHandler = () => {
@@ -58,6 +61,9 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
       password: '123123',
     });
     setOnEdit(false);
+    setChangeNickName(UserProfile!.nickName);
+    setChangeAddress(UserProfile!.address || '');
+    setChangeImg(UserProfile!.profileImgUrl);
   };
 
   const deleteHandler = () => {

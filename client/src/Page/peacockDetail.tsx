@@ -1,5 +1,6 @@
 /* eslint-disable */
-import { CarouselComponent, Square } from '../Components/peacockComponent';
+import React from 'react';
+import { CarouselComponent } from '../Components/peacockComponent';
 import doctors from '../Style/doctors.jpg';
 import { LikeComponent } from '../Components/peacockComponent';
 const PeacockDetail = () => {

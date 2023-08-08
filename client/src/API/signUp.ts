@@ -2,6 +2,7 @@
 import { User, SignupData } from '../Util/types';
 import axios from 'axios';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
+import { Axios } from '../API/api';
 
 export const checkUser = async () => {
   // 백엔드 API 호출하여 DB에서 유저 정보 가져오기

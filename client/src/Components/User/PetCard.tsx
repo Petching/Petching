@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDeleteMyPet } from '../../Hook/useDeleteMyPet';
 import { MyPetsType } from './MyPets';
 import { usePatchMyPet } from '../../Hook/usePatchMyPet';
+import { postImgHandler } from '../../Util/postImg';
 
 const PetCard: React.FC<MyPetsType> = ({
   // img,
@@ -9,16 +10,18 @@ const PetCard: React.FC<MyPetsType> = ({
   species,
   gender,
   age,
-  petUmgUrl,
+  petImgUrl,
   significant,
+  myPetId,
   // weight,
   // vaccination,
   // etc,
+  userId,
 }) => {
-  const { handlerPatchMyPet } = usePatchMyPet();
-  const { handlerDeleteMyPet } = useDeleteMyPet();
+  const { handlerPatchMyPet } = usePatchMyPet(userId!);
+  const { handlerDeleteMyPet } = useDeleteMyPet(myPetId!, userId!);
   const [onEdit, setOnEdit] = useState<boolean>(false);
-  const [changeImg, setChangeImg] = useState<string>(petUmgUrl);
+  const [changeImg, setChangeImg] = useState<string>(petImgUrl);
   const [changeName, setChangeName] = useState<string>(name);
   const [changeSpecies, setChangeSpecies] = useState<string>(species);
   const [changeGender, setChangeGender] = useState<string>(gender);
@@ -30,15 +33,14 @@ const PetCard: React.FC<MyPetsType> = ({
   const [changeSignificant, setChangeSignificant] =
     useState<string>(significant);
 
-  const changeImgHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeImgHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.currentTarget;
     const files = (target.files as FileList)[0];
     if (!files) return;
     const reader = new FileReader();
-    reader.onloadend = () => {
-      setChangeImg(reader.result as string);
-    };
     reader.readAsDataURL(files);
+    const data = await postImgHandler(files, 'mypets');
+    setChangeImg(data);
   };
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,8 +71,9 @@ const PetCard: React.FC<MyPetsType> = ({
       species: changeSpecies,
       gender: changeGender,
       age: changeAge,
-      petUmgUrl: changeImg,
+      petImgUrl: changeImg,
       significant: changeSignificant,
+      myPetId: myPetId,
       // weight: changeWeight,
       // vaccination: changeVaccination,
       // etc: changeSignificant,
@@ -105,7 +108,7 @@ const PetCard: React.FC<MyPetsType> = ({
           </label>
         ) : (
           <img
-            src={petUmgUrl}
+            src={petImgUrl}
             alt="반려동물의 이미지"
             className="w-32 h-32 rounded"
           />

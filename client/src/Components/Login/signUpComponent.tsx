@@ -8,6 +8,7 @@ import {
 } from '../../API/signUp';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import validator from 'validator';
 
 const SignComponent: React.FC = () => {
   const [message, setMessage] = useState('');
@@ -27,7 +28,6 @@ const SignComponent: React.FC = () => {
       console.log(response);
       navigate('/signin');
     } catch (error) {
-      setMessage('Sign up failed');
       console.error(error);
     }
   };
@@ -55,13 +55,17 @@ const SignComponent: React.FC = () => {
   };
 
   const handleEmaileCheck = async () => {
-    const isDuplicate = await checkEmail(email);
-    if (isDuplicate) {
-      //참일시
-      setEmailMessage('중복된 이메일입니다');
+    if (email.length > 31 || !validator.isEmail(email)) {
+      //위 조건이 참일시 아래 메세지를 내보냄
+      //16자리 이상이거나, 이메일 형식이 유효하지 않으면
+      setEmailMessage('유효한 이메일 형식을 입력해야합니다');
     } else {
-      //거짓일시
-      setEmailMessage('사용가능한 이메일입니다');
+      const isDuplicate = await checkEmail(email);
+      if (isDuplicate) {
+        setEmailMessage('중복된 이메일입니다');
+      } else {
+        setEmailMessage('사용가능한 이메일입니다');
+      }
     }
   };
 
@@ -98,7 +102,7 @@ const SignComponent: React.FC = () => {
                 ? 'text-red-400'
                 : emailMessage === '사용가능한 이메일입니다'
                 ? 'text-blue-400'
-                : 'text-black'
+                : 'text-gray-400'
             }
           >
             {emailMessage}
@@ -107,6 +111,7 @@ const SignComponent: React.FC = () => {
 
         <div className="ml-4  text-left text-gray-300">비밀번호</div>
         <input
+          type="password"
           className="ml-4  mr-7 border border-gray-300 p-2 rounded-lg"
           placeholder="비밀번호를 입력해주세요"
           onChange={e => setPassword(e.target.value)}
@@ -114,6 +119,7 @@ const SignComponent: React.FC = () => {
         />
         <div className="ml-4 text-left text-gray-300">비밀번호 확인</div>
         <input
+          type="password"
           className="ml-4 mr-7 border border-gray-300 p-2 rounded-lg"
           placeholder="비밀번호를 다시 입력해주세요"
           onChange={e => {
@@ -153,7 +159,7 @@ const SignComponent: React.FC = () => {
                 ? 'text-red-400'
                 : message === '사용가능한 닉네임입니다'
                 ? 'text-blue-400'
-                : 'text-black'
+                : 'text-gray-400'
             }`}
           >
             {message}
@@ -162,7 +168,26 @@ const SignComponent: React.FC = () => {
         <br></br>
         <button
           onClick={handleSignup}
-          className="ml-4 flex-2 bg-customGreen border border-gray-300 p-2 rounded text-white mr-7 hover:bg-green-500"
+          disabled={
+            !email ||
+            !password ||
+            !confirmPassword ||
+            !nickname ||
+            message === '중복입니다' ||
+            emailMessage === '중복된 이메일입니다' ||
+            emailMessage === '유효한 이메일 형식을 입력해야합니다'
+          }
+          className={`ml-4 flex-2 bg-customGreen border border-gray-300 p-2 rounded text-white mr-7 hover:bg-green-500 ${
+            !email ||
+            !password ||
+            !confirmPassword ||
+            !nickname ||
+            message === '중복입니다' ||
+            emailMessage === '중복된 이메일입니다' ||
+            emailMessage === '유효한 이메일 형식을 입력해야합니다'
+              ? 'opacity-50 cursor-not-allowed'
+              : ''
+          }`}
         >
           회원가입하기
         </button>
