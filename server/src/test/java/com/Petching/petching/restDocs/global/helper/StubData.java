@@ -685,7 +685,7 @@ public class StubData {
         }
 
         public static UserResponseDto.UserGetResponseDto getSingleGetResponseBody() {
-            return new UserResponseDto.UserGetResponseDto(true,"exNickName", "email@example.com", "exAddress","https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png");
+            return new UserResponseDto.UserGetResponseDto(true,"exNickName", "email@example.com", "exAddress","https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png", "KAKAO");
         }
 
 
