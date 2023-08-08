@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-export const usePostMyPets = () => {
+export const usePostMyPets = (userId: string) => {
   const queryClient = useQueryClient();
   const { mutate: postUserCommentMutation } = useMutation(
     async ({
@@ -13,18 +13,18 @@ export const usePostMyPets = () => {
       gender,
       age,
       significant,
-      petUmgUrl,
+      petImgUrl,
     }: MyPetsType) => {
       const token = localStorage.getItem('ACCESS_TOKEN');
       await axios.post(
-        `${BASE_URL}/users/pet`,
+        `${BASE_URL}/users/pets`,
         {
           name,
           species,
           gender,
           age,
           significant,
-          petUmgUrl,
+          petImgUrl,
         },
         {
           headers: { Authorization: token },
@@ -37,7 +37,7 @@ export const usePostMyPets = () => {
       },
       onSuccess: () => {
         // useId 전달해야하는지 여부 알아보기
-        queryClient.invalidateQueries(['MyPets']);
+        queryClient.invalidateQueries(['MyPets', userId]);
       },
     },
   );
@@ -47,7 +47,7 @@ export const usePostMyPets = () => {
     gender,
     age,
     significant,
-    petUmgUrl,
+    petImgUrl,
   }: MyPetsType) => {
     postUserCommentMutation({
       name,
@@ -55,7 +55,7 @@ export const usePostMyPets = () => {
       gender,
       age,
       significant,
-      petUmgUrl,
+      petImgUrl,
     });
   };
   return { handlerPostMyPet };

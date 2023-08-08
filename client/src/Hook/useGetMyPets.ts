@@ -13,7 +13,7 @@ export const useGetMyPets = (userId: string) => {
     queryKey: ['MyPets', userId],
     queryFn: async () => {
       const token = localStorage.getItem('ACCESS_TOKEN');
-      const data = await axios.get(`${BASE_URL}/users/pet/${userId}`, {
+      const data = await axios.get(`${BASE_URL}/users/pets/${userId}`, {
         headers: { Authorization: token },
       });
       return data.data;

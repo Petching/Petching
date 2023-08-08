@@ -1,21 +1,24 @@
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { usePostMyPets } from '../../Hook/usePostMyPet';
+import { postImgHandler } from '../../Util/postImg';
 
 type Props = {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
+  userId: string;
 };
-const AddPet: React.FC<Props> = ({ open, setOpen }) => {
-  const [img, setImg] = useState<string>('');
-  const changeImgHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+const AddPet: React.FC<Props> = ({ open, setOpen, userId }) => {
+  const [img, setImg] = useState<string>(
+    'https://s3.ap-northeast-2.amazonaws.com/petching.image/dog-5960092_1920.jpg',
+  );
+  const changeImgHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.currentTarget;
     const files = (target.files as FileList)[0];
     if (!files) return;
     const reader = new FileReader();
-    reader.onloadend = () => {
-      setImg(reader.result as string);
-    };
     reader.readAsDataURL(files);
+    const data = await postImgHandler(files, 'mypets');
+    setImg(data);
   };
 
   const nameRef = useRef<HTMLInputElement>(null);
@@ -25,7 +28,7 @@ const AddPet: React.FC<Props> = ({ open, setOpen }) => {
   // const weightRef = useRef<HTMLInputElement>(null);
   // const vaccinationRef = useRef<HTMLInputElement>(null);
   const significantRef = useRef<HTMLInputElement>(null);
-  const { handlerPostMyPet } = usePostMyPets();
+  const { handlerPostMyPet } = usePostMyPets(userId);
   const submitHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const { value: name } = nameRef.current!;
@@ -42,9 +45,28 @@ const AddPet: React.FC<Props> = ({ open, setOpen }) => {
       gender,
       age,
       significant,
-      petUmgUrl: img,
+      petImgUrl: img,
     });
     setOpen(false);
+    nameRef.current!.value = '';
+    speciesRef.current!.value = '';
+    genderRef.current!.value = '';
+    ageRef.current!.value = '';
+    significantRef.current!.value = '';
+    setImg(
+      'https://s3.ap-northeast-2.amazonaws.com/petching.image/dog-5960092_1920.jpg',
+    );
+  };
+  const cancelHandler = () => {
+    setOpen(false);
+    nameRef.current!.value = '';
+    speciesRef.current!.value = '';
+    genderRef.current!.value = '';
+    ageRef.current!.value = '';
+    significantRef.current!.value = '';
+    setImg(
+      'https://s3.ap-northeast-2.amazonaws.com/petching.image/dog-5960092_1920.jpg',
+    );
   };
   return (
     <form
@@ -97,7 +119,7 @@ const AddPet: React.FC<Props> = ({ open, setOpen }) => {
         </label>
       </div>
       <div>
-        <button className="mr-5" onClick={() => setOpen(false)} type="button">
+        <button className="mr-5" onClick={cancelHandler} type="button">
           취소
         </button>
         <button type="submit" onClick={submitHandler}>
