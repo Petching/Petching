@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '../Components/Care/Card';
 import ReactCalendar from '../Components/Care/ReactCalendar';
 import Postcode from '../Components/Care/Postcode';
@@ -64,6 +64,22 @@ const CareList = () => {
   const toCareListDetail = () => {
     navigate('/carelistpost', { state: { startDate, endDate, locationTag } });
   };
+
+  const fetchAllPosts = async () => {
+    try {
+      const response = await axios.get(
+        'https://server.petching.net/careposts?page=0&size=10',
+      );
+      setCardData(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAllPosts();
+  }, []);
+
   return (
     <div className="text-[1.2rem]">
       <div className="flex flex-col w-full items-center bg-gray-100 ">
