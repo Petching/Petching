@@ -1,6 +1,5 @@
 import React from 'react';
 import Carousel from './Carousel';
-import maltese1 from '../../Style/maltese1.jpg';
 
 interface CardProps {
   title: string;
@@ -22,7 +21,7 @@ const Card: React.FC<CardProps> = ({
     <div className="m-4">
       <div className=" text-center rounded-md w-[18rem] h-[26rem] pt-6 bg-white shadow-lg shadow-gray-400">
         <div className="mx-auto w-60">
-          <Carousel />
+          <Carousel imgUrls={imgUrls} />
         </div>
         <div>
           <button className="w-[7rem] h-7 bg-white shadow-sm shadow-gray-400 rounded-full mr-1">
