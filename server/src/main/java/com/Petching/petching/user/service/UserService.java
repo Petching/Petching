@@ -65,7 +65,7 @@ public class UserService {
         User user = verifiedUser(userId);
         if (findSecurityContextHolderUserId() != null) {
             User requestUser = verifiedUser(findSecurityContextHolderUserId());
-            if (requestUser == user) {
+            if (requestUser.getEmail().equals(user.getEmail())) {
                 user.setUserDivision(true);
             }
         } else user.setUserDivision(false);

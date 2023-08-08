@@ -18,5 +18,6 @@ public class UserResponseDto {
         private String email;
         private String address;
         private String profileImgUrl;
+        private String SocialType;
     }
 }
