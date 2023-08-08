@@ -635,7 +635,7 @@ Manki Cho &lt;<a href="mailto:dokeycho@gmail.com">dokeycho@gmail.com</a>&gt;</p>
 <h4 id="_request_summary" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /users/sign-up?_csrf=a84887da-0df4-4ec7-bacc-784b41e127d9 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /users/sign-up?_csrf=7b7c0fac-31b3-4493-bebd-edcf5fe47e0e HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Authorization: {AccessToken}
@@ -805,7 +805,7 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="_request_summary_2" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /users/?_csrf=c7b3e5e2-cc26-48a5-9e42-2b5d3f7a6682 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /users/?_csrf=9a25bb27-e665-4ca0-9823-96bf11c278c4 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Authorization: {AccessToken}
@@ -887,7 +887,8 @@ Content-Length: 239
     "nickName" : "exNickName",
     "email" : "email@example.com",
     "address" : "exAddress",
-    "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png"
+    "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png",
+    "socialType" : "KAKAO"
   }
 }</code></pre>
 </div>
@@ -932,12 +933,17 @@ Content-Length: 239
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">프로필 이미지 주소</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.socialType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">소셜 회원의 소셜 종류</p></td>
+</tr>
 </tbody>
 </table>
 <h4 id="_request_summary_3" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /users/1?_csrf=a5ff9a6f-644c-4e3a-b21e-df77f8e32ef3 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /users/1?_csrf=3a30acf2-8fee-4835-a7f1-45c7937d8fb0 HTTP/1.1
 Authorization: {AccessToken}
 Accept: application/json
 Host: server.petching.net</code></pre>
@@ -957,7 +963,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 267
+Content-Length: 296
 
 {
   "data" : {
@@ -965,7 +971,8 @@ Content-Length: 267
     "nickName" : "exNickName",
     "email" : "email@example.com",
     "address" : "exAddress",
-    "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png"
+    "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png",
+    "socialType" : "KAKAO"
   }
 }</code></pre>
 </div>
@@ -1018,7 +1025,7 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="_request_summary_4" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /users/1?_csrf=090b25b7-9467-4fbd-b071-cde537dcd6f5 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /users/1?_csrf=09c7757a-c122-48dc-b2dc-8434c144c11c HTTP/1.1
 Authorization: {AccessToken}
 Host: server.petching.net</code></pre>
 </div>
@@ -1150,7 +1157,7 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="_request_summary_5" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /boards?_csrf=d1610733-8458-4d29-8db9-2a777b2f0e36 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /boards?_csrf=28db078f-b79a-4eb5-9b82-5486b2c1a320 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Authorization: {AccessToken}
@@ -1292,7 +1299,7 @@ X-Frame-Options: DENY</code></pre>
     "likes" : 0,
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png",
     "nickName" : "nickName1",
-    "createdAt" : "2023-08-07T18:26:58.4045481",
+    "createdAt" : "2023-08-08T14:54:28.1491604",
     "checkLike" : false,
     "comments" : [ ],
     "commentCount" : 0,
@@ -1376,7 +1383,7 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="_request_summary_6" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /boards/1?_csrf=56334666-74d2-4a95-98a9-51e43c4ef081 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /boards/1?_csrf=f9991d91-b098-49ba-94e3-e263a6b946a5 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Authorization: {AccessToken}
@@ -1411,7 +1418,7 @@ Content-Length: 519
     "likes" : 0,
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png",
     "nickName" : "nickName1",
-    "createdAt" : "2023-08-07T18:26:58.4045481",
+    "createdAt" : "2023-08-08T14:54:28.1491604",
     "checkLike" : false,
     "comments" : [ ],
     "commentCount" : 0,
@@ -1483,7 +1490,7 @@ Content-Length: 519
     "likes" : 0,
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png",
     "nickName" : "nickName1",
-    "createdAt" : "2023-08-07T18:26:58.8086093",
+    "createdAt" : "2023-08-08T14:54:28.2650601",
     "checkLike" : false,
     "comments" : [ ],
     "commentCount" : 0,
@@ -1567,7 +1574,7 @@ Content-Length: 519
 <h4 id="_request_summary_7" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /boards/1?_csrf=f0289f68-b9b6-411a-9706-eac406e1a4fd HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /boards/1?_csrf=08703842-fe88-423f-8da9-2a7169533a27 HTTP/1.1
 Authorization: {AccessToken}
 Accept: application/json
 Host: server.petching.net</code></pre>
@@ -1594,7 +1601,7 @@ Content-Length: 519
     "likes" : 0,
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png",
     "nickName" : "nickName1",
-    "createdAt" : "2023-08-07T18:26:58.8086093",
+    "createdAt" : "2023-08-08T14:54:28.2650601",
     "checkLike" : false,
     "comments" : [ ],
     "commentCount" : 0,
@@ -1678,7 +1685,7 @@ Content-Length: 519
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png",
     "nickName" : "nickName1",
     "likes" : 0,
-    "createdAt" : "2023-08-07T18:26:58.9421972",
+    "createdAt" : "2023-08-08T14:54:28.4329759",
     "commentCount" : 0,
     "checkLike" : false,
     "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png" ]
@@ -1688,7 +1695,7 @@ Content-Length: 519
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_02.png",
     "nickName" : "nickName2",
     "likes" : 0,
-    "createdAt" : "2023-08-07T18:26:58.9421972",
+    "createdAt" : "2023-08-08T14:54:28.4329759",
     "commentCount" : 0,
     "checkLike" : false,
     "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_02.png" ]
@@ -1698,7 +1705,7 @@ Content-Length: 519
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_03.png",
     "nickName" : "nickName3",
     "likes" : 0,
-    "createdAt" : "2023-08-07T18:26:58.9426985",
+    "createdAt" : "2023-08-08T14:54:28.4334395",
     "commentCount" : 0,
     "checkLike" : false,
     "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_03.png" ]
@@ -1802,7 +1809,7 @@ Content-Length: 519
 <h4 id="_request_summary_8" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /boards?page=1&amp;size=10&amp;_csrf=9b037393-21cb-4955-bbfa-a4f1f4073ddc HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /boards?page=1&amp;size=10&amp;_csrf=7c4f8561-135e-4d70-b89e-4fe0f45ff31b HTTP/1.1
 Authorization: {AccessToken}
 Accept: application/json
 Host: server.petching.net</code></pre>
@@ -1828,7 +1835,7 @@ Content-Length: 1458
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png",
     "nickName" : "nickName1",
     "likes" : 0,
-    "createdAt" : "2023-08-07T18:26:58.9421972",
+    "createdAt" : "2023-08-08T14:54:28.4329759",
     "commentCount" : 0,
     "checkLike" : false,
     "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png" ]
@@ -1838,7 +1845,7 @@ Content-Length: 1458
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_02.png",
     "nickName" : "nickName2",
     "likes" : 0,
-    "createdAt" : "2023-08-07T18:26:58.9421972",
+    "createdAt" : "2023-08-08T14:54:28.4329759",
     "commentCount" : 0,
     "checkLike" : false,
     "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_02.png" ]
@@ -1848,7 +1855,7 @@ Content-Length: 1458
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_03.png",
     "nickName" : "nickName3",
     "likes" : 0,
-    "createdAt" : "2023-08-07T18:26:58.9426985",
+    "createdAt" : "2023-08-08T14:54:28.4334395",
     "commentCount" : 0,
     "checkLike" : false,
     "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_03.png" ]
@@ -1929,7 +1936,7 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="_request_summary_9" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /boards/1?_csrf=368dff16-aab4-4254-93e3-0a9966437c24 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /boards/1?_csrf=c6810219-9fa1-40ee-8918-d902a9046f6b HTTP/1.1
 Authorization: {AccessToken}
 Host: server.petching.net</code></pre>
 </div>
@@ -2018,7 +2025,7 @@ Content-Type: application/json;charset=UTF-8
 Authorization: {AccessToken}
 Host: server.petching.net
 
-_csrf=80afcaf5-a319-4c5a-b23e-4f511df60d55</code></pre>
+_csrf=bcef630b-2d32-45ad-b8c6-4a469ebb033b</code></pre>
 </div>
 </div>
 <h4 id="_response_summary_10" class="discrete"><code>Response Summary</code></h4>
@@ -2220,7 +2227,7 @@ Content-Length: 419
 <h4 id="_request_summary_12" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /boards/1?_csrf=8be7baf6-803a-4ae4-8731-abb45226dd25 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /boards/1?_csrf=8aee4eff-6a52-41a8-90d6-dc0db39d425e HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Authorization: {AccessToken}
@@ -2345,7 +2352,7 @@ X-Frame-Options: DENY</code></pre>
     "commentId" : 1,
     "content" : "this is content1",
     "boardId" : 1,
-    "createdAt" : "2023-08-07T18:27:02.9757305",
+    "createdAt" : "2023-08-08T14:54:32.3325453",
     "nickName" : "nickName1",
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png"
   }
@@ -2402,7 +2409,7 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="_request_summary_13" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /boards/1/1?_csrf=5c9c27e6-bdea-4eb9-b4fa-56a231a000d4 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /boards/1/1?_csrf=c031428a-1876-4ff6-a4bc-ca505747e3bd HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Authorization: {AccessToken}
@@ -2432,7 +2439,7 @@ Content-Length: 301
     "commentId" : 1,
     "content" : "this is content1",
     "boardId" : 1,
-    "createdAt" : "2023-08-07T18:27:02.9757305",
+    "createdAt" : "2023-08-08T14:54:32.3325453",
     "nickName" : "nickName1",
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png"
   }
@@ -2481,7 +2488,7 @@ Content-Length: 301
     "commentId" : 1,
     "content" : "this is content1",
     "boardId" : 1,
-    "createdAt" : "2023-08-07T18:27:03.0349191",
+    "createdAt" : "2023-08-08T14:54:32.3766603",
     "nickName" : "nickName1",
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png"
   }
@@ -2538,7 +2545,7 @@ Content-Length: 301
 <h4 id="_request_summary_14" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /boards/1/1?_csrf=514e7280-e435-40ae-a3fa-3014af1b08ab HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /boards/1/1?_csrf=4c953431-4247-4057-997d-1d5c32b256cb HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Host: server.petching.net</code></pre>
@@ -2562,7 +2569,7 @@ Content-Length: 301
     "commentId" : 1,
     "content" : "this is content1",
     "boardId" : 1,
-    "createdAt" : "2023-08-07T18:27:03.0349191",
+    "createdAt" : "2023-08-08T14:54:32.3766603",
     "nickName" : "nickName1",
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png"
   }
@@ -2639,21 +2646,21 @@ Content-Length: 301
     "commentId" : 1,
     "content" : "this is content1",
     "boardId" : 1,
-    "createdAt" : "2023-08-07T18:27:02.8487685",
+    "createdAt" : "2023-08-08T14:54:32.2424067",
     "nickName" : "nickName1",
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png"
   }, {
     "commentId" : 2,
     "content" : "this is content2",
     "boardId" : 1,
-    "createdAt" : "2023-08-07T18:27:02.8487685",
+    "createdAt" : "2023-08-08T14:54:32.2424067",
     "nickName" : "nickName2",
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_02.png"
   }, {
     "commentId" : 3,
     "content" : "this is content3",
     "boardId" : 1,
-    "createdAt" : "2023-08-07T18:27:02.8487685",
+    "createdAt" : "2023-08-08T14:54:32.2424067",
     "nickName" : "nickName3",
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_03.jpg"
   } ],
@@ -2741,7 +2748,7 @@ Content-Length: 301
 <h4 id="_request_summary_15" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /boards/1/comments?page=1&amp;size=10&amp;_csrf=dc881f02-c1af-45a0-99c6-1293472fc954 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /boards/1/comments?page=1&amp;size=10&amp;_csrf=352539f7-801e-4acf-803f-e22024455e5c HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Host: server.petching.net</code></pre>
@@ -2765,21 +2772,21 @@ Content-Length: 984
     "commentId" : 1,
     "content" : "this is content1",
     "boardId" : 1,
-    "createdAt" : "2023-08-07T18:27:02.8487685",
+    "createdAt" : "2023-08-08T14:54:32.2424067",
     "nickName" : "nickName1",
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png"
   }, {
     "commentId" : 2,
     "content" : "this is content2",
     "boardId" : 1,
-    "createdAt" : "2023-08-07T18:27:02.8487685",
+    "createdAt" : "2023-08-08T14:54:32.2424067",
     "nickName" : "nickName2",
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_02.png"
   }, {
     "commentId" : 3,
     "content" : "this is content3",
     "boardId" : 1,
-    "createdAt" : "2023-08-07T18:27:02.8487685",
+    "createdAt" : "2023-08-08T14:54:32.2424067",
     "nickName" : "nickName3",
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_03.jpg"
   } ],
@@ -2863,7 +2870,7 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="_request_summary_16" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /boards/1/1?_csrf=1025d97b-68bd-4545-9011-a9e080f1aa9a HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /boards/1/1?_csrf=51155a95-0bb7-44b6-b4ea-f979129d29b5 HTTP/1.1
 Authorization: {AccessToken}
 Host: server.petching.net</code></pre>
 </div>
@@ -3091,7 +3098,7 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="_request_summary_17" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /careposts?_csrf=b4715aab-323c-4c1a-86cc-a93cd9b13cc8 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /careposts?_csrf=4053dac7-61c6-4dc5-a469-2e1df4427559 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Authorization: {AccessToken}
@@ -3470,7 +3477,7 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="_request_summary_18" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /careposts/1?_csrf=3c56f838-322c-4457-bd0f-39228a291d82 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /careposts/1?_csrf=0a4c0908-4c16-4407-9d37-a8d27a21bae8 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Authorization: {AccessToken}
@@ -3702,7 +3709,7 @@ Content-Length: 700
 <h4 id="_request_summary_19" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /careposts/1?_csrf=3c7ed2d8-4522-48ec-aa45-349e0a1268c7 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /careposts/1?_csrf=47a433e3-1236-48f4-bdac-0c3a26bbbf5f HTTP/1.1
 Authorization: {AccessToken}
 Accept: application/json
 Host: server.petching.net</code></pre>
@@ -3976,7 +3983,7 @@ Content-Length: 700
 <h4 id="_request_summary_20" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /careposts?page=1&amp;size=10&amp;_csrf=f55cbeed-5e70-4032-9202-6a823993bd04 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /careposts?page=1&amp;size=10&amp;_csrf=3a86061b-e1b8-450e-845e-2fa30b06a4aa HTTP/1.1
 Authorization: {AccessToken}
 Accept: application/json
 Host: server.petching.net</code></pre>
@@ -4286,7 +4293,7 @@ Content-Length: 1496
 <h4 id="_request_summary_21" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /careposts/search?locationTag=%EC%A0%84%EB%82%A8+%EA%B4%91%EC%96%91%EC%8B%9C&amp;startDate.day=13&amp;startDate.month=7&amp;startDate.year=2023&amp;endDate.day=20&amp;endDate.month=7&amp;endDate.year=2023&amp;_csrf=03159880-eed1-4151-9cbe-7448701fee4a HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /careposts/search?locationTag=%EC%A0%84%EB%82%A8+%EA%B4%91%EC%96%91%EC%8B%9C&amp;startDate.day=13&amp;startDate.month=7&amp;startDate.year=2023&amp;endDate.day=20&amp;endDate.month=7&amp;endDate.year=2023&amp;_csrf=de67f7e6-baa5-4242-97ec-c270ba1c7011 HTTP/1.1
 Authorization: {AccessToken}
 Accept: application/json
 Host: server.petching.net</code></pre>
@@ -4431,11 +4438,6 @@ Content-Length: 2069
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">올릴 경로. e.g: boards</p></td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_csrf</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">csrf</p></td>
-</tr>
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
@@ -4532,7 +4534,7 @@ boards
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Content-Disposition: form-data; name=_csrf
 
-3d5d0820-3f10-4fe7-8ace-5ce097287fea
+c5f926eb-1d96-41cf-8889-4e2425f14b45
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Content-Disposition: form-data; name=files; filename=1.png
 Content-Type: multipart/form-data
@@ -4642,7 +4644,7 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="_request_summary_23" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /api/s3/delete?from=boards&amp;url=https%3A%2F%2Fs3.%7Bregion-name%7D.amazonaws.com%2F%7Bbucket-name%7D%2Fboards%2F%7Byyyy-mm-dd%7D-randomUUID_01.png&amp;_csrf=7593d9f5-ea7c-4d44-a126-fac0afb31e13 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /api/s3/delete?from=boards&amp;url=https%3A%2F%2Fs3.%7Bregion-name%7D.amazonaws.com%2F%7Bbucket-name%7D%2Fboards%2F%7Byyyy-mm-dd%7D-randomUUID_01.png&amp;_csrf=b794a951-fc07-41b7-bd2f-7b95f225c2ab HTTP/1.1
 Authorization: {AccessToken}
 Host: server.petching.net</code></pre>
 </div>
@@ -4713,7 +4715,7 @@ Accept: application/json
 Refresh: {RefreshToken}
 Host: server.petching.net
 
-_csrf=3f484ecd-383c-4b98-acf5-e35a519c0d3e</code></pre>
+_csrf=231813bd-8385-4fdc-a110-bf7e07421fa1</code></pre>
 </div>
 </div>
 <h4 id="_response_summary_24" class="discrete"><code>Response Summary</code></h4>
