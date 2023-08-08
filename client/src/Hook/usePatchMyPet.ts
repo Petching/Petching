@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-export const usePatchMyPet = () => {
+export const usePatchMyPet = (userId: string) => {
   const queryClient = useQueryClient();
   const { mutate: patchMyPetMutation } = useMutation(
     async ({
@@ -13,20 +13,20 @@ export const usePatchMyPet = () => {
       gender,
       age,
       significant,
-      petUmgUrl,
+      petImgUrl,
+      myPetId,
     }: MyPetsType) => {
-      // ! : 마이펫 아이디 요청하기
-      // ! : 이미지 안들어오는거 문의하기
       const token = localStorage.getItem('ACCESS_TOKEN');
       await axios.patch(
-        `${BASE_URL}/users/pet`,
+        `${BASE_URL}/users/pets`,
         {
           name,
           species,
           gender,
           age,
           significant,
-          petUmgUrl,
+          petImgUrl,
+          myPetId,
         },
         {
           headers: { Authorization: token },
@@ -39,7 +39,7 @@ export const usePatchMyPet = () => {
       },
       onSuccess: () => {
         // userId 등 id가 필요한지 알아보기
-        queryClient.invalidateQueries(['MyPets']);
+        queryClient.invalidateQueries(['MyPets', userId]);
       },
     },
   );
@@ -49,7 +49,8 @@ export const usePatchMyPet = () => {
     gender,
     age,
     significant,
-    petUmgUrl,
+    petImgUrl,
+    myPetId,
   }: MyPetsType) => {
     patchMyPetMutation({
       name,
@@ -57,7 +58,8 @@ export const usePatchMyPet = () => {
       gender,
       age,
       significant,
-      petUmgUrl,
+      petImgUrl,
+      myPetId,
     });
   };
   return { patchMyPetMutation, handlerPatchMyPet };
