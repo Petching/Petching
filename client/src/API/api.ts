@@ -62,6 +62,8 @@ Axios.interceptors.response.use(
   function (error) {
     if (error.response.status === 401) {
       window.location.href = `${BASE_URL}/signin`;
+    } else {
+      console.log('에러가 아닌 무언가');
     }
     return Promise.reject(error);
   },
