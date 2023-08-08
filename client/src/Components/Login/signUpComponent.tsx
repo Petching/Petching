@@ -55,7 +55,7 @@ const SignComponent: React.FC = () => {
   };
 
   const handleEmaileCheck = async () => {
-    if (email.length > 16 || !validator.isEmail(email)) {
+    if (email.length > 31 || !validator.isEmail(email)) {
       //위 조건이 참일시 아래 메세지를 내보냄
       //16자리 이상이거나, 이메일 형식이 유효하지 않으면
       setEmailMessage('유효한 이메일 형식을 입력해야합니다');
