@@ -112,6 +112,20 @@ public class CarePostController {
         return new ResponseEntity(new SingleResponse<>(mapper.carePostToCarePostResponseDto(find)),HttpStatus.OK);
     }
 
+    @GetMapping("/my-page/{user-id}")
+    public ResponseEntity getMyPageCarePost (@RequestParam(defaultValue = "0") int page,
+                                             @RequestParam(defaultValue = "10") int size,
+                                             @PathVariable("user-id") @Positive long userId) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<CarePost> pageCare = service.findAllPost(pageable);
+        List<CarePostDto.Response> find = mapper.carePostsToCarePostResponseDtos(
+                service.findUserCarePost(userId
+                ));
+
+        return new ResponseEntity<>(new MultiResponse<>(find, pageCare),HttpStatus.OK);
+    }
+
     @GetMapping("/search")
     public ResponseEntity searchCarePost(
             @RequestParam("locationTag") String locationTag,
