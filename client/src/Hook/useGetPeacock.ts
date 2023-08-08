@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-
+import { Axios } from '../API/api';
 interface PeacockData {
   boardId: number;
   title: string;
@@ -21,9 +21,7 @@ export const useGetPeacock = () => {
   } = useQuery<PeacockData[], Error>({
     queryKey: ['GetPeacock'],
     queryFn: async () => {
-      const response = await axios.get(
-        'https://server.petching.net/boards?page=1&size=10',
-      );
+      const response = await Axios.get('/boards?page=1&size=10');
       return response.data.data;
     },
     onError: () => {
