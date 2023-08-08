@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -187,6 +188,16 @@ public class CarePostService {
         return repository.findAll(pageable);
 //        return repository.findAll();
 
+    }
+
+    public List<CarePost> findUserCarePost(long userId) {
+        User finduser = userService.verifiedUser(userId);
+
+        List<CarePost> optional = repository.findAll()
+                .stream().filter(carePost -> carePost.getUser() == finduser)
+                .collect(Collectors.toList());
+
+        return optional;
     }
 
     public void deletePost (long postId,long userId) {

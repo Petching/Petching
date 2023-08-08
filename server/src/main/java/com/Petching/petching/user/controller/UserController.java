@@ -51,6 +51,10 @@ public class UserController {
         User update = service.updatedUser(patchDto);
         return new ResponseEntity(new SingleResponse<>(mapper.EntityToResponseDto(update)), HttpStatus.OK);
     }
+    @PostMapping("check-pw")
+    public boolean doubleCheckPassword (@RequestBody CheckDto dto) {
+        return service.checkPassword(dto);
+    }
 
     @GetMapping("{users-id}")
     public ResponseEntity getUser (@PathVariable("users-id") @Positive long usersId) {

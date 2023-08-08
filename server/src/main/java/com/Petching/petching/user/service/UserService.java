@@ -65,7 +65,7 @@ public class UserService {
         User user = verifiedUser(userId);
         if (findSecurityContextHolderUserId() != null) {
             User requestUser = verifiedUser(findSecurityContextHolderUserId());
-            if (requestUser == user) {
+            if (requestUser.getEmail().equals(user.getEmail())) {
                 user.setUserDivision(true);
             }
         } else user.setUserDivision(false);
@@ -85,6 +85,11 @@ public class UserService {
             return true;
         }
         return false;
+    }
+
+    public boolean checkPassword (CheckDto dto) {
+        User user = verifiedUser(findSecurityContextHolderUserId());
+        return passwordEncoder.matches(dto.getPassword(),user.getPassword());
     }
 
     public void deletedUser (long userId) {
