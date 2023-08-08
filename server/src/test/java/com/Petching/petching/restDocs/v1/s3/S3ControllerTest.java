@@ -98,7 +98,7 @@ public class S3ControllerTest implements S3ControllerTestHelper {
                         ),
                         requestParameters(
                                 parameterWithName("uploadTo").description("올릴 경로. e.g: boards"),
-                                parameterWithName("_csrf").description("csrf")
+                                parameterWithName("_csrf").description("csrf").ignored()
                         ),
                         requestParts(
                                 partWithName("files").description("올릴 파일(배열)")
