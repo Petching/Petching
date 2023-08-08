@@ -15,6 +15,7 @@ const CareList = () => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [locationTag, setLocationTag] = useState('');
+  const [cardData, setCardData] = useState<any[]>([]);
   const navigate = useNavigate();
 
   const onDateSelected = (value: any) => {
@@ -53,6 +54,7 @@ const CareList = () => {
           },
         );
         console.log(response.data);
+        setCardData(response.data.data);
       } catch (error) {
         console.error(error);
       }
@@ -86,20 +88,6 @@ const CareList = () => {
           </div>
         </div>
         <div className="w-[15rem]">
-          {/* <div className="text-center leading-10">
-            원하시는 조건을 선택하세요
-          </div>
-          <div className="flex justify-center mb-7">
-            <button className="w-[10rem] h-7 bg-white shadow-sm shadow-gray-400 rounded-full mr-1">
-              서울시
-            </button>
-            <button className="w-[10rem] h-7 bg-white shadow-sm shadow-gray-400 rounded-full mr-1">
-              대형견
-            </button>
-            <button className="w-[10rem] h-7 bg-white shadow-sm shadow-gray-400 rounded-full mr-1">
-              픽업 가능
-            </button>
-          </div> */}
           <div className="flex justify-end m-7">
             <button
               className="w-[7rem] h-7 bg-customGreen shadow-sm shadow-gray-400 rounded-full mr-1"
@@ -117,8 +105,17 @@ const CareList = () => {
         </div>
       </div>
       <div className="flex flex-wrap justify-center">
-        <Card />
-        <Card />
+        {cardData.map((cardData, index) => (
+          <Card
+            key={index}
+            title={cardData.title}
+            locationTag={cardData.locationTag}
+            petSize={cardData.petSize}
+            nickName={cardData.nickName}
+            profileImgUrl={cardData.profileImgUrl}
+            imgUrls={cardData.imgUrls}
+          />
+        ))}
       </div>
     </div>
   );
