@@ -11,9 +11,10 @@ import { postImgHandler } from '../../Util/postImg';
 const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
   const navigate = useNavigate();
   const { UserProfile } = useGetUserProfile(userId);
+
   const [onEdit, setOnEdit] = useState(false);
   const [changeImg, setChangeImg] = useState<string>(
-    UserProfile!.profileImgUrl ||
+    UserProfile?.profileImgUrl ||
       'https://s3.ap-northeast-2.amazonaws.com/petching.image/dog-5960092_1920.jpg',
   );
   const [isDuplication, setIsDuplication] = useState<boolean>(false);
@@ -21,11 +22,11 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
   const { handlerPatchProfile } = usePatchUserProfile(userId);
   const { handlerDeleteUserProfile } = useDeleteUserProfile(userId);
   const [changeNickName, setChangeNickName] = useState<string>(
-    UserProfile!.nickName || '',
+    UserProfile?.nickName || '',
   );
 
   const [changeAddress, setChangeAddress] = useState<string>(
-    UserProfile!.address || '',
+    UserProfile?.address || '',
   );
 
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
