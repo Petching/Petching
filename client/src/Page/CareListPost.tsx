@@ -15,13 +15,18 @@ const CareListPost = () => {
   const [content, setContent] = useState('');
   const [petSize, setPetSize] = useState('');
   const [memo, setMemo] = useState('');
+  const [imgUrls, setImgUrls] = useState<string[]>([]);
+
+  const handleImageUploaded = (uploadedUrls: string[]) => {
+    setImgUrls([...imgUrls, ...uploadedUrls]);
+  };
 
   const handlePost = async () => {
     try {
       const requestBody = {
         title,
         content,
-        imgUrls: [''],
+        imgUrls,
         startDate,
         endDate,
         conditionTag: isPetsitter ? '펫시터예요' : '집사예요',
@@ -74,7 +79,7 @@ const CareListPost = () => {
             펫시터에요
           </button>
           <button
-            className="bg-customGreen rounded-full"
+            className="bg-customGreen rounded-full mx-4"
             onClick={() => setIsPetsitter(false)}
           >
             집사에요
@@ -99,26 +104,26 @@ const CareListPost = () => {
         <div>펫의 크기를 지정해주세요</div>
         <div>
           <button
-            className="bg-customGreen rounded-full"
+            className="bg-customGreen rounded-full mx-4"
             onClick={() => setPetSize('소형')}
           >
             소형
           </button>
           <button
-            className="bg-customGreen rounded-full"
+            className="bg-customGreen rounded-full mx-4"
             onClick={() => setPetSize('중형')}
           >
             중형
           </button>
           <button
-            className="bg-customGreen rounded-full"
+            className="bg-customGreen rounded-full mx-4"
             onClick={() => setPetSize('대형')}
           >
             대형
           </button>
         </div>
         <div>
-          <ImageUploader />
+          <ImageUploader onUploadComplete={handleImageUploaded} />
         </div>
         <div>추가사항을 적어주세요</div>
         <input
@@ -129,7 +134,7 @@ const CareListPost = () => {
       </div>
       <div className="bg-white mt-10 text-center">
         <button
-          className="bg-customGreen w-10 rounded-full"
+          className="bg-customPink w-10 rounded-full"
           onClick={handlePost}
         >
           게시
