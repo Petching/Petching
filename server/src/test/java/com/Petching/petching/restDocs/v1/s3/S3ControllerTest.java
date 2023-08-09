@@ -98,7 +98,7 @@ public class S3ControllerTest implements S3ControllerTestHelper {
                         ),
                         requestParameters(
                                 parameterWithName("uploadTo").description("올릴 경로. e.g: boards"),
-                                parameterWithName("_csrf").description("csrf").ignored()
+                                parameterWithName("_csrf").description("csrf").ignored().optional()
                         ),
                         requestParts(
                                 partWithName("files").description("올릴 파일(배열)")
@@ -145,7 +145,7 @@ public class S3ControllerTest implements S3ControllerTestHelper {
                         getResponsePreProcessor(),
                         requestParameters(
                                 List.of(parameterWithName("url").description("삭제할 파일 객체의 URL"),parameterWithName("from").description("삭제할 파일의 공간. e.g. boards"),
-                                parameterWithName("_csrf").description("csrf"))
+                                parameterWithName("_csrf").ignored().optional())
                         )
                 ));
 
