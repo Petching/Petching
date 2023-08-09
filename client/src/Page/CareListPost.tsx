@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// import { Axios } from '../../src/API/api';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import ImageUploader from '../Components/Care/ImageUploader';
@@ -22,6 +23,7 @@ const CareListPost = () => {
   };
 
   const handlePost = async () => {
+    const token = localStorage.getItem('ACCESS_TOKEN');
     try {
       const requestBody = {
         title,
@@ -37,6 +39,9 @@ const CareListPost = () => {
       const response = await axios.post(
         'https://server.petching.net/careposts',
         requestBody,
+        {
+          headers: { Authorization: token },
+        },
       );
       console.log(response);
     } catch (error) {
