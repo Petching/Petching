@@ -1,15 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
+import { Axios } from '../API/api';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const useDeleteMyPet = (myPetId: number, userId: string) => {
   const queryClient = useQueryClient();
   const { mutate: deleteMyPetMutation } = useMutation(
     async (myPetId: number) => {
-      const token = localStorage.getItem('ACCESS_TOKEN');
-      await axios.delete(`${BASE_URL}/users/pets/${myPetId}`, {
-        headers: { Authorization: token },
-      });
+      await Axios.delete(`${BASE_URL}/users/pets/${myPetId}`);
     },
     {
       onError: error => {

@@ -1,11 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
+import { Axios } from '../API/api';
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const useDeleteUserProfile = (userId: string) => {
   const queryClient = useQueryClient();
   const { mutate: deleteUserProfileMutation } = useMutation(
     async (userId: string) => {
-      await axios.delete(`https://server.petching.net/users/${userId}`);
+      await Axios.delete(`${BASE_URL}/users/${userId}`);
     },
     {
       onError: error => {
@@ -13,6 +15,7 @@ export const useDeleteUserProfile = (userId: string) => {
       },
       onSuccess: () => {
         queryClient.invalidateQueries(['userProfile', userId]);
+        localStorage.removeItem('ACCESS_TOKEN');
       },
     },
   );

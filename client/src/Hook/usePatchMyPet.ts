@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { MyPetsType } from '../Components/User/MyPets';
-import axios from 'axios';
+import { Axios } from '../API/api';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -16,22 +16,15 @@ export const usePatchMyPet = (userId: string) => {
       petImgUrl,
       myPetId,
     }: MyPetsType) => {
-      const token = localStorage.getItem('ACCESS_TOKEN');
-      await axios.patch(
-        `${BASE_URL}/users/pets`,
-        {
-          name,
-          species,
-          gender,
-          age,
-          significant,
-          petImgUrl,
-          myPetId,
-        },
-        {
-          headers: { Authorization: token },
-        },
-      );
+      await Axios.patch(`${BASE_URL}/users/pets`, {
+        name,
+        species,
+        gender,
+        age,
+        significant,
+        petImgUrl,
+        myPetId,
+      });
     },
     {
       onError: error => {
