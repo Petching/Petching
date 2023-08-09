@@ -1,6 +1,6 @@
 //package com.Petching.petching.chat.controller;
 //
-//import com.Petching.petching.chat.model.ChatMessage;
+//import com.Petching.petching.chat.entity.ChatMessage;
 //import com.Petching.petching.chat.service.KafkaProducerService;
 //import lombok.RequiredArgsConstructor;
 //import org.springframework.messaging.handler.annotation.MessageMapping;
