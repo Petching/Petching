@@ -63,11 +63,11 @@ public class UserController {
                 (mapper.EntityToGetResponseDto(service.findUser(usersId))), HttpStatus.OK);
     }
 
-    @DeleteMapping("{users-id}")
-    public ResponseEntity deleteUser (@PathVariable("users-id") @Positive long usersId) {
+    @DeleteMapping
+    public ResponseEntity deleteUser () {
 
-        service.deletedUser(usersId);
+        service.deletedUser();
 
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
