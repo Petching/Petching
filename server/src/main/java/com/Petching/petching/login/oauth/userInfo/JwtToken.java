@@ -37,7 +37,7 @@ public class JwtToken {
 
         String accessToken = jwtService.generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
 
-        return accessToken;
+        return "Bearer " + accessToken;
     }
 
     public String delegateRefreshToken(User user) {
@@ -47,7 +47,7 @@ public class JwtToken {
 
         String refreshToken = jwtService.generateRefreshToken(subject, expiration, base64EncodedSecretKey);
 
-        return refreshToken;
+        return "Bearer " + refreshToken;
     }
 
     public Long extractUserIdFromToken(String requestToken){
