@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import { Axios } from '../API/api';
 
 type UserProfile = {
   nickName: string;
@@ -19,10 +19,7 @@ export const useGetUserProfile = (userId: string) => {
   } = useQuery<UserProfile, Error>({
     queryKey: ['UserProfile', userId],
     queryFn: async () => {
-      const token = localStorage.getItem('ACCESS_TOKEN');
-      const data = await axios.get(`${BASE_URL}/users/${userId}`, {
-        headers: { Authorization: token },
-      });
+      const data = await Axios.get(`${BASE_URL}/users/${userId}`);
       return data.data.data;
     },
     onError: () => {
@@ -35,6 +32,3 @@ export const useGetUserProfile = (userId: string) => {
   });
   return { GetUserProfileLoading, GetUserProfileError, UserProfile };
 };
-
-// 유저 프로필 GET 요청 로그인 안해도 괜찮도록
-// UserProfile 이미지 기능(회원가입시 임시이미지파일 등록)

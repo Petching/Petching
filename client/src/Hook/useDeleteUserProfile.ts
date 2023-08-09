@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
+import { Axios } from '../API/api';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -7,10 +7,7 @@ export const useDeleteUserProfile = (userId: string) => {
   const queryClient = useQueryClient();
   const { mutate: deleteUserProfileMutation } = useMutation(
     async (userId: string) => {
-      const token = localStorage.getItem('ACCESS_TOKEN');
-      await axios.delete(`${BASE_URL}/users/${userId}`, {
-        headers: { Authorization: token },
-      });
+      await Axios.delete(`${BASE_URL}/users/${userId}`);
     },
     {
       onError: error => {

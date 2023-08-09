@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
+import { Axios } from '../API/api';
 
 type PatchUserProfile = {
   userId: string;
@@ -21,20 +21,13 @@ export const usePatchUserProfile = (userId: string) => {
       password,
       profileImgUrl,
     }: PatchUserProfile) => {
-      const token = localStorage.getItem('ACCESS_TOKEN');
-      await axios.patch(
-        `${BASE_URL}/users/`,
-        {
-          userId,
-          nickname,
-          address,
-          password,
-          profileImgUrl,
-        },
-        {
-          headers: { Authorization: token },
-        },
-      );
+      await Axios.patch(`${BASE_URL}/users/`, {
+        userId,
+        nickname,
+        address,
+        password,
+        profileImgUrl,
+      });
     },
     {
       onError: error => {
