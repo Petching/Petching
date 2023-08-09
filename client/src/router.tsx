@@ -14,7 +14,7 @@ import Peacock from './Page/Peacock';
 import PeacockWrite from './Page/peacockWrite';
 import GoogleLogin from './Components/Login/GoogleLogin';
 import CareList from './Page/CareList';
-import CareListDetail from './Page/CareListDetail';
+import CareListPost from './Page/CareListPost';
 import CareListAsk from './Page/CareListAsk';
 export const routers: RemixRouter = createBrowserRouter([
   {
@@ -66,8 +66,8 @@ export const routers: RemixRouter = createBrowserRouter([
         element: <CareList />,
       },
       {
-        path: '/carelistdetail',
-        element: <CareListDetail />,
+        path: '/carelistpost',
+        element: <CareListPost />,
       },
       {
         path: '/carelistask',
