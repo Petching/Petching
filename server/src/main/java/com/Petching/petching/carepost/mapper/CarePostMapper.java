@@ -4,6 +4,7 @@ import com.Petching.petching.carepost.dto.CarePostDto;
 import com.Petching.petching.carepost.entity.CarePost;
 import com.Petching.petching.tag.conditionTag.CarePost_ConditionTag;
 import com.Petching.petching.tag.locationTag.CarePost_LocationTag;
+import com.Petching.petching.tag.petSize.CarePost_PetSize;
 import org.mapstruct.Mapper;
 
 import java.util.*;
@@ -31,7 +32,7 @@ public interface CarePostMapper {
         carePost.endDay( requestBody.getEndDate().get("day") );
         carePost.endMonth( requestBody.getEndDate().get("month") );
         carePost.endYear( requestBody.getEndDate().get("year") );
-        carePost.petSize(requestBody.getPetSize());
+//        carePost.petSize(requestBody.getPetSize());
         carePost.memo(requestBody.getMemo());
         carePost.conditionTag(requestBody.getConditionTag());
         carePost.locationTag(requestBody.getLocationTag());
@@ -62,7 +63,6 @@ public interface CarePostMapper {
         carePost.endMonth( requestBody.getEndDate().get("month") );
         carePost.endYear( requestBody.getEndDate().get("year") );
         carePost.memo( requestBody.getMemo() );
-        carePost.petSize( requestBody.getPetSize() );
         carePost.conditionTag( requestBody.getConditionTag() );
         carePost.locationTag( requestBody.getLocationTag() );
 
@@ -76,6 +76,7 @@ public interface CarePostMapper {
 
 //        List<CarePost_ConditionTag> postConditionTags = carePost.getPostConditionTags();
 //        List<CarePost_LocationTag> postLocationTags = carePost.getPostLocationTags();
+        List<CarePost_PetSize> postPetSizes = carePost.getPostPetSizes();
 
         String title = null;
         String content = null;
@@ -86,7 +87,7 @@ public interface CarePostMapper {
         Integer endDay = null;
         Integer endMonth = null;
         Integer endYear = null;
-        String petSize = null;
+//        String petSize = null;
         String memo = null;
         String conditionTag = null;
         String locationTag = null;
@@ -103,7 +104,6 @@ public interface CarePostMapper {
         endDay = carePost.getEndDay();
         endMonth = carePost.getEndMonth();
         endYear = carePost.getEndYear();
-        petSize = carePost.getPetSize();
         memo = carePost.getMemo();
         conditionTag = carePost.getConditionTag();
         locationTag = carePost.getLocationTag();
@@ -114,6 +114,7 @@ public interface CarePostMapper {
 
 //        List<String> conditionTags = postConditionTagDtoResponse(postConditionTags);
 //        List<String> locationTags = postLocationTagDtoResponse(postLocationTags);
+        List<String> petSizes = postPetSizeDtoResponse(postPetSizes);
 
         // enddate 및 startdate 정의 및 초기화
         Map<String,Integer> startDate = new HashMap<>();
@@ -139,10 +140,8 @@ public interface CarePostMapper {
                         .locationTag(locationTag)
                         .nickName(nickName)
                         .profileImgUrl(profileImgUrl)
-//                        .conditionTags(conditionTags)
-//                        .locationTags(locationTags)
-                        .petSize(petSize)
                         .memo(memo)
+                        .petSizes(petSizes)
                         .build();
 
         return response;
@@ -151,14 +150,20 @@ public interface CarePostMapper {
     //Todo : null발생 (수동매핑 필요)
     List<CarePostDto.Response> carePostsToCarePostResponseDtos(List<CarePost> carePosts);
 
-    default List<String> postConditionTagDtoResponse (List<CarePost_ConditionTag> postConditionTags) {
-        List<String> tagName = postConditionTags.stream().map(tag -> tag.getConditionTag().getBody())
-                .collect(Collectors.toList());
-        return tagName;
-    }
+//    default List<String> postConditionTagDtoResponse (List<CarePost_ConditionTag> postConditionTags) {
+//        List<String> tagName = postConditionTags.stream().map(tag -> tag.getConditionTag().getBody())
+//                .collect(Collectors.toList());
+//        return tagName;
+//    }
+//
+//    default List<String> postLocationTagDtoResponse (List<CarePost_LocationTag> postLocationTags) {
+//        List<String> tagName = postLocationTags.stream().map(tag -> tag.getLocationTag().getBody())
+//                .collect(Collectors.toList());
+//        return tagName;
+//    }
 
-    default List<String> postLocationTagDtoResponse (List<CarePost_LocationTag> postLocationTags) {
-        List<String> tagName = postLocationTags.stream().map(tag -> tag.getLocationTag().getBody())
+    default List<String> postPetSizeDtoResponse (List<CarePost_PetSize> postPetSizes) {
+        List<String> tagName = postPetSizes.stream().map(tag -> tag.getPetSize().getBody())
                 .collect(Collectors.toList());
         return tagName;
     }

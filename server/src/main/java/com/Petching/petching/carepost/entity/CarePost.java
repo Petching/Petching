@@ -1,8 +1,7 @@
 package com.Petching.petching.carepost.entity;
 
 import com.Petching.petching.audit.Auditable;
-import com.Petching.petching.tag.conditionTag.CarePost_ConditionTag;
-import com.Petching.petching.tag.locationTag.CarePost_LocationTag;
+import com.Petching.petching.tag.petSize.CarePost_PetSize;
 import com.Petching.petching.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -37,8 +36,6 @@ public class CarePost extends Auditable {
     @Column
     private String memo;
     @Column
-    private String petSize;
-    @Column
     private String conditionTag;
     @Column
     private String locationTag;
@@ -62,24 +59,35 @@ public class CarePost extends Auditable {
     private User user;
 
 //    @JsonIgnore
-    @OneToMany(mappedBy = "carePost", cascade = CascadeType.ALL)
-    private List<CarePost_ConditionTag> postConditionTags = new ArrayList<>();
+//    @OneToMany(mappedBy = "carePost", cascade = CascadeType.ALL)
+//    private List<CarePost_ConditionTag> postConditionTags = new ArrayList<>();
+//
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "carePost", cascade = CascadeType.ALL)
+//    private List<CarePost_LocationTag> postLocationTags = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "carePost", cascade = CascadeType.ALL)
-    private List<CarePost_LocationTag> postLocationTags = new ArrayList<>();
+    private List<CarePost_PetSize> postPetSizes = new ArrayList<>();
 
-    public void setCarePost_ConditionTag(CarePost_ConditionTag postConditionTags) {
-        this.postConditionTags.add(postConditionTags);
-        if (postConditionTags.getCarePost() != this) {
-            postConditionTags.setCarePost(this);
-        }
-    }
+//    public void setCarePost_ConditionTag(CarePost_ConditionTag postConditionTags) {
+//        this.postConditionTags.add(postConditionTags);
+//        if (postConditionTags.getCarePost() != this) {
+//            postConditionTags.setCarePost(this);
+//        }
+//    }
+//
+//    public void setCarePost_LocationTag(CarePost_LocationTag postLocationTags) {
+//        this.postLocationTags.add(postLocationTags);
+//        if (postLocationTags.getCarePost() != this) {
+//            postLocationTags.setCarePost(this);
+//        }
+//    }
 
-    public void setCarePost_LocationTag(CarePost_LocationTag postLocationTags) {
-        this.postLocationTags.add(postLocationTags);
-        if (postLocationTags.getCarePost() != this) {
-            postLocationTags.setCarePost(this);
+    public void setCarePost_PetSize(CarePost_PetSize postPetSizes) {
+        this.postPetSizes.add(postPetSizes);
+        if (postPetSizes.getCarePost() != this) {
+            postPetSizes.setCarePost(this);
         }
     }
 

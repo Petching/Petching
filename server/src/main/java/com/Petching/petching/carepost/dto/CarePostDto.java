@@ -22,21 +22,17 @@ public class CarePostDto {
         @NotBlank(message = "제목은 필수 입력 사항입니다.")
         @Size(max = 250, message = "제목은 250자를 넘을 수 없습니다.")
         private String title;
-
         @NotBlank(message = "내용은 필수 입력 사항입니다.")
         private String content;
-
         private List<String > imgUrls;
-
         private Map<String,Integer> startDate;
         private Map<String,Integer> endDate;
-
-//        private List<String> conditionTags;
-//        private List<String> locationTags;
+        @NotBlank(message = "필수 입력 사항입니다.")
         private String conditionTag;
+        @NotBlank(message = "필수 입력 사항입니다.")
         private String locationTag;
-        private String petSize;
         private String memo;
+        private List<String> petSizes;
         public Post(){
 
         }
@@ -47,24 +43,16 @@ public class CarePostDto {
     @AllArgsConstructor
     public static class Patch {
 
-        @NotBlank(message = "제목은 필수 입력 사항입니다.")
         @Size(max = 250, message = "제목은 250자를 넘을 수 없습니다.")
         private String title;
-
-        @NotBlank(message = "내용은 필수 입력 사항입니다.")
         private String content;
-
         private List<String > imgUrls;
-
         private Map<String,Integer> startDate;
         private Map<String,Integer> endDate;
-
-//        private List<String> conditionTags;
-//        private List<String> locationTags;
         private String conditionTag;
         private String locationTag;
-        private String petSize;
         private String memo;
+        private List<String> petSizes;
 
         public Patch(){
 
@@ -78,22 +66,15 @@ public class CarePostDto {
 
         private String title;
         private String content;
-
         private List<String> imgUrls;
-
         private String nickName;
-
         private String profileImgUrl;
-
         private Map<String,Integer> startDate;
         private Map<String,Integer> endDate;
-
-//        private List<String> conditionTags;
-//        private List<String> locationTags;
         private String conditionTag;
         private String locationTag;
-        private String petSize;
         private String memo;
+        private List<String> petSizes;
 
         public Response() {
         }
@@ -104,23 +85,15 @@ public class CarePostDto {
     public static class Detail {
 
         private String title;
-
         private String content;
-
         private List<String > imgUrls;
-
         private String profileImgUrl;
-
         private String nickName;
-
         private Map<String,Integer> startDate;
         private Map<String,Integer> endDate;
-
-//        private List<String> conditionTags;
-//        private List<String> locationTags;
         private String conditionTag;
         private String locationTag;
-        private String petSize;
+        private List<String> petSizes;
 
         public Detail(){
 
