@@ -25,6 +25,8 @@ public class MyPetDto {
 
         private String significant;
 
+        private String petImgUrl;
+
     }
 
     @Getter
@@ -41,11 +43,12 @@ public class MyPetDto {
 
     @Getter @Setter
     public static class Response {
+        private long myPetId;
         private String name;
         private String species;
         private String gender;
         private int age;
         private String significant;
-        private String petUmgUrl;
+        private String petImgUrl;
     }
 }

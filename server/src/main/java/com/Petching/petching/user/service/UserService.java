@@ -50,7 +50,8 @@ public class UserService {
     }
 
     public User updatedUser (UserPatchDto patchDto) {
-        User findUser = verifiedUser(patchDto.getUserId());
+        Long userId = findSecurityContextHolderUserId();
+        User findUser = verifiedUser(userId);
 
         Optional.ofNullable(patchDto.getNickName()).ifPresent(nickname -> findUser.updateNickName(nickname));
         Optional.ofNullable(patchDto.getAddress()).ifPresent(adr -> findUser.updateAddress(adr));
@@ -65,7 +66,7 @@ public class UserService {
         User user = verifiedUser(userId);
         if (findSecurityContextHolderUserId() != null) {
             User requestUser = verifiedUser(findSecurityContextHolderUserId());
-            if (requestUser == user) {
+            if (requestUser.getEmail().equals(user.getEmail())) {
                 user.setUserDivision(true);
             }
         } else user.setUserDivision(false);
@@ -87,8 +88,14 @@ public class UserService {
         return false;
     }
 
-    public void deletedUser (long userId) {
-        User user = verifiedUser(userId);
+    public boolean checkPassword (CheckDto dto) {
+        User user = verifiedUser(findSecurityContextHolderUserId());
+        return passwordEncoder.matches(dto.getPassword(),user.getPassword());
+    }
+
+    public void deletedUser () {
+        Long userid = findSecurityContextHolderUserId();
+        User user = verifiedUser(userid);
 
         repository.delete(user);
     }

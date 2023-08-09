@@ -150,22 +150,33 @@ public interface CarePostMapper {
     //Todo : null발생 (수동매핑 필요)
     List<CarePostDto.Response> carePostsToCarePostResponseDtos(List<CarePost> carePosts);
 
-//    default List<String> postConditionTagDtoResponse (List<CarePost_ConditionTag> postConditionTags) {
-//        List<String> tagName = postConditionTags.stream().map(tag -> tag.getConditionTag().getBody())
-//                .collect(Collectors.toList());
-//        return tagName;
-//    }
-//
-//    default List<String> postLocationTagDtoResponse (List<CarePost_LocationTag> postLocationTags) {
-//        List<String> tagName = postLocationTags.stream().map(tag -> tag.getLocationTag().getBody())
-//                .collect(Collectors.toList());
-//        return tagName;
-//    }
 
     default List<String> postPetSizeDtoResponse (List<CarePost_PetSize> postPetSizes) {
         List<String> tagName = postPetSizes.stream().map(tag -> tag.getPetSize().getBody())
+          .collect(Collectors.toList());
+        return tagName;
+    }
+
+    default List<CarePostDto.MyPage> carePostsToCarePostMyPageDto (List<CarePost> carePosts) {
+        return carePosts.stream()
+                .map(carePost -> {
+                    CarePostDto.MyPage myPage = new CarePostDto.MyPage(
+                            carePost.getTitle(), carePost.getPetSize(), carePost.getImgUrls(),
+                            carePost.getUser().getProfileImgUrl(), carePost.getUser().getNickName(),
+                            carePost.getLocationTag()
+                    );
+                    return myPage;
+                }).collect(Collectors.toList());
+    }
+
+    default List<String> postConditionTagDtoResponse (List<CarePost_ConditionTag> postConditionTags) {
+        List<String> tagName = postConditionTags.stream().map(tag -> tag.getConditionTag().getBody())
                 .collect(Collectors.toList());
         return tagName;
     }
+
+    default List<String> postLocationTagDtoResponse (List<CarePost_LocationTag> postLocationTags) {
+        List<String> tagName = postLocationTags.stream().map(tag -> tag.getLocationTag().getBody())
+                
 
 }

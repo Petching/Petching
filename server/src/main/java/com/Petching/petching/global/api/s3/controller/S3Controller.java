@@ -26,8 +26,20 @@ public class S3Controller {
 
     @PostMapping("/uploads")
     public ResponseEntity uploadFiles(
+
             @RequestParam(value = "uploadTo") String uploadTo,
             @RequestPart(value = "files") List<MultipartFile> multipartFiles) {
+
+        List<S3FileDto> multipartFileList = s3Service.uploadFiles(uploadTo, multipartFiles);
+
+        return new ResponseEntity(new SingleResponse<>(multipartFileList), HttpStatus.OK);
+    }
+
+    @PostMapping("/upload")
+    public ResponseEntity uploadFilesToBoard(
+
+            @RequestParam(value = "uploadTo") String uploadTo,
+            @RequestPart(value = "upload") List<MultipartFile> multipartFiles) {
 
         List<S3FileDto> multipartFileList = s3Service.uploadFiles(uploadTo, multipartFiles);
 

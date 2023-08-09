@@ -51,6 +51,10 @@ public class UserController {
         User update = service.updatedUser(patchDto);
         return new ResponseEntity(new SingleResponse<>(mapper.EntityToResponseDto(update)), HttpStatus.OK);
     }
+    @PostMapping("check-pw")
+    public boolean doubleCheckPassword (@RequestBody CheckDto dto) {
+        return service.checkPassword(dto);
+    }
 
     @GetMapping("{users-id}")
     public ResponseEntity getUser (@PathVariable("users-id") @Positive long usersId) {
@@ -59,11 +63,11 @@ public class UserController {
                 (mapper.EntityToGetResponseDto(service.findUser(usersId))), HttpStatus.OK);
     }
 
-    @DeleteMapping("{users-id}")
-    public ResponseEntity deleteUser (@PathVariable("users-id") @Positive long usersId) {
+    @DeleteMapping
+    public ResponseEntity deleteUser () {
 
-        service.deletedUser(usersId);
+        service.deletedUser();
 
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

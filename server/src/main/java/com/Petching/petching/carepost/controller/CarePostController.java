@@ -161,20 +161,38 @@ public class CarePostController {
         return new ResponseEntity(new SingleResponse<>(mapper.carePostToCarePostResponseDto(find)),HttpStatus.OK);
     }
 
+    @GetMapping("/my-page/{user-id}")
+    public ResponseEntity getMyPageCarePost (@RequestParam(defaultValue = "1") int page,
+                                             @RequestParam(defaultValue = "10") int size,
+                                             @PathVariable("user-id") @Positive long userId) {
+
+        Pageable pageable = PageRequest.of(page-1, size);
+        Page<CarePost> pageCare = service.findAllPost(pageable);
+        List<CarePostDto.MyPage> find = mapper.carePostsToCarePostMyPageDto(
+                service.findUserCarePost(userId
+                ));
+
+        return new ResponseEntity<>(new MultiResponse<>(find, pageCare),HttpStatus.OK);
+    }
+
     @GetMapping("/search")
-    public ResponseEntity searchCarePost(@RequestParam("locationTag") String locationTag,
-                                         @RequestParam("startDate.day") int startDay,
-                                         @RequestParam("startDate.month") int startMonth,
-                                         @RequestParam("startDate.year") int startYear,
-                                         @RequestParam("endDate.day") int endDay,
-                                         @RequestParam("endDate.month") int endMonth,
-                                         @RequestParam("endDate.year") int endYear) {
+    public ResponseEntity searchCarePost(
+            @RequestParam("locationTag") String locationTag,
+            @RequestParam("startDate.day") int startDay,
+            @RequestParam("startDate.month") int startMonth,
+            @RequestParam("startDate.year") int startYear,
+            @RequestParam("endDate.day") int endDay,
+            @RequestParam("endDate.month") int endMonth,
+            @RequestParam("endDate.year") int endYear) {
+
         List<CarePost> searchPost = service.searchPost(
                 locationTag, startDay, startMonth, startYear,
                 endDay, endMonth, endYear
                 );
 
-        return new ResponseEntity(mapper.carePostsToCarePostResponseDtos(searchPost),HttpStatus.OK);
+        List<CarePostDto.Response> responseList = mapper.carePostsToCarePostResponseDtos(searchPost);
+
+        return new ResponseEntity(new SingleResponse<>(responseList),HttpStatus.OK);
     }
 
     @DeleteMapping("/{post-id}")
