@@ -1,13 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { Axios } from '../API/api';
-
-type UserProfile = {
-  nickName: string;
-  email: string;
-  profileImgUrl: string;
-  userDivision: boolean;
-  address?: string;
-};
+import { UserProfile } from '../Util/types';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
