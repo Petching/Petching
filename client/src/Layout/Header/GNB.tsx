@@ -76,19 +76,15 @@ const GNB = () => {
         {isLogin ? (
           <>
             <button className="mx-3" onClick={userOpen}>
-              {UserProfile ? (
-                <img
-                  src={UserProfile?.profileImgUrl}
-                  alt="유저 메뉴 버튼"
-                  className="w-10 h-10 rounded-full"
-                />
-              ) : (
-                <img
-                  src="https://s3.ap-northeast-2.amazonaws.com/petching.image/dog-5960092_1920.jpg"
-                  alt="유저 메뉴 버튼"
-                  className="w-10 h-10 rounded-full"
-                />
-              )}
+              <img
+                src={
+                  UserProfile
+                    ? UserProfile!.profileImgUrl
+                    : 'https://s3.ap-northeast-2.amazonaws.com/petching.image/dog-5960092_1920.jpg'
+                }
+                alt="유저 메뉴 버튼"
+                className="w-10 h-10 rounded-full"
+              />
             </button>
           </>
         ) : (

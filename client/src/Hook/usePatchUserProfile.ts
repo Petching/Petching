@@ -1,13 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Axios } from '../API/api';
-
-type PatchUserProfile = {
-  userId: string;
-  nickname: string;
-  password: string;
-  address?: string;
-  profileImgUrl?: string;
-};
+import { PatchUserProfile } from '../Util/types';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -16,14 +9,14 @@ export const usePatchUserProfile = (userId: string) => {
   const { mutate: patchUserProfileMutation } = useMutation(
     async ({
       userId,
-      nickname,
+      nickName,
       address,
       password,
       profileImgUrl,
     }: PatchUserProfile) => {
       await Axios.patch(`${BASE_URL}/users/`, {
         userId,
-        nickname,
+        nickName,
         address,
         password,
         profileImgUrl,
@@ -40,14 +33,14 @@ export const usePatchUserProfile = (userId: string) => {
   );
   const handlerPatchProfile = async ({
     userId,
-    nickname,
+    nickName,
     address,
     profileImgUrl,
     password,
   }: PatchUserProfile) => {
     patchUserProfileMutation({
       userId,
-      nickname,
+      nickName,
       address,
       profileImgUrl,
       password,
