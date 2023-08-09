@@ -1,6 +1,7 @@
 package com.Petching.petching.user.entity;
 
 import com.Petching.petching.audit.Auditable;
+import com.Petching.petching.carepost.entity.CarePost;
 import lombok.*;
 
 import javax.persistence.*;
@@ -45,6 +46,9 @@ public class User extends Auditable {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<CarePost> carePosts = new ArrayList<>();
 
 
     public void updateNickName (String nickName) {

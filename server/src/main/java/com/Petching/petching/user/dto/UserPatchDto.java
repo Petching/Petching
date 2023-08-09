@@ -8,8 +8,6 @@ import javax.validation.constraints.Positive;
 @Getter
 @AllArgsConstructor @Setter
 public class UserPatchDto {
-    @Positive
-    private long userId;
 
     @Email
     private String email;

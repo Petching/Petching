@@ -113,13 +113,13 @@ public class CarePostController {
     }
 
     @GetMapping("/my-page/{user-id}")
-    public ResponseEntity getMyPageCarePost (@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity getMyPageCarePost (@RequestParam(defaultValue = "1") int page,
                                              @RequestParam(defaultValue = "10") int size,
                                              @PathVariable("user-id") @Positive long userId) {
 
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page-1, size);
         Page<CarePost> pageCare = service.findAllPost(pageable);
-        List<CarePostDto.Response> find = mapper.carePostsToCarePostResponseDtos(
+        List<CarePostDto.MyPage> find = mapper.carePostsToCarePostMyPageDto(
                 service.findUserCarePost(userId
                 ));
 

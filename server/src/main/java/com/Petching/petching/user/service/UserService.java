@@ -50,7 +50,8 @@ public class UserService {
     }
 
     public User updatedUser (UserPatchDto patchDto) {
-        User findUser = verifiedUser(patchDto.getUserId());
+        Long userId = findSecurityContextHolderUserId();
+        User findUser = verifiedUser(userId);
 
         Optional.ofNullable(patchDto.getNickName()).ifPresent(nickname -> findUser.updateNickName(nickname));
         Optional.ofNullable(patchDto.getAddress()).ifPresent(adr -> findUser.updateAddress(adr));
@@ -92,8 +93,9 @@ public class UserService {
         return passwordEncoder.matches(dto.getPassword(),user.getPassword());
     }
 
-    public void deletedUser (long userId) {
-        User user = verifiedUser(userId);
+    public void deletedUser () {
+        Long userid = findSecurityContextHolderUserId();
+        User user = verifiedUser(userid);
 
         repository.delete(user);
     }
