@@ -22,7 +22,7 @@ const GNB = () => {
     } else {
       setLogout();
     }
-  }, []);
+  }, [isLogin]);
 
   useEffect(() => {
     setMenu(false);
