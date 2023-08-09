@@ -11,7 +11,7 @@ type UserProfile = {
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-export const useGetUserProfile = (userId: string) => {
+export const useGetUserProfile = (userId: string | undefined) => {
   const {
     isLoading: GetUserProfileLoading,
     isError: GetUserProfileError,
@@ -19,8 +19,12 @@ export const useGetUserProfile = (userId: string) => {
   } = useQuery<UserProfile, Error>({
     queryKey: ['UserProfile', userId],
     queryFn: async () => {
-      const data = await Axios.get(`${BASE_URL}/users/${userId}`);
-      return data.data.data;
+      if (userId) {
+        const data = await Axios.get(`${BASE_URL}/users/${userId}`);
+        return data.data.data;
+      } else {
+        return {};
+      }
     },
     onError: () => {
       console.error('데이터를 받아오지 못했습니다.');

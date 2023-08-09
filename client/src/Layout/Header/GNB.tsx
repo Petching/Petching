@@ -13,8 +13,8 @@ const GNB = () => {
   const { isLogin, setLogin, setLogout } = useLoginStore();
   const token = localStorage.getItem('ACCESS_TOKEN');
 
-  const userId = getUserIdFromToken(isLogin, token);
-  const { UserProfile } = useGetUserProfile(`${userId}`);
+  const userId = getUserIdFromToken(isLogin, token)?.toString();
+  const { UserProfile } = useGetUserProfile(userId);
 
   useEffect(() => {
     if (token) {
