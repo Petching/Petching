@@ -70,7 +70,8 @@ public interface UserControllerTestHelper extends ControllerTestHelper {
                 fieldWithPath(parentPath.concat("email")).type(JsonFieldType.STRING).description("이메일"),
                 fieldWithPath(parentPath.concat("nickName")).type(JsonFieldType.STRING).description("닉네임"),
                 fieldWithPath(parentPath.concat("address")).type(JsonFieldType.STRING).description("주소"),
-                fieldWithPath(parentPath.concat("profileImgUrl")).type(JsonFieldType.STRING).description("프로필 이미지 주소")
+                fieldWithPath(parentPath.concat("profileImgUrl")).type(JsonFieldType.STRING).description("프로필 이미지 주소"),
+                fieldWithPath(parentPath.concat("socialType")).type(JsonFieldType.STRING).description("소셜 회원의 소셜 종류").optional()
         );
     }
 }

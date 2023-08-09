@@ -47,7 +47,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         if ("google".equals(type)) {
             email = String.valueOf(oAuth2User.getAttributes().get("email"));
             nickName = String.valueOf(oAuth2User.getAttributes().get("name"));
-            proImg = String.valueOf(oAuth2User.getAttributes().get("image"));
+            proImg = String.valueOf(oAuth2User.getAttributes().get("picture"));
             oauth = SocialType.GOOGLE;
         }
         else {

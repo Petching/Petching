@@ -1,5 +1,6 @@
 package com.Petching.petching.carepost.dto;
 
+import com.Petching.petching.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -99,5 +100,13 @@ public class CarePostDto {
 
         }
     }
-
+    @Getter @AllArgsConstructor @Builder
+    public static class MyPage {
+        private String title;
+        private String petSize;
+        private List<String> imgUrls;
+        private String profileImgUrl;
+        private String nickName;
+        private String locationTag;
+    }
 }

@@ -13,6 +13,22 @@ public interface UserMapper {
 
     User userPatchDtoToUser(UserPatchDto userPatchDto);
 
-    UserResponseDto.UserGetResponseDto EntityToGetResponseDto (User user);
+    default UserResponseDto.UserGetResponseDto EntityToGetResponseDto (User user) {
+        String socialType;
+
+        if (user.getSocialType() == null) {
+            socialType = "null";
+        } else socialType = user.getSocialType().name();
+
+        UserResponseDto.UserGetResponseDto result = new UserResponseDto.UserGetResponseDto(
+                user.isUserDivision(),
+                user.getNickName(),
+                user.getEmail(),
+                user.getAddress(),
+                user.getProfileImgUrl(),
+                socialType
+        );
+        return result;
+    }
 
 }

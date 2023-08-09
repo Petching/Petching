@@ -65,3 +65,5 @@ include::{snippets}/delete-s3-delete/http-request.adoc[]
 [discrete]
 ==== `Response Summary`
 include::{snippets}/delete-s3-delete/http-response.adoc[]
+
+---
