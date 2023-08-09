@@ -197,11 +197,13 @@ class UserControllerTest implements UserControllerTestHelper {
                 .build();
         user.setUserId(1L);
 
-        given(userService.savedUser(Mockito.any(UserPostDto.class))).willReturn(user);
+        given(userService.findSecurityContextHolderUserId()).willReturn(user.getUserId());
+        given(userService.verifiedUser(Mockito.anyLong())).willReturn(user);
+
 
         // when
         ResultActions actions = mockMvc.perform(
-                deleteRequestBuilder(getURI(),user.getUserId())
+                deleteRequestBuilder(getUrl())
         );
 
 
@@ -210,10 +212,7 @@ class UserControllerTest implements UserControllerTestHelper {
                 .andExpect(status().is2xxSuccessful())
                 .andDo(document("delete-user",
                         getRequestPreProcessor(),
-                        getResponsePreProcessor(),
-                        pathParameters(
-                                getMemberRequestPathParameterDescriptor()
-                        )
+                        getResponsePreProcessor()
                 ));
     }
 

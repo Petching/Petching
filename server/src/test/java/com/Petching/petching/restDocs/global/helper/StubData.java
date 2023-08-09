@@ -172,7 +172,7 @@ public class StubData {
                     .endDate(stubEndDate)
                     .conditionTag("펫시터예요")
                     .locationTag("서울시 노원구")
-                    .petSize("중형")
+                    .petSizes(List.of("중형", "소형"))
                     .memo("특이사항 없습니다.")
                     .build();
 
@@ -184,7 +184,7 @@ public class StubData {
                     .endDate(stubEndDate)
                     .conditionTag("펫시터예요")
                     .locationTag("서울시 노원구")
-                    .petSize("중형")
+                    .petSizes(List.of("중형", "소형"))
                     .memo("특이사항 없습니다.")
                     .build();
 
@@ -215,7 +215,7 @@ public class StubData {
                     .endDate(stubEndDate)
                     .conditionTag("펫시터예요")
                     .locationTag("서울시 노원구")
-                    .petSize("중형")
+                    .petSizes(List.of("중형", "소형"))
                     .memo("삶은 소고기를 못 먹어요.")
                     .build();
         }
@@ -232,7 +232,7 @@ public class StubData {
                     .endDate(stubEndDate)
                     .conditionTag("펫시터예요")
                     .locationTag("서울시 성북구")
-                    .petSize("소형")
+                    .petSizes(List.of( "소형"))
                     .memo("특이사항 없습니다.")
                     .build();
         }
@@ -248,7 +248,7 @@ public class StubData {
                     .endDate(stubEndDate)
                     .conditionTag("펫시터예요")
                     .locationTag("서울시 노원구")
-                    .petSize("중형")
+                    .petSizes(List.of("중형", "소형"))
                     .build();
         }
 
@@ -265,7 +265,7 @@ public class StubData {
                             .endDate(stubEndDate)
                             .conditionTag("펫시터예요")
                             .locationTag("서울시 노원구")
-                            .petSize("중형")
+                            .petSizes(List.of("중형", "소형"))
                             .memo("삶은 소고기를 못 먹어요.")
                             .build();
 
@@ -280,7 +280,7 @@ public class StubData {
                             .endDate(stubEndDate)
                             .conditionTag("펫시터예요")
                             .locationTag("서울시 성북구")
-                            .petSize("소형")
+                            .petSizes(List.of("소형"))
                             .memo("특이사항 없습니다.")
                             .build();
 
@@ -295,7 +295,7 @@ public class StubData {
                             .endDate(stubEndDate)
                             .conditionTag("펫시터예요")
                             .locationTag("서울시 노원구")
-                            .petSize("소형")
+                            .petSizes(List.of("중형", "소형"))
                             .memo("모르는 사람 경계가 심해요.")
                             .build();
 
@@ -310,7 +310,6 @@ public class StubData {
                     .content("this is content1")
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_01.png"))
                     .memo("특이사항 없습니다.")
-                    .petSize("소형")
                     .conditionTag("펫시터예요")
                     .locationTag("서울시 노원구")
                     .startDay(stubStartDate.get("day"))
@@ -333,7 +332,6 @@ public class StubData {
                     .content("this is content1")
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_01.png"))
                     .memo("특이사항 없습니다.")
-                    .petSize("소형")
                     .conditionTag("펫시터예요")
                     .locationTag("서울시 노원구")
                     .startDay(stubStartDate.get("day"))
@@ -355,7 +353,6 @@ public class StubData {
                     .content("this is content1")
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_01.png"))
                     .memo("특이사항 없습니다.")
-                    .petSize("소형")
                     .conditionTag("펫시터예요")
                     .locationTag("서울시 노원구")
                     .startDay(stubStartDate.get("day"))
@@ -372,7 +369,6 @@ public class StubData {
                     .content("this is content2")
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_02.png"))
                     .memo("특이사항 없습니다.")
-                    .petSize("대형")
                     .conditionTag("펫시터예요")
                     .locationTag("서울시 강남구")
                     .startDay(stubStartDate.get("day"))
@@ -673,7 +669,7 @@ public class StubData {
             stubRequestBody = new HashMap<>();
             stubRequestBody.put(HttpMethod.POST, new UserPostDto("email@example.com","exPassword",
                     "exNickName"));
-            stubRequestBody.put(HttpMethod.PATCH, new UserPatchDto(1, "email@example.com","exPassword", "exNickName","exAddress", "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png"));
+            stubRequestBody.put(HttpMethod.PATCH, new UserPatchDto("email@example.com","exPassword", "exNickName","exAddress", "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png"));
         }
 
         public static Object getRequestBody(HttpMethod method) {

@@ -11,6 +11,8 @@ import com.Petching.petching.global.aws.s3.config.S3Configuration;
 import com.Petching.petching.login.oauth.userInfo.JwtToken;
 import com.Petching.petching.restDocs.global.helper.CarePostControllerTestHelper;
 import com.Petching.petching.restDocs.global.helper.StubData;
+import com.Petching.petching.tag.petSize.CarePost_PetSizeRepository;
+import com.Petching.petching.tag.petSize.PetSizeRepository;
 import com.Petching.petching.user.entity.User;
 import com.Petching.petching.user.service.UserService;
 import com.google.gson.Gson;
@@ -75,6 +77,12 @@ public class CarePostControllerTest implements CarePostControllerTestHelper {
 
     @MockBean
     private CarePostRepository carePostRepository;
+
+    @MockBean
+    private PetSizeRepository petSizeRepository;
+
+    @MockBean
+    private CarePost_PetSizeRepository carePostPetSizeRepository;
 
     @MockBean
     private SecurityConfiguration securityConfiguration;
