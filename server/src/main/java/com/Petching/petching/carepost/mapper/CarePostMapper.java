@@ -157,17 +157,21 @@ public interface CarePostMapper {
         return tagName;
     }
 
-/*    default List<CarePostDto.MyPage> carePostsToCarePostMyPageDto (List<CarePost> carePosts) {
+    default List<CarePostDto.MyPage> carePostsToCarePostMyPageDto (List<CarePost> carePosts) {
+        List<CarePost_PetSize> size = new ArrayList<>();
+        List<String> sizes = postPetSizeDtoResponse(size);
+
         return carePosts.stream()
                 .map(carePost -> {
                     CarePostDto.MyPage myPage = new CarePostDto.MyPage(
-                            carePost.getTitle(), carePost.getPostPetSizes(), carePost.getImgUrls(),
+                            carePost.getTitle(), sizes, carePost.getImgUrls(),
                             carePost.getUser().getProfileImgUrl(), carePost.getUser().getNickName(),
                             carePost.getLocationTag()
                     );
                     return myPage;
                 }).collect(Collectors.toList());
     }
+    /*
 
     default List<String> postConditionTagDtoResponse (List<CarePost_ConditionTag> postConditionTags) {
         List<String> tagName = postConditionTags.stream().map(tag -> tag.getConditionTag().getBody())
