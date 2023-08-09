@@ -161,7 +161,7 @@ public class CarePostController {
         return new ResponseEntity(new SingleResponse<>(mapper.carePostToCarePostResponseDto(find)),HttpStatus.OK);
     }
 
-    @GetMapping("/my-page/{user-id}")
+/*    @GetMapping("/my-page/{user-id}")
     public ResponseEntity getMyPageCarePost (@RequestParam(defaultValue = "1") int page,
                                              @RequestParam(defaultValue = "10") int size,
                                              @PathVariable("user-id") @Positive long userId) {
@@ -173,7 +173,7 @@ public class CarePostController {
                 ));
 
         return new ResponseEntity<>(new MultiResponse<>(find, pageCare),HttpStatus.OK);
-    }
+    }*/
 
     @GetMapping("/search")
     public ResponseEntity searchCarePost(
