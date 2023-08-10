@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { MyPetsType } from '../Components/User/MyPets';
-import axios from 'axios';
+import { Axios } from '../API/api';
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
+const BASE_URL = process.env.REACT_APP_API_SERVER;
 
 export const useGetMyPets = (userId: string) => {
   const {
@@ -12,10 +12,7 @@ export const useGetMyPets = (userId: string) => {
   } = useQuery<MyPetsType[], Error>({
     queryKey: ['MyPets', userId],
     queryFn: async () => {
-      const token = localStorage.getItem('ACCESS_TOKEN');
-      const data = await axios.get(`${BASE_URL}/users/pets/${userId}`, {
-        headers: { Authorization: token },
-      });
+      const data = await Axios.get(`${BASE_URL}/users/pets/${userId}`);
       return data.data;
     },
     onError: () => {

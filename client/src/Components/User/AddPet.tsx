@@ -11,32 +11,33 @@ const AddPet: React.FC<Props> = ({ open, setOpen, userId }) => {
   const [img, setImg] = useState<string>(
     'https://s3.ap-northeast-2.amazonaws.com/petching.image/dog-5960092_1920.jpg',
   );
+  const [imgFiles, setImgFiles] = useState<File>();
+
   const changeImgHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.currentTarget;
     const files = (target.files as FileList)[0];
     if (!files) return;
     const reader = new FileReader();
     reader.readAsDataURL(files);
-    const data = await postImgHandler(files, 'mypets');
-    setImg(data);
+    reader.onloadend = () => {
+      setImg(reader.result as string);
+    };
+    setImgFiles(files);
   };
 
   const nameRef = useRef<HTMLInputElement>(null);
   const speciesRef = useRef<HTMLInputElement>(null);
   const genderRef = useRef<HTMLInputElement>(null);
   const ageRef = useRef<HTMLInputElement>(null);
-  // const weightRef = useRef<HTMLInputElement>(null);
-  // const vaccinationRef = useRef<HTMLInputElement>(null);
   const significantRef = useRef<HTMLInputElement>(null);
   const { handlerPostMyPet } = usePostMyPets(userId);
-  const submitHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+
+  const submitHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const { value: name } = nameRef.current!;
     const { value: species } = speciesRef.current!;
     const { value: gender } = genderRef.current!;
     const age = Number(ageRef.current!.value);
-    // const { value: weight } = weightRef.current!;
-    // const { value: vaccination } = vaccinationRef.current!;
     const { value: significant } = significantRef.current!;
     // handlerPostMyPet({ name, species, gender, age, weight, vaccination, etc });
     handlerPostMyPet({
@@ -45,7 +46,7 @@ const AddPet: React.FC<Props> = ({ open, setOpen, userId }) => {
       gender,
       age,
       significant,
-      petImgUrl: img,
+      petImgUrl: imgFiles && (await postImgHandler(imgFiles, 'profiles')),
     });
     setOpen(false);
     nameRef.current!.value = '';
@@ -105,14 +106,6 @@ const AddPet: React.FC<Props> = ({ open, setOpen, userId }) => {
           <p>나이</p>
           <input className="border" type="number" ref={ageRef} />
         </label>
-        {/* <label className="flex justify-between">
-          <p>몸무게</p>
-          <input className="border" ref={weightRef} />
-        </label>
-        <label className="flex justify-between">
-          <p>예방접종 유무</p>
-          <input className="border" ref={vaccinationRef} />
-        </label> */}
         <label className="flex justify-between">
           <p>특이사항</p>
           <input className="border" ref={significantRef} />

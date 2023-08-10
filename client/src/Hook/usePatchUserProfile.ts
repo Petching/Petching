@@ -1,40 +1,26 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
+import { Axios } from '../API/api';
+import { PatchUserProfile } from '../Util/types';
 
-type PatchUserProfile = {
-  userId: string;
-  nickname: string;
-  password: string;
-  address?: string;
-  profileImgUrl?: string;
-};
-
-const BASE_URL = process.env.REACT_APP_BASE_URL;
+const BASE_URL = process.env.REACT_APP_API_SERVER;
 
 export const usePatchUserProfile = (userId: string) => {
   const queryClient = useQueryClient();
   const { mutate: patchUserProfileMutation } = useMutation(
     async ({
       userId,
-      nickname,
+      nickName,
       address,
       password,
       profileImgUrl,
     }: PatchUserProfile) => {
-      const token = localStorage.getItem('ACCESS_TOKEN');
-      await axios.patch(
-        `${BASE_URL}/users/`,
-        {
-          userId,
-          nickname,
-          address,
-          password,
-          profileImgUrl,
-        },
-        {
-          headers: { Authorization: token },
-        },
-      );
+      await Axios.patch(`${BASE_URL}/users/`, {
+        userId,
+        nickName,
+        address,
+        password,
+        profileImgUrl,
+      });
     },
     {
       onError: error => {
@@ -47,14 +33,14 @@ export const usePatchUserProfile = (userId: string) => {
   );
   const handlerPatchProfile = async ({
     userId,
-    nickname,
+    nickName,
     address,
     profileImgUrl,
     password,
   }: PatchUserProfile) => {
     patchUserProfileMutation({
       userId,
-      nickname,
+      nickName,
       address,
       profileImgUrl,
       password,

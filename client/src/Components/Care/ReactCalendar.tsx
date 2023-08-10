@@ -6,8 +6,12 @@ import DatePicker, {
 
 interface ReactCalendarProps {
   onDateSelected: (value: DayRange) => void;
+  value?: DayRange;
 }
-const ReactCalendar: React.FC<ReactCalendarProps> = ({ onDateSelected }) => {
+const ReactCalendar: React.FC<ReactCalendarProps> = ({
+  onDateSelected,
+  value,
+}) => {
   const [selectedDayRange, setSelectedDayRange] = useState<DayRange>({
     from: null,
     to: null,
@@ -21,7 +25,7 @@ const ReactCalendar: React.FC<ReactCalendarProps> = ({ onDateSelected }) => {
   return (
     <div>
       <DatePicker
-        value={selectedDayRange}
+        value={value || selectedDayRange}
         onChange={handleDayRangeChange}
         inputPlaceholder="날짜를 선택하세요"
         shouldHighlightWeekends

@@ -1,15 +1,9 @@
-/* eslint-disable */
-import React, { useState } from 'react';
-import axios from 'axios';
-import ImageUploader from '../Components/Care/ImageUploader';
 import Carousel from '../Components/Care/Carousel';
 
 const CareListDetail = () => {
   return (
     <div className="bg-[#F2F2F2] w-full h-full min-h-screen text-xl">
-      <div>
-        <Carousel></Carousel>
-      </div>
+      <div></div>
       <div className="bg-white">
         <div>서초구핑크썬구리</div>
         <div>정성을 다해 모시겠습니다</div>

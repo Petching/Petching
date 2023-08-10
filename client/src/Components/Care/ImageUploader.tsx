@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 
-const ImageUploader = () => {
-  const [image, setImage] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
+interface ImageUploaderProps {
+  onUploadComplete: (uploadedUrls: string[]) => void;
+}
+
+const ImageUploader: React.FC<ImageUploaderProps> = ({ onUploadComplete }) => {
+  const [imageList, setImageList] = useState<File[]>([]);
+  const [previews, setPreviews] = useState<string[]>([]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files && e.target.files[0];
-    if (file) {
-      setImage(file);
-      setPreview(URL.createObjectURL(file));
+    const files = e.target.files;
+    if (files) {
+      const fileList = Array.from(files);
+      setImageList(fileList);
+      setPreviews(fileList.map(file => URL.createObjectURL(file)));
     }
   };
 
@@ -16,14 +21,26 @@ const ImageUploader = () => {
     e.preventDefault();
 
     // 이미지를 서버에 업로드하거나 처리하는 로직을 작성합니다.
-    console.log('서버로 이미지 전송: ', image);
+    console.log('서버로 이미지 전송: ', imageList);
+
+    // 업로드 완료 콜백에 URL 배열 전달
+    setTimeout(() => {
+      onUploadComplete(previews);
+    }, 1000);
   };
 
   return (
     <div>
-      {preview && <img src={preview} alt="preview" width="200" />}
+      {previews.map((preview, index) => (
+        <img key={index} src={preview} alt={`preview-${index}`} width="200" />
+      ))}
       <form onSubmit={handleSubmit}>
-        <input type="file" accept="image/*" onChange={handleImageChange} />
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={handleImageChange}
+        />
         <button type="submit">Upload</button>
       </form>
     </div>

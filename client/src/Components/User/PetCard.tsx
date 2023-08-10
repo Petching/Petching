@@ -5,7 +5,6 @@ import { usePatchMyPet } from '../../Hook/usePatchMyPet';
 import { postImgHandler } from '../../Util/postImg';
 
 const PetCard: React.FC<MyPetsType> = ({
-  // img,
   name,
   species,
   gender,
@@ -13,9 +12,6 @@ const PetCard: React.FC<MyPetsType> = ({
   petImgUrl,
   significant,
   myPetId,
-  // weight,
-  // vaccination,
-  // etc,
   userId,
 }) => {
   const { handlerPatchMyPet } = usePatchMyPet(userId!);
@@ -26,12 +22,9 @@ const PetCard: React.FC<MyPetsType> = ({
   const [changeSpecies, setChangeSpecies] = useState<string>(species);
   const [changeGender, setChangeGender] = useState<string>(gender);
   const [changeAge, setChangeAge] = useState<number>(age);
-  // const [changeWeight, setChangeWeight] = useState<string>(weight || '');
-  // const [changeVaccination, setChangeVaccination] = useState<string>(
-  //   vaccination || '',
-  // );
   const [changeSignificant, setChangeSignificant] =
     useState<string>(significant);
+  const [imgFiles, setImgFiles] = useState<File>();
 
   const changeImgHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.currentTarget;
@@ -39,8 +32,10 @@ const PetCard: React.FC<MyPetsType> = ({
     if (!files) return;
     const reader = new FileReader();
     reader.readAsDataURL(files);
-    const data = await postImgHandler(files, 'mypets');
-    setChangeImg(data);
+    reader.onloadend = () => {
+      setChangeImg(reader.result as string);
+    };
+    setImgFiles(files);
   };
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,10 +49,6 @@ const PetCard: React.FC<MyPetsType> = ({
         return setChangeAge(Number(value));
       case 'gender':
         return setChangeGender(value);
-      // case 'weight':
-      //   return setChangeWeight(value);
-      // case 'vaccination':
-      //   return setChangeVaccination(value);
       case 'significant':
         return setChangeSignificant(value);
       default:
@@ -65,18 +56,17 @@ const PetCard: React.FC<MyPetsType> = ({
     }
   };
 
-  const submitHandler = () => {
+  const submitHandler = async () => {
     handlerPatchMyPet({
       name: changeName,
       species: changeSpecies,
       gender: changeGender,
       age: changeAge,
-      petImgUrl: changeImg,
+      petImgUrl: imgFiles
+        ? await postImgHandler(imgFiles, 'profiles')
+        : petImgUrl,
       significant: changeSignificant,
       myPetId: myPetId,
-      // weight: changeWeight,
-      // vaccination: changeVaccination,
-      // etc: changeSignificant,
     });
     setOnEdit(false);
   };

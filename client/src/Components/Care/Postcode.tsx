@@ -11,9 +11,10 @@ interface AddressData {
 interface PostcodeProps {
   onAddressSelected: (address: string) => void;
   onError?: () => void;
+  value?: string;
 }
 
-const Postcode: React.FC<PostcodeProps> = ({ onAddressSelected }) => {
+const Postcode: React.FC<PostcodeProps> = ({ onAddressSelected, value }) => {
   const [open, setOpen] = useState(false);
   const [address, setAddress] = useState('');
 
@@ -60,7 +61,7 @@ const Postcode: React.FC<PostcodeProps> = ({ onAddressSelected }) => {
         <input
           className="w-[8.5rem] h-[2rem] text-sm text-center border-2"
           type="text"
-          value={address}
+          value={value || address}
           onClick={handleClick}
           readOnly
           placeholder="주소를 검색해주세요"
