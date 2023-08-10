@@ -3,6 +3,7 @@ import { useDeleteMyPet } from '../../Hook/useDeleteMyPet';
 import { MyPetsType } from './MyPets';
 import { usePatchMyPet } from '../../Hook/usePatchMyPet';
 import { postImgHandler } from '../../Util/postImg';
+import Warning from '../Common/Warning';
 
 const PetCard: React.FC<MyPetsType> = ({
   name,
@@ -25,6 +26,7 @@ const PetCard: React.FC<MyPetsType> = ({
   const [changeSignificant, setChangeSignificant] =
     useState<string>(significant);
   const [imgFiles, setImgFiles] = useState<File>();
+  const [onModal, setOnModal] = useState<boolean>(false);
 
   const changeImgHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.currentTarget;
@@ -72,6 +74,7 @@ const PetCard: React.FC<MyPetsType> = ({
   };
 
   const deleteHandler = () => {
+    setOnModal(false);
     handlerDeleteMyPet();
   };
   return (
@@ -158,32 +161,6 @@ const PetCard: React.FC<MyPetsType> = ({
             <p>{age}</p>
           )}
         </label>
-        {/* <label className="flex flex-col">
-          <p className="text-left text-gray-500 text-xs">몸무게</p>
-          {onEdit ? (
-            <input
-              value={changeWeight}
-              name="weight"
-              onChange={changeHandler}
-              className="border border-gray-300 rounded mr-2 block"
-            />
-          ) : (
-            <p>{weight}</p>
-          )}
-        </label> */}
-        {/* <label className="flex flex-col">
-          <p className="text-left text-gray-500 text-xs">백신여부</p>
-          {onEdit ? (
-            <input
-              value={changeVaccination}
-              name="vaccination"
-              onChange={changeHandler}
-              className="border border-gray-300 rounded mr-2 block"
-            />
-          ) : (
-            <p>{vaccination}</p>
-          )}
-        </label> */}
         <label className="flex flex-col">
           <p className="text-left text-gray-500 text-xs">그외사항</p>
           {onEdit ? (
@@ -228,11 +205,19 @@ const PetCard: React.FC<MyPetsType> = ({
         )}
         <button
           className="mr-3 text-slate-400 hover:text-red-700"
-          onClick={deleteHandler}
+          onClick={() => setOnModal(true)}
         >
           삭제
         </button>
       </div>
+      {onModal && (
+        <Warning
+          title="펫 카드 삭제"
+          sub={`${name} 카드를 삭제하시겠습니까?`}
+          fn={deleteHandler}
+          setState={setOnModal}
+        />
+      )}
     </div>
   );
 };
