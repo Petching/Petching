@@ -1,0 +1,131 @@
+[[MyPet-API]]
+= MyPet API
+== MyPet Controller
+
+=== MyPet 등록 API
+
+[discrete]
+==== `Request`
+[source,http]
+----
+POST: /users/pets
+----
+
+.request-headers
+include::{snippets}/post-myPet/request-headers.adoc[]
+.request-body
+include::{snippets}/post-myPet/request-body.adoc[]
+.request-fields
+include::{snippets}/post-myPet/request-fields.adoc[]
+
+
+[discrete]
+==== `Response`
+.response-headers
+include::{snippets}/post-myPet/response-headers.adoc[]
+
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/post-myPet/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/post-myPet/http-response.adoc[]
+
+---
+
+=== MyPet 수정 API
+[discrete]
+==== `Request`
+[source,http]
+----
+PATCH: /users/pets
+----
+
+.request-headers
+include::{snippets}/patch-myPet/request-headers.adoc[]
+.request-body
+include::{snippets}/patch-myPet/request-body.adoc[]
+.request-fields
+include::{snippets}/patch-myPet/request-fields.adoc[]
+
+
+[discrete]
+==== `Response`
+.response-body
+include::{snippets}/patch-myPet/response-body.adoc[]
+.response-fields
+include::{snippets}/patch-myPet/response-fields.adoc[]
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/patch-myPet/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/patch-myPet/http-response.adoc[]
+
+---
+
+=== MyPet 조회 API
+[discrete]
+==== `Request`
+[source,http]
+----
+GET: /users/pets/{user-id}
+----
+
+.request-headers
+include::{snippets}/get-all-myPet/request-headers.adoc[]
+.path-parameters
+include::{snippets}/get-all-myPet/path-parameters.adoc[]
+
+
+[discrete]
+==== `Response`
+.response-body
+include::{snippets}/get-all-myPet/response-body.adoc[]
+.response-fields
+include::{snippets}/get-all-myPet/response-fields.adoc[]
+
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/get-all-myPet/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/get-all-myPet/http-response.adoc[]
+
+---
+
+=== MyPet 삭제 API
+[discrete]
+==== `Request`
+[source,http]
+----
+DELETE: /users/pets/{petId}
+----
+
+.request-headers
+include::{snippets}/delete-myPet/request-headers.adoc[]
+.path-parameters
+include::{snippets}/delete-myPet/path-parameters.adoc[]
+
+
+[discrete]
+==== `Response`
+.http-response
+include::{snippets}/delete-myPet/http-response.adoc[]
+
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/delete-myPet/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/delete-myPet/http-response.adoc[]
+
+---
