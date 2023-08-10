@@ -17,7 +17,6 @@ export type MyPetsType = {
 const MyPets: React.FC<{ userId: string }> = ({ userId }) => {
   const [open, setOpen] = useState<boolean>(false);
   const { MyPets } = useGetMyPets(userId);
-  console.log(MyPets);
   return (
     <div className="relative py-8 w-full">
       <button
