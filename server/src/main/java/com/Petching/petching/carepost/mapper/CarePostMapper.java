@@ -157,7 +157,7 @@ public interface CarePostMapper {
         return tagName;
     }
 
-    default List<CarePostDto.MyPage> carePostsToCarePostMyPageDto (List<CarePost> carePosts) {
+/*    default List<CarePostDto.MyPage> carePostsToCarePostMyPageDto (List<CarePost> carePosts) {
         return carePosts.stream()
                 .map(carePost -> {
                     CarePostDto.MyPage myPage = new CarePostDto.MyPage(
@@ -167,7 +167,7 @@ public interface CarePostMapper {
                     );
                     return myPage;
                 }).collect(Collectors.toList());
-    }
+    }*/
 
     default List<String> postConditionTagDtoResponse (List<CarePost_ConditionTag> postConditionTags) {
         List<String> tagName = postConditionTags.stream().map(tag -> tag.getConditionTag().getBody())

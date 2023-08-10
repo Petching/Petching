@@ -495,8 +495,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
   },
   "conditionTag" : "펫시터예요",
   "locationTag" : "서울시 노원구",
-  "petSize" : "중형",
-  "memo" : "특이사항 없습니다."
+  "memo" : "특이사항 없습니다.",
+  "petSizes" : [ "중형", "소형" ]
 }</code></pre>
 </div>
 </div>
@@ -611,8 +611,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>petSize</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>petSizes[]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">반려동물 크기</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -649,11 +649,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h4 id="_request_summary" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /careposts?_csrf=4053dac7-61c6-4dc5-a469-2e1df4427559 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /careposts?_csrf=88d0cc6f-0d8a-4c6b-9aaa-4336df7d9a76 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Authorization: {AccessToken}
-Content-Length: 731
+Content-Length: 746
 Host: server.petching.net
 
 {
@@ -672,8 +672,8 @@ Host: server.petching.net
   },
   "conditionTag" : "펫시터예요",
   "locationTag" : "서울시 노원구",
-  "petSize" : "중형",
-  "memo" : "특이사항 없습니다."
+  "memo" : "특이사항 없습니다.",
+  "petSizes" : [ "중형", "소형" ]
 }</code></pre>
 </div>
 </div>
@@ -763,8 +763,8 @@ X-Frame-Options: DENY</code></pre>
   },
   "conditionTag" : "펫시터예요",
   "locationTag" : "서울시 노원구",
-  "petSize" : "중형",
-  "memo" : "특이사항 없습니다."
+  "memo" : "특이사항 없습니다.",
+  "petSizes" : [ "중형", "소형" ]
 }</code></pre>
 </div>
 </div>
@@ -879,8 +879,8 @@ X-Frame-Options: DENY</code></pre>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>petSize</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>petSizes[]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">반려동물 크기</p></td>
 <td class="tableblock halign-left valign-top"></td>
@@ -917,8 +917,8 @@ X-Frame-Options: DENY</code></pre>
     },
     "conditionTag" : "펫시터예요",
     "locationTag" : "서울시 노원구",
-    "petSize" : "중형",
-    "memo" : "삶은 소고기를 못 먹어요."
+    "memo" : "삶은 소고기를 못 먹어요.",
+    "petSizes" : [ "중형", "소형" ]
   }
 }</code></pre>
 </div>
@@ -1014,8 +1014,8 @@ X-Frame-Options: DENY</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">장소 태그</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.petSize</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.petSizes[]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">반려동물 크기</p></td>
 </tr>
 <tr>
@@ -1028,11 +1028,11 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="_request_summary_2" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">PATCH /careposts/1?_csrf=0a4c0908-4c16-4407-9d37-a8d27a21bae8 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">PATCH /careposts/1?_csrf=938e10ef-dae8-48dd-b159-98f817cce207 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Authorization: {AccessToken}
-Content-Length: 731
+Content-Length: 746
 Host: server.petching.net
 
 {
@@ -1051,8 +1051,8 @@ Host: server.petching.net
   },
   "conditionTag" : "펫시터예요",
   "locationTag" : "서울시 노원구",
-  "petSize" : "중형",
-  "memo" : "특이사항 없습니다."
+  "memo" : "특이사항 없습니다.",
+  "petSizes" : [ "중형", "소형" ]
 }</code></pre>
 </div>
 </div>
@@ -1070,7 +1070,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 700
+Content-Length: 715
 
 {
   "data" : {
@@ -1091,8 +1091,8 @@ Content-Length: 700
     },
     "conditionTag" : "펫시터예요",
     "locationTag" : "서울시 노원구",
-    "petSize" : "중형",
-    "memo" : "삶은 소고기를 못 먹어요."
+    "memo" : "삶은 소고기를 못 먹어요.",
+    "petSizes" : [ "중형", "소형" ]
   }
 }</code></pre>
 </div>
@@ -1149,8 +1149,8 @@ Content-Length: 700
     },
     "conditionTag" : "펫시터예요",
     "locationTag" : "서울시 노원구",
-    "petSize" : "중형",
-    "memo" : "삶은 소고기를 못 먹어요."
+    "memo" : "삶은 소고기를 못 먹어요.",
+    "petSizes" : [ "중형", "소형" ]
   }
 }</code></pre>
 </div>
@@ -1246,8 +1246,8 @@ Content-Length: 700
 <td class="tableblock halign-left valign-top"><p class="tableblock">장소 태그</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.petSize</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.petSizes[]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">반려동물 크기</p></td>
 </tr>
 <tr>
@@ -1260,7 +1260,7 @@ Content-Length: 700
 <h4 id="_request_summary_3" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /careposts/1?_csrf=47a433e3-1236-48f4-bdac-0c3a26bbbf5f HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /careposts/1?_csrf=ef77c040-9406-43bc-a3f4-775fe8435f7a HTTP/1.1
 Authorization: {AccessToken}
 Accept: application/json
 Host: server.petching.net</code></pre>
@@ -1280,7 +1280,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 700
+Content-Length: 715
 
 {
   "data" : {
@@ -1301,8 +1301,8 @@ Content-Length: 700
     },
     "conditionTag" : "펫시터예요",
     "locationTag" : "서울시 노원구",
-    "petSize" : "중형",
-    "memo" : "삶은 소고기를 못 먹어요."
+    "memo" : "삶은 소고기를 못 먹어요.",
+    "petSizes" : [ "중형", "소형" ]
   }
 }</code></pre>
 </div>
@@ -1372,8 +1372,8 @@ Content-Length: 700
     },
     "conditionTag" : "펫시터예요",
     "locationTag" : "서울시 노원구",
-    "petSize" : "중형",
-    "memo" : "삶은 소고기를 못 먹어요."
+    "memo" : "삶은 소고기를 못 먹어요.",
+    "petSizes" : [ "중형", "소형" ]
   }, {
     "title" : "this is title1",
     "content" : "this is content1",
@@ -1392,8 +1392,8 @@ Content-Length: 700
     },
     "conditionTag" : "펫시터예요",
     "locationTag" : "서울시 노원구",
-    "petSize" : "중형",
-    "memo" : "삶은 소고기를 못 먹어요."
+    "memo" : "삶은 소고기를 못 먹어요.",
+    "petSizes" : [ "중형", "소형" ]
   } ],
   "pageInfo" : {
     "page" : 1,
@@ -1495,8 +1495,8 @@ Content-Length: 700
 <td class="tableblock halign-left valign-top"><p class="tableblock">장소 태그</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].petSize</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].petSizes[]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">반려동물 크기</p></td>
 </tr>
 <tr>
@@ -1534,7 +1534,7 @@ Content-Length: 700
 <h4 id="_request_summary_4" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /careposts?page=1&amp;size=10&amp;_csrf=3a86061b-e1b8-450e-845e-2fa30b06a4aa HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /careposts?page=1&amp;size=10&amp;_csrf=8816e7c2-49aa-4a30-a04f-c16dc894a9ae HTTP/1.1
 Authorization: {AccessToken}
 Accept: application/json
 Host: server.petching.net</code></pre>
@@ -1555,7 +1555,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 1496
+Content-Length: 1526
 
 {
   "data" : [ {
@@ -1576,8 +1576,8 @@ Content-Length: 1496
     },
     "conditionTag" : "펫시터예요",
     "locationTag" : "서울시 노원구",
-    "petSize" : "중형",
-    "memo" : "삶은 소고기를 못 먹어요."
+    "memo" : "삶은 소고기를 못 먹어요.",
+    "petSizes" : [ "중형", "소형" ]
   }, {
     "title" : "this is title1",
     "content" : "this is content1",
@@ -1596,8 +1596,8 @@ Content-Length: 1496
     },
     "conditionTag" : "펫시터예요",
     "locationTag" : "서울시 노원구",
-    "petSize" : "중형",
-    "memo" : "삶은 소고기를 못 먹어요."
+    "memo" : "삶은 소고기를 못 먹어요.",
+    "petSizes" : [ "중형", "소형" ]
   } ],
   "pageInfo" : {
     "page" : 1,
@@ -1693,8 +1693,8 @@ Content-Length: 1496
     },
     "conditionTag" : "펫시터예요",
     "locationTag" : "서울시 노원구",
-    "petSize" : "중형",
-    "memo" : "삶은 소고기를 못 먹어요."
+    "memo" : "삶은 소고기를 못 먹어요.",
+    "petSizes" : [ "중형", "소형" ]
   }, {
     "title" : "this is title2",
     "content" : "this is content2",
@@ -1713,8 +1713,8 @@ Content-Length: 1496
     },
     "conditionTag" : "펫시터예요",
     "locationTag" : "서울시 성북구",
-    "petSize" : "소형",
-    "memo" : "특이사항 없습니다."
+    "memo" : "특이사항 없습니다.",
+    "petSizes" : [ "소형" ]
   }, {
     "title" : "this is title3",
     "content" : "this is content3",
@@ -1733,8 +1733,8 @@ Content-Length: 1496
     },
     "conditionTag" : "펫시터예요",
     "locationTag" : "서울시 노원구",
-    "petSize" : "소형",
-    "memo" : "모르는 사람 경계가 심해요."
+    "memo" : "모르는 사람 경계가 심해요.",
+    "petSizes" : [ "중형", "소형" ]
   } ]
 }</code></pre>
 </div>
@@ -1830,8 +1830,8 @@ Content-Length: 1496
 <td class="tableblock halign-left valign-top"><p class="tableblock">장소 태그</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].petSize</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].petSizes[]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">반려동물 크기</p></td>
 </tr>
 <tr>
@@ -1844,7 +1844,7 @@ Content-Length: 1496
 <h4 id="_request_summary_5" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /careposts/search?locationTag=%EC%A0%84%EB%82%A8+%EA%B4%91%EC%96%91%EC%8B%9C&amp;startDate.day=13&amp;startDate.month=7&amp;startDate.year=2023&amp;endDate.day=20&amp;endDate.month=7&amp;endDate.year=2023&amp;_csrf=de67f7e6-baa5-4242-97ec-c270ba1c7011 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /careposts/search?locationTag=%EC%A0%84%EB%82%A8+%EA%B4%91%EC%96%91%EC%8B%9C&amp;startDate.day=13&amp;startDate.month=7&amp;startDate.year=2023&amp;endDate.day=20&amp;endDate.month=7&amp;endDate.year=2023&amp;_csrf=8b40250c-17b3-4939-a8bf-f5da442d7cd5 HTTP/1.1
 Authorization: {AccessToken}
 Accept: application/json
 Host: server.petching.net</code></pre>
@@ -1864,7 +1864,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 2069
+Content-Length: 2104
 
 {
   "data" : [ {
@@ -1885,8 +1885,8 @@ Content-Length: 2069
     },
     "conditionTag" : "펫시터예요",
     "locationTag" : "서울시 노원구",
-    "petSize" : "중형",
-    "memo" : "삶은 소고기를 못 먹어요."
+    "memo" : "삶은 소고기를 못 먹어요.",
+    "petSizes" : [ "중형", "소형" ]
   }, {
     "title" : "this is title2",
     "content" : "this is content2",
@@ -1905,8 +1905,8 @@ Content-Length: 2069
     },
     "conditionTag" : "펫시터예요",
     "locationTag" : "서울시 성북구",
-    "petSize" : "소형",
-    "memo" : "특이사항 없습니다."
+    "memo" : "특이사항 없습니다.",
+    "petSizes" : [ "소형" ]
   }, {
     "title" : "this is title3",
     "content" : "this is content3",
@@ -1925,8 +1925,8 @@ Content-Length: 2069
     },
     "conditionTag" : "펫시터예요",
     "locationTag" : "서울시 노원구",
-    "petSize" : "소형",
-    "memo" : "모르는 사람 경계가 심해요."
+    "memo" : "모르는 사람 경계가 심해요.",
+    "petSizes" : [ "중형", "소형" ]
   } ]
 }</code></pre>
 </div>
