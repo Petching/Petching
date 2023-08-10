@@ -105,15 +105,8 @@ include::{snippets}/get-user/http-response.adoc[]
 ==== `Request`
 [source,http]
 ----
-DELETE: /users/{user-id}
+DELETE: /users/
 ----
-.path-parameters
-include::{snippets}/delete-user/path-parameters.adoc[]
-
-[discrete]
-==== `Response`
-.http-response
-include::{snippets}/delete-user/http-response.adoc[]
 
 [discrete]
 ==== `Request Summary`

@@ -39,6 +39,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(UserController.class)
@@ -197,23 +198,22 @@ class UserControllerTest implements UserControllerTestHelper {
                 .build();
         user.setUserId(1L);
 
-        given(userService.savedUser(Mockito.any(UserPostDto.class))).willReturn(user);
+        given(userService.findSecurityContextHolderUserId()).willReturn(user.getUserId());
+        given(userService.verifiedUser(Mockito.anyLong())).willReturn(user);
+
 
         // when
         ResultActions actions = mockMvc.perform(
-                deleteRequestBuilder(getURI(),user.getUserId())
+                deleteRequestBuilder(getUrl())
         );
 
-
+        actions.andDo(print());
         // then
         actions
                 .andExpect(status().is2xxSuccessful())
                 .andDo(document("delete-user",
                         getRequestPreProcessor(),
-                        getResponsePreProcessor(),
-                        pathParameters(
-                                getMemberRequestPathParameterDescriptor()
-                        )
+                        getResponsePreProcessor()
                 ));
     }
 

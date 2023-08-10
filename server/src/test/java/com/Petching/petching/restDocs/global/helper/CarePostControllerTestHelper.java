@@ -87,7 +87,7 @@ public interface CarePostControllerTestHelper extends ControllerTestHelper{
                 fieldWithPath("endDate.year").type(JsonFieldType.NUMBER).description("종료 날짜/년"),
                 fieldWithPath("conditionTag").type(JsonFieldType.STRING).description("상태 태그"),
                 fieldWithPath("locationTag").type(JsonFieldType.STRING).description("장소 태그"),
-                fieldWithPath("petSize").type(JsonFieldType.STRING).description("반려동물 크기"),
+                fieldWithPath("petSizes[]").type(JsonFieldType.ARRAY).description("반려동물 크기"),
                 fieldWithPath("memo").type(JsonFieldType.STRING).description("특이사항")
         );
     }
@@ -109,7 +109,7 @@ public interface CarePostControllerTestHelper extends ControllerTestHelper{
                 fieldWithPath("endDate.year").type(JsonFieldType.NUMBER).description("종료 날짜/년"),
                 fieldWithPath("conditionTag").type(JsonFieldType.STRING).description("상태 태그"),
                 fieldWithPath("locationTag").type(JsonFieldType.STRING).description("장소 태그"),
-                fieldWithPath("petSize").type(JsonFieldType.STRING).description("반려동물 크기"),
+                fieldWithPath("petSizes[]").type(JsonFieldType.ARRAY).description("반려동물 크기"),
                 fieldWithPath("memo").type(JsonFieldType.STRING).description("특이사항")
         );
     }
@@ -135,7 +135,7 @@ public interface CarePostControllerTestHelper extends ControllerTestHelper{
                 fieldWithPath(parentPath.concat("endDate.year")).type(JsonFieldType.NUMBER).description("종료 날짜/년"),
                 fieldWithPath(parentPath.concat("conditionTag")).type(JsonFieldType.STRING).description("상태 태그"),
                 fieldWithPath(parentPath.concat("locationTag")).type(JsonFieldType.STRING).description("장소 태그"),
-                fieldWithPath(parentPath.concat("petSize")).type(JsonFieldType.STRING).description("반려동물 크기"),
+                fieldWithPath(parentPath.concat("petSizes[]")).type(JsonFieldType.ARRAY).description("반려동물 크기"),
                 fieldWithPath(parentPath.concat("memo")).type(JsonFieldType.STRING).description("특이사항")
         );
     }
@@ -160,7 +160,7 @@ public interface CarePostControllerTestHelper extends ControllerTestHelper{
                 fieldWithPath(parentPath.concat("endDate.year")).type(JsonFieldType.NUMBER).description("종료 날짜/년"),
                 fieldWithPath(parentPath.concat("conditionTag")).type(JsonFieldType.STRING).description("상태 태그"),
                 fieldWithPath(parentPath.concat("locationTag")).type(JsonFieldType.STRING).description("장소 태그"),
-                fieldWithPath(parentPath.concat("petSize")).type(JsonFieldType.STRING).description("반려동물 크기"),
+                fieldWithPath(parentPath.concat("petSizes[]")).type(JsonFieldType.ARRAY).description("반려동물 크기"),
                 fieldWithPath(parentPath.concat("memo")).type(JsonFieldType.STRING).description("특이사항")
 
         );

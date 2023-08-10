@@ -1,4 +1,4 @@
-//package com.Petching.petching.chat.model;
+//package com.Petching.petching.chat.entity;
 //
 //import lombok.AllArgsConstructor;
 //import lombok.Getter;

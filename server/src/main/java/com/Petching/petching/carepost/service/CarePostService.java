@@ -112,8 +112,6 @@ public class CarePostService {
                 .ifPresent(findPost::setEndMonth);
         Optional.ofNullable(patch.getEndYear())
                 .ifPresent(findPost::setEndYear);
-        Optional.ofNullable(patch.getPetSize())
-                .ifPresent(findPost::setPetSize);
         Optional.ofNullable(patch.getMemo())
                 .ifPresent(findPost::setMemo);
         Optional.ofNullable(patch.getConditionTag())
