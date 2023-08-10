@@ -1,6 +1,3 @@
-/* eslint-disable */
-import Carousel from '../Components/Care/Carousel';
-
 const CareListDetail = () => {
   return (
     <div className="bg-[#F2F2F2] w-full h-full min-h-screen text-xl">

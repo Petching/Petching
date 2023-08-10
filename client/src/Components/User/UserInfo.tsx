@@ -13,10 +13,14 @@ import { useNavigate } from 'react-router-dom';
 import { checkNickname } from '../../API/signUp';
 import { postImgHandler } from '../../Util/postImg';
 import { checkPw } from '../../API/user';
+import { removeCookie } from '../../Util/getCookie';
+import useLoginStore from '../../store/login';
+import Warning from '../Common/Warning';
 
 const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
   const navigate = useNavigate();
   const { UserProfile, GetUserProfileError } = useGetUserProfile(userId);
+  const { setLogout } = useLoginStore();
 
   const [onEdit, setOnEdit] = useState(false);
   const [changeImg, setChangeImg] = useState<string>(
@@ -43,6 +47,8 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
   const [changeAddress, setChangeAddress] = useState<string>(
     UserProfile?.address || '',
   );
+
+  const [onModal, setOnModal] = useState<boolean>(false);
 
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsPwError(false);
@@ -123,8 +129,11 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
   };
 
   const deleteHandler = () => {
-    handlerDeleteUserProfile(userId);
-    navigate('/');
+    setOnModal(false);
+    console.log('delete');
+    // 해당 훅에서 토큰 삭제, logout 처리 실행
+    // handlerDeleteUserProfile(userId);
+    // navigate('/');
   };
 
   // 수정 버튼을 클릭한 채로 다른 유저의 페이지로 이동할 경우, 수정 칸이 열려있는 현상 방지
@@ -303,7 +312,7 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
           <>
             <button
               className="mr-3 text-slate-400 hover:text-red-700"
-              onClick={deleteHandler}
+              onClick={() => setOnModal(true)}
             >
               회원 탈퇴
             </button>
@@ -328,6 +337,14 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
           )
         )}
       </div>
+      {onModal && (
+        <Warning
+          title="회원 탈퇴"
+          sub="사이트를 탈퇴합니다"
+          fn={deleteHandler}
+          setState={setOnModal}
+        />
+      )}
     </div>
   );
 };

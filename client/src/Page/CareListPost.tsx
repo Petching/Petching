@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import { Axios } from '../../src/API/api';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import ImageUploader from '../Components/Care/ImageUploader';
@@ -14,7 +13,7 @@ const CareListPost = () => {
   const [isPetsitter, setIsPetsitter] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [petSize, setPetSize] = useState('');
+  const [petSizes, setpetSizes] = useState<string[]>([]);
   const [memo, setMemo] = useState('');
   const [imgUrls, setImgUrls] = useState<string[]>([]);
 
@@ -33,7 +32,7 @@ const CareListPost = () => {
         endDate,
         conditionTag: isPetsitter ? '펫시터예요' : '집사예요',
         locationTag,
-        petSize,
+        petSizes,
         memo,
       };
       const response = await axios.post(
@@ -62,7 +61,13 @@ const CareListPost = () => {
       });
     }
   };
-
+  const handlepetSizesClick = (size: string) => {
+    if (petSizes.includes(size)) {
+      setpetSizes(petSizes.filter(s => s !== size));
+    } else {
+      setpetSizes([...petSizes, size]);
+    }
+  };
   return (
     <div className="bg-[#F2F2F2] w-full h-full min-h-screen text-xl">
       <div className="bg-[#F2F2F2] text-center">
@@ -109,20 +114,26 @@ const CareListPost = () => {
         <div>펫의 크기를 지정해주세요</div>
         <div>
           <button
-            className="bg-customGreen rounded-full mx-4"
-            onClick={() => setPetSize('소형')}
+            className={`bg-customGreen rounded-full mx-4 ${
+              petSizes.includes('소형') ? 'text-white' : ''
+            }`}
+            onClick={() => handlepetSizesClick('소형')}
           >
             소형
           </button>
           <button
-            className="bg-customGreen rounded-full mx-4"
-            onClick={() => setPetSize('중형')}
+            className={`bg-customGreen rounded-full mx-4 ${
+              petSizes.includes('중형') ? 'text-white' : ''
+            }`}
+            onClick={() => handlepetSizesClick('중형')}
           >
             중형
           </button>
           <button
-            className="bg-customGreen rounded-full mx-4"
-            onClick={() => setPetSize('대형')}
+            className={`bg-customGreen rounded-full mx-4 ${
+              petSizes.includes('대형') ? 'text-white' : ''
+            }`}
+            onClick={() => handlepetSizesClick('대형')}
           >
             대형
           </button>

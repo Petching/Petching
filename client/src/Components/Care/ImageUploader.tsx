@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { postImgHandler } from '../../Util/postImg';
 
 interface ImageUploaderProps {
   onUploadComplete: (uploadedUrls: string[]) => void;
@@ -17,16 +18,22 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onUploadComplete }) => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // 이미지를 서버에 업로드하거나 처리하는 로직을 작성합니다.
     console.log('서버로 이미지 전송: ', imageList);
 
-    // 업로드 완료 콜백에 URL 배열 전달
-    setTimeout(() => {
-      onUploadComplete(previews);
-    }, 1000);
+    try {
+      const imgUrls = [];
+      // 순서대로 이미지 업로드 후 배열에 저장
+      for (const img of imageList) {
+        const imgUrl = await postImgHandler(img, 'careposts');
+        imgUrls.push(imgUrl);
+      }
+      onUploadComplete(imgUrls);
+    } catch (error) {
+      console.error('이미지 업로드 실패', error);
+    }
   };
 
   return (
