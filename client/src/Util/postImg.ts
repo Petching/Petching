@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
+const BASE_URL = process.env.REACT_APP_API_SERVER;
 
 // 이미지 url 요청할 때 사용
 export const postImgHandler = async (

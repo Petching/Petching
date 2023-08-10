@@ -1,17 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import { Axios } from '../API/api';
+import { UserProfile } from '../Util/types';
 
-type UserProfile = {
-  nickName: string;
-  email: string;
-  profileImgUrl: string;
-  userDivision: boolean;
-  address?: string;
-};
+const BASE_URL = process.env.REACT_APP_API_SERVER;
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-
-export const useGetUserProfile = (userId: string) => {
+export const useGetUserProfile = (userId: string | undefined) => {
   const {
     isLoading: GetUserProfileLoading,
     isError: GetUserProfileError,
@@ -19,11 +12,12 @@ export const useGetUserProfile = (userId: string) => {
   } = useQuery<UserProfile, Error>({
     queryKey: ['UserProfile', userId],
     queryFn: async () => {
-      const token = localStorage.getItem('ACCESS_TOKEN');
-      const data = await axios.get(`${BASE_URL}/users/${userId}`, {
-        headers: { Authorization: token },
-      });
-      return data.data.data;
+      if (userId) {
+        const data = await Axios.get(`${BASE_URL}/users/${userId}`);
+        return data.data.data;
+      } else {
+        return {};
+      }
     },
     onError: () => {
       console.error('데이터를 받아오지 못했습니다.');
@@ -35,6 +29,3 @@ export const useGetUserProfile = (userId: string) => {
   });
   return { GetUserProfileLoading, GetUserProfileError, UserProfile };
 };
-
-// 유저 프로필 GET 요청 로그인 안해도 괜찮도록
-// UserProfile 이미지 기능(회원가입시 임시이미지파일 등록)

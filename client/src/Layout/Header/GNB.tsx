@@ -1,5 +1,5 @@
 import { MouseEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import useLoginStore from '../../store/login';
 import { getUserIdFromToken } from '../../Util/getUserIdFromToken';
@@ -7,13 +7,14 @@ import { useGetUserProfile } from '../../Hook/useGetUserProfile';
 
 const GNB = () => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const [userIcon, setUserIcon] = useState<boolean>(false);
   const [menu, setMenu] = useState<boolean>(false);
   const { isLogin, setLogin, setLogout } = useLoginStore();
   const token = localStorage.getItem('ACCESS_TOKEN');
 
-  const userId = getUserIdFromToken(isLogin, token);
-  const { UserProfile } = useGetUserProfile(`${userId}`);
+  const userId = getUserIdFromToken(isLogin, token)?.toString();
+  const { UserProfile } = useGetUserProfile(userId);
 
   useEffect(() => {
     if (token) {
@@ -22,6 +23,11 @@ const GNB = () => {
       setLogout();
     }
   }, [isLogin]);
+
+  useEffect(() => {
+    setMenu(false);
+    setUserIcon(false);
+  }, [pathname]);
 
   const userOpen = () => {
     setUserIcon(prev => !prev);
@@ -70,13 +76,15 @@ const GNB = () => {
         {isLogin ? (
           <>
             <button className="mx-3" onClick={userOpen}>
-              {UserProfile && (
-                <img
-                  src={UserProfile!.profileImgUrl}
-                  alt="유저 메뉴 버튼"
-                  className="w-10 h-10 rounded-full"
-                />
-              )}
+              <img
+                src={
+                  UserProfile
+                    ? UserProfile!.profileImgUrl
+                    : 'https://s3.ap-northeast-2.amazonaws.com/petching.image/dog-5960092_1920.jpg'
+                }
+                alt="유저 메뉴 버튼"
+                className="w-10 h-10 rounded-full"
+              />
             </button>
           </>
         ) : (

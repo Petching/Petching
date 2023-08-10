@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { MyPetsType } from '../Components/User/MyPets';
-import axios from 'axios';
+import { Axios } from '../API/api';
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
+const BASE_URL = process.env.REACT_APP_API_SERVER;
 
 export const usePostMyPets = (userId: string) => {
   const queryClient = useQueryClient();
@@ -15,21 +15,14 @@ export const usePostMyPets = (userId: string) => {
       significant,
       petImgUrl,
     }: MyPetsType) => {
-      const token = localStorage.getItem('ACCESS_TOKEN');
-      await axios.post(
-        `${BASE_URL}/users/pets`,
-        {
-          name,
-          species,
-          gender,
-          age,
-          significant,
-          petImgUrl,
-        },
-        {
-          headers: { Authorization: token },
-        },
-      );
+      await Axios.post(`${BASE_URL}/users/pets`, {
+        name,
+        species,
+        gender,
+        age,
+        significant,
+        petImgUrl,
+      });
     },
     {
       onError: error => {

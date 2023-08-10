@@ -17,3 +17,20 @@ export interface UserToken {
   exp: number;
   iat: number;
 }
+
+export interface UserProfile {
+  nickName: string;
+  email: string;
+  profileImgUrl: string;
+  userDivision: boolean;
+  socialType: string;
+  address?: string;
+}
+
+export interface PatchUserProfile {
+  userId: string;
+  nickName: string;
+  password?: string;
+  address?: string;
+  profileImgUrl?: string;
+}
