@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Carousel from '../Components/Care/Carousel';
 
 const CareListDetail = () => {
