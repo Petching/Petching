@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { User, SignupData } from '../Util/types';
 import axios from 'axios';
-const BASE_URL = process.env.REACT_APP_BASE_URL;
+const BASE_URL = process.env.REACT_APP_API_SERVER;
 import { Axios } from '../API/api';
 
 export const checkUser = async () => {

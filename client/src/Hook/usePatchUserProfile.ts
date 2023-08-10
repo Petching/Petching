@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Axios } from '../API/api';
 import { PatchUserProfile } from '../Util/types';
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
+const BASE_URL = process.env.REACT_APP_API_SERVER;
 
 export const usePatchUserProfile = (userId: string) => {
   const queryClient = useQueryClient();
