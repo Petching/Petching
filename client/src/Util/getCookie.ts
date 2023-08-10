@@ -10,4 +10,9 @@ function getCookie(name: string): string {
   return cookieValue || '';
 }
 
-export { setCookie, getCookie };
+function removeCookie() {
+  document.cookie =
+    'REFRESH_TOKEN' + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+}
+
+export { setCookie, getCookie, removeCookie };

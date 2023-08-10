@@ -13,10 +13,13 @@ import { useNavigate } from 'react-router-dom';
 import { checkNickname } from '../../API/signUp';
 import { postImgHandler } from '../../Util/postImg';
 import { checkPw } from '../../API/user';
+import { removeCookie } from '../../Util/getCookie';
+import useLoginStore from '../../store/login';
 
 const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
   const navigate = useNavigate();
   const { UserProfile, GetUserProfileError } = useGetUserProfile(userId);
+  const { setLogout } = useLoginStore();
 
   const [onEdit, setOnEdit] = useState(false);
   const [changeImg, setChangeImg] = useState<string>(
@@ -123,6 +126,7 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
   };
 
   const deleteHandler = () => {
+    // 해당 훅에서 토큰 삭제, logout 처리 실행
     handlerDeleteUserProfile(userId);
     navigate('/');
   };
