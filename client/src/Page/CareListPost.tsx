@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import { Axios } from '../../src/API/api';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import ImageUploader from '../Components/Care/ImageUploader';
@@ -14,7 +13,7 @@ const CareListPost = () => {
   const [isPetsitter, setIsPetsitter] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [petSize, setPetSize] = useState('');
+  const [petSize, setPetSize] = useState<string[]>([]);
   const [memo, setMemo] = useState('');
   const [imgUrls, setImgUrls] = useState<string[]>([]);
 
@@ -62,7 +61,13 @@ const CareListPost = () => {
       });
     }
   };
-
+  const handlePetSizeClick = (size: string) => {
+    if (petSize.includes(size)) {
+      setPetSize(petSize.filter(s => s !== size));
+    } else {
+      setPetSize([...petSize.size]);
+    }
+  };
   return (
     <div className="bg-[#F2F2F2] w-full h-full min-h-screen text-xl">
       <div className="bg-[#F2F2F2] text-center">
