@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Axios } from '../API/api';
 import { UserProfile } from '../Util/types';
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
+const BASE_URL = process.env.REACT_APP_API_SERVER;
 
 export const useGetUserProfile = (userId: string | undefined) => {
   const {
