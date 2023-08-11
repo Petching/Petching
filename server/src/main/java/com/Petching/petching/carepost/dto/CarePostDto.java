@@ -103,7 +103,7 @@ public class CarePostDto {
     @Getter @AllArgsConstructor @Builder
     public static class MyPage {
         private String title;
-        private List<String> petSizes;
+        private String petSize;
         private List<String> imgUrls;
         private String profileImgUrl;
         private String nickName;

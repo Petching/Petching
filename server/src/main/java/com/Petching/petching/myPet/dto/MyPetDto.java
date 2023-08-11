@@ -1,5 +1,6 @@
 package com.Petching.petching.myPet.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,6 +28,17 @@ public class MyPetDto {
 
         private String petImgUrl;
 
+        @Builder
+        public Post(String name, String species, String gender, int age, String significant, String petImgUrl) {
+            this.name = name;
+            this.species = species;
+            this.gender = gender;
+            this.age = age;
+            this.significant = significant;
+            this.petImgUrl = petImgUrl;
+        }
+
+
     }
 
     @Getter
@@ -39,6 +51,17 @@ public class MyPetDto {
         private String significant;
         private String gender;
         private String petImgUrl;
+
+        @Builder
+        public Patch(long myPetId, String name, String species, int age, String significant, String gender, String petImgUrl) {
+            this.myPetId = myPetId;
+            this.name = name;
+            this.species = species;
+            this.age = age;
+            this.significant = significant;
+            this.gender = gender;
+            this.petImgUrl = petImgUrl;
+        }
     }
 
     @Getter @Setter
@@ -50,5 +73,16 @@ public class MyPetDto {
         private int age;
         private String significant;
         private String petImgUrl;
+
+        @Builder
+        public Response(long myPetId, String name, String species, String gender, int age, String significant, String petImgUrl) {
+            this.myPetId = myPetId;
+            this.name = name;
+            this.species = species;
+            this.gender = gender;
+            this.age = age;
+            this.significant = significant;
+            this.petImgUrl = petImgUrl;
+        }
     }
 }
