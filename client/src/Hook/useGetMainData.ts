@@ -17,6 +17,7 @@ export const useGetMainData = () => {
       const data = await axios.get(
         'https://server.petching.net/boards/recently-created',
       );
+      console.log(data);
       return data.data.data;
     },
     onError: () => {
