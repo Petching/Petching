@@ -9,6 +9,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import validator from 'validator';
+import petimg from '../../Style/icon_Pet.png';
 
 const SignComponent: React.FC = () => {
   const [message, setMessage] = useState('');
@@ -81,7 +82,9 @@ const SignComponent: React.FC = () => {
   return (
     <>
       <div className=" bg-white shadow-custom mx-auto flex flex-col  space-y-3 w-full h-full sm:w-full sm:h-full md:w-[600px] md:h-[700px] p-4 border border-#e0e0e0 rounded-3xl">
-        <div className="mt-11 mb-11 text-gray-300 font-semibold">펫칭</div>
+        <div className="mt-11 mb-11 text-gray-300 font-semibold">
+          <img src={petimg} />
+        </div>
         <div className="ml-4 text-left text-gray-300">아이디</div>
         <div className="flex items-center">
           <input
