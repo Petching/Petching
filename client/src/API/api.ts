@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getCookie } from '../Util/getCookie';
 
-const BASE_URL = process.env.REACT_APP_API_SERVER;
+export const BASE_URL = process.env.REACT_APP_API_SERVER;
 
 export const Axios = axios.create({
   baseURL: 'https://server.petching.net',
@@ -19,7 +19,7 @@ Axios.interceptors.request.use(
   async function (config) {
     const accessToken = localStorage.getItem('ACCESS_TOKEN');
     const refreshToken = getCookie('REFRESH_TOKEN');
-    console.log(refreshToken);
+    // console.log(refreshToken);
     if (!accessToken && refreshToken) {
       // 로그아웃 후 refreshToken은 있고, accessToken은 없음
       //refreshtoken만 보내줌
