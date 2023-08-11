@@ -64,6 +64,7 @@ Axios.interceptors.response.use(
   },
   function (error) {
     if (error.response.status === 401) {
+      alert('토큰이 만료되었습니다. 다시 로그인해주세요');
       window.location.href = `${BASE_URL}/signin`;
     } else {
       console.log('에러가 아닌 무언가');

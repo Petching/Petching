@@ -175,7 +175,8 @@ const SignComponent: React.FC = () => {
             !nickname ||
             message === '중복입니다' ||
             emailMessage === '중복된 이메일입니다' ||
-            emailMessage === '유효한 이메일 형식을 입력해야합니다'
+            emailMessage === '유효한 이메일 형식을 입력해야합니다' ||
+            passwordCheckMsg === '비밀번호가 일치하지 않습니다'
           }
           className={`ml-4 flex-2 bg-customGreen border border-gray-300 p-2 rounded text-white mr-7 hover:bg-green-500 ${
             !email ||
@@ -186,7 +187,7 @@ const SignComponent: React.FC = () => {
             emailMessage === '중복된 이메일입니다' ||
             emailMessage === '유효한 이메일 형식을 입력해야합니다'
               ? 'opacity-50 cursor-not-allowed'
-              : ''
+              : '' || passwordCheckMsg === '비밀번호가 일치하지 않습니다'
           }`}
         >
           회원가입하기
