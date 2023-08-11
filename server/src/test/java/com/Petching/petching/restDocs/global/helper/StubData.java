@@ -542,6 +542,41 @@ public class StubData {
                     2);
         }
 
+        public static CarePostDto.MyPage getCarePostMyPageDto() {
+
+            return CarePostDto.MyPage.builder()
+                    .title("this is title1")
+                    .petSizes(List.of("소형"))
+                    .imgUrls(imgUrls)
+                    .profileImgUrl("https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png")
+                    .nickName("nickname1")
+                    .locationTag("서울시 노원구")
+                    .build();
+
+        }
+
+        public static List<CarePostDto.MyPage> getCarePostMyPageListDto() {
+            CarePostDto.MyPage myPage1 = CarePostDto.MyPage.builder()
+                    .title("this is title1")
+                    .petSizes(List.of("소형"))
+                    .imgUrls(imgUrls)
+                    .profileImgUrl("https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png")
+                    .nickName("nickname1")
+                    .locationTag("서울시 노원구")
+                    .build();
+
+            CarePostDto.MyPage myPage2 = CarePostDto.MyPage.builder()
+                    .title("this is title2")
+                    .petSizes(List.of("소형", "중형"))
+                    .imgUrls(imgUrls)
+                    .profileImgUrl("https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_02.png")
+                    .nickName("nickname2")
+                    .locationTag("서울시 강남구")
+                    .build();
+
+
+            return List.of(myPage1, myPage2);
+        }
 
 
     }

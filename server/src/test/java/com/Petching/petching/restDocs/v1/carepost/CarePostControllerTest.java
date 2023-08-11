@@ -347,4 +347,55 @@ public class CarePostControllerTest implements CarePostControllerTestHelper {
                         )
                 );
     }
+
+
+    @DisplayName("Test - CarePostController - GET - MyPage")
+    @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
+    public void getMyPageTest() throws Exception {
+
+        // given
+        Page<CarePost> carePostPage = StubData.MockCarePost.getMultiResultBoard();
+        List<CarePostDto.MyPage> carePostDtoList = StubData.MockCarePost.getCarePostMyPageListDto();
+        List<CarePost> carePostList = StubData.MockCarePost.getMultiResultBoard().toList();
+
+        given(carePostService.findAllPost(Mockito.any(Pageable.class))).willReturn(carePostPage);
+        given(carePostService.findUserCarePost(Mockito.anyLong())).willReturn(carePostList);
+        given(carePostMapper.carePostsToCarePostMyPageDto(Mockito.anyList())).willReturn(carePostDtoList);
+
+        Long userId = 1L;
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                getRequestBuilder(getUserURI(), userId)
+        );
+
+
+
+        // then
+        actions
+                .andExpect(status().isOk())
+                .andDo(
+                        document("get-carePost-myPage",
+                                getRequestPreProcessor(),
+                                getResponsePreProcessor(),
+                                pathParameters(
+                                        getCarePostMyPageRequestPathParameterDescriptor()
+                                ),
+                                requestParameters(
+                                        getDefaultRequestParameterDescriptors()
+                                ),
+                                responseFields(
+                                        getFullPageResponseDescriptors(
+                                                getCarePostMyPageResponseDescriptors(DataResponseType.LIST)
+                                        )
+                                )
+
+                        )
+                ).andReturn();
+    }
+
+
+
+
 }
