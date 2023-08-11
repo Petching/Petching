@@ -46,7 +46,7 @@ const AddPet: React.FC<Props> = ({ open, setOpen, userId }) => {
       gender,
       age,
       significant,
-      petImgUrl: imgFiles && (await postImgHandler(imgFiles, 'profiles')),
+      petImgUrl: imgFiles && (await postImgHandler(imgFiles, 'mypets')),
     });
     setOpen(false);
     nameRef.current!.value = '';
