@@ -16,6 +16,7 @@ import GoogleLogin from './Components/Login/GoogleLogin';
 import CareList from './Page/CareList';
 import CareListPost from './Page/CareListPost';
 import CareListAsk from './Page/CareListAsk';
+import Inquery from './Page/Inquery';
 export const routers: RemixRouter = createBrowserRouter([
   {
     path: '/',
@@ -24,6 +25,10 @@ export const routers: RemixRouter = createBrowserRouter([
       {
         index: true,
         element: <Main />,
+      },
+      {
+        path: '/inquery',
+        element: <Inquery />,
       },
       {
         path: '/kakao',

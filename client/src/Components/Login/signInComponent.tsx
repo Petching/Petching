@@ -5,6 +5,7 @@ import kakaoLogo from '../../Style/kakaoLogo.png';
 import { authenticate } from '../../API/signIn';
 import { useNavigate } from 'react-router-dom';
 import useLoginStore from '../../store/login';
+import petimg from '../../Style/icon_Pet.png';
 
 const SignInComponent: React.FC = () => {
   const [message, setMessage] = useState('');
@@ -35,6 +36,7 @@ const SignInComponent: React.FC = () => {
   };
 
   const handleButtonClick = async () => {
+    //반환값을 success에 저장
     const success = await authenticate(email, password);
     if (success) {
       navigate('/');
@@ -47,7 +49,9 @@ const SignInComponent: React.FC = () => {
   return (
     <>
       <div className=" bg-white shadow-custom mx-auto flex flex-col  space-y-3 w-full h-full sm:w-full sm:h-full md:w-[600px] md:h-[700px] p-4 border border-#e0e0e0 rounded-3xl">
-        <div className="mt-11 mb-11 text-gray-300 font-semibold">펫칭</div>
+        <div className="mt-11 mb-11 text-gray-300 font-semibold">
+          <img src={petimg} />
+        </div>
         <div className="ml-4 text-left text-gray-300">아이디</div>
         <div className="flex items-center">
           <input
@@ -70,7 +74,7 @@ const SignInComponent: React.FC = () => {
         <br></br>
         <button
           onClick={handleButtonClick}
-          className="ml-4 flex-2 bg-customGreen border border-gray-300 p-3 rounded text-gray-500 mr-7 hover:bg-green-500"
+          className="ml-4 flex-2 bg-customGreen border border-gray-300 p-3 rounded text-gray-500 mr-7 hover:bg-hoverGreen"
         >
           로그인하기
         </button>
