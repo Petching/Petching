@@ -13,3 +13,10 @@ export const postImgHandler = async (
     .post(`${BASE_URL}/api/s3/uploads?uploadTo=${uploadTo}`, files)
     .then(res => res.data.data[0].uploadFileUrl);
 };
+
+export const deleteImgHandler = async (
+  url: string,
+  from: 'boards' | 'profiles' | 'careposts' | 'mypets',
+) => {
+  await axios.delete(`${BASE_URL}/api/s3/delete?from=${from}&url=${url}`);
+};
