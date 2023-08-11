@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDeleteMyPet } from '../../Hook/useDeleteMyPet';
 import { MyPetsType } from './MyPets';
 import { usePatchMyPet } from '../../Hook/usePatchMyPet';
-import { postImgHandler } from '../../Util/postImg';
+import { deleteImgHandler, postImgHandler } from '../../Util/postImg';
 import Warning from '../Common/Warning';
 
 const PetCard: React.FC<MyPetsType> = ({
@@ -59,13 +59,16 @@ const PetCard: React.FC<MyPetsType> = ({
   };
 
   const submitHandler = async () => {
+    if (imgFiles) {
+      deleteImgHandler(petImgUrl, 'mypets');
+    }
     handlerPatchMyPet({
       name: changeName,
       species: changeSpecies,
       gender: changeGender,
       age: changeAge,
       petImgUrl: imgFiles
-        ? await postImgHandler(imgFiles, 'profiles')
+        ? await postImgHandler(imgFiles, 'mypets')
         : petImgUrl,
       significant: changeSignificant,
       myPetId: myPetId,
@@ -75,11 +78,12 @@ const PetCard: React.FC<MyPetsType> = ({
 
   const deleteHandler = () => {
     setOnModal(false);
+    deleteImgHandler(petImgUrl, 'mypets');
     handlerDeleteMyPet();
   };
   return (
-    <div className="flex border p-4 rounded relative">
-      <div className="w-32 h-32 rounded overflow-hidden mr-3">
+    <div className="flex flex-col items-center border p-4 rounded relative sm:flex-row sm:items-start">
+      <div className="w-32 h-32 rounded overflow-hidden sm:mr-3 my-10 sm:my-0">
         {onEdit ? (
           <label className="w-32 h-32 rounded overflow-hidden border relative block cursor-pointer hover:border-4">
             <div className="absolute bottom-0 left-0 w-full h-1/2 bg-white text-center p-2 opacity-80">
@@ -107,7 +111,7 @@ const PetCard: React.FC<MyPetsType> = ({
           />
         )}
       </div>
-      <form>
+      <form className="w-2/3">
         <label className="flex flex-col">
           <p className="text-left text-gray-500 text-xs">이름</p>
           {onEdit ? (
