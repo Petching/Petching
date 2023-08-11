@@ -74,7 +74,7 @@ const SignInComponent: React.FC = () => {
         <br></br>
         <button
           onClick={handleButtonClick}
-          className="ml-4 flex-2 bg-customGreen border border-gray-300 p-3 rounded text-gray-500 mr-7 hover:bg-green-500"
+          className="ml-4 flex-2 bg-customGreen border border-gray-300 p-3 rounded text-gray-500 mr-7 hover:bg-hoverGreen"
         >
           로그인하기
         </button>

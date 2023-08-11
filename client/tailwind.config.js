@@ -15,6 +15,7 @@ module.exports = {
         customBlue: '#BAD7DF',
         kakaoYellow: '#F7E600',
         kakaoText: '#3A1D1D',
+        hoverGreen: '#52D2B3',
       },
     },
   },

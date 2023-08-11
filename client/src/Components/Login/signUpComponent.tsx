@@ -181,7 +181,7 @@ const SignComponent: React.FC = () => {
             emailMessage === '유효한 이메일 형식을 입력해야합니다' ||
             passwordCheckMsg === '비밀번호가 일치하지 않습니다'
           }
-          className={`ml-4 flex-2 bg-customGreen border border-gray-300 p-2 rounded text-white mr-7 hover:bg-green-500 ${
+          className={`ml-4 flex-2 bg-customGreen border border-gray-300 p-2 rounded text-white mr-7 hover:bg-hoverGreen ${
             !email ||
             !password ||
             !confirmPassword ||
