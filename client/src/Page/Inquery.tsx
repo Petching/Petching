@@ -5,6 +5,7 @@ import InqueryComponent from '../Components/Inquery/InqueryComponent';
 import { useNavigate } from 'react-router-dom';
 import QuestionSection from '../Components/Inquery/QuestionSection';
 import { GoToFunction } from '../Util/types';
+import SearchInput from '../Components/Inquery/SearchInput';
 
 const Inquery = () => {
   const navi = useNavigate();
@@ -19,10 +20,7 @@ const Inquery = () => {
         <div className=" text-[40px] mb-4 flex items-center p-5">
           자주 묻는 질문
         </div>
-        <input
-          className=" w-full h-[100px] sm:w-full sm:h-[100px] md:w-[500px] md:h-[60px] rounded-3xl"
-          placeholder="검색어를 입력해주세요"
-        />
+        <SearchInput />
         <QuestionSection goTo={goTo} />
       </div>
       <section className=" flex flex-col items-center justify-center bg-#e0e0e0">

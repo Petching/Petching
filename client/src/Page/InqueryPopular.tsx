@@ -6,6 +6,7 @@ import QuestionSection from '../Components/Inquery/QuestionSection';
 import { useNavigate } from 'react-router-dom';
 import { GoToFunction } from '../Util/types';
 import { dummyData } from '../Components/Inquery/dummyData';
+import SearchInput from '../Components/Inquery/SearchInput';
 
 const InqueryPopular = () => {
   const navi = useNavigate();
@@ -26,10 +27,7 @@ const InqueryPopular = () => {
           {/* <img src={doctor} /> */}
           자주 묻는 질문
         </div>
-        <input
-          className=" w-full h-[100px] sm:w-full sm:h-[100px] md:w-[500px] md:h-[60px] rounded-3xl"
-          placeholder="검색어를 입력해주세요"
-        />
+        <SearchInput />
         <QuestionSection goTo={goTo} />
       </div>
       <div className="flex justify-center items-center text-2xl mt-4 text-gray-400">
