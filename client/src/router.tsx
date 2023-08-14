@@ -17,6 +17,7 @@ import CareList from './Page/CareList';
 import CareListPost from './Page/CareListPost';
 import CareListAsk from './Page/CareListAsk';
 import Inquery from './Page/Inquery';
+import InqueryPopular from './Page/InqueryPopular';
 export const routers: RemixRouter = createBrowserRouter([
   {
     path: '/',
@@ -29,6 +30,14 @@ export const routers: RemixRouter = createBrowserRouter([
       {
         path: '/inquery',
         element: <Inquery />,
+      },
+      {
+        path: '/inquery/popular',
+        element: <InqueryPopular />,
+      },
+      {
+        path: '/inquery/first',
+        element: <InqueryPopular />,
       },
       {
         path: '/kakao',

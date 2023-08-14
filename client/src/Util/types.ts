@@ -34,3 +34,12 @@ export interface PatchUserProfile {
   address?: string;
   profileImgUrl?: string;
 }
+
+export type GoToFunction = (path: string) => void;
+
+export type DummyDataItem = {
+  id: number;
+  q: string;
+  a: string;
+  조회수: number;
+};
