@@ -6,7 +6,7 @@ import QuestionSection from '../Components/Inquery/QuestionSection';
 import { useNavigate } from 'react-router-dom';
 import { GoToFunction } from '../Util/types';
 
-const InqueryFirst = () => {
+const InqueryFind = () => {
   const navi = useNavigate();
   const goTo: GoToFunction = (path: string) => {
     navi(path);
@@ -41,4 +41,4 @@ const InqueryFirst = () => {
   );
 };
 
-export default InqueryFirst;
+export default InqueryFind;
