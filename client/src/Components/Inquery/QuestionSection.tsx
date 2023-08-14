@@ -1,6 +1,4 @@
 import React from 'react';
-import { AiFillCaretDown } from 'react-icons/ai';
-import { useState } from 'react';
 import { GoToFunction } from '../../Util/types';
 
 interface QuestionSectionProps {
