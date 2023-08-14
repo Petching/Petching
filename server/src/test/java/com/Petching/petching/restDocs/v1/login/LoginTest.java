@@ -80,9 +80,15 @@ public class LoginTest implements LoginTestHelper {
     @MockBean
     private UserService userService;
 
+
+    /**
+     * login test 구현 필요
+     *
+     */
     @DisplayName("Test - Login - POST")
     @Test
-    @WithMockUser(username = "email@example.com", password = "exPassword",roles = "admin")    public void loginTest() throws Exception {
+    @WithMockUser(username = "email@example.com", password = "exPassword",roles = "admin")
+    public void loginTest() throws Exception {
 
         this.createUser();
 
