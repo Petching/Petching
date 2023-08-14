@@ -70,7 +70,7 @@ export const routers: RemixRouter = createBrowserRouter([
         element: <CareListPost />,
       },
       {
-        path: '/carelistDetail',
+        path: '/carelistDetai/:id',
         element: <CareListDetail />,
       },
     ],

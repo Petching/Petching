@@ -1,5 +1,4 @@
 import Carousel from '../Components/Care/Carousel';
-import maltese1 from '../Style/maltese1.jpg';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
