@@ -2,6 +2,7 @@ import Carousel from '../Components/Care/Carousel';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import DatePicker from 'react-modern-calendar-datepicker';
 
 const CareListDetail = () => {
   const [title, setTitle] = useState('');
