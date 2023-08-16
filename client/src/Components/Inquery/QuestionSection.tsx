@@ -11,32 +11,32 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({ goTo }) => {
       <div className="flex h-1/2">
         <button
           onClick={() => goTo && goTo('/inquery')}
-          className="flex-1 flex justify-center items-center hover:bg-green-100"
+          className="flex-1 flex justify-center items-center hover:bg-InqueryComponentButton"
         >
           질문 홈
         </button>
         {/* goTo &&를 써서 null, false 등이 값이 아닌걸 확인 */}
         <button
           onClick={() => goTo && goTo('/inquery/popular')}
-          className="flex-1 flex justify-center items-center hover:bg-green-100"
+          className="flex-1 flex justify-center items-center hover:bg-InqueryComponentButton"
         >
           인기질문
         </button>
         <button
-          onClick={() => goTo && goTo('/inquery/first')}
-          className="flex-1 flex justify-center items-center hover:bg-green-100"
+          // onClick={() => goTo && goTo('/inquery/find')}
+          className="flex-1 flex justify-center items-center hover:bg-InqueryComponentButton"
         >
           이용 가이드
         </button>
       </div>
       <div className="flex  h-1/2">
-        <button className="flex-1 flex justify-center items-center hover:bg-green-100">
+        <button className="flex-1 flex justify-center items-center hover:bg-InqueryComponentButton">
           준비중
         </button>
-        <button className="flex-1 flex justify-center items-center hover:bg-green-100">
+        <button className="flex-1 flex justify-center items-center hover:bg-InqueryComponentButton">
           준비중
         </button>
-        <button className="flex-1 flex justify-center items-center hover:bg-green-100">
+        <button className="flex-1 flex justify-center items-center hover:bg-InqueryComponentButton">
           준비중
         </button>
       </div>

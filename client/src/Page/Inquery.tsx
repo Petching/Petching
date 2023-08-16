@@ -6,25 +6,31 @@ import { useNavigate } from 'react-router-dom';
 import QuestionSection from '../Components/Inquery/QuestionSection';
 import { GoToFunction } from '../Util/types';
 import SearchInput from '../Components/Inquery/SearchInput';
-
+import { useState } from 'react';
+import useStore from '../store/useSearchStore';
+// import { useSearchStore } from '../store/useSearchStore';
 const Inquery = () => {
   const navi = useNavigate();
-
+  const { inputValue } = useStore();
   const goTo: GoToFunction = (path: string) => {
     navi(path);
   };
 
+  const [search, setSearch] = useState('');
+
+  console.log(search);
   return (
     <>
-      <div className=" flex flex-col justify-center items-center h-[60vh] bg-customGreen p-5">
+      <div className="flex flex-col justify-center items-center h-[60vh] bg-InqueryMain p-5">
         <div className=" text-[40px] mb-4 flex items-center p-5">
           자주 묻는 질문
         </div>
-        <SearchInput />
+        <SearchInput search={setSearch} />
         <QuestionSection goTo={goTo} />
       </div>
       <section className=" flex flex-col items-center justify-center bg-#e0e0e0">
-        <InqueryComponent />
+        {/* <InqueryComponent search={inputValue} /> */}
+        <InqueryComponent search={search} />
       </section>
       <section className="flex justify-left h-[20vh] bg-gray-100 p-10 inset-x-0 bottom-0">
         <div className="flex flex-col items-left">
