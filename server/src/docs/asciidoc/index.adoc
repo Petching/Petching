@@ -1,4 +1,4 @@
-== API Documentation
+= API Documentation
 ifndef::snippets[]
 :snippets: ./build/generated-snippets
 endif::[]
