@@ -93,6 +93,7 @@ public interface CarePostMapper {
         String locationTag = null;
         String nickName = null;
         String profileImgUrl = null;
+        Long postId = null;
 
 
         title = carePost.getTitle();
@@ -109,6 +110,7 @@ public interface CarePostMapper {
         locationTag = carePost.getLocationTag();
         nickName = carePost.getUser().getNickName();
         profileImgUrl = carePost.getUser().getProfileImgUrl();
+        postId = carePost.getPostId();
 
 
 
@@ -131,6 +133,7 @@ public interface CarePostMapper {
 
         CarePostDto.Response response =
                 CarePostDto.Response.builder()
+                        .postId(postId)
                         .title(title)
                         .content(content)
                         .imgUrls(imgUrls)
