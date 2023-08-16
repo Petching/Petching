@@ -157,6 +157,37 @@ include::{snippets}/get-carePost-search/http-request.adoc[]
 include::{snippets}/get-carePost-search/http-response.adoc[]
 
 ---
+=== 게시물 삭제 API
+
+[discrete]
+==== `Request`
+[source,http]
+----
+GET: /careposts/{post-id}
+----
+
+.path-parameters
+include::{snippets}/delete-carePost/path-parameters.adoc[]
+.request-headers
+include::{snippets}/delete-carePost/request-headers.adoc[]
+
+
+[discrete]
+==== `Response`
+
+.http-response
+include::{snippets}/delete-carePost/http-response.adoc[]
+
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/delete-carePost/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/delete-carePost/http-response.adoc[]
+
+---
 
 === 게시물 마이페이지 조회 API
 

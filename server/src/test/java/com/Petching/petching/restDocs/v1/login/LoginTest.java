@@ -80,6 +80,9 @@ public class LoginTest implements LoginTestHelper {
     @MockBean
     private UserService userService;
 
+    @MockBean
+    private SecurityConfiguration securityConfiguration;
+
 
     /**
      * login test 구현 필요
@@ -102,7 +105,7 @@ public class LoginTest implements LoginTestHelper {
                     postRequestBuilder(getUrl(), content)
         ).andDo(print());
 
-        System.out.println("actions : " + actions.andReturn().getResponse().getHeaderNames());
+        System.out.println("actions : " + actions.andReturn().getResponse());
 
     }
 

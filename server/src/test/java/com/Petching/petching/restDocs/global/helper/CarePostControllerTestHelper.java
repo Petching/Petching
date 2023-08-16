@@ -134,6 +134,7 @@ public interface CarePostControllerTestHelper extends ControllerTestHelper{
         String parentPath = getDataParentPath(dataResponseType);
 
         return List.of(
+                fieldWithPath(parentPath.concat("postId")).type(JsonFieldType.NUMBER).description("게시글 식별자 ID"),
                 fieldWithPath(parentPath.concat("title")).type(JsonFieldType.STRING).description("제목"),
                 fieldWithPath(parentPath.concat("content")).type(JsonFieldType.STRING).description("내용"),
                 fieldWithPath(parentPath.concat("imgUrls[]")).type(JsonFieldType.ARRAY).description("올릴 사진").optional(),
@@ -159,6 +160,7 @@ public interface CarePostControllerTestHelper extends ControllerTestHelper{
         String parentPath = getDataParentPath(dataResponseType);
 
         return List.of(
+                fieldWithPath(parentPath.concat("postId")).type(JsonFieldType.NUMBER).description("게시글 식별자 ID"),
                 fieldWithPath(parentPath.concat("title")).type(JsonFieldType.STRING).description("제목"),
                 fieldWithPath(parentPath.concat("content")).type(JsonFieldType.STRING).description("내용"),
                 fieldWithPath(parentPath.concat("imgUrls[]")).type(JsonFieldType.ARRAY).description("올릴 사진").optional(),
