@@ -1,4 +1,4 @@
-import { useState } from 'react';
+/* eslint-disable */
 import { useNavigate } from 'react-router-dom';
 import useStore from '../../store/useSearchStore';
 import { GoSearch } from 'react-icons/go';

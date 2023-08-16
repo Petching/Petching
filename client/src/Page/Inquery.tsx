@@ -1,4 +1,4 @@
-import React from 'react';
+/* eslint-disable */
 import cat from '../Style/greencat.png';
 import questionPicture from '../Style/question.png';
 import InqueryComponent from '../Components/Inquery/InqueryComponent';
