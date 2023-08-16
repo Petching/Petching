@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React from 'react';
 import { AiFillCaretDown } from 'react-icons/ai';
 import { useState } from 'react';
@@ -6,20 +8,27 @@ import { DummyDataItem } from '../../Util/types';
 
 interface InqueryComponentProps {
   data?: DummyDataItem[];
+  search?: string;
 }
 
 const InqueryComponent: React.FC<InqueryComponentProps> = ({
   data = dummyData,
+  search,
 }) => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
-
+  console.log(data, search);
+  const filteredData = data.filter(item =>
+    item.q.toLowerCase().includes((search || '').toLowerCase()),
+  );
+  console.log(filteredData);
   return (
     <>
       <div className="flex flex-col p-6 justify-center items-center w-[90vw]">
-        <div className="text-lg mb-6">총 {data.length}개의 질문</div>
-        {data.map((item, index) => (
-          <>
-            <div key={item.id}>
+        <div className="text-lg mb-6">총 {filteredData.length}개의 질문</div>
+        {/* dummydata/data/filteredData 순으로 바뀌었음 */}
+        {filteredData.map((item, index) => (
+          <div key={item.id}>
+            <div>
               <div className="flex p-3 text-3xl">
                 Q. {item.q}
                 <button
@@ -41,7 +50,7 @@ const InqueryComponent: React.FC<InqueryComponentProps> = ({
                 </div>
               )}
             </div>
-          </>
+          </div>
         ))}
       </div>
     </>

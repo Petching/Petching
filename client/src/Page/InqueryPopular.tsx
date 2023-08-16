@@ -7,13 +7,13 @@ import { useNavigate } from 'react-router-dom';
 import { GoToFunction } from '../Util/types';
 import { dummyData } from '../Components/Inquery/dummyData';
 import SearchInput from '../Components/Inquery/SearchInput';
-
+import { useState } from 'react';
 const InqueryPopular = () => {
   const navi = useNavigate();
   const goTo: GoToFunction = (path: string) => {
     navi(path);
   };
-
+  const [search, setSearch] = useState('');
   // dummyData 배열을 조회수를 기준으로 내림차순으로 정렬
   const sortedData = [...dummyData].sort((a, b) => b.조회수 - a.조회수);
 
@@ -22,19 +22,19 @@ const InqueryPopular = () => {
 
   return (
     <>
-      <div className=" flex flex-col justify-center items-center  h-[60vh] bg-customGreen p-5">
+      <div className=" flex flex-col justify-center items-center  h-[60vh] bg-InqueryMain p-5">
         <div className=" text-[40px] mb-4 flex items-center p-5">
           {/* <img src={doctor} /> */}
           자주 묻는 질문
         </div>
-        <SearchInput />
+        <SearchInput search={setSearch} />
         <QuestionSection goTo={goTo} />
       </div>
       <div className="flex justify-center items-center text-2xl mt-4 text-gray-400">
         조회수 상위 10개의 질문만 표시됩니다
       </div>
       <section className="flex flex-col items-center justify-center bg-#e0e0e0">
-        <InqueryComponent data={top10Data} />
+        <InqueryComponent data={top10Data} search={search} />
       </section>
       <section className="flex justify-left h-[20vh] bg-gray-100 p-10 overflow-hidden">
         <div className="flex flex-col items-left">
