@@ -30,7 +30,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ search }) => {
       <GoSearch className="absolute bsolute left-3 top-[50%] transform -translate-y-[50%] text-gray-400 z-10" />
       <input
         className=" pl-8 w-full h-[100px] sm:w-full sm:h-[100px] md:w-[500px] md:h-[60px] rounded-2xl"
-        placeholder="검색어를 입력해주세요"
+        placeholder="궁금한 질문을 검색으로 빠르게 찾아보세요"
         onChange={e => {
           setInputValue(e.target.value);
           console.log('Updated inputValue:', e.target.value);
@@ -40,7 +40,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ search }) => {
       ></input>
       <button
         onClick={handleSearch}
-        className=" w-[55px] h-[42px] ml-2 rounded-xl bg-[#D5F5A9] hover:bg-customHoverGreen"
+        className=" w-[55px] h-[42px] ml-2 rounded-xl bg-[#EEEEE0] hover:bg-[#D4D4C7]"
       >
         검색
       </button>
