@@ -74,10 +74,7 @@ const CareListPost = () => {
         <div>찾으시는 지역</div>
         <Postcode onAddressSelected={setLocationTag} value={locationTag} />
         <div>언제 맡기시나요?</div>
-        <ReactCalendar
-          onDateSelected={onDateSelected}
-          value={{ from: startDate, to: endDate }}
-        />
+        <ReactCalendar onDateSelected={onDateSelected} />
       </div>
       <div className="bg-white mt-10 text-center">
         <div>펫을 맡기시나요?</div>
