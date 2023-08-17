@@ -15,7 +15,7 @@ import PeacockWrite from './Page/peacockWrite';
 import GoogleLogin from './Components/Login/GoogleLogin';
 import CareList from './Page/CareList';
 import CareListPost from './Page/CareListPost';
-import CareListAsk from './Page/CareListAsk';
+import CareListDetail from './Page/CareListDetail';
 import Inquery from './Page/Inquery';
 import InqueryPopular from './Page/InqueryPopular';
 import InqueryFind from './Page/InqueryFind';
@@ -90,8 +90,8 @@ export const routers: RemixRouter = createBrowserRouter([
         element: <CareListPost />,
       },
       {
-        path: '/carelistask',
-        element: <CareListAsk />,
+        path: '/carelistDetail/:postId',
+        element: <CareListDetail />,
       },
     ],
   },
