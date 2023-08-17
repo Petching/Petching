@@ -6,8 +6,9 @@ const Info = () => {
     navigate('/carelist');
   };
   return (
-    <div className="w-full h-full flex justify-center items-center">
-      <div className="sm:w-1/4 -mt-20 w-3/4">
+    <div className="w-full h-full flex justify-center items-center relative">
+      <div className="absolute top-0 left-0 w-full h-full bg-[url(https://media.discordapp.net/attachments/1118151636695650308/1141566260539310101/pexels-photo-16395147.png?width=1236&height=822)] opacity-40 bg-cover bg-no-repeat bg-center"></div>
+      <div className="sm:w-1/4 -mt-20 w-3/4 relative z-10 ">
         <p className="text-center text-2xl">
           소중한 우리 댕냥이
           <br />
