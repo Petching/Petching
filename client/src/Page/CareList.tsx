@@ -4,7 +4,6 @@ import ReactCalendar from '../Components/Care/ReactCalendar';
 import Postcode from '../Components/Care/Postcode';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useCallback } from 'react';
 
 interface Date {
   year: number;
@@ -66,8 +65,8 @@ const CareList = () => {
     navigate('/carelistpost', { state: { startDate, endDate, locationTag } });
   };
 
-  const toCareListDetail = (id: number) => {
-    navigate(`/carelistdetail/${id}`);
+  const toCareListDetail = (postId: number) => {
+    navigate(`/carelistdetail/${postId}`);
   };
 
   const fetchAllPosts = async () => {
@@ -127,7 +126,7 @@ const CareList = () => {
       </div>
       <div className="flex flex-wrap justify-center">
         {cardData.map((cardData, index) => (
-          <div key={index} onClick={() => toCareListDetail(cardData.id)}>
+          <div key={index} onClick={() => toCareListDetail(cardData.postId)}>
             <Card
               key={index}
               title={cardData.title}

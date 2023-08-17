@@ -3,10 +3,16 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
+interface Date {
+  year: number;
+  month: number;
+  day: number;
+}
+
 const CareListDetail = () => {
   const [title, setTitle] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
   const [locationTag, setLocationTag] = useState('');
   const [petSizes, setPetSizes] = useState([]);
   const [content, setContent] = useState('');
@@ -14,12 +20,12 @@ const CareListDetail = () => {
   const [profileImgUrl, setProfileImgUrl] = useState('');
   const [imgUrls, setImgUrls] = useState<string[]>([]);
 
-  const { id } = useParams<{ id: string }>();
+  const { postId } = useParams<{ postId: string }>();
 
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `https://server.petching.net/careposts/${id}`,
+        `https://server.petching.net/careposts/${postId}`,
       );
       const data = response.data.data;
 
@@ -39,7 +45,7 @@ const CareListDetail = () => {
 
   useEffect(() => {
     fetchData();
-  }, [id]);
+  }, [postId]);
 
   return (
     <div className="bg-[#F2F2F2] w-full h-full min-h-screen text-xl">
@@ -50,8 +56,11 @@ const CareListDetail = () => {
             <img className="w-20 " src={profileImgUrl}></img>
             <div>{nickName}</div>
             <div>{title}</div>
+
             <div>
-              {startDate}~{endDate}
+              {startDate && endDate
+                ? `${startDate.year}-${startDate.month}-${startDate.day} ~ ${endDate.year}-${endDate.month}-${endDate.day}`
+                : '날짜 정보를 불러오는 중...'}
             </div>
             <button className="bg-customGreen rounded-full">
               {locationTag}
