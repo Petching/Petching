@@ -14,6 +14,7 @@ env:
   REACT_APP_KAKAO_REDIRECT_URL: ${{secrets.KAKAO_REDIRECT_URL}}
   REACT_APP_GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
   REACT_APP_GOOGLE_REDIRECT_URL: ${{secrets.GOOGLE_REDIRECT_URL}}
+  REACT_APP_KAKAO_MAP: ${{secrets.REACT_APP_KAKAO_MAP}}
 jobs:
   build:
     runs-on: ubuntu-latest
