@@ -61,14 +61,18 @@ const CareList = () => {
     }
   };
 
-  const toCareListDetail = () => {
+  const toCareListPost = () => {
     navigate('/carelistpost', { state: { startDate, endDate, locationTag } });
+  };
+
+  const toCareListDetail = (postId: number) => {
+    navigate(`/carelistdetail/${postId}`);
   };
 
   const fetchAllPosts = async () => {
     try {
       const response = await axios.get(
-        'https://server.petching.net/careposts?page=0&size=10',
+        `https://server.petching.net/careposts?page=0&size=10`,
       );
       setCardData(response.data.data);
     } catch (error) {
@@ -113,7 +117,7 @@ const CareList = () => {
             </button>
             <button
               className="w-[7rem] h-7 bg-customGreen shadow-sm shadow-gray-400 rounded-full mr-1"
-              onClick={toCareListDetail}
+              onClick={toCareListPost}
             >
               글작성
             </button>
@@ -122,15 +126,17 @@ const CareList = () => {
       </div>
       <div className="flex flex-wrap justify-center">
         {cardData.map((cardData, index) => (
-          <Card
-            key={index}
-            title={cardData.title}
-            locationTag={cardData.locationTag}
-            petSize={cardData.petSize}
-            nickName={cardData.nickName}
-            profileImgUrl={cardData.profileImgUrl}
-            imgUrls={cardData.imgUrls}
-          />
+          <div key={index} onClick={() => toCareListDetail(cardData.postId)}>
+            <Card
+              key={index}
+              title={cardData.title}
+              locationTag={cardData.locationTag}
+              petSize={cardData.petSize}
+              nickName={cardData.nickName}
+              profileImgUrl={cardData.profileImgUrl}
+              imgUrls={cardData.imgUrls}
+            />
+          </div>
         ))}
       </div>
     </div>
