@@ -73,4 +73,5 @@ public interface BoardMapper {
 
         return response.build();
     }
+    List<BoardDto.Response> listToListResponseDto (List<Board> boards);
 }
