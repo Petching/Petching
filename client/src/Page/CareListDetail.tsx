@@ -50,13 +50,14 @@ const CareListDetail = () => {
   return (
     <div className="bg-[#F2F2F2] w-full h-full min-h-screen text-xl">
       <div>
-        <Carousel imgUrls={imgUrls} />
+        <div className="mx-auto w-60">
+          <Carousel imgUrls={imgUrls} />
+        </div>
         <div className="bg-[#F2F2F2] text-center">
           <div className="bg-white mt-5">
             <img className="w-20 " src={profileImgUrl}></img>
             <div>{nickName}</div>
             <div>{title}</div>
-
             <div>
               {startDate && endDate
                 ? `${startDate.year}-${startDate.month}-${startDate.day} ~ ${endDate.year}-${endDate.month}-${endDate.day}`
