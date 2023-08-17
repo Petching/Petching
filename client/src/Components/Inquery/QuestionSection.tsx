@@ -23,7 +23,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({ goTo }) => {
           인기질문
         </button>
         <button
-          // onClick={() => goTo && goTo('/inquery/map')}
+          onClick={() => goTo && goTo('/inquery/map')}
           className="flex-1 flex justify-center items-center hover:bg-InqueryComponentButton"
         >
           만남의 장소
