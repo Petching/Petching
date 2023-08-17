@@ -31,6 +31,6 @@ export const authenticate = async (email: string, password: string) => {
     }
   } catch (error) {
     console.error(error);
-    throw error;
+    return false;
   }
 };

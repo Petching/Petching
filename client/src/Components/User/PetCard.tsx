@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { useDeleteMyPet } from '../../Hook/useDeleteMyPet';
 import { MyPetsType } from './MyPets';
 import { usePatchMyPet } from '../../Hook/usePatchMyPet';
-import { postImgHandler } from '../../Util/postImg';
+import { deleteImgHandler, postImgHandler } from '../../Util/postImg';
+import Warning from '../Common/Warning';
 
 const PetCard: React.FC<MyPetsType> = ({
   name,
@@ -25,6 +26,7 @@ const PetCard: React.FC<MyPetsType> = ({
   const [changeSignificant, setChangeSignificant] =
     useState<string>(significant);
   const [imgFiles, setImgFiles] = useState<File>();
+  const [onModal, setOnModal] = useState<boolean>(false);
 
   const changeImgHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.currentTarget;
@@ -57,13 +59,16 @@ const PetCard: React.FC<MyPetsType> = ({
   };
 
   const submitHandler = async () => {
+    if (imgFiles) {
+      deleteImgHandler(petImgUrl, 'mypets');
+    }
     handlerPatchMyPet({
       name: changeName,
       species: changeSpecies,
       gender: changeGender,
       age: changeAge,
       petImgUrl: imgFiles
-        ? await postImgHandler(imgFiles, 'profiles')
+        ? await postImgHandler(imgFiles, 'mypets')
         : petImgUrl,
       significant: changeSignificant,
       myPetId: myPetId,
@@ -72,11 +77,13 @@ const PetCard: React.FC<MyPetsType> = ({
   };
 
   const deleteHandler = () => {
+    setOnModal(false);
+    deleteImgHandler(petImgUrl, 'mypets');
     handlerDeleteMyPet();
   };
   return (
-    <div className="flex border p-4 rounded relative">
-      <div className="w-32 h-32 rounded overflow-hidden mr-3">
+    <div className="flex flex-col items-center border p-4 rounded relative sm:flex-row sm:items-start">
+      <div className="w-32 h-32 rounded overflow-hidden sm:mr-3 my-10 sm:my-0">
         {onEdit ? (
           <label className="w-32 h-32 rounded overflow-hidden border relative block cursor-pointer hover:border-4">
             <div className="absolute bottom-0 left-0 w-full h-1/2 bg-white text-center p-2 opacity-80">
@@ -104,7 +111,7 @@ const PetCard: React.FC<MyPetsType> = ({
           />
         )}
       </div>
-      <form>
+      <form className="w-2/3">
         <label className="flex flex-col">
           <p className="text-left text-gray-500 text-xs">이름</p>
           {onEdit ? (
@@ -158,32 +165,6 @@ const PetCard: React.FC<MyPetsType> = ({
             <p>{age}</p>
           )}
         </label>
-        {/* <label className="flex flex-col">
-          <p className="text-left text-gray-500 text-xs">몸무게</p>
-          {onEdit ? (
-            <input
-              value={changeWeight}
-              name="weight"
-              onChange={changeHandler}
-              className="border border-gray-300 rounded mr-2 block"
-            />
-          ) : (
-            <p>{weight}</p>
-          )}
-        </label> */}
-        {/* <label className="flex flex-col">
-          <p className="text-left text-gray-500 text-xs">백신여부</p>
-          {onEdit ? (
-            <input
-              value={changeVaccination}
-              name="vaccination"
-              onChange={changeHandler}
-              className="border border-gray-300 rounded mr-2 block"
-            />
-          ) : (
-            <p>{vaccination}</p>
-          )}
-        </label> */}
         <label className="flex flex-col">
           <p className="text-left text-gray-500 text-xs">그외사항</p>
           {onEdit ? (
@@ -228,11 +209,19 @@ const PetCard: React.FC<MyPetsType> = ({
         )}
         <button
           className="mr-3 text-slate-400 hover:text-red-700"
-          onClick={deleteHandler}
+          onClick={() => setOnModal(true)}
         >
           삭제
         </button>
       </div>
+      {onModal && (
+        <Warning
+          title="펫 카드 삭제"
+          sub={`${name} 카드를 삭제하시겠습니까?`}
+          fn={deleteHandler}
+          setState={setOnModal}
+        />
+      )}
     </div>
   );
 };
