@@ -1,8 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { MyPetsType } from '../Components/User/MyPets';
-import { Axios } from '../API/api';
-
-const BASE_URL = process.env.REACT_APP_API_SERVER;
+import { Axios, BASE_URL } from '../API/api';
 
 export const usePostMyPets = (userId: string) => {
   const queryClient = useQueryClient();

@@ -4,6 +4,7 @@ import { RxHamburgerMenu } from 'react-icons/rx';
 import useLoginStore from '../../store/login';
 import { getUserIdFromToken } from '../../Util/getUserIdFromToken';
 import { useGetUserProfile } from '../../Hook/useGetUserProfile';
+import { removeCookie } from '../../Util/getCookie';
 
 const GNB = () => {
   const navigate = useNavigate();
@@ -51,6 +52,7 @@ const GNB = () => {
   const logoutHandler = () => {
     localStorage.removeItem('ACCESS_TOKEN');
     setLogout();
+    removeCookie();
     navigate('/');
     setMenu(false);
     setUserIcon(false);

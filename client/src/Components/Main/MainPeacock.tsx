@@ -9,8 +9,8 @@ const MainPeacock = () => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center md:flex-row">
-      <div className="w-1/5 -mt-20">
+    <div className="w-full h-full flex flex-col justify-center items-center sm:flex-row">
+      <div className="w-4/5 sm:w-1/5 -mt-20">
         <p className="text-center text-xl">
           당신의 반려동물을 <br />
           자랑하고 <br />

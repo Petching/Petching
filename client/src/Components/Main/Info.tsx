@@ -7,7 +7,7 @@ const Info = () => {
   };
   return (
     <div className="w-full h-full flex justify-center items-center">
-      <div className="w-1/4 -mt-20">
+      <div className="sm:w-1/4 -mt-20 w-3/4">
         <p className="text-center text-2xl">
           소중한 우리 댕냥이
           <br />

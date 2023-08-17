@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getCookie } from '../Util/getCookie';
 
-const BASE_URL = process.env.REACT_APP_API_SERVER;
+export const BASE_URL = process.env.REACT_APP_API_SERVER;
 
 export const Axios = axios.create({
   baseURL: 'https://server.petching.net',
@@ -19,7 +19,7 @@ Axios.interceptors.request.use(
   async function (config) {
     const accessToken = localStorage.getItem('ACCESS_TOKEN');
     const refreshToken = getCookie('REFRESH_TOKEN');
-    console.log(refreshToken);
+    // console.log(refreshToken);
     if (!accessToken && refreshToken) {
       // 로그아웃 후 refreshToken은 있고, accessToken은 없음
       //refreshtoken만 보내줌
@@ -45,7 +45,7 @@ Axios.interceptors.request.use(
         console.error(error);
       }
     } else if (accessToken) {
-      // 액세스 토큰이 있다면 요청 헤더에 추가
+      // 액세스 토큰, 리프레시 토큰이 있다면 요청 헤더에 추가
       config.headers['Authorization'] = `Bearer ${accessToken}`;
     } else {
       console.log('아무것도 아닙니다');
@@ -64,6 +64,7 @@ Axios.interceptors.response.use(
   },
   function (error) {
     if (error.response.status === 401) {
+      alert('토큰이 만료되었습니다. 다시 로그인해주세요');
       window.location.href = `${BASE_URL}/signin`;
     } else {
       console.log('에러가 아닌 무언가');

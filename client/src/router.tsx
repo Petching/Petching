@@ -16,6 +16,10 @@ import GoogleLogin from './Components/Login/GoogleLogin';
 import CareList from './Page/CareList';
 import CareListPost from './Page/CareListPost';
 import CareListDetail from './Page/CareListDetail';
+import Inquery from './Page/Inquery';
+import InqueryPopular from './Page/InqueryPopular';
+import InqueryFind from './Page/InqueryFind';
+
 export const routers: RemixRouter = createBrowserRouter([
   {
     path: '/',
@@ -24,6 +28,18 @@ export const routers: RemixRouter = createBrowserRouter([
       {
         index: true,
         element: <Main />,
+      },
+      {
+        path: '/inquery',
+        element: <Inquery />,
+      },
+      {
+        path: '/inquery/popular',
+        element: <InqueryPopular />,
+      },
+      {
+        path: '/inquery/find',
+        element: <InqueryFind />,
       },
       {
         path: '/kakao',
