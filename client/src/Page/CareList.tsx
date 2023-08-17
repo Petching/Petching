@@ -17,7 +17,6 @@ const CareList = () => {
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [locationTag, setLocationTag] = useState('');
   const [cardData, setCardData] = useState<any[]>([]);
-  const [page, setPage] = useState(0);
   const navigate = useNavigate();
 
   const onDateSelected = (value: any) => {
@@ -74,7 +73,7 @@ const CareList = () => {
   const fetchAllPosts = async () => {
     try {
       const response = await axios.get(
-        `https://server.petching.net/careposts?page=${page}&size=10`,
+        `https://server.petching.net/careposts?page=0&size=10`,
       );
       setCardData(response.data.data);
     } catch (error) {
@@ -82,33 +81,8 @@ const CareList = () => {
     }
   };
 
-  const handleScroll = useCallback(() => {
-    const scrollTop = window.scrollY;
-    const clientHeight = document.documentElement.clientHeight;
-    const scrollHeight = document.documentElement.scrollHeight;
-    if (scrollTop + clientHeight >= scrollHeight) {
-      fetchMorePosts();
-    }
-  }, []);
-
-  const fetchMorePosts = async () => {
-    try {
-      setPage(prevPage => prevPage + 1);
-      const response = await axios.get(
-        `http://server.petching.net/careposts?page=${page}&size=10`,
-      );
-      setCardData(prevCardData => [...prevCardData, ...response.data.data]);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
     fetchAllPosts();
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
   }, []);
 
   return (
