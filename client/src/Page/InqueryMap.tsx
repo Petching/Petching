@@ -1,7 +1,6 @@
 import React from 'react';
 import cat from '../Style/greencat.png';
 import questionPicture from '../Style/question.png';
-import InqueryComponent from '../Components/Inquery/InqueryComponent';
 import QuestionSection from '../Components/Inquery/QuestionSection';
 import { useNavigate } from 'react-router-dom';
 import { GoToFunction } from '../Util/types';
