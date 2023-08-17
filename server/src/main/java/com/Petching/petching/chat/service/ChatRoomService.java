@@ -1,6 +1,6 @@
 //package com.Petching.petching.chat.service;
 //
-//import com.Petching.petching.chat.entity.ChatRoom;
+//import com.Petching.petching.chat.model.ChatRoom;
 //import com.Petching.petching.chat.repository.ChatRoomRepository;
 //import lombok.RequiredArgsConstructor;
 //import lombok.extern.slf4j.Slf4j;

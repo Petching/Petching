@@ -1,10 +1,7 @@
-//package com.Petching.petching.chat.entity;
+//package com.Petching.petching.chat.model;
 //
-//import com.Petching.petching.user.entity.User;
-//import com.fasterxml.jackson.annotation.JsonIgnore;
 //import lombok.Getter;
 //import lombok.NoArgsConstructor;
-//
 //import javax.persistence.*;
 //
 //@Getter
@@ -18,11 +15,6 @@
 //
 //    @Column
 //    private String roomName;
-//
-//    @JsonIgnore
-//    @ManyToOne
-//    @JoinColumn(name = "USER_ID")
-//    private User user;
 //
 //    public ChatRoom(String roomName) {
 //        this.roomName = roomName;

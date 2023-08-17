@@ -5,5 +5,4 @@
 //@Getter
 //public class ChatRoomDto {
 //    private String roomName;
-//    private String nickName;
 //}

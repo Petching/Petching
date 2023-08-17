@@ -1,6 +1,6 @@
 //package com.Petching.petching.chat.dto;
 //
-//import com.Petching.petching.chat.entity.ChatMessage;
+//import com.Petching.petching.chat.model.ChatMessage;
 //import lombok.Getter;
 //import lombok.Setter;
 //
