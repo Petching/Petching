@@ -1,25 +1,28 @@
 import { useQuery } from '@tanstack/react-query';
 import { Axios, BASE_URL } from '../API/api';
+import { CardProps } from '../Util/types';
 
 interface PostType {
-  title: string;
-  locationTag: string;
-  petSize: string;
-  nickName: string;
-  profileImgUrl: string;
-  imgUrls: string[];
+  data: CardProps[];
+  pageInfo: {
+    page: number;
+    size: number;
+    totalElements: number;
+    totalPages: number;
+  };
 }
 
-export const useGetMyPostToCare = (userId: string) => {
+export const useGetMyPostToCare = (userId: string, page: number) => {
   const {
     isLoading: GetMyPostToCareLoading,
     isError: GetMyPostToCareError,
     data: MyPostToCare,
-  } = useQuery<PostType[], Error>({
+  } = useQuery<PostType, Error>({
     queryKey: ['MyPostToCare', userId],
     queryFn: async () => {
-      const data = await Axios.get(`${BASE_URL}/careposts/my-page/${userId}`);
-      console.log(data);
+      const data = await Axios.get(
+        `${BASE_URL}/careposts/my-page/${userId}?page=${page}&size=9`,
+      );
       return data.data;
     },
     onError: () => {
