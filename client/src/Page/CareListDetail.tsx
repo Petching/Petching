@@ -43,6 +43,19 @@ const CareListDetail = () => {
     }
   };
 
+  const deletePost = async () => {
+    const token = localStorage.getItem('ACCESS_TOKEN');
+    try {
+      await axios.delete(`https://server.petching.net/careposts/${postId}`, {
+        headers: { Authorization: token },
+      });
+      alert('게시물이 성공적으로 삭제되었습니다');
+    } catch (error) {
+      console.error(error);
+      alert('게시물 삭제에 실패했습니다.');
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, [postId]);
@@ -73,7 +86,12 @@ const CareListDetail = () => {
             ))}
             <div>{content}</div>
           </div>
-          <button className="bg-customPink">문의 하기</button>
+          <div>
+            <button className="bg-customPink">문의 하기</button>
+            <button className="bg-black text-white" onClick={deletePost}>
+              삭제하기
+            </button>
+          </div>
         </div>
       </div>
     </div>
