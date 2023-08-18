@@ -22,7 +22,7 @@ const InqueryPopular = () => {
 
   return (
     <>
-      <div className=" flex flex-col justify-center items-center  h-[60vh] bg-InqueryMain p-5">
+      <div className=" flex flex-col justify-center items-center  h-[45vh] bg-InqueryMain p-5">
         <div className=" text-[40px] mb-4 flex items-center p-5">
           {/* <img src={doctor} /> */}
           자주 묻는 질문

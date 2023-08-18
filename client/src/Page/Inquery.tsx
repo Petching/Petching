@@ -21,12 +21,19 @@ const Inquery = () => {
   console.log(search);
   return (
     <>
-      <div className="flex flex-col justify-center items-center h-[60vh] bg-InqueryMain p-5">
-        <div className=" text-[40px] mb-4 flex items-center p-5">
-          자주 묻는 질문
+      <div className="flex justify-stretch flex-col md:flex-row items-center w-full h-[50vh] sm:h-[55vh] md:h-[70vh] bg-InqueryMain">
+        <div className="flex-1 flex flex-col p-10">
+          <div className="text-[30px] sm:text-[30px] md:text-[50px] mb-4 items-center p-5 ">
+            안녕하세요. <br />
+            무엇을 도와드릴까요?
+          </div>
+          <div className="flex justify-center items-center">
+            <SearchInput search={setSearch} />
+          </div>
         </div>
-        <SearchInput search={setSearch} />
-        <QuestionSection goTo={goTo} />
+        <div className="flex-1 flex justify-center items-center ml-5 mr-5">
+          <QuestionSection goTo={goTo} />
+        </div>
       </div>
       <section className=" flex flex-col items-center justify-center bg-#e0e0e0">
         {/* <InqueryComponent search={inputValue} /> */}
