@@ -1,5 +1,5 @@
 import Carousel from '../Components/Care/Carousel';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
@@ -19,7 +19,7 @@ const CareListDetail = () => {
   const [nickName, setNickName] = useState('');
   const [profileImgUrl, setProfileImgUrl] = useState('');
   const [imgUrls, setImgUrls] = useState<string[]>([]);
-
+  const navigate = useNavigate();
   const { postId } = useParams<{ postId: string }>();
 
   const fetchData = async () => {
@@ -49,6 +49,7 @@ const CareListDetail = () => {
       await axios.delete(`https://server.petching.net/careposts/${postId}`, {
         headers: { Authorization: token },
       });
+      navigate('/carelist');
       alert('게시물이 성공적으로 삭제되었습니다');
     } catch (error) {
       console.error(error);
