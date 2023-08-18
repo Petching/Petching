@@ -19,7 +19,7 @@ import CareListDetail from './Page/CareListDetail';
 import Inquery from './Page/Inquery';
 import InqueryPopular from './Page/InqueryPopular';
 import InqueryFind from './Page/InqueryFind';
-
+import InqueryMap from './Page/InqueryMap';
 export const routers: RemixRouter = createBrowserRouter([
   {
     path: '/',
@@ -40,6 +40,10 @@ export const routers: RemixRouter = createBrowserRouter([
       {
         path: '/inquery/find',
         element: <InqueryFind />,
+      },
+      {
+        path: '/inquery/map',
+        element: <InqueryMap />,
       },
       {
         path: '/kakao',
