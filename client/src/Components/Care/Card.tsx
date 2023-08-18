@@ -1,14 +1,7 @@
 import React from 'react';
 import Carousel from './Carousel';
+import { CardProps } from '../../Util/types';
 
-interface CardProps {
-  title: string;
-  locationTag: string;
-  petSize: string;
-  nickName: string;
-  profileImgUrl: string;
-  imgUrls: string[];
-}
 const Card: React.FC<CardProps> = ({
   title,
   locationTag,

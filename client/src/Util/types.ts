@@ -43,3 +43,12 @@ export type DummyDataItem = {
   a: string;
   조회수: number;
 };
+
+export type CardProps = {
+  title: string;
+  locationTag: string;
+  petSize: string[];
+  nickName: string;
+  profileImgUrl: string;
+  imgUrls: string[];
+};
