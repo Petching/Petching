@@ -52,3 +52,13 @@ export type CardProps = {
   profileImgUrl: string;
   imgUrls: string[];
 };
+
+export interface UserPostType {
+  data: CardProps[];
+  pageInfo: {
+    page: number;
+    size: number;
+    totalElements: number;
+    totalPages: number;
+  };
+}
