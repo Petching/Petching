@@ -43,7 +43,7 @@ const User = () => {
       <div className="flex justify-center items-center mt-10 w-9/12">
         {category === '반려동물' && <MyPets userId={userId} />}
         {category === '작성' && <MyPost userId={userId} />}
-        {category === '좋아요' && <MyLikes />}
+        {category === '좋아요' && <MyLikes userId={userId} />}
       </div>
     </div>
   );
