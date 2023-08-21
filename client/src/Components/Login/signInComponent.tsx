@@ -74,7 +74,7 @@ const SignInComponent: React.FC = () => {
         <br></br>
         <button
           onClick={handleButtonClick}
-          className="ml-4 flex-2 bg-customGreen border border-gray-300 p-3 rounded text-gray-500 mr-7 hover:bg-hoverGreen"
+          className="ml-4 flex-2 bg-customGreen border border-gray-300 p-3 rounded text-gray-500 mr-7 hover:bg-customHoverGreen"
         >
           로그인하기
         </button>
@@ -86,7 +86,7 @@ const SignInComponent: React.FC = () => {
 
         <button
           onClick={Kakao}
-          className="ml-4 bg-kakaoYellow border border-gray-300 p-3 rounded text-kakaoText  flex items-center justify-center mr-7 hover:bg-yellow-300"
+          className="ml-4 bg-yellow-300 border border-gray-300 p-3 rounded text-kakaoText  flex items-center justify-center mr-7 hover:bg-[#FAEF64]"
         >
           <img src={kakaoLogo} alt="kakao Image" className="h-7 w-7 mr-4 " />
           카카오톡 로그인
@@ -94,7 +94,7 @@ const SignInComponent: React.FC = () => {
 
         <button
           onClick={Google}
-          className="ml-4 bg-white border border-gray-300 p-3 rounded text-black  flex items-center justify-center mr-7 hover:bg-gray-200"
+          className="ml-4 bg-white border border-gray-300 p-3 rounded text-black  flex items-center justify-center mr-7 hover:bg-[#F5F5EB]"
         >
           <img src={googleLogo} alt="google Image" className="h-5 w-5 mr-4" />
           구글 로그인
