@@ -17,7 +17,7 @@ import Warning from '../Common/Warning';
 
 const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
   const navigate = useNavigate();
-  const { UserProfile, GetUserProfileError } = useGetUserProfile(userId);;
+  const { UserProfile, GetUserProfileError } = useGetUserProfile(userId);
   const [onEdit, setOnEdit] = useState(false);
   const [changeImg, setChangeImg] = useState<string>(
     UserProfile?.profileImgUrl ||
@@ -101,7 +101,7 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
     if (imgFiles) {
       deleteImgHandler(UserProfile!.profileImgUrl, 'profiles');
     }
-    
+
     handlerPatchProfile({
       userId,
       nickName: changeNickName,
@@ -194,7 +194,7 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
                 onChange={inputChangeHandler}
               />
               <button
-                className="ml-2 px-2 flex-2 rounded hover:scale-90 transition-all bg-customPink hover:bg-customGreen"
+                className="ml-2 px-2 flex-2 rounded hover:scale-90 transition-all bg-customGreen hover:bg-customHoverGreen"
                 onClick={nickNameCheckHandler}
               >
                 중복확인
@@ -323,7 +323,7 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
             >
               수정취소
             </button>
-            <button onClick={submitHandler} className="hover:text-customGreen">
+            <button onClick={submitHandler} className="hover:text-hoverGreen">
               수정 완료
             </button>
           </>
@@ -331,7 +331,7 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
           UserProfile?.userDivision && (
             <button
               onClick={() => setOnEdit(true)}
-              className="hover:text-customGreen"
+              className="hover:text-hoverGreen"
             >
               회원 정보 수정
             </button>
