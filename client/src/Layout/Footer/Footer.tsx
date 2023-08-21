@@ -6,7 +6,7 @@ const Footer = () => {
     navigate('/inquery');
   };
   return (
-    <div className="bg-[#99DDCC] h-8 fixed bottom-0 left-0 w-full z-50 flex justify-between items-center px-2">
+    <div className="bg-[#CAE8E6] h-8 fixed bottom-0 left-0 w-full z-50 flex justify-between items-center px-2">
       <div className="w-5">
         <img
           src="https://img.icons8.com/?size=512&id=121198&format=png"

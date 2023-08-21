@@ -33,7 +33,6 @@ const SearchInput: React.FC<SearchInputProps> = ({ search }) => {
         placeholder="궁금한 질문을 빠르게 찾아보세요"
         onChange={e => {
           setInputValue(e.target.value);
-          console.log('Updated inputValue:', e.target.value);
         }}
         onKeyDown={handleKeyDown}
         // defaultValue={inputValue}
