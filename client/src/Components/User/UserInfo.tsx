@@ -98,7 +98,10 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
   };
 
   const nickNameCheckHandler = async () => {
-    if (UserProfile?.nickName === changeNickName) return;
+    if (UserProfile?.nickName === changeNickName) {
+      setNickCheck(true);
+      return;
+    }
     const data = await checkNickname(changeNickName);
     if (data) {
       setNickError('중복된 닉네임입니다.');
