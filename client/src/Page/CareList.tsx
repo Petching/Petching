@@ -68,17 +68,6 @@ const CareList = () => {
     navigate('/carelistpost', { state: { startDate, endDate, locationTag } });
   };
 
-  const fetchAllPosts = async () => {
-    try {
-      const response = await axios.get(
-        `https://server.petching.net/careposts?page=0&size=10`,
-      );
-      setCardData(response.data.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const fetchMoreData = async () => {
     try {
       const response = await axios.get(
