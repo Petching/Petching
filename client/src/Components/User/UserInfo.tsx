@@ -17,7 +17,7 @@ import Warning from '../Common/Warning';
 
 const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
   const navigate = useNavigate();
-  const { UserProfile, GetUserProfileError } = useGetUserProfile(userId);;
+  const { UserProfile, GetUserProfileError } = useGetUserProfile(userId);
   const [onEdit, setOnEdit] = useState(false);
   const [changeImg, setChangeImg] = useState<string>(
     UserProfile?.profileImgUrl ||
@@ -30,7 +30,8 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
   const [newPw, setNewPw] = useState<string>('');
   const [newConfirmPw, setNewConfirmPw] = useState<string>('');
 
-  const [isDuplication, setIsDuplication] = useState<boolean>(false);
+  const [nickCheck, setNickCheck] = useState<boolean>(false);
+  const [nickError, setNickError] = useState<string>('');
   const [isPwError, setIsPwError] = useState<boolean>(false);
   const [isPwEqual, setIsPwEqual] = useState<boolean>(false);
 
@@ -46,13 +47,31 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
 
   const [onModal, setOnModal] = useState<boolean>(false);
 
+  const onEditHandler = () => {
+    // 초기화
+    setChangeImg(
+      UserProfile?.profileImgUrl ||
+        'https://s3.ap-northeast-2.amazonaws.com/petching.image/dog-5960092_1920.jpg',
+    );
+    setChangeNickName(UserProfile?.nickName || '');
+    setChangeAddress(UserProfile?.address || '');
+    setOriginPw('');
+    setNewPw('');
+    setNewConfirmPw('');
+    setNickError('');
+    setOnEdit(true);
+  };
+
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsPwError(false);
     setIsPwEqual(false);
     const { value, name } = e.currentTarget;
     switch (name) {
       case 'nickname':
-        return setChangeNickName(value);
+        setChangeNickName(value);
+        setNickCheck(false);
+        setNickError('');
+        return;
       case 'address':
         return setChangeAddress(value);
       case 'originPw':
@@ -78,11 +97,26 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
     setImgFiles(files);
   };
 
-  const nickNameCheckHandler = () => {
-    setIsDuplication(true);
+  const nickNameCheckHandler = async () => {
+    if (UserProfile?.nickName === changeNickName) {
+      setNickCheck(true);
+      return;
+    }
+    const data = await checkNickname(changeNickName);
+    if (data) {
+      setNickError('중복된 닉네임입니다.');
+      return;
+    } else {
+      setNickError('사용할 수 있습니다.');
+      setNickCheck(true);
+    }
   };
 
   const submitHandler = async () => {
+    if (!nickCheck) {
+      setNickError('중복확인을 진행해주세요.');
+      return;
+    }
     // 비밀번호 변경이 일어날 경우
     if (changePw) {
       const data = await checkPw(originPw);
@@ -101,7 +135,7 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
     if (imgFiles) {
       deleteImgHandler(UserProfile!.profileImgUrl, 'profiles');
     }
-    
+
     handlerPatchProfile({
       userId,
       nickName: changeNickName,
@@ -114,6 +148,8 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
     setChangeNickName(UserProfile!.nickName);
     setChangeAddress(UserProfile!.address || '');
     setChangeImg(UserProfile!.profileImgUrl);
+    setNickCheck(false);
+    setNickError('');
     setOnEdit(false);
     setChangePw(false);
   };
@@ -125,7 +161,8 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
     setChangeImg(UserProfile!.profileImgUrl);
     setIsPwError(false);
     setIsPwEqual(false);
-    setIsDuplication(false);
+    setNickCheck(false);
+    setNickError('');
     setChangePw(false);
   };
 
@@ -194,14 +231,15 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
                 onChange={inputChangeHandler}
               />
               <button
-                className="ml-2 px-2 flex-2 rounded hover:scale-90 transition-all bg-customPink hover:bg-customGreen"
+                className="ml-2 px-2 flex-2 rounded hover:scale-90 transition-all bg-customGreen hover:bg-customHoverGreen"
                 onClick={nickNameCheckHandler}
               >
                 중복확인
               </button>
-              {isDuplication && (
-                <p className="ml-2 text-red-700">중복된 닉네임입니다.</p>
-              )}
+              <p className="ml-2 text-red-700">{nickError}</p>
+              {/* {isDuplication && (
+
+              )} */}
             </label>
           ) : (
             <label className="flex items-center">
@@ -323,16 +361,13 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
             >
               수정취소
             </button>
-            <button onClick={submitHandler} className="hover:text-customGreen">
+            <button onClick={submitHandler} className="hover:text-hoverGreen">
               수정 완료
             </button>
           </>
         ) : (
           UserProfile?.userDivision && (
-            <button
-              onClick={() => setOnEdit(true)}
-              className="hover:text-customGreen"
-            >
+            <button onClick={onEditHandler} className="hover:text-hoverGreen">
               회원 정보 수정
             </button>
           )

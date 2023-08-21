@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useStore from '../../store/useSearchStore';
 import { GoSearch } from 'react-icons/go';
@@ -27,20 +28,19 @@ const SearchInput: React.FC<SearchInputProps> = ({ search }) => {
 
   return (
     <div className="flex items-center justify-center relative">
-      <GoSearch className="absolute bsolute left-3 top-[50%] transform -translate-y-[50%] text-gray-400 z-10" />
+      <GoSearch className="absolute left-3 top-[50%] transform -translate-y-[50%] text-gray-400 z-10" />
       <input
-        className=" pl-8 w-full h-[100px] sm:w-full sm:h-[100px] md:w-[500px] md:h-[60px] rounded-2xl"
-        placeholder="궁금한 질문을 검색으로 빠르게 찾아보세요"
+        className="focus:outline-none pl-8 w-[250px] h-[60px] sm:w-[400px] sm:h-[60px] md:w-[500px] md:h-[80px] lg:w-[500px] lg:h-[80px] rounded-2xl text-2xl"
+        placeholder="궁금한 질문을 빠르게 찾아보세요"
         onChange={e => {
           setInputValue(e.target.value);
-          console.log('Updated inputValue:', e.target.value);
         }}
         onKeyDown={handleKeyDown}
         // defaultValue={inputValue}
       ></input>
       <button
         onClick={handleSearch}
-        className=" w-[55px] h-[42px] ml-2 rounded-xl bg-[#EEEEE0] hover:bg-[#D4D4C7]"
+        className="transform transition-transform duration-300 hover:scale-105 w-[80px] h-[60px] sm:w-[80px] sm:h-[60px] md:w-[80px] md:h-[80px] lg:w-[80px] lg:h-[80px] ml-2 rounded-xl bg-[#EEEEE0] hover:bg-InqueryComponentButton]"
       >
         검색
       </button>

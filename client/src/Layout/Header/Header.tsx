@@ -17,7 +17,7 @@ const Header = () => {
         <div className="w-9 hover:scale-90 overflow-hidden rounded-full mr-2">
           <img src={icon_Pet} alt="발바닥 모양의 아이콘" />
         </div>
-        <h1 className="text-3xl text-customGreen">펫칭</h1>
+        <h1 className="text-3xl text-hoverGreen">펫칭</h1>
       </div>
       <GNB />
     </div>

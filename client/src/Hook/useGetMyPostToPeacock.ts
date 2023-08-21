@@ -2,14 +2,15 @@ import { useQuery } from '@tanstack/react-query';
 import { Axios, BASE_URL } from '../API/api';
 import { UserPostType } from '../Util/types';
 
-export const useGetMyPostToCare = (userId: string, page: number) => {
+export const useGetMyPostToPeacock = (userId: string, page: number) => {
   const {
-    isLoading: GetMyPostToCareLoading,
-    isError: GetMyPostToCareError,
-    data: MyPostToCare,
+    isLoading: GetMyPostToPeacockLoading,
+    isError: GetMyPostToPeacockError,
+    data: MyPostToPeacock,
   } = useQuery<UserPostType, Error>({
-    queryKey: ['MyPostToCare', userId],
+    queryKey: ['MyPostToPeacock', userId],
     queryFn: async () => {
+      // 추후 peocock 데이터 받아올 수 있게 되면 api 주소 바꿀 것
       const data = await Axios.get(
         `${BASE_URL}/careposts/my-page/${userId}?page=${page}&size=9`,
       );
@@ -23,5 +24,9 @@ export const useGetMyPostToCare = (userId: string, page: number) => {
       return false;
     },
   });
-  return { GetMyPostToCareLoading, GetMyPostToCareError, MyPostToCare };
+  return {
+    GetMyPostToPeacockLoading,
+    GetMyPostToPeacockError,
+    MyPostToPeacock,
+  };
 };
