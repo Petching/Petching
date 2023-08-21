@@ -95,7 +95,7 @@ const SignComponent: React.FC = () => {
           />
           <button
             onClick={handleEmaileCheck}
-            className="ml-2 mr-9 flex-2 border border-gray-300 p-2 rounded text-white bg-customGreen hover:bg-green-500"
+            className="ml-2 mr-9 flex-2 border border-gray-300 p-2 rounded text-gray-400 bg-customGreen hover:bg-customHoverGreen"
           >
             중복확인
           </button>
@@ -152,7 +152,7 @@ const SignComponent: React.FC = () => {
           />
           <button
             onClick={handleNicknameCheck}
-            className="ml-2 mr-9 flex-2 border border-gray-300 p-2 rounded text-white bg-customGreen hover:bg-green-500"
+            className="ml-2 mr-9 flex-2 border border-gray-300 p-2 rounded text-gray-400 bg-customGreen hover:bg-customHoverGreen"
           >
             중복확인
           </button>
@@ -181,7 +181,7 @@ const SignComponent: React.FC = () => {
             emailMessage === '유효한 이메일 형식을 입력해야합니다' ||
             passwordCheckMsg === '비밀번호가 일치하지 않습니다'
           }
-          className={`ml-4 flex-2 bg-customGreen border border-gray-300 p-2 rounded text-white mr-7 hover:bg-hoverGreen ${
+          className={`ml-4 flex-2 bg-customGreen border border-gray-300 p-2 rounded text-gray-400 mr-7 hover:bg-customHoverGreen ${
             !email ||
             !password ||
             !confirmPassword ||
