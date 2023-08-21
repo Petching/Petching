@@ -17,7 +17,7 @@ const User = () => {
           onClick={() => setCategory('반려동물')}
           className={`mx-5 ${
             category === '반려동물' &&
-            'text-customGreen  decoration-wavy underline'
+            'text-hoverGreen  decoration-wavy underline'
           }`}
         >
           반려동물
@@ -25,7 +25,7 @@ const User = () => {
         <button
           onClick={() => setCategory('작성')}
           className={`mx-5 ${
-            category === '작성' && 'text-customGreen  decoration-wavy underline'
+            category === '작성' && 'text-hoverGreen  decoration-wavy underline'
           }`}
         >
           작성한 게시글
@@ -34,7 +34,7 @@ const User = () => {
           onClick={() => setCategory('좋아요')}
           className={`mx-5 ${
             category === '좋아요' &&
-            'text-customGreen  decoration-wavy underline'
+            'text-hoverGreen  decoration-wavy underline'
           }`}
         >
           좋아요 게시글

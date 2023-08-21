@@ -62,14 +62,14 @@ const GNB = () => {
     <>
       <div className="absolute right-0 md:right-10 flex justify-center items-center">
         <button
-          className="mx-3 hidden md:block hover:text-customGreen"
+          className="mx-3 hidden md:block hover:text-hoverGreen"
           name="carelist"
           onClick={moveHandler}
         >
           돌봄리스트
         </button>
         <button
-          className="mx-3 hidden md:block hover:text-customGreen"
+          className="mx-3 hidden md:block hover:text-hoverGreen"
           name="peacock"
           onClick={moveHandler}
         >
@@ -92,14 +92,14 @@ const GNB = () => {
         ) : (
           <>
             <button
-              className="mx-3 hidden md:block hover:text-customGreen"
+              className="mx-3 hidden md:block hover:text-hoverGreen"
               name="signin"
               onClick={moveHandler}
             >
               로그인
             </button>
             <button
-              className="mx-3 hidden md:block hover:text-customGreen"
+              className="mx-3 hidden md:block hover:text-hoverGreen"
               name="signup"
               onClick={moveHandler}
             >
@@ -112,9 +112,9 @@ const GNB = () => {
         )}
       </div>
       {userIcon && (
-        <ul className="bg-slate-400 absolute right-0 top-[4.5rem] w-40 text-center rounded-b">
+        <ul className="bg-customBlue/90 absolute right-0 top-[4.5rem] w-full sm:w-40 text-center rounded-b z-50">
           <li className="h-10 leading-10">{UserProfile?.email}</li>
-          <li className="h-10 leading-10 hover:bg-white block md:hidden">
+          <li className="h-10 leading-10 hover:bg-white active:bg-white block md:hidden">
             <button
               className="w-full h-full"
               name="carelist"
@@ -123,7 +123,7 @@ const GNB = () => {
               돌봄리스트
             </button>
           </li>
-          <li className="h-10 leading-10 hover:bg-white block md:hidden">
+          <li className="h-10 leading-10 hover:bg-white active:bg-white block md:hidden">
             <button
               className="w-full h-full"
               name="peacock"
@@ -132,7 +132,7 @@ const GNB = () => {
               자랑하기
             </button>
           </li>
-          <li className="h-10 leading-10 hover:bg-white">
+          <li className="h-10 leading-10 hover:bg-white active:bg-white">
             <button
               className="w-full h-full"
               name="mypage"
@@ -141,10 +141,10 @@ const GNB = () => {
               마이 페이지
             </button>
           </li>
-          <li className="h-10 leading-10 hover:bg-white">
+          <li className="h-10 leading-10 hover:bg-white active:bg-white">
             <button className="w-full h-full">문의 내역</button>
           </li>
-          <li className="h-10 leading-10 hover:bg-white">
+          <li className="h-10 leading-10 hover:bg-white active:bg-white">
             <button className="w-full h-full" onClick={logoutHandler}>
               로그아웃
             </button>
@@ -153,7 +153,7 @@ const GNB = () => {
       )}
       {menu && (
         <ul className="bg-slate-400 absolute right-0 top-14 w-40 text-center rounded-b">
-          <li className="h-10 leading-10 hover:bg-white">
+          <li className="h-10 leading-10 hover:bg-white active:bg-white">
             <button
               className="w-full h-full"
               name="carelist"
@@ -162,7 +162,7 @@ const GNB = () => {
               돌봄리스트
             </button>
           </li>
-          <li className="h-10 leading-10 hover:bg-white">
+          <li className="h-10 leading-10 hover:bg-white active:bg-white">
             <button
               className="w-full h-full"
               name="peacock"
@@ -171,7 +171,7 @@ const GNB = () => {
               자랑하기
             </button>
           </li>
-          <li className="h-10 leading-10 hover:bg-white">
+          <li className="h-10 leading-10 hover:bg-white active:bg-white">
             <button
               className="w-full h-full"
               name="signin"
@@ -180,7 +180,7 @@ const GNB = () => {
               로그인
             </button>
           </li>
-          <li className="h-10 leading-10 hover:bg-white">
+          <li className="h-10 leading-10 hover:bg-white active:bg-white">
             <button
               className="w-full h-full"
               name="signup"

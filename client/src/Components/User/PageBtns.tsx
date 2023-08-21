@@ -18,8 +18,8 @@ const PageBtns: React.FC<PageBtnsProps> = ({ data, page, setPage }) => {
           <button
             key={number}
             className={`w-5 h-10 mx-1 rounded ${
-              number === page && 'text-customHoverGreen'
-            } hover:text-customHoverGreen`}
+              number === page && 'text-hoverGreen'
+            } hover:text-hoverGreen`}
             onClick={() => setPage(number)}
           >
             {number}
