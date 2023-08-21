@@ -124,26 +124,30 @@ const CareList = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-wrap justify-center">
+      <div>
         <InfiniteScroll
           dataLength={cardData.length}
           next={fetchMoreData}
           hasMore={true}
           loader={<h4>Loading...</h4>}
         >
-          {cardData.map((cardData, index) => (
-            <div key={index}>
-              <Card
-                key={index}
-                title={cardData.title}
-                locationTag={cardData.locationTag}
-                petSize={cardData.petSize}
-                nickName={cardData.nickName}
-                profileImgUrl={cardData.profileImgUrl}
-                imgUrls={cardData.imgUrls}
-              />
+          <div className="flex justify-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
+              {cardData.map((cardData, index) => (
+                <div key={index}>
+                  <Card
+                    key={index}
+                    title={cardData.title}
+                    locationTag={cardData.locationTag}
+                    petSize={cardData.petSize}
+                    nickName={cardData.nickName}
+                    profileImgUrl={cardData.profileImgUrl}
+                    imgUrls={cardData.imgUrls}
+                  />
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </InfiniteScroll>
       </div>
     </div>
