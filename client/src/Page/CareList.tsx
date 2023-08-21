@@ -4,6 +4,7 @@ import ReactCalendar from '../Components/Care/ReactCalendar';
 import Postcode from '../Components/Care/Postcode';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 interface Date {
   year: number;
@@ -16,6 +17,8 @@ const CareList = () => {
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [locationTag, setLocationTag] = useState('');
   const [cardData, setCardData] = useState<any[]>([]);
+  const [page, setPage] = useState(0);
+
   const navigate = useNavigate();
 
   const onDateSelected = (value: any) => {
@@ -65,23 +68,20 @@ const CareList = () => {
     navigate('/carelistpost', { state: { startDate, endDate, locationTag } });
   };
 
-  const toCareListDetail = (postId: number) => {
-    navigate(`/carelistdetail/${postId}`);
-  };
-
-  const fetchAllPosts = async () => {
+  const fetchMoreData = async () => {
     try {
       const response = await axios.get(
-        `https://server.petching.net/careposts?page=0&size=10`,
+        `https://server.petching.net/careposts?page=${page}&size=10`,
       );
-      setCardData(response.data.data);
+      setCardData(cardData.concat(response.data.data));
+      setPage(page + 1);
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-    fetchAllPosts();
+    fetchMoreData();
   }, []);
 
   return (
@@ -125,19 +125,26 @@ const CareList = () => {
         </div>
       </div>
       <div className="flex flex-wrap justify-center">
-        {cardData.map((cardData, index) => (
-          <div key={index} onClick={() => toCareListDetail(cardData.postId)}>
-            <Card
-              key={index}
-              title={cardData.title}
-              locationTag={cardData.locationTag}
-              petSize={cardData.petSize}
-              nickName={cardData.nickName}
-              profileImgUrl={cardData.profileImgUrl}
-              imgUrls={cardData.imgUrls}
-            />
-          </div>
-        ))}
+        <InfiniteScroll
+          dataLength={cardData.length}
+          next={fetchMoreData}
+          hasMore={true}
+          loader={<h4>Loading...</h4>}
+        >
+          {cardData.map((cardData, index) => (
+            <div key={index}>
+              <Card
+                key={index}
+                title={cardData.title}
+                locationTag={cardData.locationTag}
+                petSize={cardData.petSize}
+                nickName={cardData.nickName}
+                profileImgUrl={cardData.profileImgUrl}
+                imgUrls={cardData.imgUrls}
+              />
+            </div>
+          ))}
+        </InfiniteScroll>
       </div>
     </div>
   );
