@@ -30,7 +30,6 @@ const Inquery = () => {
           style={{
             backgroundImage: `url(${mainimg})`,
             filter: 'blur(1px)',
-            // backgroundSize: '30%',
             backgroundRepeat: 'no-repeat',
           }}
         ></div>
