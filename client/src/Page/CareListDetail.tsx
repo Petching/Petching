@@ -1,5 +1,5 @@
 import Carousel from '../Components/Care/Carousel';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
@@ -19,7 +19,7 @@ const CareListDetail = () => {
   const [nickName, setNickName] = useState('');
   const [profileImgUrl, setProfileImgUrl] = useState('');
   const [imgUrls, setImgUrls] = useState<string[]>([]);
-
+  const navigate = useNavigate();
   const { postId } = useParams<{ postId: string }>();
 
   const fetchData = async () => {
@@ -43,6 +43,20 @@ const CareListDetail = () => {
     }
   };
 
+  const deletePost = async () => {
+    const token = localStorage.getItem('ACCESS_TOKEN');
+    try {
+      await axios.delete(`https://server.petching.net/careposts/${postId}`, {
+        headers: { Authorization: token },
+      });
+      navigate('/carelist');
+      alert('게시물이 성공적으로 삭제되었습니다');
+    } catch (error) {
+      console.error(error);
+      alert('게시물 삭제에 실패했습니다.');
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, [postId]);
@@ -50,13 +64,14 @@ const CareListDetail = () => {
   return (
     <div className="bg-[#F2F2F2] w-full h-full min-h-screen text-xl">
       <div>
-        <Carousel imgUrls={imgUrls} />
+        <div className="mx-auto w-60">
+          <Carousel imgUrls={imgUrls} />
+        </div>
         <div className="bg-[#F2F2F2] text-center">
           <div className="bg-white mt-5">
             <img className="w-20 " src={profileImgUrl}></img>
             <div>{nickName}</div>
             <div>{title}</div>
-
             <div>
               {startDate && endDate
                 ? `${startDate.year}-${startDate.month}-${startDate.day} ~ ${endDate.year}-${endDate.month}-${endDate.day}`
@@ -72,7 +87,12 @@ const CareListDetail = () => {
             ))}
             <div>{content}</div>
           </div>
-          <button className="bg-customPink">문의 하기</button>
+          <div>
+            <button className="bg-customPink">문의 하기</button>
+            <button className="bg-black text-white" onClick={deletePost}>
+              삭제하기
+            </button>
+          </div>
         </div>
       </div>
     </div>

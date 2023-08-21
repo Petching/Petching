@@ -1,15 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
 import { Axios, BASE_URL } from '../API/api';
+// 타입 변경되는거 보고 수정할 것
 import { UserPostType } from '../Util/types';
 
-export const useGetMyPostToCare = (userId: string, page: number) => {
+export const useGetUserLikes = (userId: string, page: number) => {
   const {
-    isLoading: GetMyPostToCareLoading,
-    isError: GetMyPostToCareError,
-    data: MyPostToCare,
+    isLoading: GetUserLikesLoading,
+    isError: GetUserLikesError,
+    data: UserLikes,
   } = useQuery<UserPostType, Error>({
-    queryKey: ['MyPostToCare', userId],
+    queryKey: ['UserLikes', userId],
     queryFn: async () => {
+      // 추후 좋아요 게시글 데이터 받아올 수 있게 되면 api 주소 바꿀 것
       const data = await Axios.get(
         `${BASE_URL}/careposts/my-page/${userId}?page=${page}&size=9`,
       );
@@ -23,5 +25,9 @@ export const useGetMyPostToCare = (userId: string, page: number) => {
       return false;
     },
   });
-  return { GetMyPostToCareLoading, GetMyPostToCareError, MyPostToCare };
+  return {
+    GetUserLikesLoading,
+    GetUserLikesError,
+    UserLikes,
+  };
 };
