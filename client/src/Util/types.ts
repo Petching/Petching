@@ -51,6 +51,7 @@ export type CardProps = {
   nickName: string;
   profileImgUrl: string;
   imgUrls: string[];
+  onCardClick: () => void;
 };
 
 export interface UserPostType {
