@@ -7,6 +7,9 @@ module.exports = {
       boxShadow: {
         custom: '0 0 10px 5px rgba(0, 0, 0, 0.1)',
       },
+      fontFamily: {
+        custom: ['HakgyoansimWoojuR', 'sans'],
+      },
       colors: {
         customGreen: '#C3EBDB',
         customHoverGreen: '#C1F3DE',
