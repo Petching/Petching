@@ -45,6 +45,8 @@ public class MyPetService {
     }
 
     public List<MyPet> findAllPet (long userId) {
+        userService.verifiedUser(userId);
+
         List<MyPet> op = petRepository.findAll()
                 .stream().filter(user -> user.getUser().getUserId().equals(userId))
                 .collect(Collectors.toList());

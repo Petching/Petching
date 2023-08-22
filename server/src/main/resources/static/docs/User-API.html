@@ -530,7 +530,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h4 id="_request_summary" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /users/sign-up?_csrf=7b7c0fac-31b3-4493-bebd-edcf5fe47e0e HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /users/sign-up?_csrf=e6f1997a-a37c-4502-8bec-f2ae4c382668 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Authorization: {AccessToken}
@@ -574,7 +574,6 @@ X-Frame-Options: DENY</code></pre>
 <div class="title">request-body</div>
 <div class="content">
 <pre class="highlight nowrap"><code>{
-  "userId" : 1,
   "email" : "email@example.com",
   "password" : "exPassword",
   "nickName" : "exNickName",
@@ -602,13 +601,6 @@ X-Frame-Options: DENY</code></pre>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>userId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">회원 식별자</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
@@ -651,7 +643,6 @@ X-Frame-Options: DENY</code></pre>
 <div class="title">request-body</div>
 <div class="content">
 <pre class="highlight nowrap"><code>{
-  "userId" : 1,
   "email" : "email@example.com",
   "password" : "exPassword",
   "nickName" : "exNickName",
@@ -700,15 +691,14 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="_request_summary_2" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">PATCH /users/?_csrf=9a25bb27-e665-4ca0-9823-96bf11c278c4 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">PATCH /users/?_csrf=e106ca4c-b19d-496b-9610-d6c555d40a74 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Authorization: {AccessToken}
-Content-Length: 275
+Content-Length: 258
 Host: server.petching.net
 
 {
-  "userId" : 1,
   "email" : "email@example.com",
   "password" : "exPassword",
   "nickName" : "exNickName",
@@ -838,7 +828,7 @@ Content-Length: 239
 <h4 id="_request_summary_3" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /users/1?_csrf=3a30acf2-8fee-4835-a7f1-45c7937d8fb0 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /users/1?_csrf=d148fa64-d237-4dfd-acb8-34d4ad70d208 HTTP/1.1
 Authorization: {AccessToken}
 Accept: application/json
 Host: server.petching.net</code></pre>
@@ -879,48 +869,13 @@ Content-Length: 296
 <h4 id="_request_4" class="discrete"><code>Request</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-http" data-lang="http">DELETE: /users/{user-id}</code></pre>
-</div>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 7. /users/{user-id}</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>user-id</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">User 식별자 ID</p></td>
-</tr>
-</tbody>
-</table>
-<h4 id="_response_4" class="discrete"><code>Response</code></h4>
-<div class="listingblock">
-<div class="title">http-response</div>
-<div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 204 No Content
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 1; mode=block
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-Pragma: no-cache
-Expires: 0
-X-Frame-Options: DENY</code></pre>
+<pre class="highlight"><code class="language-http" data-lang="http">DELETE: /users/</code></pre>
 </div>
 </div>
 <h4 id="_request_summary_4" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /users/1?_csrf=09c7757a-c122-48dc-b2dc-8434c144c11c HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /users/?_csrf=27d507d3-f7ee-43b9-bba1-496bbfa7ec01 HTTP/1.1
 Authorization: {AccessToken}
 Host: server.petching.net</code></pre>
 </div>
@@ -947,7 +902,7 @@ X-Frame-Options: DENY</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-07-23 02:40:45 +0900
+Last updated 2023-08-10 13:08:16 +0900
 </div>
 </div>
 </body>

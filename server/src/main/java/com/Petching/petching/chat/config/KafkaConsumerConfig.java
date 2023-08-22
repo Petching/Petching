@@ -1,6 +1,6 @@
 //package com.Petching.petching.chat.config;
 //
-//import com.Petching.petching.chat.entity.ChatMessage;
+//import com.Petching.petching.chat.model.ChatMessage;
 //import org.apache.kafka.clients.consumer.ConsumerConfig;
 //import org.apache.kafka.common.serialization.StringDeserializer;
 //import org.springframework.beans.factory.annotation.Value;

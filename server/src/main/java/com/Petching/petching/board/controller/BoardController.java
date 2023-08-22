@@ -10,17 +10,13 @@ import com.Petching.petching.global.exception.ExceptionCode;
 import com.Petching.petching.login.oauth.userInfo.JwtToken;
 import com.Petching.petching.login.service.UserLoginService;
 import com.Petching.petching.response.MultiResponse;
-import com.Petching.petching.response.PageInfo;
 import com.Petching.petching.response.SingleResponse;
 import com.Petching.petching.user.entity.User;
 import com.Petching.petching.user.service.UserService;
-import com.google.gson.Gson;
-import com.nimbusds.jose.util.IntegerUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
@@ -29,11 +25,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.thymeleaf.util.StringUtils;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 @RestController
@@ -231,6 +225,18 @@ public class BoardController {
 
 
         return new ResponseEntity( HttpStatus.OK);
+    }
+
+    @GetMapping("/{user-id}/like")
+    public ResponseEntity getUserLikeBoards(@RequestParam(defaultValue = "1") int page,
+                                            @RequestParam(defaultValue = "10") int size,
+                                            @PathVariable("user-id") long userId) {
+
+        Pageable pageable = PageRequest.of(page -1, size);
+        Page<Board> boardPage = boardService.findBoards(pageable);
+        List<BoardDto.Response> result = mapper.listToListResponseDto(userService.findUserLikeBoards(userId));
+
+        return new ResponseEntity<>(new MultiResponse<>(result, boardPage), HttpStatus.OK);
     }
 
 

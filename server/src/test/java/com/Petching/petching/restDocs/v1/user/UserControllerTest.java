@@ -39,6 +39,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(UserController.class)
@@ -206,7 +207,7 @@ class UserControllerTest implements UserControllerTestHelper {
                 deleteRequestBuilder(getUrl())
         );
 
-
+        actions.andDo(print());
         // then
         actions
                 .andExpect(status().is2xxSuccessful())

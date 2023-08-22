@@ -23,6 +23,8 @@ public interface CarePostControllerTestHelper extends ControllerTestHelper{
     String BOARD_URL = "/careposts";
     String RESOURCE_URI = "/{post-id}";
 
+    String USER_URI = "/my-page/{user-id}";
+
     default String getUrl() {
         return BOARD_URL;
     }
@@ -30,6 +32,11 @@ public interface CarePostControllerTestHelper extends ControllerTestHelper{
     default String getURI() {
         return BOARD_URL + RESOURCE_URI;
     }
+
+    default String getUserURI() {
+        return BOARD_URL + USER_URI;
+    }
+
 
     default List<ParameterDescriptor> getCarePostGetRequestPathParameterDescriptor() {
         return Arrays.asList(
@@ -41,6 +48,13 @@ public interface CarePostControllerTestHelper extends ControllerTestHelper{
                 parameterWithName("post-id").description("CarePost 식별자 ID")
         );
     }
+
+    default List<ParameterDescriptor> getCarePostMyPageRequestPathParameterDescriptor() {
+        return Arrays.asList(
+                parameterWithName("user-id").description("User 식별자 ID")
+        );
+    }
+
 
     default RequestBuilder getRequestBuilder(String url, String locationTag, Map<String, Integer> startDate, Map<String, Integer> endDate ) {
 
@@ -120,6 +134,7 @@ public interface CarePostControllerTestHelper extends ControllerTestHelper{
         String parentPath = getDataParentPath(dataResponseType);
 
         return List.of(
+                fieldWithPath(parentPath.concat("postId")).type(JsonFieldType.NUMBER).description("게시글 식별자 ID"),
                 fieldWithPath(parentPath.concat("title")).type(JsonFieldType.STRING).description("제목"),
                 fieldWithPath(parentPath.concat("content")).type(JsonFieldType.STRING).description("내용"),
                 fieldWithPath(parentPath.concat("imgUrls[]")).type(JsonFieldType.ARRAY).description("올릴 사진").optional(),
@@ -145,6 +160,7 @@ public interface CarePostControllerTestHelper extends ControllerTestHelper{
         String parentPath = getDataParentPath(dataResponseType);
 
         return List.of(
+                fieldWithPath(parentPath.concat("postId")).type(JsonFieldType.NUMBER).description("게시글 식별자 ID"),
                 fieldWithPath(parentPath.concat("title")).type(JsonFieldType.STRING).description("제목"),
                 fieldWithPath(parentPath.concat("content")).type(JsonFieldType.STRING).description("내용"),
                 fieldWithPath(parentPath.concat("imgUrls[]")).type(JsonFieldType.ARRAY).description("올릴 사진").optional(),
@@ -182,6 +198,21 @@ public interface CarePostControllerTestHelper extends ControllerTestHelper{
         );
     }
 
+
+    default List<FieldDescriptor> getCarePostMyPageResponseDescriptors(DataResponseType dataResponseType) {
+
+        String parentPath = getDataParentPath(dataResponseType);
+
+        return List.of(
+                fieldWithPath(parentPath.concat("title")).type(JsonFieldType.STRING).description("제목"),
+                fieldWithPath(parentPath.concat("imgUrls[]")).type(JsonFieldType.ARRAY).description("올릴 사진"),
+                fieldWithPath(parentPath.concat("petSizes[]")).type(JsonFieldType.ARRAY).description("반려동물 크기"),
+                fieldWithPath(parentPath.concat("profileImgUrl")).type(JsonFieldType.STRING).description("작성자의 프로필 사진"),
+                fieldWithPath(parentPath.concat("nickName")).type(JsonFieldType.STRING).description("작성자의 닉네임"),
+                fieldWithPath(parentPath.concat("locationTag")).type(JsonFieldType.STRING).description("장소 태그")
+
+        );
+    }
 
     default List<FieldDescriptor> getFullResponseDescriptors(List dataResponseFieldDescriptors) {
         Stream<FieldDescriptor> defaultResponseDescriptors = getDefaultResponseDescriptors(JsonFieldType.ARRAY).stream();

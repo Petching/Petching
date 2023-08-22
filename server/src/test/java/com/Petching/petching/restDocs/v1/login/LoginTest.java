@@ -80,9 +80,18 @@ public class LoginTest implements LoginTestHelper {
     @MockBean
     private UserService userService;
 
+    @MockBean
+    private SecurityConfiguration securityConfiguration;
+
+
+    /**
+     * login test 구현 필요
+     *
+     */
     @DisplayName("Test - Login - POST")
     @Test
-    @WithMockUser(username = "email@example.com", password = "exPassword",roles = "admin")    public void loginTest() throws Exception {
+    @WithMockUser(username = "email@example.com", password = "exPassword",roles = "admin")
+    public void loginTest() throws Exception {
 
         this.createUser();
 
@@ -96,7 +105,7 @@ public class LoginTest implements LoginTestHelper {
                     postRequestBuilder(getUrl(), content)
         ).andDo(print());
 
-        System.out.println("actions : " + actions.andReturn().getResponse().getHeaderNames());
+        System.out.println("actions : " + actions.andReturn().getResponse());
 
     }
 

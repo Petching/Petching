@@ -16,7 +16,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
 
     // Board 에서 random 한 img 를 최대 4개 불러오는 쿼리 NULL 은 제외.
-    @Query(nativeQuery = true, value = "SELECT b.img_url FROM board b WHERE b.img_url IS NOT NULL ORDER BY RAND() LIMIT 4")
+    @Query(nativeQuery = true, value = "SELECT b.img_urls FROM board_img_urls b WHERE b.img_urls IS NOT NULL ORDER BY RAND() LIMIT 4")
     Optional<List<String>> findRandomBoardImages();
 
     @Query(value = "SELECT * FROM Board ORDER BY RAND() LIMIT 4", nativeQuery = true)
