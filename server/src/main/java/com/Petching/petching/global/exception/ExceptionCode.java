@@ -26,7 +26,11 @@ public enum ExceptionCode {
     BAD_GATEWAY(502, "Bad Gateway"),
     SERVICE_UNAVAILABLE(503, "Service Temporarily Unavailable"),
     GATEWAY_TIMEOUT(504, "Gateway Time-out"),
-    UNKNOWN_ERROR(520, "Unknown Error");
+    UNKNOWN_ERROR(520, "Unknown Error"),
+    ROOM_NOT_FOUND(404, "Room not found"),
+    ROOM_EXIST(409,"Already exists"),
+    NOT_AUTHORIZED(401, "Not Authorized");
+
 
     @Getter
     private int status;
