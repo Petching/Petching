@@ -20,9 +20,14 @@ const Card: React.FC<CardProps> = ({
           <button className="w-[7rem] h-7 bg-white shadow-sm shadow-gray-400 rounded-full mr-1">
             {locationTag}
           </button>
-          <button className="w-[5rem] h-7 bg-white shadow-sm shadow-gray-400 rounded-full ml-1">
-            {petSize}
-          </button>
+          {petSize.map(size => (
+            <button
+              key={size}
+              className="w-[4rem] h-7 bg-white shadow-sm shadow-gray-400 rounded-full ml-1"
+            >
+              {size}
+            </button>
+          ))}
         </div>
         <div className="mt-5">{title}</div>
         <div className="flex justify-center items-center">

@@ -16,16 +16,16 @@ const MyPost: React.FC<{ userId: string }> = ({ userId }) => {
       <div className="">
         <button
           className={`${
-            category && 'text-customHoverGreen'
-          } hover:text-customHoverGreen mx-3`}
+            category && 'text-hoverGreen'
+          } hover:text-hoverGreen mx-3`}
           onClick={() => setCategory(true)}
         >
           돌봄리스트
         </button>
         <button
           className={`${
-            !category && 'text-customHoverGreen'
-          } hover:text-customHoverGreen mx-3`}
+            !category && 'text-hoverGreen'
+          } hover:text-hoverGreen mx-3`}
           onClick={() => setCategory(false)}
         >
           자랑하기
