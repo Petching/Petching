@@ -79,6 +79,10 @@ public class ErrorResponse {
     public static ErrorResponse of(ErrorResponse info, Map<String, String> message) {
         return new ErrorResponse(new ErrorResponse.CustomData(info, message));
     }
+
+    public static ErrorResponse of(HttpStatus httpStatus, String message) {
+        return new ErrorResponse(httpStatus.value(), message);
+    }
     // Field Error 가공 : DTO 클래스의 유효성 검증에서 발생하는 에러 정보 생성
     @Getter
     public static class FieldError {
