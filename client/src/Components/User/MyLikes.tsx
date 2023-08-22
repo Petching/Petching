@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useGetUserLikes } from '../../Hook/useGetUserLikes';
 import Card from '../Care/Card';
 import PageBtns from './PageBtns';
+import { toCareListDetail } from '../../Util/navigateToCareListDetail';
 
 const MyLikes: React.FC<{ userId: string }> = ({ userId }) => {
   const [page, setPage] = useState<number>(1);
@@ -31,6 +32,9 @@ const MyLikes: React.FC<{ userId: string }> = ({ userId }) => {
               nickName={ele.nickName}
               profileImgUrl={ele.profileImgUrl}
               imgUrls={ele.imgUrls}
+              onCardClick={() => {
+                toCareListDetail;
+              }}
             />
           ))}
       </div>
