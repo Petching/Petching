@@ -29,7 +29,7 @@ const QuestionSection: React.FC<QuestionSectionProps> = ({ goTo }) => {
           찾아오시는 길
         </button>
         <button
-          onClick={() => goTo && goTo('/inquery/map')}
+          onClick={() => goTo && goTo('/inquery/write')}
           className="transform transition-transform duration-300 hover:scale-105  flex-1 flex justify-center items-center hover:bg-InqueryComponentButton text-[20px] sm:text-[23px] md:text-[28px]"
         >
           문의하기

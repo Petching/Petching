@@ -20,6 +20,7 @@ import Inquery from './Page/Inquery';
 import InqueryPopular from './Page/InqueryPopular';
 import InqueryFind from './Page/InqueryFind';
 import InqueryMap from './Page/InqueryMap';
+import InqueryWrite from './Page/InqueryWrite';
 export const routers: RemixRouter = createBrowserRouter([
   {
     path: '/',
@@ -32,6 +33,10 @@ export const routers: RemixRouter = createBrowserRouter([
       {
         path: '/inquery',
         element: <Inquery />,
+      },
+      {
+        path: '/inquery/write',
+        element: <InqueryWrite />,
       },
       {
         path: '/inquery/popular',
