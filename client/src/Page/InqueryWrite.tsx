@@ -1,6 +1,3 @@
-import React from 'react';
-import cat from '../Style/greencat.png';
-import questionPicture from '../Style/question.png';
 import TextEditor from '../Components/Care/TextEditor';
 import Dropdown from '../Components/Inquery/Dropdown';
 
