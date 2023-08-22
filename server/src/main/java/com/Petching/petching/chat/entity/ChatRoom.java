@@ -4,10 +4,12 @@
 //import com.fasterxml.jackson.annotation.JsonIgnore;
 //import lombok.Getter;
 //import lombok.NoArgsConstructor;
+//import lombok.Setter;
 //
 //import javax.persistence.*;
 //
 //@Getter
+//@Setter
 //@NoArgsConstructor
 //@Entity
 //public class ChatRoom {
@@ -18,6 +20,12 @@
 //
 //    @Column
 //    private String roomName;
+//
+//    @Column
+//    private String userNickName;
+//
+//    @Column
+//    private String keeperNickName;
 //
 //    @JsonIgnore
 //    @ManyToOne

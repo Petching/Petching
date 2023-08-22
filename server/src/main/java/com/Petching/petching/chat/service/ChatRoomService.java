@@ -1,7 +1,9 @@
 //package com.Petching.petching.chat.service;
 //
+//import com.Petching.petching.chat.dto.ChatRoomDto;
 //import com.Petching.petching.chat.entity.ChatRoom;
 //import com.Petching.petching.chat.repository.ChatRoomRepository;
+//import com.Petching.petching.user.entity.User;
 //import lombok.RequiredArgsConstructor;
 //import lombok.extern.slf4j.Slf4j;
 //import org.springframework.stereotype.Service;
@@ -28,8 +30,11 @@
 //    }
 //
 //    //채팅방 생성
-//    public ChatRoom createRoom(String name) {
-//        ChatRoom chatRoom = new ChatRoom(name);
+//    public ChatRoom createRoom(String userName, String keeperName, User user) {
+//        ChatRoom chatRoom = new ChatRoom(userName +" 과 " + keeperName + "의 채팅방");
+//        chatRoom.setUser(user);
+//        chatRoom.setKeeperNickName(keeperName);
+//        chatRoom.setUserNickName(userName);
 //        chatRoomRepository.save(chatRoom);
 //        return chatRoom;
 //    }

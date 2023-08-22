@@ -1,9 +1,11 @@
 //package com.Petching.petching.chat.dto;
 //
 //import lombok.Getter;
+//import lombok.Setter;
 //
 //@Getter
+//@Setter
 //public class ChatRoomDto {
-//    private String roomName;
-//    private String nickName;
+//    private String userName;
+//    private String keeperName;
 //}
