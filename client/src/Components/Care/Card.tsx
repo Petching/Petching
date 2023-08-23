@@ -5,7 +5,7 @@ import { CardProps } from '../../Util/types';
 const Card: React.FC<CardProps> = ({
   title,
   locationTag,
-  petSize,
+  petSizes,
   nickName,
   profileImgUrl,
   imgUrls,
@@ -22,7 +22,7 @@ const Card: React.FC<CardProps> = ({
             <button className="w-[7rem] h-7 bg-white shadow-sm shadow-gray-400 rounded-full mr-1">
               {locationTag}
             </button>
-            {petSize.map(size => (
+            {petSizes.map(size => (
               <button
                 key={size}
                 className="w-[4rem] h-7 bg-white shadow-sm shadow-gray-400 rounded-full ml-1"

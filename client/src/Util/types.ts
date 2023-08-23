@@ -47,7 +47,7 @@ export type DummyDataItem = {
 export type CardProps = {
   title: string;
   locationTag: string;
-  petSize: string[];
+  petSizes: string[];
   nickName: string;
   profileImgUrl: string;
   imgUrls: string[];

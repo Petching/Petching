@@ -28,7 +28,7 @@ const MyLikes: React.FC<{ userId: string }> = ({ userId }) => {
               key={idx}
               title={ele.title}
               locationTag={ele.locationTag}
-              petSize={ele.petSize}
+              petSizes={ele.petSizes}
               nickName={ele.nickName}
               profileImgUrl={ele.profileImgUrl}
               imgUrls={ele.imgUrls}

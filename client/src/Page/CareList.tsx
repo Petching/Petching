@@ -140,7 +140,7 @@ const CareList = () => {
                     key={index}
                     title={cardData.title}
                     locationTag={cardData.locationTag}
-                    petSize={cardData.petSizes}
+                    petSizes={cardData.petSizes}
                     nickName={cardData.nickName}
                     profileImgUrl={cardData.profileImgUrl}
                     imgUrls={cardData.imgUrls}
