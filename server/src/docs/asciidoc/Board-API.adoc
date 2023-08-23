@@ -1,5 +1,5 @@
-[[자랑하기-API]]
-= 자랑하기 API
+[[Board-API]]
+= Board API
 == Board Controller
 
 === Board 게시물 등록 API

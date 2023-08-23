@@ -62,6 +62,10 @@ dependencies {
 
 	// 실시간 채팅을 위한 websocket
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	// stomp
+	implementation 'org.webjars:stomp-websocket:2.3.4'
+	// redis 관련 의존성 추가
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
 	// Spring Data JPA 사용을 위함
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

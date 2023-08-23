@@ -1,6 +1,9 @@
 spring:
   profiles:
-    active: dev
+    active: local
+  redis:
+    port: 8080
+    host: localhost
   security:
     oauth2:
       client:
@@ -115,8 +118,8 @@ spring:
       on-profile: local
   datasource:
     url:
-    username:
-    password:
+    username: root
+    password: 980915
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database: mysql

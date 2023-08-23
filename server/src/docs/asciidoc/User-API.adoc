@@ -45,14 +45,13 @@ PATCH: /users/
 ----
 .request-body
 include::{snippets}/patch-user/request-body.adoc[]
-
 .request-fields
 include::{snippets}/patch-user/request-fields.adoc[]
 
 [discrete]
 ==== `Response`
 .request-body
-include::{snippets}/patch-user/request-body.adoc[]
+include::{snippets}/patch-user/response-body.adoc[]
 
 .response-fields
 include::{snippets}/patch-user/response-fields.adoc[]
