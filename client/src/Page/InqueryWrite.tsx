@@ -2,6 +2,10 @@ import TextEditor from '../Components/Care/TextEditor';
 import Dropdown from '../Components/Inquery/Dropdown';
 
 const InqueryWrite = () => {
+  const handleButtonClick = () => {
+    alert('1대1 문의는 준비중입니다.');
+  };
+
   return (
     <>
       <section className="p-10">
@@ -22,7 +26,10 @@ const InqueryWrite = () => {
             <TextEditor />
           </div>
         </div>
-        <button className="bg-customGreen hover:bg-customHoverGreen text-gray-700 font-bold py-2 px-4 rounded duration-300 hover:scale-110 ease-in-out">
+        <button
+          onClick={handleButtonClick}
+          className="bg-customGreen hover:bg-customHoverGreen text-gray-700 font-bold py-2 px-4 rounded duration-300 hover:scale-110 ease-in-out"
+        >
           Submit
         </button>
       </section>
