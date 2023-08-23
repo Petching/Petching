@@ -5,6 +5,7 @@ import Postcode from '../Components/Care/Postcode';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { toCareListDetail } from '../Util/navigateToCareListDetail';
 
 interface Date {
   year: number;
@@ -139,10 +140,11 @@ const CareList = () => {
                     key={index}
                     title={cardData.title}
                     locationTag={cardData.locationTag}
-                    petSize={cardData.petSizes}
+                    petSizes={cardData.petSizes}
                     nickName={cardData.nickName}
                     profileImgUrl={cardData.profileImgUrl}
                     imgUrls={cardData.imgUrls}
+                    onCardClick={() => toCareListDetail(cardData.postId)}
                   />
                 </div>
               ))}

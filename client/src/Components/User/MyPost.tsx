@@ -4,12 +4,14 @@ import { useGetMyPostToCare } from '../../Hook/useGetMyPostToCare';
 import Card from '../Care/Card';
 import { useGetMyPostToPeacock } from '../../Hook/useGetMyPostToPeacock';
 import PageBtns from './PageBtns';
-
+import { toCareListDetail } from '../../Util/navigateToCareListDetail';
 const MyPost: React.FC<{ userId: string }> = ({ userId }) => {
   const [category, setCategory] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1);
   const { MyPostToCare } = useGetMyPostToCare(userId, page);
   const { MyPostToPeacock } = useGetMyPostToPeacock(userId, page);
+  console.log(MyPostToCare);
+  console.log(MyPostToPeacock);
 
   return (
     <div className="w-full">
@@ -36,33 +38,51 @@ const MyPost: React.FC<{ userId: string }> = ({ userId }) => {
         {category ? (
           <>
             {MyPostToCare &&
-              MyPostToCare.data.map((ele, idx) => (
-                // 추후 postId로 감싸는 div 추가할 것
-                <Card
-                  key={idx}
-                  title={ele.title}
-                  locationTag={ele.locationTag}
-                  petSize={ele.petSize}
-                  nickName={ele.nickName}
-                  profileImgUrl={ele.profileImgUrl}
-                  imgUrls={ele.imgUrls}
-                />
+              (MyPostToCare.data.length === 0 ? (
+                <div className="mt-10">
+                  <p>작성한 게시글이 없습니다.</p>
+                </div>
+              ) : (
+                MyPostToCare.data.map((ele, idx) => (
+                  // 추후 postId로 감싸는 div 추가할 것
+                  <Card
+                    key={idx}
+                    title={ele.title}
+                    locationTag={ele.locationTag}
+                    petSizes={ele.petSizes}
+                    nickName={ele.nickName}
+                    profileImgUrl={ele.profileImgUrl}
+                    imgUrls={ele.imgUrls}
+                    onCardClick={() => {
+                      toCareListDetail;
+                    }}
+                  />
+                ))
               ))}
           </>
         ) : (
           <>
             {MyPostToPeacock &&
-              MyPostToPeacock.data.map((ele, idx) => (
-                // 추후 postId로 감싸는 div 추가할 것
-                <Card
-                  key={idx}
-                  title={ele.title}
-                  locationTag={ele.locationTag}
-                  petSize={ele.petSize}
-                  nickName={ele.nickName}
-                  profileImgUrl={ele.profileImgUrl}
-                  imgUrls={ele.imgUrls}
-                />
+              (MyPostToPeacock.data.length === 0 ? (
+                <div className="mt-10">
+                  <p>작성한 게시글이 없습니다.</p>
+                </div>
+              ) : (
+                MyPostToPeacock.data.map((ele, idx) => (
+                  // 추후 postId로 감싸는 div 추가할 것
+                  <Card
+                    key={idx}
+                    title={ele.title}
+                    locationTag={ele.locationTag}
+                    petSizes={ele.petSizes}
+                    nickName={ele.nickName}
+                    profileImgUrl={ele.profileImgUrl}
+                    imgUrls={ele.imgUrls}
+                    onCardClick={() => {
+                      toCareListDetail;
+                    }}
+                  />
+                ))
               ))}
           </>
         )}
