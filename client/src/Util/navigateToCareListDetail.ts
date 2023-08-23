@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-const navigate = useNavigate();
 export const toCareListDetail = (postId: number) => {
+  const navigate = useNavigate();
   navigate(`/carelistdetail/${postId}`);
 };
