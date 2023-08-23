@@ -23,13 +23,15 @@ const InqueryComponent: React.FC<InqueryComponentProps> = ({
   console.log(filteredData);
   return (
     <>
-      <div className="flex flex-col p-6 justify-center items-center w-[90vw]">
-        <div className="text-lg mb-6">총 {filteredData.length}개의 질문</div>
+      <div className="flex flex-col p-6 justify-left items-left w-[90vw]">
+        <div className="text-[30px] mb-6 p-5">
+          총 {filteredData.length}개의 질문
+        </div>
         {/* dummydata/data/filteredData 순으로 바뀌었음 */}
         {filteredData.map((item, index) => (
           <div key={item.id}>
             <div>
-              <div className="flex p-3 text-3xl">
+              <div className="flex p-3 text-2xl">
                 Q. {item.q}
                 <button
                   onClick={() =>
@@ -45,7 +47,7 @@ const InqueryComponent: React.FC<InqueryComponentProps> = ({
               </div>
               <hr className="border-t border-gray-200 mb-10" />
               {expandedIndex === index && (
-                <div className="text-2xl mb-4 mt-7 flex justify-center items-center bg-green-200">
+                <div className="text-2xl mb-4 p-6 mt-7 flex justify-left items-center w-full h-[15vh] lg:w-[50vw] lg:h-[15vh] bg-gray-100">
                   A. {item.a}
                 </div>
               )}
