@@ -22,7 +22,7 @@ const InqueryWrite = () => {
             <TextEditor />
           </div>
         </div>
-        <button className="bg-customGreen hover:bg-customHoverGreen text-gray-700 font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+        <button className="bg-customGreen hover:bg-customHoverGreen text-gray-700 font-bold py-2 px-4 rounded duration-300 hover:scale-110 ease-in-out">
           Submit
         </button>
       </section>
