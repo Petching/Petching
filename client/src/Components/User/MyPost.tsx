@@ -37,22 +37,6 @@ const MyPost: React.FC<{ userId: string }> = ({ userId }) => {
       <div className="flex flex-wrap justify-center">
         {category ? (
           <>
-            {/* {MyPostToCare &&
-              MyPostToCare.data?.map((ele, idx) => (
-                // 추후 postId로 감싸는 div 추가할 것
-                <Card
-                  key={idx}
-                  title={ele.title}
-                  locationTag={ele.locationTag}
-                  petSize={ele.petSize}
-                  nickName={ele.nickName}
-                  profileImgUrl={ele.profileImgUrl}
-                  imgUrls={ele.imgUrls}
-                  onCardClick={() => {
-                    toCareListDetail;
-                  }}
-                />
-              ))} */}
             {MyPostToCare &&
               (MyPostToCare.data.length === 0 ? (
                 <div className="mt-10">
@@ -65,7 +49,7 @@ const MyPost: React.FC<{ userId: string }> = ({ userId }) => {
                     key={idx}
                     title={ele.title}
                     locationTag={ele.locationTag}
-                    petSize={ele.petSize}
+                    petSizes={ele.petSizes}
                     nickName={ele.nickName}
                     profileImgUrl={ele.profileImgUrl}
                     imgUrls={ele.imgUrls}
@@ -90,7 +74,7 @@ const MyPost: React.FC<{ userId: string }> = ({ userId }) => {
                     key={idx}
                     title={ele.title}
                     locationTag={ele.locationTag}
-                    petSize={ele.petSize}
+                    petSizes={ele.petSizes}
                     nickName={ele.nickName}
                     profileImgUrl={ele.profileImgUrl}
                     imgUrls={ele.imgUrls}
