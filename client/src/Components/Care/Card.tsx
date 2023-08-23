@@ -1,6 +1,7 @@
 import React from 'react';
 import Carousel from './Carousel';
 import { CardProps } from '../../Util/types';
+import { useNavigate } from 'react-router-dom';
 
 const Card: React.FC<CardProps> = ({
   title,
@@ -9,15 +10,20 @@ const Card: React.FC<CardProps> = ({
   nickName,
   profileImgUrl,
   imgUrls,
-  onCardClick,
+  postId,
 }) => {
+  const navigate = useNavigate();
+  const toCareListDetail = (postId: number) => {
+    navigate(`/carelistdetail/${postId}`);
+  };
+
   return (
     <div className="m-4">
       <div className=" text-center rounded-md w-[18rem] h-[26rem] pt-6 bg-white shadow-lg shadow-gray-400">
         <div className="mx-auto w-60">
           <Carousel imgUrls={imgUrls} />
         </div>
-        <div onClick={onCardClick}>
+        <div onClick={() => toCareListDetail(postId)}>
           <div>
             <button className="w-[7rem] h-7 bg-white shadow-sm shadow-gray-400 rounded-full mr-1">
               {locationTag}

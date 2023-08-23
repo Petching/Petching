@@ -4,7 +4,7 @@ import { useGetMyPostToCare } from '../../Hook/useGetMyPostToCare';
 import Card from '../Care/Card';
 import { useGetMyPostToPeacock } from '../../Hook/useGetMyPostToPeacock';
 import PageBtns from './PageBtns';
-import { toCareListDetail } from '../../Util/navigateToCareListDetail';
+
 const MyPost: React.FC<{ userId: string }> = ({ userId }) => {
   const [category, setCategory] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1);
@@ -53,9 +53,7 @@ const MyPost: React.FC<{ userId: string }> = ({ userId }) => {
                     nickName={ele.nickName}
                     profileImgUrl={ele.profileImgUrl}
                     imgUrls={ele.imgUrls}
-                    onCardClick={() => {
-                      toCareListDetail;
-                    }}
+                    postId={ele.postId}
                   />
                 ))
               ))}
@@ -78,9 +76,7 @@ const MyPost: React.FC<{ userId: string }> = ({ userId }) => {
                     nickName={ele.nickName}
                     profileImgUrl={ele.profileImgUrl}
                     imgUrls={ele.imgUrls}
-                    onCardClick={() => {
-                      toCareListDetail;
-                    }}
+                    postId={ele.postId}
                   />
                 ))
               ))}
