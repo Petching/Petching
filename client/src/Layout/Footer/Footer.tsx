@@ -15,7 +15,12 @@ const Footer = () => {
       </div>
       <div className="flex items-center">
         <button onClick={toInquery}>문의하기</button>
-        <button className="w-5 ml-2">
+        <button
+          className="ml-2"
+          onClick={() => {
+            window.open('https://github.com/Petching/Petching');
+          }}
+        >
           <RxGithubLogo />
         </button>
       </div>
