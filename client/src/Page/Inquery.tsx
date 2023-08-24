@@ -1,4 +1,5 @@
 /* eslint-disable */
+import React from 'react';
 import poo from '../Style/footerdog.png';
 import InqueryComponent from '../Components/Inquery/InqueryComponent';
 import { useNavigate } from 'react-router-dom';
