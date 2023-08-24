@@ -153,7 +153,7 @@ public interface ControllerTestHelper<T> {
         return List.of(
                 parameterWithName("page").description("Page 번호").optional(),
                 parameterWithName("size").description("Page Size").optional(),
-                parameterWithName("_csrf").description("csrf").optional()
+                parameterWithName("_csrf").description("csrf").optional().ignored()
         );
     }
     enum DataResponseType {
