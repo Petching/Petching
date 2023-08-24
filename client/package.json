@@ -31,6 +31,7 @@
     "react-fullpage": "^0.1.19",
     "react-icons": "^4.10.1",
     "react-infinite-scroll-component": "^6.1.0",
+    "react-kakao-maps-sdk": "^1.1.11",
     "react-modern-calendar-datepicker": "^3.1.6",
     "react-query": "^3.39.3",
     "react-responsive-carousel": "^3.2.23",

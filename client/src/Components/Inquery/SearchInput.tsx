@@ -30,7 +30,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ search }) => {
     <div className="flex items-center justify-center relative">
       <GoSearch className="absolute left-3 top-[50%] transform -translate-y-[50%] text-gray-400 z-10" />
       <input
-        className="focus:outline-none pl-8 w-[250px] h-[60px] sm:w-[400px] sm:h-[60px] md:w-[500px] md:h-[80px] lg:w-[500px] lg:h-[80px] rounded-2xl text-2xl"
+        className="focus:outline-none pl-8 w-[250px] h-[60px] sm:w-[400px] sm:h-[60px] md:w-[500px] md:h-[80px] lg:w-[500px] lg:h-[80px] rounded-2xl text-lg md:text-2xl"
         placeholder="궁금한 질문을 빠르게 찾아보세요"
         onChange={e => {
           setInputValue(e.target.value);
