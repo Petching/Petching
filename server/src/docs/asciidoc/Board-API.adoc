@@ -216,3 +216,36 @@ include::{snippets}/get-board-random-imgUrls/http-request.adoc[]
 include::{snippets}/get-board-random-imgUrls/http-response.adoc[]
 
 ---
+
+=== 유저가 작성한 Board 게시물 조회 API
+[discrete]
+==== `Request`
+[source,http]
+----
+GET: /boards/{userId}/written
+----
+[discrete]
+==== `Request`
+.path-parameters
+include::{snippets}/get-boards-user-written/path-parameters.adoc[]
+.request-parameters
+include::{snippets}/get-boards-user-written/request-parameters.adoc[]
+.request-headers
+include::{snippets}/get-boards-user-written/request-headers.adoc[]
+
+[discrete]
+==== `Response`
+.response-body
+include::{snippets}/get-boards-user-written/response-body.adoc[]
+.response-fields
+include::{snippets}/get-boards-user-written/response-fields.adoc[]
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/get-boards-user-written/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/get-boards-user-written/http-response.adoc[]
+
+---

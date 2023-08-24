@@ -354,13 +354,14 @@ public class CarePostControllerTest implements CarePostControllerTestHelper {
     @WithMockUser(username = "TestAdmin", roles = "admin")
     public void getMyPageTest() throws Exception {
 
+
         // given
+        List<CarePost> carePostList = StubData.MockCarePost.getMultiResultBoard().toList();
         Page<CarePost> carePostPage = StubData.MockCarePost.getMultiResultBoard();
         List<CarePostDto.MyPage> carePostDtoList = StubData.MockCarePost.getCarePostMyPageListDto();
-        List<CarePost> carePostList = StubData.MockCarePost.getMultiResultBoard().toList();
 
-        given(carePostService.findAllPost(Mockito.any(Pageable.class))).willReturn(carePostPage);
         given(carePostService.findUserCarePost(Mockito.anyLong())).willReturn(carePostList);
+        given(carePostService.findUserCarePost(Mockito.any(Pageable.class), Mockito.anyList())).willReturn(carePostPage);
         given(carePostMapper.carePostsToCarePostMyPageDto(Mockito.anyList())).willReturn(carePostDtoList);
 
         Long userId = 1L;

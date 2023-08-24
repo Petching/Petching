@@ -426,4 +426,67 @@ public class BoardControllerTest implements BoardControllerTestHelper {
 
     }
 
+
+    @DisplayName("Test - BoardController - GET Boards - User written")
+    @Test
+    @WithMockUser(username = "TestAdmin", roles = "admin")
+    public void getUserWittenBoardsTest() throws Exception {
+
+        // given
+        String page = "1";
+        String size = "10";
+
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", page);
+        queryParams.add("size", size);
+
+        Page<Board> boardPage = StubData.MockBoard.getMultiResultBoard();
+        PageInfo pageInfo = new PageInfo(
+                boardPage.getNumber(),
+                boardPage.getSize(),
+                3,
+                1
+        );
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-Page-Info", new Gson().toJson(pageInfo));
+
+
+        List<BoardDto.Response> responseList = StubData.MockBoard.getMultiResponseBody();
+        User user = StubData.MockUser.getSingleResultUser(1L);
+
+
+        given(boardService.findBoardByWrittenUser(Mockito.anyLong(),Mockito.any(Pageable.class))).willReturn(boardPage);
+        given(boardMapper.boardPageToBoardResponseListDto(Mockito.any(Page.class))).willReturn(responseList);
+        given(userService.findUser(Mockito.anyLong())).willReturn(user);
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                getWrittenRequestBuilder(getUserURI(), 1L, queryParams)
+        );
+
+
+
+        // then
+        actions
+                .andExpect(status().isOk())
+                .andDo(
+                        document("get-boards-user-written",
+                                getRequestPreProcessor(),
+                                getResponsePreProcessor(),
+                                requestHeaders(
+                                        getOptionalRequestHeaderDescriptors()
+                                ),
+                                requestParameters(
+                                        getDefaultRequestParameterDescriptors()
+                                ),
+                                pathParameters(
+                                        getWrittenBoardRequestPathParameterDescriptor()
+                                ),
+                                responseFields(
+                                        getFullPageResponseDescriptors(
+                                                getDefaultBoardResponseDescriptors(DataResponseType.LIST))
+                                )
+                        )).andReturn();
+
+    }
 }

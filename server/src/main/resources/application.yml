@@ -119,8 +119,8 @@ spring:
       on-profile: local
   datasource:
     url:
-    username: root
-    password: 980915
+    username:
+    password:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database: mysql
