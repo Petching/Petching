@@ -239,5 +239,18 @@ public class BoardController {
         return new ResponseEntity<>(new MultiResponse<>(result, boardPage), HttpStatus.OK);
     }
 
+    // 유저가 작성한 게시글 조회
+    @GetMapping("/{userId}/written")
+    public ResponseEntity getUserWittenBoards(@RequestParam(defaultValue = "1") int page,
+                                            @RequestParam(defaultValue = "10") int size,
+                                            @PathVariable("userId") long userId) {
+
+        Pageable pageable = PageRequest.of(page -1, size);
+        Page<Board> writtenBoard = boardService.findBoardByWrittenUser(userId, pageable);
+        List<BoardDto.Response> result = mapper.boardPageToBoardResponseListDto(writtenBoard);
+
+
+        return new ResponseEntity<>(new MultiResponse<>(result, writtenBoard), HttpStatus.OK);
+    }
 
 }

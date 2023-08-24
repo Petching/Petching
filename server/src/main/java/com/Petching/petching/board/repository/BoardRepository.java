@@ -1,6 +1,8 @@
 package com.Petching.petching.board.repository;
 
 import com.Petching.petching.board.entity.Board;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -21,4 +23,8 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     @Query(value = "SELECT * FROM Board ORDER BY RAND() LIMIT 4", nativeQuery = true)
     List<Board> findRandomBoards();
+
+    @Query(value = "SELECT * FROM board WHERE user_id = :userId", nativeQuery = true)
+    Page<Board> findBoardsByUserId(Long userId, Pageable pageable);
+
 }

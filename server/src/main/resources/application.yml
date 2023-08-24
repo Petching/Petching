@@ -1,9 +1,10 @@
 spring:
   profiles:
-    active: local
+    active: dev
   redis:
-    port: 8080
-    host: localhost
+    port:
+    host:
+    password:
   security:
     oauth2:
       client:

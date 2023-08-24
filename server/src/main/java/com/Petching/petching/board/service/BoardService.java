@@ -138,4 +138,11 @@ public class BoardService {
 
         return boardRepository.save(board);
     }
+
+    public Page<Board> findBoardByWrittenUser(long userId, Pageable pageable) {
+
+        return boardRepository.findBoardsByUserId(userId, pageable);
+    }
+
+
 }
