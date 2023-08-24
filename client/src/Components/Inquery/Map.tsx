@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
+import { Map, MapMarker, Roadview, RoadviewMarker } from 'react-kakao-maps-sdk';
 
 declare global {
   interface Window {
@@ -7,34 +8,78 @@ declare global {
 }
 
 const MapContainer = () => {
-  useEffect(() => {
-    const container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-    const options = {
-      //지도를 생성할 때 필요한 기본 옵션
-      center: new window.kakao.maps.LatLng(
-        37.58203340383761,
-        126.81311841037957,
-      ), //지도의 중심좌표.
-      level: 3, //지도의 레벨(확대, 축소 정도)
-    };
+  const [toggle, setToggle] = useState('map');
 
-    // 마커가 표시될 위치입니다
-    const markerPosition = new window.kakao.maps.LatLng(
-      37.58203340383761,
-      126.81311841037957,
-    );
+  const placePosition = {
+    lat: 37.58194842014786,
+    lng: 126.81493569640868,
+  };
 
-    // 마커를 생성합니다
-    const marker = new window.kakao.maps.Marker({
-      position: markerPosition,
-    });
-
-    const map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-
-    marker.setMap(map);
-  }, []);
-
-  return <div id="map" style={{ width: '500px', height: '500px' }} />;
+  return (
+    <div style={{ width: '50vw', height: '50vh', position: 'relative' }}>
+      <Map // 로드뷰를 표시할 Container
+        center={placePosition}
+        style={{
+          display: toggle === 'map' ? 'block' : 'none',
+          width: '100%',
+          height: '100%',
+        }}
+        level={3}
+      >
+        <MapMarker position={placePosition} />
+        {toggle === 'map' && (
+          <input
+            style={{
+              position: 'absolute',
+              top: '5px',
+              left: '5px',
+              zIndex: 10,
+              color: 'black',
+              cursor: 'pointer',
+              border: 'none',
+              borderRadius: 3,
+              padding: '5px',
+              backgroundColor: '#F5F5EB',
+            }}
+            type="button"
+            onClick={() => setToggle('roadview')}
+            title="로드뷰 보기"
+            value="로드뷰 보기"
+          />
+        )}
+      </Map>
+      <Roadview // 로드뷰를 표시할 Container
+        position={{ ...placePosition, radius: 50 }}
+        style={{
+          display: toggle === 'roadview' ? 'block' : 'none',
+          width: '100%',
+          height: '100%',
+        }}
+      >
+        <RoadviewMarker position={placePosition} />
+        {toggle === 'roadview' && (
+          <input
+            style={{
+              position: 'absolute',
+              top: '5px',
+              left: '5px',
+              zIndex: 10,
+              color: 'black',
+              cursor: 'pointer',
+              border: 'none',
+              borderRadius: 3,
+              padding: '5px',
+              backgroundColor: '#DEDED5',
+            }}
+            type="button"
+            onClick={() => setToggle('map')}
+            title="지도 보기"
+            value="지도 보기"
+          />
+        )}
+      </Roadview>
+    </div>
+  );
 };
 
 export default MapContainer;
