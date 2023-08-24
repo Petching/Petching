@@ -88,6 +88,8 @@ public class SecurityConfiguration {
         configuration.addAllowedOriginPattern("https://www.petching.net");
         configuration.addAllowedOriginPattern("https://petching.net");
         configuration.addAllowedOriginPattern("https://server.petching.net");
+        configuration.addAllowedOriginPattern("*");
+
         configuration.addAllowedHeader("*");
         configuration.setAllowedMethods(Arrays.asList("*"));
         configuration.addExposedHeader("Authorization");

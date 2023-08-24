@@ -29,7 +29,7 @@ CAUTION: `_csrf=812a*!-@#$~` 으로 작성된 parameter는 security 기본 설�
 
 include::User-API.adoc[]
 
-include::자랑하기-API.adoc[]
+include::Board-API.adoc[]
 
 include::Comment-API.adoc[]
 

@@ -1,0 +1,218 @@
+[[Board-API]]
+= Board API
+== Board Controller
+
+=== Board 게시물 등록 API
+
+[discrete]
+==== `Request`
+[source,http]
+----
+POST: /boards
+----
+
+.request-headers
+include::{snippets}/post-board/request-headers.adoc[]
+
+.request-body
+include::{snippets}/post-board/request-body.adoc[]
+
+.request-fields
+include::{snippets}/post-board/request-fields.adoc[]
+
+
+[discrete]
+==== `Response`
+.response-headers
+include::{snippets}/post-board/response-headers.adoc[]
+
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/post-board/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/post-board/http-response.adoc[]
+
+---
+
+=== Board 게시물 수정 API
+[discrete]
+==== `Request`
+[source,http]
+----
+PATCH: /boards/{boardId}
+----
+
+.path-parameters
+include::{snippets}/patch-board/path-parameters.adoc[]
+.request-headers
+include::{snippets}/patch-board/request-headers.adoc[]
+.request-body
+include::{snippets}/patch-board/request-body.adoc[]
+.request-fields
+include::{snippets}/patch-board/request-fields.adoc[]
+
+
+[discrete]
+==== `Response`
+.response-body
+include::{snippets}/patch-board/response-body.adoc[]
+.response-fields
+include::{snippets}/patch-board/response-fields.adoc[]
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/patch-board/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/patch-board/http-response.adoc[]
+
+---
+=== Board 게시물 단일 조회 API
+[discrete]
+==== `Request`
+[source,http]
+----
+GET: /boards/{boardId}
+----
+.path-parameters
+include::{snippets}/get-board/path-parameters.adoc[]
+.request-headers
+include::{snippets}/get-board/request-headers.adoc[]
+
+
+[discrete]
+==== `Response`
+.response-body
+include::{snippets}/get-board/response-body.adoc[]
+.response-fields
+include::{snippets}/get-board/response-fields.adoc[]
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/get-board/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/get-board/http-response.adoc[]
+
+---
+
+=== Board 게시물 전체 조회 API
+[discrete]
+==== `Request`
+[source,http]
+----
+GET: /boards?page={default:1}&size={default:10}
+----
+
+.request-headers
+include::{snippets}/get-all-board/request-headers.adoc[]
+.request-parameters
+include::{snippets}/get-all-board/request-parameters.adoc[]
+
+
+[discrete]
+==== `Response`
+.response-body
+include::{snippets}/get-all-board/response-body.adoc[]
+.response-fields
+include::{snippets}/get-all-board/response-fields.adoc[]
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/get-all-board/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/get-all-board/http-response.adoc[]
+
+---
+
+=== Board 게시물 삭제 API
+[discrete]
+==== `Request`
+[source,http]
+----
+DELETE: /boards/{boardId}
+----
+.path-parameters
+include::{snippets}/delete-board/path-parameters.adoc[]
+.request-headers
+include::{snippets}/delete-board/request-headers.adoc[]
+
+
+[discrete]
+==== `Response`
+.http-response
+include::{snippets}/delete-board/http-response.adoc[]
+
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/delete-board/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/delete-board/http-response.adoc[]
+
+---
+
+=== Board 게시물 좋아요 올리기 API
+[discrete]
+==== `Request`
+[source,http]
+----
+POST: /boards/{boardId}/like
+----
+
+.path-parameters
+include::{snippets}/post-board-update-like/path-parameters.adoc[]
+.request-headers
+include::{snippets}/post-board-update-like/request-headers.adoc[]
+
+
+
+[discrete]
+==== `Response`
+.http-response
+include::{snippets}/post-board-update-like/http-response.adoc[]
+
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/post-board-update-like/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/post-board-update-like/http-response.adoc[]
+
+---
+
+=== Board 게시물 사진 랜덤 조회 API
+[discrete]
+==== `Request`
+[source,http]
+----
+POST: /boards/recently-created
+----
+
+[discrete]
+==== `Response`
+.response-body
+include::{snippets}/get-board-random-imgUrls/response-body.adoc[]
+.response-fields
+include::{snippets}/get-board-random-imgUrls/response-fields.adoc[]
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/get-board-random-imgUrls/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/get-board-random-imgUrls/http-response.adoc[]
+
+---
