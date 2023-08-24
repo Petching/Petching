@@ -15,10 +15,11 @@ const Footer = () => {
       </div>
       <div className="flex items-center">
         <button className="hover:scale-90" onClick={toInquery}>
-          문의하기
+          고객센터
         </button>
+        <div className="h-4 w-[1px] bg-black mx-2" />
         <button
-          className="ml-2 hover:scale-90"
+          className="hover:scale-90"
           onClick={() => {
             window.open('https://github.com/Petching/Petching');
           }}
