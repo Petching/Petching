@@ -80,7 +80,11 @@ const AddPet: React.FC<Props> = ({ open, setOpen, userId }) => {
           이미지 <br />
           입력
         </div>
-        <img src={img} alt="입력된 이미지" className="w-full h-full" />
+        <img
+          src={img}
+          alt="입력된 이미지"
+          className="w-full h-full object-cover"
+        />
         <input
           id="attach-file"
           type="file"

@@ -198,7 +198,7 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
             <img
               src={changeImg}
               alt="변경된 이미지"
-              className="w-full h-full"
+              className="w-full h-full object-cover"
             />
             <input
               id="attach-file"
@@ -212,7 +212,7 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
           <img
             src={UserProfile?.profileImgUrl}
             alt="유저의 프로필 이미지"
-            className="w-32 h-32 rounded"
+            className="w-32 h-32 rounded object-cover"
           />
         )}
       </div>
