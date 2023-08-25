@@ -1,45 +1,50 @@
-import React, { useRef, useState } from 'react';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { Editor } from '@toast-ui/react-editor';
+import '@toast-ui/editor/dist/toastui-editor.css';
+import '@toast-ui/editor/dist/i18n/ko-kr';
+import axios from 'axios';
 
-const TextEditor = () => {
-  const editorRef = useRef<any>(null);
-  const [data, setData] = useState('');
+export type HookMap = {
+  addImageBlobHook?: (blob: Blob | File, callback: HookCallback) => void;
+};
+type HookCallback = (url: string, text?: string) => void;
 
-  const handleInit = (editor: any) => {
-    editorRef.current = editor;
-    setData(editor.getData());
-  };
+function TextEditor() {
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-  const handleChange = (event: any, editor: any) => {
-    setData(editor.getData());
+  async function uploadImage(blob: any) {
+    const files = new FormData();
+    files.append('files', blob);
+
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/api/s3/uploads?uploadTo=boards`,
+        files,
+      );
+      return response.data.url;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const onUploadImage = async (blob: any, callback: any) => {
+    const url = await uploadImage(blob);
+    callback(url, 'alt text');
+    return false;
   };
 
   return (
-    <div className="w-full">
-      <CKEditor
-        editor={ClassicEditor}
-        config={{
-          toolbar: [
-            'bold',
-            'italic',
-            'link',
-            'bulletedList',
-            'numberedList',
-            'blockQuote',
-            'imageUpload', //이미지추가기능
-          ],
-          ckfinder: {
-            // 이미지 업로드 기능을 서버측 API를 사용하여 설정합니다.
-            uploadUrl: 'https://server.petching.net/api/s3/uploads',
-          },
-        }}
-        onReady={(editor: any) => handleInit(editor)}
-        onChange={(event: any, editor: any) => handleChange(event, editor)}
-        data={data}
-      />
-    </div>
+    <Editor
+      initialValue="hello react editor world!"
+      previewStyle="vertical"
+      height="200px"
+      initialEditType="wysiwyg"
+      useCommandShortcut={false}
+      language="ko-KR"
+      hooks={{
+        addImageBlobHook: onUploadImage,
+      }}
+    />
   );
-};
+}
 
 export default TextEditor;
