@@ -10,7 +10,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        // 웹소켓이 handshake를 하기 위해 연결하는 endpoint. ex: ws://localhost:8080/ws
+        // 웹소켓이 handshake를 하기 위해 연결하는 endpoint. ex: ws://localhost:8080/ws/chat
         registry.addEndpoint("/ws/chat")
                 .setAllowedOriginPatterns("*");
     }
