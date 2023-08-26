@@ -1,6 +1,7 @@
 package com.Petching.petching.temp.chat.config;
 
 import com.Petching.petching.temp.chat.redis.RedisSubscriber;
+import jnr.ffi.annotations.In;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

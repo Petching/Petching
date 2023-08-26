@@ -20,7 +20,6 @@ public class BoardDto {
     @AllArgsConstructor
     @Builder
     public static class Post{
-        // TODO: JWT 구현 이후 userId 삭제 후 token 을 받아 요청한 유저를 찾아 Board 객체에 유저 지정
 /*        @NotNull(message = "userId not null, JWT 구현이후 token 으로 바꿀 예정입니다.")
         private long userId;*/
         @NotBlank(message = "title not null")

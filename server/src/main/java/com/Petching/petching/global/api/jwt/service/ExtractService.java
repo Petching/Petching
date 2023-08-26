@@ -1,10 +1,14 @@
 package com.Petching.petching.global.api.jwt.service;
 
 
+import com.Petching.petching.global.exception.BusinessLogicException;
+import com.Petching.petching.global.exception.ExceptionCode;
 import com.Petching.petching.login.oauth.userInfo.JwtToken;
 import com.Petching.petching.user.entity.User;
 import com.Petching.petching.user.service.UserService;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 public class ExtractService {
@@ -23,8 +27,20 @@ public class ExtractService {
     public User getUserFromToken(String authorization) {
         authorization = authorization.replaceAll("Bearer ","");
 
-        return userService.findUser(jwtToken.extractUserIdFromToken(authorization));
+        Long userId = null;
+        userId = jwtToken.extractUserIdFromToken(authorization);
+
+        if(userId != null)
+            return userService.findUser(userId);
+
+        throw new BusinessLogicException(ExceptionCode.NOT_AUTHORIZED);
     }
 
 
+    public void isSameUser(User original, User request) {
+
+        if(!Objects.equals(original.getUserId(), request.getUserId()))
+            throw new BusinessLogicException(ExceptionCode.FORBIDDEN);
+
+    }
 }
