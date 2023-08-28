@@ -16,7 +16,7 @@ public class RoomDto {
     @Getter
     @Setter
     public static class Post {
-        private long userId;
+        private String nickName;
         private String title;
         private int userCurrentCount;
     }
@@ -29,7 +29,7 @@ public class RoomDto {
     public static class PostResponseDto {
         private long roomId;
         private String title;
-        private long userId;
+        private String nickName;
         private int userCurrentCount;
     }
 

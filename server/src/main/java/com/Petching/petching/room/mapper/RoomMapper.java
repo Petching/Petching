@@ -17,7 +17,7 @@ public interface RoomMapper {
         if (requestBody == null) return null;
 
         Room room = new Room();
-        room.setAdminUserId(requestBody.getUserId());
+        room.setAdminUserNickname(requestBody.getNickName());
         room.setTitle(requestBody.getTitle());
 
         return room;
@@ -33,7 +33,7 @@ public interface RoomMapper {
         postResponseDto.setTitle(createRoom.getTitle());
 
         if (createRoom.getAdminUserId() != null)
-            postResponseDto.setUserId(createRoom.getAdminUserId());
+            postResponseDto.setNickName(createRoom.getAdminUserNickname());
 
         return postResponseDto;
     }

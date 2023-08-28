@@ -34,12 +34,12 @@ public class RoomService {
 
 
     public Room createRoom(Room room, RoomDto.Post requestBody) {
-        long adminMemberId = requestBody.getUserId();
-        User findAdminUser = userRepository.findById(adminMemberId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        String adminNickName = requestBody.getNickName();
+        User findAdminUser = userRepository.findByNickName(adminNickName).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
         User findRequestUser = userRepository.findById(room.getRequestUserId()).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
-        room.setAdminUserNickname(findAdminUser.getNickName());
+        room.setAdminUserId(findAdminUser.getUserId());
         room.setRequestUserNickname(findRequestUser.getNickName());
         room.setTitle(room.getAdminUserNickname() + "과 " + room.getRequestUserNickname() + "의 대화방");
 
