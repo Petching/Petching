@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import TextEditor from '../Components/Care/TextEditor';
 import Dropdown from '../Components/Inquery/Dropdown';
 
@@ -5,7 +6,7 @@ const InqueryWrite = () => {
   const handleButtonClick = () => {
     alert('1대1 문의는 준비중입니다.');
   };
-
+  const [title, setTitle] = useState('');
   return (
     <>
       <section className="p-10">
@@ -16,14 +17,18 @@ const InqueryWrite = () => {
             <Dropdown />
           </div>
           <div className="text-lg">제목</div>
-          <input className="focus:outline-none border p-2 rounded w-full border- lg:w-[700px]" />
+          <input
+            className="focus:outline-none border p-2 rounded w-full border- lg:w-[700px]"
+            value={title}
+            onChange={e => setTitle(e.target.value)}
+          />
           <div className="text-lg mt-4">요청 사항 제목을 입력해 주세요.</div>
           <div className="mt-2 text-sm text-gray-600  w-full h-full lg:w-[700px] ">
             문의&요청 내용을 입력해주세요. 처리 및 답변에 최대 약 7일 소요될 수
             있습니다.
           </div>
           <div className="mt-4 w-full h-full lg:w-[700px] lg:h-[170px]">
-            <TextEditor />
+            <TextEditor title={title} />
           </div>
         </div>
         <button
