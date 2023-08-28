@@ -74,7 +74,7 @@ const TextEditor = ({ title }: TextEditorProps) => {
       <Editor
         ref={editorRef}
         hideModeSwitch={true}
-        initialValue="내용을 입력하세요"
+        placeholder="내용을 입력하세요"
         previewStyle="vertical"
         height="500px"
         useCommandShortcut={false}
