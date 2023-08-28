@@ -9,7 +9,12 @@ export type HookMap = {
 };
 type HookCallback = (url: string, text?: string) => void;
 
-const TextEditor = () => {
+interface TextEditorProps {
+  title: string;
+}
+
+//title props에 대한 TextEditorProps추가
+const TextEditor = ({ title }: TextEditorProps) => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [imgUrls, setImgUrls] = useState<string[]>();
   const editorRef = useRef<Editor | null>(null);
@@ -50,7 +55,7 @@ const TextEditor = () => {
       console.log(text);
 
       const requestBody = {
-        title: 'this is title1',
+        title,
         content: text,
         imgUrls: imgUrls,
       };
