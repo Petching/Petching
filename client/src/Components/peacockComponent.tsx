@@ -10,49 +10,44 @@ import { AiOutlineComment } from 'react-icons/ai';
 // import pills from '../Style/pills.jpg';
 import { useGetPeacock } from '../Hook/useGetPeacock';
 
+interface PeacockData {
+  boardId: number;
+  title: string;
+  profileImgUrl: string;
+  nickName: string;
+  likes: number;
+  createdAt: string;
+  commentCount: number;
+  checkLike: boolean;
+  imgUrls: string[];
+}
+
 export const CarouselComponent: React.FC = () => {
   const { GetPeacock } = useGetPeacock();
 
-  interface PictureItem {
-    id: number;
-    imgurl: string;
+  interface PeacockData {
+    boardId: number;
+    title: string;
+    profileImgUrl: string;
+    nickName: string;
+    likes: number;
+    createdAt: string;
+    commentCount: number;
+    checkLike: boolean;
+    imgUrls: string[];
   }
-
-  function changearray(el: any[]): PictureItem[] {
-    const picture: PictureItem[] = [];
-    for (let i = 0; i < el.length; i++) {
-      const id = i + 1;
-      const imgurl = el[i];
-      picture.push({ id, imgurl });
-    }
-    return picture;
-  }
-  let pictureItems: PictureItem[] = [];
-
-  if (GetPeacock) {
-    pictureItems = changearray(GetPeacock[0].imgUrls);
-  }
-
   return (
-    <Carousel
-      showStatus={false}
-      showIndicators={false}
-      showThumbs={false}
-      infiniteLoop={true}
-    >
-      {pictureItems.map(el => (
-        <div key={el.id}>
-          <img
-            src={el.imgurl}
-            alt="cau"
-            style={{ maxHeight: '100%', maxWidth: '100%' }}
-          />
-        </div>
-      ))}
+    <Carousel showThumbs={false}>
+      {GetPeacock &&
+        GetPeacock.map((item: PeacockData) => (
+          <div key={item.boardId}>
+            <img src={item.imgUrls[0]} alt={item.title} />
+            <p>{item.title}</p>
+          </div>
+        ))}
     </Carousel>
   );
 };
-
 export const LikeComponent = () => {
   const { GetPeacock } = useGetPeacock();
 
@@ -112,23 +107,55 @@ export const Square = () => {
   );
 };
 
-export const PeacockComponent = () => {
-  const { GetPeacock } = useGetPeacock();
+const PeacockCarousel: React.FC<PeacockComponentProps> = ({ data }) => {
+  const [count, setCount] = useState(1);
+  const [isLiked, setIsLiked] = useState(false);
+
+  const handleLike = () => {
+    if (!isLiked) {
+      setCount(count + 1);
+      setIsLiked(true);
+    } else {
+      setCount(count - 1);
+      setIsLiked(false);
+    }
+  };
 
   return (
-    <div className="h-96 w-72 m-12 bg-[#f2f2f2]">
-      <CarouselComponent />
-      <div className="mt-3 text-center">노가르시아</div>
-      {GetPeacock &&
-        GetPeacock.map(el => (
-          <div key={el.boardId} className="flex items-center ml-2">
-            <img className="w-16 h-16" src={pit} alt="logo" />
-            <span className="ml-4">{el.nickName}</span>
-          </div>
-        ))}
-      <div className="flex items-center mt-8 ml-2">
-        <LikeComponent />
+    <div>
+      <img src={data.imgUrls[0]} alt={data.title} className="w-40 h-40" />
+      <p>{data.title}</p>
+      <div className="flex items-center">
+        <button className="" onClick={handleLike}>
+          {isLiked ? (
+            <AiFillHeart className="w-6 h-6" color="red" />
+          ) : (
+            <AiOutlineHeart className="w-6 h-6" />
+          )}
+        </button>
+        <span className="ml-4">좋아요 {count}개</span>
+        <button className="flex items-center ml-10">
+          <AiOutlineComment className="w-6 h-6" />
+        </button>
+        <span className="ml-4">댓글 {data.commentCount}개</span>
       </div>
     </div>
   );
 };
+
+export const PeacockComponent: React.FC = () => {
+  const { GetPeacock } = useGetPeacock();
+
+  return (
+    <Carousel showThumbs={false}>
+      {GetPeacock &&
+        GetPeacock.map((item: PeacockData) => (
+          <PeacockCarousel key={item.boardId} data={item} />
+        ))}
+    </Carousel>
+  );
+};
+
+interface PeacockComponentProps {
+  data: PeacockData;
+}
