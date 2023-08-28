@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import ImageUploader from '../Components/Care/ImageUploader';
 import ReactCalendar from '../Components/Care/ReactCalendar';
 import Postcode from '../Components/Care/Postcode';
-
+import { postImgHandler } from '../Util/postImg';
 const CareListPost = () => {
   const location = useLocation();
   const [startDate, setStartDate] = useState(location.state.startDate);
@@ -15,14 +15,19 @@ const CareListPost = () => {
   const [content, setContent] = useState('');
   const [petSizes, setpetSizes] = useState<string[]>([]);
   const [memo, setMemo] = useState('');
-  const [imgUrls, setImgUrls] = useState<string[]>([]);
+  const [imagesToUpload, setImagesToUpload] = useState<File[]>([]);
 
-  const handleImageUploaded = (uploadedUrls: string[]) => {
-    setImgUrls([...imgUrls, ...uploadedUrls]);
+  const handleImageUploaded = (uploadedUrls: File[]) => {
+    setImagesToUpload(uploadedUrls);
   };
 
   const handlePost = async () => {
     const token = localStorage.getItem('ACCESS_TOKEN');
+    const imgUrls: string[] = [];
+    for (const img of imagesToUpload) {
+      const imgUrl = await postImgHandler(img, 'careposts');
+      imgUrls.push(imgUrl);
+    }
     try {
       const requestBody = {
         title,
