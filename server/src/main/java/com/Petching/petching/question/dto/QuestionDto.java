@@ -29,16 +29,49 @@ public class QuestionDto {
     @Getter
     @Builder
     public static class Patch{
+        @Nullable
+        private String title;
 
+        @Nullable
+        private String content;
+
+        @Nullable
+        private String questionType;
+
+        @Nullable
+        private List<String> imgUrls;
     }
 
     @Getter
     @Builder
     public static class Response{
+        @Nullable
+        private String title;
 
+        @Nullable
+        private String content;
+
+        @Nullable
+        private String questionType;
+
+        @Nullable
+        private List<String> imgUrls;
     }
 
 
+    @Getter
+    @Builder
     public static class Detail {
+        @Nullable
+        private String title;
+
+        @Nullable
+        private String content;
+
+        @Nullable
+        private String questionType;
+
+        @Nullable
+        private List<String> imgUrls;
     }
 }

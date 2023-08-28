@@ -57,4 +57,5 @@ public class Question extends BaseEntity {
         this.imgUrls = imgUrls;
         this.user = user;
     }
+
 }
