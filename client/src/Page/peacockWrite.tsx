@@ -1,8 +1,7 @@
 import PeacockTextEditor from '../Components/Care/PeacockTextEditor';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useCreateBoard, BoardData } from '../Hook/usePostPeacock';
 import { usePeacockStore } from '../store/PeacockStore';
-import Board from '../Components/Care/Board';
 import { postImgHandler } from '../Util/postImg';
 
 const PeacockWrite = () => {
