@@ -4,7 +4,7 @@ const Peacock = () => {
   return (
     <div className="flex flex-col items-center">
       <Square />
-      <div className="flex flex-wrap justify-center">
+      <div className="flex justify-center">
         <PeacockComponent />
       </div>
     </div>
