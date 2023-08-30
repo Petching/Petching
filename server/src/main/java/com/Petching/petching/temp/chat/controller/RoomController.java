@@ -62,7 +62,7 @@ public class RoomController {
     }
 
     //  채팅방 열기
-    @GetMapping("/{room-id}")
+    @GetMapping("/{roomId}")
     public ResponseEntity getChatRoom(@Positive @PathVariable("roomId") long roomId,
                                       @RequestHeader("Authorization") String authorization) {
 

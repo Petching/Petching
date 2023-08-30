@@ -1,13 +1,11 @@
 package com.Petching.petching.restDocs.v1.jwt;
 
-import com.Petching.petching.board.controller.BoardController;
 import com.Petching.petching.config.SecurityConfiguration;
 import com.Petching.petching.global.api.jwt.controller.JwtController;
 import com.Petching.petching.global.aws.s3.config.S3Configuration;
-import com.Petching.petching.login.jwt.service.JwtService;
 import com.Petching.petching.login.oauth.userInfo.JwtToken;
 import com.Petching.petching.restDocs.global.helper.JwtControllerTestHelper;
-import com.Petching.petching.restDocs.global.helper.StubData;
+import com.Petching.petching.restDocs.global.mock.StubData;
 import com.Petching.petching.user.entity.User;
 import com.Petching.petching.user.service.UserService;
 import com.google.gson.Gson;
@@ -21,12 +19,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
-import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-
-import java.util.List;
 
 import static com.Petching.petching.restDocs.global.utils.ApiDocumentUtils.getRequestPreProcessor;
 import static com.Petching.petching.restDocs.global.utils.ApiDocumentUtils.getResponsePreProcessor;

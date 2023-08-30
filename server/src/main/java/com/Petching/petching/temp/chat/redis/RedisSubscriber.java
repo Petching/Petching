@@ -16,10 +16,10 @@ public class RedisSubscriber{
 
     public void sendMessage(String message) {
         try {
-            log.info("publish 전 message: {}", message);
+            //log.info("publish 전 message: {}", message);
             PublishMessage publishMessage = objectMapper.readValue(message, PublishMessage.class);
             messagingTemplate.convertAndSend("/sub/chats/" + publishMessage.getRoomId(), publishMessage);
-            log.info("publish 전 message: {}", publishMessage.getContent());
+            //log.info("publish 전 message: {}", publishMessage.getContent());
         } catch (Exception e) {
             log.error(e.getMessage());
         }

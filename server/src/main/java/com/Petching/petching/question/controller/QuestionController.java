@@ -53,11 +53,11 @@ public class QuestionController {
                                         @RequestHeader("Authorization") String authorization){
 
         User user = extractService.getUserFromToken(authorization);
-        Question request = questionMapper.patchDtoToEntity(requestBody);
-        request.setUser(user);
-        request.setQuestionId(questionId);
+                Question request = questionMapper.patchDtoToEntity(requestBody);
+                request.setUser(user);
+                request.setQuestionId(questionId);
 
-        request = questionService.update(request);
+                request = questionService.update(request);
 
         QuestionDto.Detail detail = questionMapper.entityToDetail(request);
 

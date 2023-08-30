@@ -1,7 +1,6 @@
 package com.Petching.petching.restDocs.v1.mypet;
 
 
-import com.Petching.petching.config.SecurityConfiguration;
 import com.Petching.petching.global.aws.s3.config.S3Configuration;
 import com.Petching.petching.myPet.controller.MyPetController;
 import com.Petching.petching.myPet.dto.MyPetDto;
@@ -9,7 +8,7 @@ import com.Petching.petching.myPet.entity.MyPet;
 import com.Petching.petching.myPet.mapper.MyPetMapper;
 import com.Petching.petching.myPet.service.MyPetService;
 import com.Petching.petching.restDocs.global.helper.MyPetControllerTestHelper;
-import com.Petching.petching.restDocs.global.helper.StubData;
+import com.Petching.petching.restDocs.global.mock.StubData;
 import com.Petching.petching.restDocs.global.mock.ControllerTest;
 import com.Petching.petching.user.entity.User;
 import com.Petching.petching.user.service.UserService;
@@ -18,22 +17,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
-import java.util.Map;
 
 import static com.Petching.petching.restDocs.global.utils.ApiDocumentUtils.getRequestPreProcessor;
 import static com.Petching.petching.restDocs.global.utils.ApiDocumentUtils.getResponsePreProcessor;
@@ -109,11 +101,10 @@ public class MyPetControllerTest extends ControllerTest implements MyPetControll
                         )
                 ));
 
-        actions.andDo(print());
     }
 
 
-    @DisplayName("Test - MyPetController - POST")
+    @DisplayName("Test - MyPetController - PATCH")
     @Test
     @WithMockUser(username = "securityUsername", password = "securityPassword", roles = "USER")
     public void patchPetTest() throws Exception {

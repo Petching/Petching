@@ -10,7 +10,7 @@ import com.Petching.petching.config.SecurityConfiguration;
 import com.Petching.petching.global.aws.s3.config.S3Configuration;
 import com.Petching.petching.login.oauth.userInfo.JwtToken;
 import com.Petching.petching.restDocs.global.helper.CarePostControllerTestHelper;
-import com.Petching.petching.restDocs.global.helper.StubData;
+import com.Petching.petching.restDocs.global.mock.StubData;
 import com.Petching.petching.tag.petSize.CarePost_PetSizeRepository;
 import com.Petching.petching.tag.petSize.PetSizeRepository;
 import com.Petching.petching.user.entity.User;
