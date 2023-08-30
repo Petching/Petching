@@ -66,7 +66,6 @@ dependencies {
 	implementation 'org.webjars:stomp-websocket:2.3.4'
 	// redis 관련 의존성 추가
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-	implementation 'org.springframework.session:spring-session'
 
 	// Spring Data JPA 사용을 위함
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

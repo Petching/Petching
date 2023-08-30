@@ -1,6 +1,5 @@
 package com.Petching.petching.restDocs.v1.comment;
 
-import com.Petching.petching.board.controller.BoardController;
 import com.Petching.petching.board.entity.Board;
 import com.Petching.petching.board.service.BoardService;
 import com.Petching.petching.comment.controller.CommentController;
@@ -12,7 +11,7 @@ import com.Petching.petching.config.SecurityConfiguration;
 import com.Petching.petching.global.aws.s3.config.S3Configuration;
 import com.Petching.petching.login.oauth.userInfo.JwtToken;
 import com.Petching.petching.restDocs.global.helper.CommentControllerTestHelper;
-import com.Petching.petching.restDocs.global.helper.StubData;
+import com.Petching.petching.restDocs.global.mock.StubData;
 import com.Petching.petching.user.entity.User;
 import com.Petching.petching.user.service.UserService;
 import com.google.gson.Gson;
@@ -26,7 +25,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.HttpHeaders;
@@ -34,11 +32,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.Petching.petching.restDocs.global.utils.ApiDocumentUtils.getRequestPreProcessor;
 import static com.Petching.petching.restDocs.global.utils.ApiDocumentUtils.getResponsePreProcessor;

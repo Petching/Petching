@@ -45,16 +45,15 @@ public class QuestionDto {
     @Getter
     @Builder
     public static class Response{
-        @Nullable
+
+        private long questionId;
+
         private String title;
 
-        @Nullable
         private String content;
 
-        @Nullable
         private String questionType;
 
-        @Nullable
         private List<String> imgUrls;
     }
 
@@ -62,16 +61,15 @@ public class QuestionDto {
     @Getter
     @Builder
     public static class Detail {
-        @Nullable
+
+        private long questionId;
+
         private String title;
 
-        @Nullable
         private String content;
 
-        @Nullable
         private String questionType;
 
-        @Nullable
         private List<String> imgUrls;
     }
 }

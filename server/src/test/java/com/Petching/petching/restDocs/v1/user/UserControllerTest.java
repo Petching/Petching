@@ -6,7 +6,7 @@ import com.Petching.petching.restDocs.global.helper.UserControllerTestHelper;
 import com.Petching.petching.user.dto.UserPatchDto;
 import com.Petching.petching.user.dto.UserResponseDto;
 import com.Petching.petching.user.mapper.UserMapper;
-import com.Petching.petching.restDocs.global.helper.StubData;
+import com.Petching.petching.restDocs.global.mock.StubData;
 import com.google.gson.Gson;
 import com.Petching.petching.user.controller.UserController;
 import com.Petching.petching.user.dto.UserPostDto;

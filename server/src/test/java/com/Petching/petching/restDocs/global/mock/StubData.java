@@ -1,4 +1,4 @@
-package com.Petching.petching.restDocs.global.helper;
+package com.Petching.petching.restDocs.global.mock;
 
 import com.Petching.petching.board.dto.BoardDto;
 import com.Petching.petching.board.entity.Board;
@@ -9,6 +9,8 @@ import com.Petching.petching.comment.entity.Comment;
 import com.Petching.petching.global.aws.s3.dto.S3FileDto;
 import com.Petching.petching.myPet.dto.MyPetDto;
 import com.Petching.petching.myPet.entity.MyPet;
+import com.Petching.petching.question.dto.QuestionDto;
+import com.Petching.petching.question.entity.Question;
 import com.Petching.petching.user.dto.UserPatchDto;
 import com.Petching.petching.user.dto.UserPostDto;
 import com.Petching.petching.user.dto.UserResponseDto;
@@ -29,6 +31,175 @@ import java.util.*;
 
 
 public class StubData {
+
+    public static class MockQuestion{
+        private static Map<HttpMethod, Object> stubRequestBody;
+
+        static {
+            QuestionDto.Post postDto = QuestionDto.Post.builder()
+                    .title("this is title1")
+                    .content("this is content1")
+                    .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_01.png"))
+                    .questionType("SYSTEM")
+                    .build();
+
+            QuestionDto.Patch patchDto = QuestionDto.Patch.builder()
+                    .title("this is title1")
+                    .content("this is content1")
+                    .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_01.png"))
+                    .questionType("SYSTEM")
+                    .build();
+
+            stubRequestBody = new HashMap<>();
+            stubRequestBody.put(HttpMethod.POST, postDto);
+            stubRequestBody.put(HttpMethod.PATCH, patchDto);
+        }
+
+        public static Object getRequestBody(HttpMethod method) {
+            return stubRequestBody.get(method);
+        }
+
+        public static QuestionDto.Detail getSingleDetailBody() {
+            return QuestionDto.Detail.builder()
+                    .questionId(1L)
+                    .title("this is title1")
+                    .content("this is content1")
+                    .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_01.png"))
+                    .questionType("SYSTEM")
+                    .build();
+        }
+
+        public static List<QuestionDto.Detail> getMultiDetailBody() {
+
+            QuestionDto.Detail responseDto1 = QuestionDto.Detail.builder()
+                    .questionId(1L)
+                    .title("this is title1")
+                    .content("this is content1")
+                    .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_01.png"))
+                    .questionType("SYSTEM")
+                    .build();
+
+            QuestionDto.Detail responseDto2 = QuestionDto.Detail.builder()
+                    .questionId(2L)
+                    .title("this is title2")
+                    .content("this is content2")
+                    .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_02.png"))
+                    .questionType("SYSTEM")
+                    .build();
+
+            QuestionDto.Detail responseDto3 = QuestionDto.Detail.builder()
+                    .questionId(3L)
+                    .title("this is title3")
+                    .content("this is content3")
+                    .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_03.png"))
+                    .questionType("SYSTEM")
+                    .build();
+
+
+            return List.of(responseDto1,responseDto2,responseDto3);
+        }
+
+        public static QuestionDto.Response getSingleResponseBody() {
+            return QuestionDto.Response.builder()
+                    .questionId(1L)
+                    .title("this is title1")
+                    .content("this is content1")
+                    .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_01.png"))
+                    .questionType("SYSTEM")
+                    .build();
+        }
+
+        public static List<QuestionDto.Response> getMultiResponseBody() {
+
+            QuestionDto.Response responseDto1 = QuestionDto.Response.builder()
+                    .questionId(1L)
+                    .title("this is title1")
+                    .content("this is content1")
+                    .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_01.png"))
+                    .questionType("SYSTEM")
+                    .build();
+
+            QuestionDto.Response responseDto2 = QuestionDto.Response.builder()
+                    .questionId(2L)
+                    .title("this is title2")
+                    .content("this is content2")
+                    .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_02.png"))
+                    .questionType("SYSTEM")
+                    .build();
+
+            QuestionDto.Response responseDto3 = QuestionDto.Response.builder()
+                    .questionId(3L)
+                    .title("this is title3")
+                    .content("this is content3")
+                    .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_03.png"))
+                    .questionType("SYSTEM")
+                    .build();
+
+
+            return List.of(responseDto1,responseDto2,responseDto3);
+        }
+
+        public static Question getSingleResultQuestion() {
+
+            Question question = Question.builder()
+                    .questionId(1L)
+                    .title("this is title1")
+                    .content("this is content1")
+                    .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_01.png"))
+                    .questionType(Question.QuestionType.SYSTEM)
+                    .build();
+
+            return question;
+        }
+
+        public static Question getSingleResultQuestion(long questionId) {
+
+            Question question = Question.builder()
+                    .questionId(questionId)
+                    .title("this is title1")
+                    .content("this is content1")
+                    .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_01.png"))
+                    .questionType(Question.QuestionType.SYSTEM)
+                    .build();
+
+            return question;
+        }
+
+
+        public static Page<Question> getMultiResultQuestion() {
+
+
+            Question question1 = Question.builder()
+                    .questionId(1L)
+                    .title("this is title1")
+                    .content("this is content1")
+                    .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_01.png"))
+                    .questionType(Question.QuestionType.SYSTEM)
+                    .build();
+
+
+            Question question2 = Question.builder()
+                    .questionId(2L)
+                    .title("this is title2")
+                    .content("this is content2")
+                    .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_02.png"))
+                    .questionType(Question.QuestionType.ETC)
+                    .build();
+
+
+            Question question3 = Question.builder()
+                    .questionId(3L)
+                    .title("this is title3")
+                    .content("this is content3")
+                    .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_03.png"))
+                    .questionType(Question.QuestionType.PET)
+                    .build();
+
+            return new PageImpl<>(List.of(question1, question2, question3),
+                    PageRequest.of(0, 10, Sort.by("questionId").descending()), 3);
+        }
+
+    }
 
     public static class MockMyPet{
 
@@ -165,7 +336,7 @@ public class StubData {
                     .build();
 
             return new PageImpl<>(List.of(myPet1, myPet2,myPet3),
-                    PageRequest.of(0, 10, Sort.by("commentId").descending()), 3);
+                    PageRequest.of(0, 10, Sort.by("myPetId").descending()), 3);
         }
 
         public static MyPet getSingleResultComment(long myPetId) {
