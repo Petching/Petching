@@ -65,13 +65,15 @@ const CareListDetail = () => {
   return (
     <div className="bg-[#F2F2F2] w-full h-full min-h-screen text-xl">
       <div>
-        <div className="mx-auto w-60">
-          <Carousel imgUrls={imgUrls} />
+        <div className="mx-auto w-[30rem] h-80">
+          <Carousel imgUrls={imgUrls} width="30rem" height="80" />
         </div>
         <div className="bg-[#F2F2F2] text-center">
           <div className="bg-white mt-5">
-            <img className="w-20 " src={profileImgUrl}></img>
-            <div>{nickName}</div>
+            <div className="bg-white mt-5 items-center justify-center">
+              <img className="w-10 " src={profileImgUrl}></img>
+              <div>{nickName}</div>
+            </div>
             <div>{title}</div>
             <div>
               {startDate && endDate
