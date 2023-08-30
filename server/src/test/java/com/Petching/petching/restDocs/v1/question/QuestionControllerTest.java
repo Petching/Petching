@@ -153,6 +153,9 @@ public class QuestionControllerTest extends ControllerTest implements QuestionCo
                 .andDo(document("patch-question",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
+                        pathParameters(
+                                getQuestionRequestPathParameterDescriptor()
+                        ),
                         requestHeaders(
                                 getDefaultRequestHeaderDescriptors()
                         ),
