@@ -5,12 +5,13 @@ import ImageUploader from '../Components/Care/ImageUploader';
 import ReactCalendar from '../Components/Care/ReactCalendar';
 import Postcode from '../Components/Care/Postcode';
 import { postImgHandler } from '../Util/postImg';
+import { useEffect } from 'react';
 const CareListPost = () => {
   const location = useLocation();
   const [startDate, setStartDate] = useState(location.state.startDate);
   const [endDate, setEndDate] = useState(location.state.endDate);
   const [locationTag, setLocationTag] = useState(location.state.locationTag);
-  const [isPetsitter, setIsPetsitter] = useState(false);
+  const [isPetsitter, setIsPetsitter] = useState(true);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [petSizes, setpetSizes] = useState<string[]>([]);
@@ -73,6 +74,12 @@ const CareListPost = () => {
       setpetSizes([...petSizes, size]);
     }
   };
+
+  useEffect(() => {
+    setTitle(isPetsitter ? '' : '펫시터 찾아요 👀');
+    setContent(isPetsitter ? '' : '펫시터분 문의주세요~');
+  }, [isPetsitter]);
+
   return (
     <div className="bg-[#F2F2F2] w-full h-full min-h-screen text-xl">
       <div className="bg-[#F2F2F2] text-center">
@@ -97,7 +104,22 @@ const CareListPost = () => {
             집사에요
           </button>
         </div>
-        {isPetsitter && (
+        {isPetsitter ? (
+          <>
+            <div>글제목을 입력하세요</div>
+            <input
+              className="border-2"
+              value={title}
+              onChange={e => setTitle(e.target.value)}
+            />
+            <div>내용을 입력하세요</div>
+            <input
+              className="border-2"
+              value={content}
+              onChange={e => setContent(e.target.value)}
+            />
+          </>
+        ) : (
           <>
             <div>글제목을 입력하세요</div>
             <input
