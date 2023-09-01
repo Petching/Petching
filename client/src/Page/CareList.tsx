@@ -85,9 +85,10 @@ const CareList = () => {
 
   return (
     <div className="text-[1.2rem]">
-      <div className="flex flex-col w-full items-center bg-gray-100 ">
+      <div className="bg-white h-10 mt-[4rem]"></div>
+      <div className="flex flex-col mx-auto w-3/4 h-64 rounded-lg items-center bg-gray-100 ">
         <div>
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col mt-5 items-center">
             <div className="text-center leading-10 ">
               어느 지역을 찾으시나요?
             </div>
