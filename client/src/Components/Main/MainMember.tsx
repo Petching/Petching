@@ -54,6 +54,9 @@ const MainMember = () => {
   const [member, setMember] = useState(true);
   return (
     <div>
+      <h1 className="text-center text-xl m-5 -mb-5 sm:m-10 sm:-mb-10">
+        Petching의 팀원들
+      </h1>
       <div className="hidden sm:flex w-full flex-col sm:flex-row sm:justify-evenly sm:py-20">
         <Members members={member_fe} type="FRONT END" />
         <Members members={member_be} type="BACK END" />
