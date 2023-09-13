@@ -93,7 +93,7 @@ const CareList = () => {
               어느 지역을 찾으시나요?
             </div>
             <div className="flex items-center">
-              <div>
+              <div className="z-[100]">
                 <Postcode onAddressSelected={onAddressSelected} />
               </div>
             </div>
