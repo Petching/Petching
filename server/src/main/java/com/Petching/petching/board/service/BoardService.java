@@ -131,11 +131,25 @@ public class BoardService {
 
     public Board updateBoardLike(long boardId, User requestUser) {
         Board board = findBoardByMK(boardId);
+        int updateLike = board.getLikes();
 
-        int updateLike = board.getLikes() + 1;
+        if(board.getLikedUserIds().contains(requestUser.getUserId())){
+            updateLike--;
+            board.deleteLikedUserId(requestUser.getUserId());
+        }
+        else {
+            updateLike++;
+            board.addLikedUserId(requestUser.getUserId());
+        }
         board.setLikes(updateLike);
-        board.addLikedUserId(requestUser.getUserId());
 
         return boardRepository.save(board);
     }
+
+    public Page<Board> findBoardByWrittenUser(long userId, Pageable pageable) {
+
+        return boardRepository.findBoardsByUserId(userId, pageable);
+    }
+
+
 }

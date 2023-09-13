@@ -1,6 +1,7 @@
 package com.Petching.petching.user.entity;
 
 import com.Petching.petching.audit.Auditable;
+import com.Petching.petching.board.entity.Board;
 import com.Petching.petching.carepost.entity.CarePost;
 import lombok.*;
 
@@ -40,7 +41,6 @@ public class User extends Auditable {
     @Transient
     private boolean userDivision;
 
-
     @ElementCollection
     private List<Long> likedBoardList = new ArrayList<>();
 
@@ -54,9 +54,6 @@ public class User extends Auditable {
     public void updateNickName (String nickName) {
         this.nickName = nickName;
     }
-    public void updateEmail (String email) {
-        this.email = email;
-    }
     public void updatePassword (String password) {
         this.password = password;
     }
@@ -66,6 +63,10 @@ public class User extends Auditable {
 
     public void addLikedBoard(Long boardId){
         likedBoardList.add(boardId);
+    }
+
+    public void deleteLikedBoard(Long boardId){
+        likedBoardList.remove(boardId);
     }
 
     public void updateProfileImgUrl(String imgUrl) {

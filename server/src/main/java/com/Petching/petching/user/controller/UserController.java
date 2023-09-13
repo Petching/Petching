@@ -56,11 +56,11 @@ public class UserController {
         return service.checkPassword(dto);
     }
 
-    @GetMapping("{users-id}")
-    public ResponseEntity getUser (@PathVariable("users-id") @Positive long usersId) {
+    @GetMapping("{user-id}")
+    public ResponseEntity getUser (@PathVariable("user-id") @Positive long userId) {
 
-        return new ResponseEntity(new SingleResponse<>
-                (mapper.EntityToGetResponseDto(service.findUser(usersId))), HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponse<>
+                (mapper.EntityToGetResponseDto(service.findUser(userId))), HttpStatus.OK);
     }
 
     @DeleteMapping

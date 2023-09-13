@@ -1,0 +1,162 @@
+[[Question-API]]
+= Question API
+== Question Controller
+
+=== Question 등록 API
+
+[discrete]
+==== `Request`
+[source,http]
+----
+POST: /questions
+----
+
+.request-headers
+include::{snippets}/post-question/request-headers.adoc[]
+.request-body
+include::{snippets}/post-question/request-body.adoc[]
+.request-fields
+include::{snippets}/post-question/request-fields.adoc[]
+
+
+[discrete]
+==== `Response`
+.response-headers
+include::{snippets}/post-question/response-headers.adoc[]
+
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/post-question/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/post-question/http-response.adoc[]
+
+---
+
+=== Question 수정 API
+[discrete]
+==== `Request`
+[source,http]
+----
+PATCH: /question/{questionId}
+----
+
+.path-parameters
+include::{snippets}/patch-question/path-parameters.adoc[]
+.request-headers
+include::{snippets}/patch-question/request-headers.adoc[]
+.request-body
+include::{snippets}/patch-question/request-body.adoc[]
+.request-fields
+include::{snippets}/patch-question/request-fields.adoc[]
+
+
+[discrete]
+==== `Response`
+.response-body
+include::{snippets}/patch-question/response-body.adoc[]
+.response-fields
+include::{snippets}/patch-question/response-fields.adoc[]
+
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/patch-question/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/patch-question/http-response.adoc[]
+
+---
+
+=== Question 조회 API
+[discrete]
+==== `Request`
+[source,http]
+----
+GET: /question/{questionId}
+----
+
+.path-parameters
+include::{snippets}/get-question/path-parameters.adoc[]
+
+
+[discrete]
+==== `Response`
+.response-body
+include::{snippets}/get-question/response-body.adoc[]
+.response-fields
+include::{snippets}/get-question/response-fields.adoc[]
+
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/get-question/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/get-question/http-response.adoc[]
+
+---
+
+=== Question 전체 조회 API
+[discrete]
+==== `Request`
+[source,http]
+----
+GET: /question
+----
+
+.request-parameters
+include::{snippets}/get-all-question/request-parameters.adoc[]
+
+
+[discrete]
+==== `Response`
+.response-body
+include::{snippets}/get-all-question/response-body.adoc[]
+.response-fields
+include::{snippets}/get-all-question/response-fields.adoc[]
+
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/get-all-question/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/get-all-question/http-response.adoc[]
+
+---
+
+=== Question 삭제 API
+[discrete]
+==== `Request`
+[source,http]
+----
+DELETE: /users/pets/{petId}
+----
+
+.path-parameters
+include::{snippets}/delete-question/path-parameters.adoc[]
+.request-headers
+include::{snippets}/delete-question/request-headers.adoc[]
+
+
+[discrete]
+==== `Response`
+.http-response
+include::{snippets}/delete-question/http-response.adoc[]
+
+
+[discrete]
+==== `Request Summary`
+include::{snippets}/delete-question/http-request.adoc[]
+
+[discrete]
+==== `Response Summary`
+include::{snippets}/delete-question/http-response.adoc[]
+
+---

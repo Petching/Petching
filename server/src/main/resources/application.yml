@@ -1,6 +1,10 @@
 spring:
   profiles:
     active: dev
+  redis:
+    port:
+    host:
+    password:
   security:
     oauth2:
       client:

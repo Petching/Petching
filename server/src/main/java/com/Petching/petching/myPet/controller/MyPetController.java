@@ -46,8 +46,8 @@ public class MyPetController {
         return new ResponseEntity(petMapper.ListEntityToListDto(pet), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{petId}")
-    public ResponseEntity deletePet(@PathVariable("petId") @Positive long petId) {
+    @DeleteMapping("/{pet-id}")
+    public ResponseEntity deletePet(@PathVariable("pet-id") @Positive long petId) {
         petService.deletePet(petId);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);

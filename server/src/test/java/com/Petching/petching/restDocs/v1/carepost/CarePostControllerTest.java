@@ -10,7 +10,7 @@ import com.Petching.petching.config.SecurityConfiguration;
 import com.Petching.petching.global.aws.s3.config.S3Configuration;
 import com.Petching.petching.login.oauth.userInfo.JwtToken;
 import com.Petching.petching.restDocs.global.helper.CarePostControllerTestHelper;
-import com.Petching.petching.restDocs.global.helper.StubData;
+import com.Petching.petching.restDocs.global.mock.StubData;
 import com.Petching.petching.tag.petSize.CarePost_PetSizeRepository;
 import com.Petching.petching.tag.petSize.PetSizeRepository;
 import com.Petching.petching.user.entity.User;
@@ -354,13 +354,14 @@ public class CarePostControllerTest implements CarePostControllerTestHelper {
     @WithMockUser(username = "TestAdmin", roles = "admin")
     public void getMyPageTest() throws Exception {
 
+
         // given
+        List<CarePost> carePostList = StubData.MockCarePost.getMultiResultBoard().toList();
         Page<CarePost> carePostPage = StubData.MockCarePost.getMultiResultBoard();
         List<CarePostDto.MyPage> carePostDtoList = StubData.MockCarePost.getCarePostMyPageListDto();
-        List<CarePost> carePostList = StubData.MockCarePost.getMultiResultBoard().toList();
 
-        given(carePostService.findAllPost(Mockito.any(Pageable.class))).willReturn(carePostPage);
         given(carePostService.findUserCarePost(Mockito.anyLong())).willReturn(carePostList);
+        given(carePostService.findUserCarePost(Mockito.any(Pageable.class), Mockito.anyList())).willReturn(carePostPage);
         given(carePostMapper.carePostsToCarePostMyPageDto(Mockito.anyList())).willReturn(carePostDtoList);
 
         Long userId = 1L;

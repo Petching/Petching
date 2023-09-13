@@ -1,5 +1,8 @@
 package com.Petching.petching.user.service;
 
+import com.Petching.petching.board.entity.Board;
+import com.Petching.petching.board.mapper.BoardMapper;
+import com.Petching.petching.board.service.BoardService;
 import com.Petching.petching.global.exception.BusinessLoginException;
 import com.Petching.petching.global.exception.ExceptionCode;
 import com.Petching.petching.login.jwt.util.CustomAuthorityUtils;
@@ -9,6 +12,8 @@ import com.Petching.petching.user.dto.UserPostDto;
 import com.Petching.petching.user.entity.User;
 import com.Petching.petching.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,9 +21,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service @Transactional
 @RequiredArgsConstructor
@@ -26,6 +33,7 @@ public class UserService {
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
+    private final BoardService boardService;
 
     public User savedUser (UserPostDto postDto){
 
@@ -91,6 +99,19 @@ public class UserService {
     public boolean checkPassword (CheckDto dto) {
         User user = verifiedUser(findSecurityContextHolderUserId());
         return passwordEncoder.matches(dto.getPassword(),user.getPassword());
+    }
+
+    public List<Board> findUserLikeBoards (long userId) {
+        User user = verifiedUser(userId);
+
+        List<Board> boards = user.getLikedBoardList().stream()
+                .map(boardId -> {
+                    Board board = boardService.findVerifiedBoard(boardId);
+                    return board;
+                }).collect(Collectors.toList());
+
+
+        return boards;
     }
 
     public void deletedUser () {

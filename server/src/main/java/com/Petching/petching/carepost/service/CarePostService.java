@@ -19,6 +19,7 @@ import com.Petching.petching.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -218,6 +219,10 @@ public class CarePostService {
         if (post.getUser().getUserId() != userId) {
             throw new BusinessLogicException(ExceptionCode.POST_NOT_WRITE);
         }
+    }
+    public Page<CarePost> findUserCarePost (Pageable pageable, List<CarePost> carePosts) {
+
+        return new PageImpl<>(carePosts, pageable, carePosts.size());
     }
 
 }

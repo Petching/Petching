@@ -457,7 +457,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 </ul>
 </li>
-<li><a href="#자랑하기-API">자랑하기 API</a>
+<li><a href="#Board-API">Board API</a>
 <ul class="sectlevel1">
 <li><a href="#_board_controller">2. Board Controller</a>
 <ul class="sectlevel2">
@@ -468,6 +468,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_board_게시물_삭제_api">2.5. Board 게시물 삭제 API</a></li>
 <li><a href="#_board_게시물_좋아요_올리기_api">2.6. Board 게시물 좋아요 올리기 API</a></li>
 <li><a href="#_board_게시물_사진_랜덤_조회_api">2.7. Board 게시물 사진 랜덤 조회 API</a></li>
+<li><a href="#_유저가_작성한_board_게시물_조회_api">2.8. 유저가 작성한 Board 게시물 조회 API</a></li>
 </ul>
 </li>
 </ul>
@@ -527,6 +528,19 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_mypet_수정_api">7.2. MyPet 수정 API</a></li>
 <li><a href="#_mypet_조회_api">7.3. MyPet 조회 API</a></li>
 <li><a href="#_mypet_삭제_api">7.4. MyPet 삭제 API</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#Question-API">Question API</a>
+<ul class="sectlevel1">
+<li><a href="#_question_controller">8. Question Controller</a>
+<ul class="sectlevel2">
+<li><a href="#_question_등록_api">8.1. Question 등록 API</a></li>
+<li><a href="#_question_수정_api">8.2. Question 수정 API</a></li>
+<li><a href="#_question_조회_api">8.3. Question 조회 API</a></li>
+<li><a href="#_question_전체_조회_api">8.4. Question 전체 조회 API</a></li>
+<li><a href="#_question_삭제_api">8.5. Question 삭제 API</a></li>
 </ul>
 </li>
 </ul>
@@ -649,7 +663,7 @@ Manki Cho &lt;<a href="mailto:dokeycho@gmail.com">dokeycho@gmail.com</a>&gt;</p>
 <h4 id="_request_summary" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /users/sign-up?_csrf=e6f1997a-a37c-4502-8bec-f2ae4c382668 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /users/sign-up?_csrf=49c8d356-d677-45b7-9766-acb98e6132b7 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Authorization: {AccessToken}
@@ -762,11 +776,12 @@ X-Frame-Options: DENY</code></pre>
 <div class="title">request-body</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code>{
-  "email" : "email@example.com",
-  "password" : "exPassword",
-  "nickName" : "exNickName",
-  "address" : "exAddress",
-  "profileImgUrl" : "https://server.petching.net{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png"
+  "data" : {
+    "nickName" : "exNickName",
+    "email" : "email@example.com",
+    "address" : "exAddress",
+    "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png"
+  }
 }</code></pre>
 </div>
 </div>
@@ -810,7 +825,7 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="_request_summary_2" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /users/?_csrf=e106ca4c-b19d-496b-9610-d6c555d40a74 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /users/?_csrf=a67334ca-6924-4fae-9dc8-fa202df11389 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Authorization: {AccessToken}
@@ -947,7 +962,7 @@ Content-Length: 239
 <h4 id="_request_summary_3" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /users/1?_csrf=d148fa64-d237-4dfd-acb8-34d4ad70d208 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /users/1?_csrf=3143d79e-f9f3-4d0e-9279-65e148fdbf97 HTTP/1.1
 Authorization: {AccessToken}
 Accept: application/json
 Host: server.petching.net</code></pre>
@@ -994,7 +1009,7 @@ Content-Length: 296
 <h4 id="_request_summary_4" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /users/?_csrf=27d507d3-f7ee-43b9-bba1-496bbfa7ec01 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /users/?_csrf=dd6d8952-d378-4c9a-a220-9783358c5456 HTTP/1.1
 Authorization: {AccessToken}
 Host: server.petching.net</code></pre>
 </div>
@@ -1017,7 +1032,7 @@ X-Frame-Options: DENY</code></pre>
 </div>
 </div>
 </div>
-<h1 id="자랑하기-API" class="sect0"><a class="anchor" href="#자랑하기-API"></a><a class="link" href="#자랑하기-API">자랑하기 API</a></h1>
+<h1 id="Board-API" class="sect0"><a class="anchor" href="#Board-API"></a><a class="link" href="#Board-API">Board API</a></h1>
 <div class="sect1">
 <h2 id="_board_controller"><a class="anchor" href="#_board_controller"></a><a class="link" href="#_board_controller">2. Board Controller</a></h2>
 <div class="sectionbody">
@@ -1126,7 +1141,7 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="_request_summary_5" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /boards?_csrf=72d181c9-d8a8-4107-8539-daacd962b357 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /boards?_csrf=3bb249fe-bbdb-48e6-a609-859ef4a9951a HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Authorization: {AccessToken}
@@ -1268,7 +1283,7 @@ X-Frame-Options: DENY</code></pre>
     "likes" : 0,
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png",
     "nickName" : "nickName1",
-    "createdAt" : "2023-08-16T11:16:33.6116444",
+    "createdAt" : "2023-09-13T18:02:00.5634805",
     "checkLike" : false,
     "comments" : [ ],
     "commentCount" : 0,
@@ -1352,7 +1367,7 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="_request_summary_6" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /boards/1?_csrf=2eda9a8e-9861-4225-9677-845f93739f30 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /boards/1?_csrf=d7566bbc-cbe8-4662-b698-d114e05a9505 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Authorization: {AccessToken}
@@ -1387,7 +1402,7 @@ Content-Length: 519
     "likes" : 0,
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png",
     "nickName" : "nickName1",
-    "createdAt" : "2023-08-16T11:16:33.6116444",
+    "createdAt" : "2023-09-13T18:02:00.5634805",
     "checkLike" : false,
     "comments" : [ ],
     "commentCount" : 0,
@@ -1459,7 +1474,7 @@ Content-Length: 519
     "likes" : 0,
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png",
     "nickName" : "nickName1",
-    "createdAt" : "2023-08-16T11:16:33.9451775",
+    "createdAt" : "2023-09-13T18:02:01.0224133",
     "checkLike" : false,
     "comments" : [ ],
     "commentCount" : 0,
@@ -1543,7 +1558,7 @@ Content-Length: 519
 <h4 id="_request_summary_7" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /boards/1?_csrf=c9a5d11b-bcb9-42b8-9f63-42f94f1ae524 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /boards/1?_csrf=1dd2ecce-2f43-438e-b9a6-889a1ef9fdf2 HTTP/1.1
 Authorization: {AccessToken}
 Accept: application/json
 Host: server.petching.net</code></pre>
@@ -1570,7 +1585,7 @@ Content-Length: 519
     "likes" : 0,
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png",
     "nickName" : "nickName1",
-    "createdAt" : "2023-08-16T11:16:33.9451775",
+    "createdAt" : "2023-09-13T18:02:01.0224133",
     "checkLike" : false,
     "comments" : [ ],
     "commentCount" : 0,
@@ -1636,11 +1651,6 @@ Content-Length: 519
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Page Size</p></td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_csrf</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">csrf</p></td>
-</tr>
 </tbody>
 </table>
 <h4 id="_response_7" class="discrete"><code>Response</code></h4>
@@ -1654,7 +1664,7 @@ Content-Length: 519
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png",
     "nickName" : "nickName1",
     "likes" : 0,
-    "createdAt" : "2023-08-16T11:16:34.0463115",
+    "createdAt" : "2023-09-13T18:02:01.4397633",
     "commentCount" : 0,
     "checkLike" : false,
     "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png" ]
@@ -1664,7 +1674,7 @@ Content-Length: 519
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_02.png",
     "nickName" : "nickName2",
     "likes" : 0,
-    "createdAt" : "2023-08-16T11:16:34.0463115",
+    "createdAt" : "2023-09-13T18:02:01.4397633",
     "commentCount" : 0,
     "checkLike" : false,
     "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_02.png" ]
@@ -1674,7 +1684,7 @@ Content-Length: 519
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_03.png",
     "nickName" : "nickName3",
     "likes" : 0,
-    "createdAt" : "2023-08-16T11:16:34.0463115",
+    "createdAt" : "2023-09-13T18:02:01.4397633",
     "commentCount" : 0,
     "checkLike" : false,
     "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_03.png" ]
@@ -1778,7 +1788,7 @@ Content-Length: 519
 <h4 id="_request_summary_8" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /boards?page=1&amp;size=10&amp;_csrf=297d843e-0933-4ab3-b02e-e7857a0828f3 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /boards?page=1&amp;size=10&amp;_csrf=c1e70f5a-910c-40ac-853e-cd249fa589aa HTTP/1.1
 Authorization: {AccessToken}
 Accept: application/json
 Host: server.petching.net</code></pre>
@@ -1804,7 +1814,7 @@ Content-Length: 1458
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png",
     "nickName" : "nickName1",
     "likes" : 0,
-    "createdAt" : "2023-08-16T11:16:34.0463115",
+    "createdAt" : "2023-09-13T18:02:01.4397633",
     "commentCount" : 0,
     "checkLike" : false,
     "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png" ]
@@ -1814,7 +1824,7 @@ Content-Length: 1458
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_02.png",
     "nickName" : "nickName2",
     "likes" : 0,
-    "createdAt" : "2023-08-16T11:16:34.0463115",
+    "createdAt" : "2023-09-13T18:02:01.4397633",
     "commentCount" : 0,
     "checkLike" : false,
     "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_02.png" ]
@@ -1824,7 +1834,7 @@ Content-Length: 1458
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_03.png",
     "nickName" : "nickName3",
     "likes" : 0,
-    "createdAt" : "2023-08-16T11:16:34.0463115",
+    "createdAt" : "2023-09-13T18:02:01.4397633",
     "commentCount" : 0,
     "checkLike" : false,
     "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_03.png" ]
@@ -1905,7 +1915,7 @@ X-Frame-Options: DENY</code></pre>
 <h4 id="_request_summary_9" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /boards/1?_csrf=84d2e0be-05f0-40f8-8c4a-ddf679f964b6 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /boards/1?_csrf=4b53f257-3483-4d08-bb1d-3e5e190f2930 HTTP/1.1
 Authorization: {AccessToken}
 Host: server.petching.net</code></pre>
 </div>
@@ -1994,7 +2004,7 @@ Content-Type: application/json;charset=UTF-8
 Authorization: {AccessToken}
 Host: server.petching.net
 
-_csrf=a0fb5477-7ad1-47eb-8529-5f34076fc87d</code></pre>
+_csrf=5b1e0c60-17fb-4023-a6ec-d1d54c1e1423</code></pre>
 </div>
 </div>
 <h4 id="_response_summary_10" class="discrete"><code>Response Summary</code></h4>
@@ -2082,22 +2092,63 @@ Content-Length: 419
 </div>
 <hr>
 </div>
-</div>
-</div>
-<h1 id="Comment-API" class="sect0"><a class="anchor" href="#Comment-API"></a><a class="link" href="#Comment-API">Comment API</a></h1>
-<div class="sect1">
-<h2 id="_comment_controller"><a class="anchor" href="#_comment_controller"></a><a class="link" href="#_comment_controller">3. Comment Controller</a></h2>
-<div class="sectionbody">
 <div class="sect2">
-<h3 id="_comment_댓글_등록_api"><a class="anchor" href="#_comment_댓글_등록_api"></a><a class="link" href="#_comment_댓글_등록_api">3.1. Comment 댓글 등록 API</a></h3>
+<h3 id="_유저가_작성한_board_게시물_조회_api"><a class="anchor" href="#_유저가_작성한_board_게시물_조회_api"></a><a class="link" href="#_유저가_작성한_board_게시물_조회_api">2.8. 유저가 작성한 Board 게시물 조회 API</a></h3>
 <h4 id="_request_12" class="discrete"><code>Request</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="http">POST: /boards/{boardId}</code></pre>
+<pre class="prettyprint highlight"><code data-lang="http">GET: /boards/{userId}/written</code></pre>
 </div>
 </div>
+<h4 id="_request_13" class="discrete"><code>Request</code></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 25. request-headers</caption>
+<caption class="title">Table 25. /boards/{userId}/written</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>userId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User 식별자 ID</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 26. request-parameters</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">파라미터명</th>
+<th class="tableblock halign-left valign-top">필수값 여부</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Page 번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Page Size</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 27. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2113,122 +2164,220 @@ Content-Length: 419
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Request User의 access token</p></td>
 </tr>
 </tbody>
 </table>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 26. /boards/{boardId}</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boardId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Board 식별자 ID</p></td>
-</tr>
-</tbody>
-</table>
+<h4 id="_response_11" class="discrete"><code>Response</code></h4>
 <div class="listingblock">
-<div class="title">request-body</div>
+<div class="title">response-body</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code>{
-  "content" : "this is content1"
+  "data" : [ {
+    "boardId" : 1,
+    "title" : "this is title1",
+    "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png",
+    "nickName" : "nickName1",
+    "likes" : 0,
+    "createdAt" : "2023-09-13T18:02:01.3193006",
+    "commentCount" : 0,
+    "checkLike" : false,
+    "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png" ]
+  }, {
+    "boardId" : 2,
+    "title" : "this is title2",
+    "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_02.png",
+    "nickName" : "nickName2",
+    "likes" : 0,
+    "createdAt" : "2023-09-13T18:02:01.3193006",
+    "commentCount" : 0,
+    "checkLike" : false,
+    "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_02.png" ]
+  }, {
+    "boardId" : 3,
+    "title" : "this is title3",
+    "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_03.png",
+    "nickName" : "nickName3",
+    "likes" : 0,
+    "createdAt" : "2023-09-13T18:02:01.3193006",
+    "commentCount" : 0,
+    "checkLike" : false,
+    "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_03.png" ]
+  } ],
+  "pageInfo" : {
+    "page" : 1,
+    "size" : 10,
+    "totalElements" : 3,
+    "totalPages" : 1
+  }
 }</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 27. request-fields</caption>
+<caption class="title">Table 28. response-fields</caption>
 <colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">필드명</th>
-<th class="tableblock halign-left valign-top">타입</th>
-<th class="tableblock halign-left valign-top">필수값 여부</th>
-<th class="tableblock halign-left valign-top">설명</th>
-<th class="tableblock halign-left valign-top">제약 조건</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">댓글 내용</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table>
-<h4 id="_response_11" class="discrete"><code>Response</code></h4>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 28. response-headers</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
 <th class="tableblock halign-left valign-top">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Location</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Location header. 등록된 Comment의 URI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].boardId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board 식별자 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].imgUrls</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">첨부된 이미지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].likes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">좋아요 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].profileImgUrl</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">글쓴이의 프로필 사진 url</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].nickName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">글쓴이의 닉네임</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].createdAt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">글쓴 시간</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].checkLike</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">글을 보는 사람의 좋아요 여부</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].commentCount</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">댓글 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageInfo</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 정보</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageInfo.page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageInfo.size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 사이즈</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageInfo.totalElements</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전체 건 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageInfo.totalPages</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전체 페이지 수</p></td>
 </tr>
 </tbody>
 </table>
 <h4 id="_request_summary_12" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /boards/1?_csrf=2d9ea770-30cc-428a-82d5-68424150e82a HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Accept: application/json
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /boards/1/written?page=1&amp;size=10&amp;_csrf=6a9f633d-ee89-420b-9915-69ece8f33b60 HTTP/1.1
 Authorization: {AccessToken}
-Content-Length: 38
-Host: server.petching.net
-
-{
-  "content" : "this is content1"
-}</code></pre>
+Accept: application/json
+Host: server.petching.net</code></pre>
 </div>
 </div>
 <h4 id="_response_summary_12" class="discrete"><code>Response Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 201 Created
-Location: /1/0
+<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
-X-Frame-Options: DENY</code></pre>
+X-Frame-Options: DENY
+Content-Length: 1458
+
+{
+  "data" : [ {
+    "boardId" : 1,
+    "title" : "this is title1",
+    "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png",
+    "nickName" : "nickName1",
+    "likes" : 0,
+    "createdAt" : "2023-09-13T18:02:01.3193006",
+    "commentCount" : 0,
+    "checkLike" : false,
+    "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_01.png" ]
+  }, {
+    "boardId" : 2,
+    "title" : "this is title2",
+    "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_02.png",
+    "nickName" : "nickName2",
+    "likes" : 0,
+    "createdAt" : "2023-09-13T18:02:01.3193006",
+    "commentCount" : 0,
+    "checkLike" : false,
+    "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_02.png" ]
+  }, {
+    "boardId" : 3,
+    "title" : "this is title3",
+    "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_03.png",
+    "nickName" : "nickName3",
+    "likes" : 0,
+    "createdAt" : "2023-09-13T18:02:01.3193006",
+    "commentCount" : 0,
+    "checkLike" : false,
+    "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/boards/{yyyy-mm-dd}-randomUUID_03.png" ]
+  } ],
+  "pageInfo" : {
+    "page" : 1,
+    "size" : 10,
+    "totalElements" : 3,
+    "totalPages" : 1
+  }
+}</code></pre>
 </div>
 </div>
 <hr>
 </div>
+</div>
+</div>
+<h1 id="Comment-API" class="sect0"><a class="anchor" href="#Comment-API"></a><a class="link" href="#Comment-API">Comment API</a></h1>
+<div class="sect1">
+<h2 id="_comment_controller"><a class="anchor" href="#_comment_controller"></a><a class="link" href="#_comment_controller">3. Comment Controller</a></h2>
+<div class="sectionbody">
 <div class="sect2">
-<h3 id="_comment_댓글_수정_api"><a class="anchor" href="#_comment_댓글_수정_api"></a><a class="link" href="#_comment_댓글_수정_api">3.2. Comment 댓글 수정 API</a></h3>
-<h4 id="_request_13" class="discrete"><code>Request</code></h4>
+<h3 id="_comment_댓글_등록_api"><a class="anchor" href="#_comment_댓글_등록_api"></a><a class="link" href="#_comment_댓글_등록_api">3.1. Comment 댓글 등록 API</a></h3>
+<h4 id="_request_14" class="discrete"><code>Request</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="http">PATCH: /boards/{boardId}/{commentId}</code></pre>
+<pre class="prettyprint highlight"><code data-lang="http">POST: /boards/{boardId}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -2254,7 +2403,7 @@ X-Frame-Options: DENY</code></pre>
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 30. /boards/{boardId}/{commentId}</caption>
+<caption class="title">Table 30. /boards/{boardId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -2269,10 +2418,6 @@ X-Frame-Options: DENY</code></pre>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>boardId</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Board 식별자 ID</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>commentId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Comment 식별자 ID</p></td>
 </tr>
 </tbody>
 </table>
@@ -2313,72 +2458,29 @@ X-Frame-Options: DENY</code></pre>
 </tbody>
 </table>
 <h4 id="_response_12" class="discrete"><code>Response</code></h4>
-<div class="listingblock">
-<div class="title">response-body</div>
-<div class="content">
-<pre class="prettyprint highlight nowrap"><code>{
-  "data" : {
-    "commentId" : 1,
-    "content" : "this is content1",
-    "boardId" : 1,
-    "createdAt" : "2023-08-16T11:16:37.3656428",
-    "nickName" : "nickName1",
-    "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png"
-  }
-}</code></pre>
-</div>
-</div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 32. response-fields</caption>
+<caption class="title">Table 32. response-headers</caption>
 <colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
+<col style="width: 50%;">
+<col style="width: 50%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Path</th>
-<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Name</th>
 <th class="tableblock halign-left valign-top">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.commentId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">댓글 식별자 ID</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">댓글 내용</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.boardId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">본문 식별자 ID</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.createdAt</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">글쓴 시간</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.nickName</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">글쓴이의 닉네임</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.profileImgUrl</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">글쓴이의 프로필 사진 url</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Location</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Location header. 등록된 Comment의 URI</p></td>
 </tr>
 </tbody>
 </table>
 <h4 id="_request_summary_13" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /boards/1/1?_csrf=7e651d61-b79b-4005-8979-4787a28d791a HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /boards/1?_csrf=03279e1f-d081-4e40-817e-3afc178ec0e2 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Authorization: {AccessToken}
@@ -2393,40 +2495,50 @@ Host: server.petching.net
 <h4 id="_response_summary_13" class="discrete"><code>Response Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
+<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 201 Created
+Location: /1/0
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
-X-Frame-Options: DENY
-Content-Length: 301
-
-{
-  "data" : {
-    "commentId" : 1,
-    "content" : "this is content1",
-    "boardId" : 1,
-    "createdAt" : "2023-08-16T11:16:37.3656428",
-    "nickName" : "nickName1",
-    "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png"
-  }
-}</code></pre>
+X-Frame-Options: DENY</code></pre>
 </div>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_comment_댓글_단일_조회_api"><a class="anchor" href="#_comment_댓글_단일_조회_api"></a><a class="link" href="#_comment_댓글_단일_조회_api">3.3. Comment 댓글 단일 조회 API</a></h3>
-<h4 id="_request_14" class="discrete"><code>Request</code></h4>
+<h3 id="_comment_댓글_수정_api"><a class="anchor" href="#_comment_댓글_수정_api"></a><a class="link" href="#_comment_댓글_수정_api">3.2. Comment 댓글 수정 API</a></h3>
+<h4 id="_request_15" class="discrete"><code>Request</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="http">GET: /boards/{boardId}/{commentId}</code></pre>
+<pre class="prettyprint highlight"><code data-lang="http">PATCH: /boards/{boardId}/{commentId}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 33. /boards/{boardId}/{commentId}</caption>
+<caption class="title">Table 33. request-headers</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">필수값 여부</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Request User의 access token</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 34. /boards/{boardId}/{commentId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -2448,6 +2560,42 @@ Content-Length: 301
 </tr>
 </tbody>
 </table>
+<div class="listingblock">
+<div class="title">request-body</div>
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code>{
+  "content" : "this is content1"
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 35. request-fields</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">타입</th>
+<th class="tableblock halign-left valign-top">필수값 여부</th>
+<th class="tableblock halign-left valign-top">설명</th>
+<th class="tableblock halign-left valign-top">제약 조건</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">댓글 내용</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
 <h4 id="_response_13" class="discrete"><code>Response</code></h4>
 <div class="listingblock">
 <div class="title">response-body</div>
@@ -2457,7 +2605,7 @@ Content-Length: 301
     "commentId" : 1,
     "content" : "this is content1",
     "boardId" : 1,
-    "createdAt" : "2023-08-16T11:16:37.402462",
+    "createdAt" : "2023-09-13T18:02:08.9934876",
     "nickName" : "nickName1",
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png"
   }
@@ -2465,7 +2613,7 @@ Content-Length: 301
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 34. response-fields</caption>
+<caption class="title">Table 36. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2514,10 +2662,16 @@ Content-Length: 301
 <h4 id="_request_summary_14" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /boards/1/1?_csrf=ec02bb0b-40bb-411f-b178-9035ec419d1d HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /boards/1/1?_csrf=5e95600c-431f-42cb-ba30-cacd85847cfb HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
-Host: server.petching.net</code></pre>
+Authorization: {AccessToken}
+Content-Length: 38
+Host: server.petching.net
+
+{
+  "content" : "this is content1"
+}</code></pre>
 </div>
 </div>
 <h4 id="_response_summary_14" class="discrete"><code>Response Summary</code></h4>
@@ -2531,14 +2685,144 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 300
+Content-Length: 301
 
 {
   "data" : {
     "commentId" : 1,
     "content" : "this is content1",
     "boardId" : 1,
-    "createdAt" : "2023-08-16T11:16:37.402462",
+    "createdAt" : "2023-09-13T18:02:08.9934876",
+    "nickName" : "nickName1",
+    "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png"
+  }
+}</code></pre>
+</div>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="_comment_댓글_단일_조회_api"><a class="anchor" href="#_comment_댓글_단일_조회_api"></a><a class="link" href="#_comment_댓글_단일_조회_api">3.3. Comment 댓글 단일 조회 API</a></h3>
+<h4 id="_request_16" class="discrete"><code>Request</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="http">GET: /boards/{boardId}/{commentId}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 37. /boards/{boardId}/{commentId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boardId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Board 식별자 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>commentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comment 식별자 ID</p></td>
+</tr>
+</tbody>
+</table>
+<h4 id="_response_14" class="discrete"><code>Response</code></h4>
+<div class="listingblock">
+<div class="title">response-body</div>
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code>{
+  "data" : {
+    "commentId" : 1,
+    "content" : "this is content1",
+    "boardId" : 1,
+    "createdAt" : "2023-09-13T18:02:09.0418689",
+    "nickName" : "nickName1",
+    "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png"
+  }
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 38. response-fields</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.commentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">댓글 식별자 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">댓글 내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.boardId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">본문 식별자 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.createdAt</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">글쓴 시간</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.nickName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">글쓴이의 닉네임</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.profileImgUrl</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">글쓴이의 프로필 사진 url</p></td>
+</tr>
+</tbody>
+</table>
+<h4 id="_request_summary_15" class="discrete"><code>Request Summary</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /boards/1/1?_csrf=6207d526-bbb3-4fea-b21b-a1c5575c89bb HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Accept: application/json
+Host: server.petching.net</code></pre>
+</div>
+</div>
+<h4 id="_response_summary_15" class="discrete"><code>Response Summary</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 301
+
+{
+  "data" : {
+    "commentId" : 1,
+    "content" : "this is content1",
+    "boardId" : 1,
+    "createdAt" : "2023-09-13T18:02:09.0418689",
     "nickName" : "nickName1",
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png"
   }
@@ -2549,14 +2833,14 @@ Content-Length: 300
 </div>
 <div class="sect2">
 <h3 id="_comment_댓글_전체_조회_api"><a class="anchor" href="#_comment_댓글_전체_조회_api"></a><a class="link" href="#_comment_댓글_전체_조회_api">3.4. Comment 댓글 전체 조회 API</a></h3>
-<h4 id="_request_15" class="discrete"><code>Request</code></h4>
+<h4 id="_request_17" class="discrete"><code>Request</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="http">GET: /boards/{boardId}/comments?page={default:1}&amp;size={default:10}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 35. /boards/{boardId}/comments</caption>
+<caption class="title">Table 39. /boards/{boardId}/comments</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -2575,7 +2859,7 @@ Content-Length: 300
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 36. request-parameters</caption>
+<caption class="title">Table 40. request-parameters</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2599,14 +2883,9 @@ Content-Length: 300
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Page Size</p></td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_csrf</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">csrf</p></td>
-</tr>
 </tbody>
 </table>
-<h4 id="_response_14" class="discrete"><code>Response</code></h4>
+<h4 id="_response_15" class="discrete"><code>Response</code></h4>
 <div class="listingblock">
 <div class="title">response-body</div>
 <div class="content">
@@ -2615,21 +2894,21 @@ Content-Length: 300
     "commentId" : 1,
     "content" : "this is content1",
     "boardId" : 1,
-    "createdAt" : "2023-08-16T11:16:37.2851178",
+    "createdAt" : "2023-09-13T18:02:08.8873937",
     "nickName" : "nickName1",
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png"
   }, {
     "commentId" : 2,
     "content" : "this is content2",
     "boardId" : 1,
-    "createdAt" : "2023-08-16T11:16:37.2851178",
+    "createdAt" : "2023-09-13T18:02:08.8873937",
     "nickName" : "nickName2",
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_02.png"
   }, {
     "commentId" : 3,
     "content" : "this is content3",
     "boardId" : 1,
-    "createdAt" : "2023-08-16T11:16:37.2851178",
+    "createdAt" : "2023-09-13T18:02:08.8873937",
     "nickName" : "nickName3",
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_03.jpg"
   } ],
@@ -2643,7 +2922,7 @@ Content-Length: 300
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 37. response-fields</caption>
+<caption class="title">Table 41. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2714,16 +2993,16 @@ Content-Length: 300
 </tr>
 </tbody>
 </table>
-<h4 id="_request_summary_15" class="discrete"><code>Request Summary</code></h4>
+<h4 id="_request_summary_16" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /boards/1/comments?page=1&amp;size=10&amp;_csrf=4e129e86-d5c2-4b9a-8175-c783fcfc32e5 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /boards/1/comments?page=1&amp;size=10&amp;_csrf=beee2532-1b79-4642-a94b-213e36da46bf HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Host: server.petching.net</code></pre>
 </div>
 </div>
-<h4 id="_response_summary_15" class="discrete"><code>Response Summary</code></h4>
+<h4 id="_response_summary_16" class="discrete"><code>Response Summary</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -2741,21 +3020,21 @@ Content-Length: 984
     "commentId" : 1,
     "content" : "this is content1",
     "boardId" : 1,
-    "createdAt" : "2023-08-16T11:16:37.2851178",
+    "createdAt" : "2023-09-13T18:02:08.8873937",
     "nickName" : "nickName1",
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png"
   }, {
     "commentId" : 2,
     "content" : "this is content2",
     "boardId" : 1,
-    "createdAt" : "2023-08-16T11:16:37.2851178",
+    "createdAt" : "2023-09-13T18:02:08.8873937",
     "nickName" : "nickName2",
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_02.png"
   }, {
     "commentId" : 3,
     "content" : "this is content3",
     "boardId" : 1,
-    "createdAt" : "2023-08-16T11:16:37.2851178",
+    "createdAt" : "2023-09-13T18:02:08.8873937",
     "nickName" : "nickName3",
     "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_03.jpg"
   } ],
@@ -2772,14 +3051,14 @@ Content-Length: 984
 </div>
 <div class="sect2">
 <h3 id="_comment_댓글_삭제_api"><a class="anchor" href="#_comment_댓글_삭제_api"></a><a class="link" href="#_comment_댓글_삭제_api">3.5. Comment 댓글 삭제 API</a></h3>
-<h4 id="_request_16" class="discrete"><code>Request</code></h4>
+<h4 id="_request_18" class="discrete"><code>Request</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="http">DELETE: /boards/{boardId}/{commentId}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 38. request-headers</caption>
+<caption class="title">Table 42. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2801,7 +3080,7 @@ Content-Length: 984
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 39. /boards/{boardId}/{commentId}</caption>
+<caption class="title">Table 43. /boards/{boardId}/{commentId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -2823,7 +3102,7 @@ Content-Length: 984
 </tr>
 </tbody>
 </table>
-<h4 id="_response_15" class="discrete"><code>Response</code></h4>
+<h4 id="_response_16" class="discrete"><code>Response</code></h4>
 <div class="listingblock">
 <div class="title">http-response</div>
 <div class="content">
@@ -2836,15 +3115,15 @@ Expires: 0
 X-Frame-Options: DENY</code></pre>
 </div>
 </div>
-<h4 id="_request_summary_16" class="discrete"><code>Request Summary</code></h4>
+<h4 id="_request_summary_17" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /boards/1/1?_csrf=01048c16-c8fb-454a-b9fa-cc830ace7f13 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /boards/1/1?_csrf=822e808e-1d0f-49a2-b2c3-f6d39ab3ba38 HTTP/1.1
 Authorization: {AccessToken}
 Host: server.petching.net</code></pre>
 </div>
 </div>
-<h4 id="_response_summary_16" class="discrete"><code>Response Summary</code></h4>
+<h4 id="_response_summary_17" class="discrete"><code>Response Summary</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
@@ -2866,280 +3145,12 @@ X-Frame-Options: DENY</code></pre>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_게시물_등록_api"><a class="anchor" href="#_게시물_등록_api"></a><a class="link" href="#_게시물_등록_api">4.1. 게시물 등록 API</a></h3>
-<h4 id="_request_17" class="discrete"><code>Request</code></h4>
+<h4 id="_request_19" class="discrete"><code>Request</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="http">POST: /careposts</code></pre>
 </div>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 40. request-headers</caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">필드명</th>
-<th class="tableblock halign-left valign-top">필수값 여부</th>
-<th class="tableblock halign-left valign-top">설명</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Request User의 access token</p></td>
-</tr>
-</tbody>
-</table>
-<div class="listingblock">
-<div class="title">request-body</div>
-<div class="content">
-<pre class="prettyprint highlight nowrap"><code>{
-  "title" : "this is title1",
-  "content" : "this is content1",
-  "imgUrls" : [ "https://server.petching.net{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_01.png", "https://server.petching.net{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_02.png", "https://server.petching.net{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_03.jpg" ],
-  "startDate" : {
-    "month" : 7,
-    "year" : 2023,
-    "day" : 13
-  },
-  "endDate" : {
-    "month" : 7,
-    "year" : 2023,
-    "day" : 20
-  },
-  "conditionTag" : "펫시터예요",
-  "locationTag" : "서울시 노원구",
-  "memo" : "특이사항 없습니다.",
-  "petSizes" : [ "중형", "소형" ]
-}</code></pre>
-</div>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 41. request-fields</caption>
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">필드명</th>
-<th class="tableblock halign-left valign-top">타입</th>
-<th class="tableblock halign-left valign-top">필수값 여부</th>
-<th class="tableblock halign-left valign-top">설명</th>
-<th class="tableblock halign-left valign-top">제약 조건</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">제목</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">내용</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>imgUrls[]</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">올릴 사진</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>startDate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">시작 날짜</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>startDate.day</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">시작 날짜/일</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>startDate.month</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">시작 날짜/월</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>startDate.year</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">시작 날짜/년</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>endDate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">종료 날짜</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>endDate.day</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">종료 날짜/일</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>endDate.month</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">종료 날짜/월</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>endDate.year</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">종료 날짜/년</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>conditionTag</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">상태 태그</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>locationTag</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">장소 태그</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>petSizes[]</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">반려동물 크기</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>memo</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">특이사항</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table>
-<h4 id="_response_16" class="discrete"><code>Response</code></h4>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 42. response-headers</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Location</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Location header. 등록된 User의 URI</p></td>
-</tr>
-</tbody>
-</table>
-<h4 id="_request_summary_17" class="discrete"><code>Request Summary</code></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /careposts?_csrf=7cfdfae5-e673-43b2-8aad-930222a02803 HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Accept: application/json
-Authorization: {AccessToken}
-Content-Length: 746
-Host: server.petching.net
-
-{
-  "title" : "this is title1",
-  "content" : "this is content1",
-  "imgUrls" : [ "https://server.petching.net{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_01.png", "https://server.petching.net{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_02.png", "https://server.petching.net{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_03.jpg" ],
-  "startDate" : {
-    "month" : 7,
-    "year" : 2023,
-    "day" : 13
-  },
-  "endDate" : {
-    "month" : 7,
-    "year" : 2023,
-    "day" : 20
-  },
-  "conditionTag" : "펫시터예요",
-  "locationTag" : "서울시 노원구",
-  "memo" : "특이사항 없습니다.",
-  "petSizes" : [ "중형", "소형" ]
-}</code></pre>
-</div>
-</div>
-<h4 id="_response_summary_17" class="discrete"><code>Response Summary</code></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 201 Created
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
-Location: /post/1
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 1; mode=block
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-Pragma: no-cache
-Expires: 0
-X-Frame-Options: DENY</code></pre>
-</div>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="_게시물_수정_api"><a class="anchor" href="#_게시물_수정_api"></a><a class="link" href="#_게시물_수정_api">4.2. 게시물 수정 API</a></h3>
-<h4 id="_request_18" class="discrete"><code>Request</code></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code data-lang="http">PATCH: /careposts/{post-id}</code></pre>
-</div>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 43. /careposts/{post-id}</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>post-id</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CarePost 식별자 ID</p></td>
-</tr>
-</tbody>
-</table>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 44. request-headers</caption>
 <colgroup>
@@ -3313,146 +3324,29 @@ X-Frame-Options: DENY</code></pre>
 </tbody>
 </table>
 <h4 id="_response_17" class="discrete"><code>Response</code></h4>
-<div class="listingblock">
-<div class="title">response-body</div>
-<div class="content">
-<pre class="prettyprint highlight nowrap"><code>{
-  "data" : {
-    "postId" : 1,
-    "title" : "this is title1",
-    "content" : "this is content1",
-    "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_01.png" ],
-    "nickName" : "nickName1",
-    "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png",
-    "startDate" : {
-      "month" : 7,
-      "year" : 2023,
-      "day" : 13
-    },
-    "endDate" : {
-      "month" : 7,
-      "year" : 2023,
-      "day" : 20
-    },
-    "conditionTag" : "펫시터예요",
-    "locationTag" : "서울시 노원구",
-    "memo" : "삶은 소고기를 못 먹어요.",
-    "petSizes" : [ "중형", "소형" ]
-  }
-}</code></pre>
-</div>
-</div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 46. response-fields</caption>
+<caption class="title">Table 46. response-headers</caption>
 <colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
+<col style="width: 50%;">
+<col style="width: 50%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Path</th>
-<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Name</th>
 <th class="tableblock halign-left valign-top">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.postId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">게시글 식별자 ID</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.title</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">제목</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">내용</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.imgUrls[]</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">올릴 사진</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.profileImgUrl</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">작성자의 프로필 사진</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.nickName</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">작성자의 닉네임</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.startDate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">시작 날짜</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.startDate.day</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">시작 날짜/일</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.startDate.month</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">시작 날짜/월</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.startDate.year</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">시작 날짜/년</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.endDate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">종료 날짜</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.endDate.day</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">종료 날짜/일</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.endDate.month</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">종료 날짜/월</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.endDate.year</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">종료 날짜/년</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.conditionTag</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">상태 태그</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.locationTag</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">장소 태그</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.petSizes[]</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">반려동물 크기</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.memo</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">특이사항</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Location</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Location header. 등록된 User의 URI</p></td>
 </tr>
 </tbody>
 </table>
 <h4 id="_request_summary_18" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /careposts/1?_csrf=dd891e03-8be9-4a90-a10a-79875a5068b4 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /careposts?_csrf=1b74e0df-95be-40ee-aa39-087185870648 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Authorization: {AccessToken}
@@ -3483,53 +3377,27 @@ Host: server.petching.net
 <h4 id="_response_summary_18" class="discrete"><code>Response Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 201 Created
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Content-Type: application/json;charset=UTF-8
+Location: /post/1
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
-X-Frame-Options: DENY
-Content-Length: 734
-
-{
-  "data" : {
-    "postId" : 1,
-    "title" : "this is title1",
-    "content" : "this is content1",
-    "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_01.png" ],
-    "nickName" : "nickName1",
-    "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png",
-    "startDate" : {
-      "month" : 7,
-      "year" : 2023,
-      "day" : 13
-    },
-    "endDate" : {
-      "month" : 7,
-      "year" : 2023,
-      "day" : 20
-    },
-    "conditionTag" : "펫시터예요",
-    "locationTag" : "서울시 노원구",
-    "memo" : "삶은 소고기를 못 먹어요.",
-    "petSizes" : [ "중형", "소형" ]
-  }
-}</code></pre>
+X-Frame-Options: DENY</code></pre>
 </div>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_게시물_단일_조회_api"><a class="anchor" href="#_게시물_단일_조회_api"></a><a class="link" href="#_게시물_단일_조회_api">4.3. 게시물 단일 조회 API</a></h3>
-<h4 id="_request_19" class="discrete"><code>Request</code></h4>
+<h3 id="_게시물_수정_api"><a class="anchor" href="#_게시물_수정_api"></a><a class="link" href="#_게시물_수정_api">4.2. 게시물 수정 API</a></h3>
+<h4 id="_request_20" class="discrete"><code>Request</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="http">GET: /careposts/{post-id}</code></pre>
+<pre class="prettyprint highlight"><code data-lang="http">PATCH: /careposts/{post-id}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -3548,6 +3416,178 @@ Content-Length: 734
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>post-id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">CarePost 식별자 ID</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 48. request-headers</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">필수값 여부</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Request User의 access token</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">request-body</div>
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code>{
+  "title" : "this is title1",
+  "content" : "this is content1",
+  "imgUrls" : [ "https://server.petching.net{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_01.png", "https://server.petching.net{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_02.png", "https://server.petching.net{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_03.jpg" ],
+  "startDate" : {
+    "month" : 7,
+    "year" : 2023,
+    "day" : 13
+  },
+  "endDate" : {
+    "month" : 7,
+    "year" : 2023,
+    "day" : 20
+  },
+  "conditionTag" : "펫시터예요",
+  "locationTag" : "서울시 노원구",
+  "memo" : "특이사항 없습니다.",
+  "petSizes" : [ "중형", "소형" ]
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 49. request-fields</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">타입</th>
+<th class="tableblock halign-left valign-top">필수값 여부</th>
+<th class="tableblock halign-left valign-top">설명</th>
+<th class="tableblock halign-left valign-top">제약 조건</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제목</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">내용</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>imgUrls[]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">올릴 사진</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>startDate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">시작 날짜</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>startDate.day</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">시작 날짜/일</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>startDate.month</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">시작 날짜/월</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>startDate.year</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">시작 날짜/년</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>endDate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">종료 날짜</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>endDate.day</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">종료 날짜/일</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>endDate.month</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">종료 날짜/월</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>endDate.year</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">종료 날짜/년</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>conditionTag</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">상태 태그</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>locationTag</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">장소 태그</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>petSizes[]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">반려동물 크기</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>memo</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">특이사항</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
 </table>
@@ -3582,7 +3622,7 @@ Content-Length: 734
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 48. response-fields</caption>
+<caption class="title">Table 50. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3691,10 +3731,32 @@ Content-Length: 734
 <h4 id="_request_summary_19" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /careposts/1?_csrf=e38690ab-fa71-455d-bb1f-37647398b109 HTTP/1.1
-Authorization: {AccessToken}
+<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /careposts/1?_csrf=d36327c7-d6dc-44a6-a8f6-7813a7bd54e1 HTTP/1.1
+Content-Type: application/json;charset=UTF-8
 Accept: application/json
-Host: server.petching.net</code></pre>
+Authorization: {AccessToken}
+Content-Length: 746
+Host: server.petching.net
+
+{
+  "title" : "this is title1",
+  "content" : "this is content1",
+  "imgUrls" : [ "https://server.petching.net{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_01.png", "https://server.petching.net{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_02.png", "https://server.petching.net{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_03.jpg" ],
+  "startDate" : {
+    "month" : 7,
+    "year" : 2023,
+    "day" : 13
+  },
+  "endDate" : {
+    "month" : 7,
+    "year" : 2023,
+    "day" : 20
+  },
+  "conditionTag" : "펫시터예요",
+  "locationTag" : "서울시 노원구",
+  "memo" : "특이사항 없습니다.",
+  "petSizes" : [ "중형", "소형" ]
+}</code></pre>
 </div>
 </div>
 <h4 id="_response_summary_19" class="discrete"><code>Response Summary</code></h4>
@@ -3742,15 +3804,232 @@ Content-Length: 734
 <hr>
 </div>
 <div class="sect2">
+<h3 id="_게시물_단일_조회_api"><a class="anchor" href="#_게시물_단일_조회_api"></a><a class="link" href="#_게시물_단일_조회_api">4.3. 게시물 단일 조회 API</a></h3>
+<h4 id="_request_21" class="discrete"><code>Request</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="http">GET: /careposts/{post-id}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 51. /careposts/{post-id}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>post-id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CarePost 식별자 ID</p></td>
+</tr>
+</tbody>
+</table>
+<h4 id="_response_19" class="discrete"><code>Response</code></h4>
+<div class="listingblock">
+<div class="title">response-body</div>
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code>{
+  "data" : {
+    "postId" : 1,
+    "title" : "this is title1",
+    "content" : "this is content1",
+    "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_01.png" ],
+    "nickName" : "nickName1",
+    "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png",
+    "startDate" : {
+      "month" : 7,
+      "year" : 2023,
+      "day" : 13
+    },
+    "endDate" : {
+      "month" : 7,
+      "year" : 2023,
+      "day" : 20
+    },
+    "conditionTag" : "펫시터예요",
+    "locationTag" : "서울시 노원구",
+    "memo" : "삶은 소고기를 못 먹어요.",
+    "petSizes" : [ "중형", "소형" ]
+  }
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 52. response-fields</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.postId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">게시글 식별자 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.imgUrls[]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">올릴 사진</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.profileImgUrl</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">작성자의 프로필 사진</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.nickName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">작성자의 닉네임</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.startDate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">시작 날짜</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.startDate.day</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">시작 날짜/일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.startDate.month</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">시작 날짜/월</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.startDate.year</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">시작 날짜/년</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.endDate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">종료 날짜</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.endDate.day</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">종료 날짜/일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.endDate.month</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">종료 날짜/월</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.endDate.year</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">종료 날짜/년</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.conditionTag</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">상태 태그</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.locationTag</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">장소 태그</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.petSizes[]</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">반려동물 크기</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.memo</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">특이사항</p></td>
+</tr>
+</tbody>
+</table>
+<h4 id="_request_summary_20" class="discrete"><code>Request Summary</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /careposts/1?_csrf=01e646ef-78db-4d67-b59e-12502e27e861 HTTP/1.1
+Authorization: {AccessToken}
+Accept: application/json
+Host: server.petching.net</code></pre>
+</div>
+</div>
+<h4 id="_response_summary_20" class="discrete"><code>Response Summary</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 734
+
+{
+  "data" : {
+    "postId" : 1,
+    "title" : "this is title1",
+    "content" : "this is content1",
+    "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_01.png" ],
+    "nickName" : "nickName1",
+    "profileImgUrl" : "https://s3.{region-name}.amazonaws.com/{bucket-name}/profiles/{yyyy-mm-dd}-randomUUID_01.png",
+    "startDate" : {
+      "month" : 7,
+      "year" : 2023,
+      "day" : 13
+    },
+    "endDate" : {
+      "month" : 7,
+      "year" : 2023,
+      "day" : 20
+    },
+    "conditionTag" : "펫시터예요",
+    "locationTag" : "서울시 노원구",
+    "memo" : "삶은 소고기를 못 먹어요.",
+    "petSizes" : [ "중형", "소형" ]
+  }
+}</code></pre>
+</div>
+</div>
+<hr>
+</div>
+<div class="sect2">
 <h3 id="_게시물_전체_조회_api"><a class="anchor" href="#_게시물_전체_조회_api"></a><a class="link" href="#_게시물_전체_조회_api">4.4. 게시물 전체 조회 API</a></h3>
-<h4 id="_request_20" class="discrete"><code>Request</code></h4>
+<h4 id="_request_22" class="discrete"><code>Request</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="http">GET: /careposts?page={default:1}&amp;size={default:10}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 49. request-parameters</caption>
+<caption class="title">Table 53. request-parameters</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3774,14 +4053,9 @@ Content-Length: 734
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Page Size</p></td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_csrf</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">csrf</p></td>
-</tr>
 </tbody>
 </table>
-<h4 id="_response_19" class="discrete"><code>Response</code></h4>
+<h4 id="_response_20" class="discrete"><code>Response</code></h4>
 <div class="listingblock">
 <div class="title">response-body</div>
 <div class="content">
@@ -3839,7 +4113,7 @@ Content-Length: 734
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 50. response-fields</caption>
+<caption class="title">Table 54. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3970,16 +4244,16 @@ Content-Length: 734
 </tr>
 </tbody>
 </table>
-<h4 id="_request_summary_20" class="discrete"><code>Request Summary</code></h4>
+<h4 id="_request_summary_21" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /careposts?page=1&amp;size=10&amp;_csrf=d4946254-2f7f-4d1e-83f0-14a8aa05f5b7 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /careposts?page=1&amp;size=10&amp;_csrf=d1033dab-2f3a-4028-b732-de164d9b581e HTTP/1.1
 Authorization: {AccessToken}
 Accept: application/json
 Host: server.petching.net</code></pre>
 </div>
 </div>
-<h4 id="_response_summary_20" class="discrete"><code>Response Summary</code></h4>
+<h4 id="_response_summary_21" class="discrete"><code>Response Summary</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -4053,14 +4327,14 @@ Content-Length: 1564
 </div>
 <div class="sect2">
 <h3 id="_게시물_날짜별_조회_api"><a class="anchor" href="#_게시물_날짜별_조회_api"></a><a class="link" href="#_게시물_날짜별_조회_api">4.5. 게시물 날짜별 조회 API</a></h3>
-<h4 id="_request_21" class="discrete"><code>Request</code></h4>
+<h4 id="_request_23" class="discrete"><code>Request</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="http">GET: /careposts/search?locationTag=...&amp;startDate.day=...&amp;이하생략</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 51. request-parameters</caption>
+<caption class="title">Table 55. request-parameters</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4111,7 +4385,7 @@ Content-Length: 1564
 </tr>
 </tbody>
 </table>
-<h4 id="_response_20" class="discrete"><code>Response</code></h4>
+<h4 id="_response_21" class="discrete"><code>Response</code></h4>
 <div class="listingblock">
 <div class="title">response-body</div>
 <div class="content">
@@ -4184,7 +4458,7 @@ Content-Length: 1564
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 52. response-fields</caption>
+<caption class="title">Table 56. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4290,16 +4564,16 @@ Content-Length: 1564
 </tr>
 </tbody>
 </table>
-<h4 id="_request_summary_21" class="discrete"><code>Request Summary</code></h4>
+<h4 id="_request_summary_22" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /careposts/search?locationTag=%EC%A0%84%EB%82%A8+%EA%B4%91%EC%96%91%EC%8B%9C&amp;startDate.day=13&amp;startDate.month=7&amp;startDate.year=2023&amp;endDate.day=20&amp;endDate.month=7&amp;endDate.year=2023&amp;_csrf=b1756847-cef9-45c8-8252-bca3f228d087 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /careposts/search?locationTag=%EC%A0%84%EB%82%A8+%EA%B4%91%EC%96%91%EC%8B%9C&amp;startDate.day=13&amp;startDate.month=7&amp;startDate.year=2023&amp;endDate.day=20&amp;endDate.month=7&amp;endDate.year=2023&amp;_csrf=d3629234-d4e8-4084-8b9f-efa28c2512df HTTP/1.1
 Authorization: {AccessToken}
 Accept: application/json
 Host: server.petching.net</code></pre>
 </div>
 </div>
-<h4 id="_response_summary_21" class="discrete"><code>Response Summary</code></h4>
+<h4 id="_response_summary_22" class="discrete"><code>Response Summary</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -4387,14 +4661,14 @@ Content-Length: 2161
 </div>
 <div class="sect2">
 <h3 id="_게시물_삭제_api"><a class="anchor" href="#_게시물_삭제_api"></a><a class="link" href="#_게시물_삭제_api">4.6. 게시물 삭제 API</a></h3>
-<h4 id="_request_22" class="discrete"><code>Request</code></h4>
+<h4 id="_request_24" class="discrete"><code>Request</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="http">GET: /careposts/{post-id}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 53. /careposts/{post-id}</caption>
+<caption class="title">Table 57. /careposts/{post-id}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -4413,7 +4687,7 @@ Content-Length: 2161
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 54. request-headers</caption>
+<caption class="title">Table 58. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4434,7 +4708,7 @@ Content-Length: 2161
 </tr>
 </tbody>
 </table>
-<h4 id="_response_21" class="discrete"><code>Response</code></h4>
+<h4 id="_response_22" class="discrete"><code>Response</code></h4>
 <div class="listingblock">
 <div class="title">http-response</div>
 <div class="content">
@@ -4450,15 +4724,15 @@ Expires: 0
 X-Frame-Options: DENY</code></pre>
 </div>
 </div>
-<h4 id="_request_summary_22" class="discrete"><code>Request Summary</code></h4>
+<h4 id="_request_summary_23" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /careposts/1?_csrf=34c83b0c-b164-44cb-bad5-1ce16494ba5e HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /careposts/1?_csrf=097e8e0a-294c-46df-abbe-5ecb272ac04a HTTP/1.1
 Authorization: {AccessToken}
 Host: server.petching.net</code></pre>
 </div>
 </div>
-<h4 id="_response_summary_22" class="discrete"><code>Response Summary</code></h4>
+<h4 id="_response_summary_23" class="discrete"><code>Response Summary</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
@@ -4477,14 +4751,14 @@ X-Frame-Options: DENY</code></pre>
 </div>
 <div class="sect2">
 <h3 id="_게시물_마이페이지_조회_api"><a class="anchor" href="#_게시물_마이페이지_조회_api"></a><a class="link" href="#_게시물_마이페이지_조회_api">4.7. 게시물 마이페이지 조회 API</a></h3>
-<h4 id="_request_23" class="discrete"><code>Request</code></h4>
+<h4 id="_request_25" class="discrete"><code>Request</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="http">GET: /careposts/my-page/{user-id}?page={default:1}&amp;size={default:10}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 55. /careposts/my-page/{user-id}</caption>
+<caption class="title">Table 59. /careposts/my-page/{user-id}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -4503,7 +4777,7 @@ X-Frame-Options: DENY</code></pre>
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 56. request-parameters</caption>
+<caption class="title">Table 60. request-parameters</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4527,14 +4801,9 @@ X-Frame-Options: DENY</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Page Size</p></td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>_csrf</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">csrf</p></td>
-</tr>
 </tbody>
 </table>
-<h4 id="_response_22" class="discrete"><code>Response</code></h4>
+<h4 id="_response_23" class="discrete"><code>Response</code></h4>
 <div class="listingblock">
 <div class="title">response-body</div>
 <div class="content">
@@ -4564,7 +4833,7 @@ X-Frame-Options: DENY</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 57. response-fields</caption>
+<caption class="title">Table 61. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4635,16 +4904,16 @@ X-Frame-Options: DENY</code></pre>
 </tr>
 </tbody>
 </table>
-<h4 id="_request_summary_23" class="discrete"><code>Request Summary</code></h4>
+<h4 id="_request_summary_24" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /careposts/my-page/1?_csrf=27c539c9-c0a4-4c7e-9811-5f3b563d5bbf HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /careposts/my-page/1?_csrf=89160ade-9e40-48b5-b402-016442a64d93 HTTP/1.1
 Authorization: {AccessToken}
 Accept: application/json
 Host: server.petching.net</code></pre>
 </div>
 </div>
-<h4 id="_response_summary_23" class="discrete"><code>Response Summary</code></h4>
+<h4 id="_response_summary_24" class="discrete"><code>Response Summary</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -4695,14 +4964,14 @@ Content-Length: 1292
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_파일_업로드_api"><a class="anchor" href="#_파일_업로드_api"></a><a class="link" href="#_파일_업로드_api">5.1. 파일 업로드 API</a></h3>
-<h4 id="_request_24" class="discrete"><code>Request</code></h4>
+<h4 id="_request_26" class="discrete"><code>Request</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="http">POST: /api/s3/uploads</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 58. request-headers</caption>
+<caption class="title">Table 62. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4724,7 +4993,7 @@ Content-Length: 1292
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 59. request-parameters</caption>
+<caption class="title">Table 63. request-parameters</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4746,7 +5015,7 @@ Content-Length: 1292
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 60. request-parts</caption>
+<caption class="title">Table 64. request-parts</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -4764,7 +5033,7 @@ Content-Length: 1292
 </tr>
 </tbody>
 </table>
-<h4 id="_response_23" class="discrete"><code>Response</code></h4>
+<h4 id="_response_24" class="discrete"><code>Response</code></h4>
 <div class="listingblock">
 <div class="title">response-body</div>
 <div class="content">
@@ -4789,7 +5058,7 @@ Content-Length: 1292
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 61. response-fields</caption>
+<caption class="title">Table 65. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4825,7 +5094,7 @@ Content-Length: 1292
 </tr>
 </tbody>
 </table>
-<h4 id="_request_summary_24" class="discrete"><code>Request Summary</code></h4>
+<h4 id="_request_summary_25" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/s3/uploads HTTP/1.1
@@ -4839,7 +5108,7 @@ boards
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Content-Disposition: form-data; name=_csrf
 
-00a068aa-05e3-4fea-a1b1-a994adffbaf1
+9caf37fb-95b0-4b9e-a681-72a9b435ab3b
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Content-Disposition: form-data; name=files; filename=1.png
 Content-Type: multipart/form-data
@@ -4858,7 +5127,7 @@ src/main/resources/static/temp/3.jpg
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
 </div>
 </div>
-<h4 id="_response_summary_24" class="discrete"><code>Response Summary</code></h4>
+<h4 id="_response_summary_25" class="discrete"><code>Response Summary</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -4895,14 +5164,14 @@ Content-Length: 733
 </div>
 <div class="sect2">
 <h3 id="_파일_삭제_api"><a class="anchor" href="#_파일_삭제_api"></a><a class="link" href="#_파일_삭제_api">5.2. 파일 삭제 API</a></h3>
-<h4 id="_request_25" class="discrete"><code>Request</code></h4>
+<h4 id="_request_27" class="discrete"><code>Request</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="http">DELETE: /api/s3/delete</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 62. request-parameters</caption>
+<caption class="title">Table 66. request-parameters</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4928,7 +5197,7 @@ Content-Length: 733
 </tr>
 </tbody>
 </table>
-<h4 id="_response_24" class="discrete"><code>Response</code></h4>
+<h4 id="_response_25" class="discrete"><code>Response</code></h4>
 <div class="listingblock">
 <div class="title">http-response</div>
 <div class="content">
@@ -4941,15 +5210,15 @@ Expires: 0
 X-Frame-Options: DENY</code></pre>
 </div>
 </div>
-<h4 id="_request_summary_25" class="discrete"><code>Request Summary</code></h4>
+<h4 id="_request_summary_26" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /api/s3/delete?from=boards&amp;url=https%3A%2F%2Fs3.%7Bregion-name%7D.amazonaws.com%2F%7Bbucket-name%7D%2Fboards%2F%7Byyyy-mm-dd%7D-randomUUID_01.png&amp;_csrf=9f01a7ea-8abc-4ba9-b4d7-64cb106f8d1a HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /api/s3/delete?from=boards&amp;url=https%3A%2F%2Fs3.%7Bregion-name%7D.amazonaws.com%2F%7Bbucket-name%7D%2Fboards%2F%7Byyyy-mm-dd%7D-randomUUID_01.png&amp;_csrf=0becbe49-087d-4534-b276-9994ff60170e HTTP/1.1
 Authorization: {AccessToken}
 Host: server.petching.net</code></pre>
 </div>
 </div>
-<h4 id="_response_summary_25" class="discrete"><code>Response Summary</code></h4>
+<h4 id="_response_summary_26" class="discrete"><code>Response Summary</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
@@ -4971,14 +5240,14 @@ X-Frame-Options: DENY</code></pre>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_access_token_재발급_api"><a class="anchor" href="#_access_token_재발급_api"></a><a class="link" href="#_access_token_재발급_api">6.1. Access token 재발급 API</a></h3>
-<h4 id="_request_26" class="discrete"><code>Request</code></h4>
+<h4 id="_request_28" class="discrete"><code>Request</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="http">POST: /api/jwt</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 63. request-headers</caption>
+<caption class="title">Table 67. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -4999,14 +5268,14 @@ X-Frame-Options: DENY</code></pre>
 </tr>
 </tbody>
 </table>
-<h4 id="_response_25" class="discrete"><code>Response</code></h4>
+<h4 id="_response_26" class="discrete"><code>Response</code></h4>
 <div class="listingblock">
 <div class="title">response-body</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code>Bearer {AccessToken}</code></pre>
 </div>
 </div>
-<h4 id="_request_summary_26" class="discrete"><code>Request Summary</code></h4>
+<h4 id="_request_summary_27" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /api/jwt HTTP/1.1
@@ -5015,10 +5284,10 @@ Accept: application/json
 Refresh: {RefreshToken}
 Host: server.petching.net
 
-_csrf=324ee49a-2c91-4aa9-bb53-6fa34ce2db84</code></pre>
+_csrf=f3639b08-8865-4425-9e1e-b092268d04d8</code></pre>
 </div>
 </div>
-<h4 id="_response_summary_26" class="discrete"><code>Response Summary</code></h4>
+<h4 id="_response_summary_27" class="discrete"><code>Response Summary</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 201 Created
@@ -5044,14 +5313,14 @@ Bearer {AccessToken}</code></pre>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_mypet_등록_api"><a class="anchor" href="#_mypet_등록_api"></a><a class="link" href="#_mypet_등록_api">7.1. MyPet 등록 API</a></h3>
-<h4 id="_request_27" class="discrete"><code>Request</code></h4>
+<h4 id="_request_29" class="discrete"><code>Request</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="http">POST: /users/pets</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 64. request-headers</caption>
+<caption class="title">Table 68. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -5086,7 +5355,7 @@ Bearer {AccessToken}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 65. request-fields</caption>
+<caption class="title">Table 69. request-fields</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 20%;">
@@ -5148,9 +5417,9 @@ Bearer {AccessToken}</code></pre>
 </tr>
 </tbody>
 </table>
-<h4 id="_response_26" class="discrete"><code>Response</code></h4>
+<h4 id="_response_27" class="discrete"><code>Response</code></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 66. response-headers</caption>
+<caption class="title">Table 70. response-headers</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -5168,10 +5437,10 @@ Bearer {AccessToken}</code></pre>
 </tr>
 </tbody>
 </table>
-<h4 id="_request_summary_27" class="discrete"><code>Request Summary</code></h4>
+<h4 id="_request_summary_28" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /users/pets?_csrf=f986f1f8-8c55-4268-92c9-af02b7b03161 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /users/pets?_csrf=47966ca7-2d34-454d-aa29-3dc28fb0c343 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Authorization: {AccessToken}
@@ -5188,7 +5457,7 @@ Host: server.petching.net
 }</code></pre>
 </div>
 </div>
-<h4 id="_response_summary_27" class="discrete"><code>Response Summary</code></h4>
+<h4 id="_response_summary_28" class="discrete"><code>Response Summary</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 201 Created
@@ -5205,14 +5474,14 @@ X-Frame-Options: DENY</code></pre>
 </div>
 <div class="sect2">
 <h3 id="_mypet_수정_api"><a class="anchor" href="#_mypet_수정_api"></a><a class="link" href="#_mypet_수정_api">7.2. MyPet 수정 API</a></h3>
-<h4 id="_request_28" class="discrete"><code>Request</code></h4>
+<h4 id="_request_30" class="discrete"><code>Request</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="http">PATCH: /users/pets</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 67. request-headers</caption>
+<caption class="title">Table 71. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -5248,7 +5517,7 @@ X-Frame-Options: DENY</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 68. request-fields</caption>
+<caption class="title">Table 72. request-fields</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 20%;">
@@ -5317,7 +5586,7 @@ X-Frame-Options: DENY</code></pre>
 </tr>
 </tbody>
 </table>
-<h4 id="_response_27" class="discrete"><code>Response</code></h4>
+<h4 id="_response_28" class="discrete"><code>Response</code></h4>
 <div class="listingblock">
 <div class="title">response-body</div>
 <div class="content">
@@ -5335,7 +5604,7 @@ X-Frame-Options: DENY</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 69. response-fields</caption>
+<caption class="title">Table 73. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -5386,10 +5655,10 @@ X-Frame-Options: DENY</code></pre>
 </tr>
 </tbody>
 </table>
-<h4 id="_request_summary_28" class="discrete"><code>Request Summary</code></h4>
+<h4 id="_request_summary_29" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /users/pets?_csrf=9d018b1a-dd31-45d0-a2a4-40bfcd990b9a HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /users/pets?_csrf=23fa9619-8243-4abe-b0a7-66d0d75f5bc7 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Authorization: {AccessToken}
@@ -5407,7 +5676,7 @@ Host: server.petching.net
 }</code></pre>
 </div>
 </div>
-<h4 id="_response_summary_28" class="discrete"><code>Response Summary</code></h4>
+<h4 id="_response_summary_29" class="discrete"><code>Response Summary</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -5437,14 +5706,14 @@ Content-Length: 280
 </div>
 <div class="sect2">
 <h3 id="_mypet_조회_api"><a class="anchor" href="#_mypet_조회_api"></a><a class="link" href="#_mypet_조회_api">7.3. MyPet 조회 API</a></h3>
-<h4 id="_request_29" class="discrete"><code>Request</code></h4>
+<h4 id="_request_31" class="discrete"><code>Request</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="http">GET: /users/pets/{user-id}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 70. request-headers</caption>
+<caption class="title">Table 74. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -5466,7 +5735,7 @@ Content-Length: 280
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 71. /users/pets/{user-id}</caption>
+<caption class="title">Table 75. /users/pets/{user-id}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -5484,7 +5753,7 @@ Content-Length: 280
 </tr>
 </tbody>
 </table>
-<h4 id="_response_28" class="discrete"><code>Response</code></h4>
+<h4 id="_response_29" class="discrete"><code>Response</code></h4>
 <div class="listingblock">
 <div class="title">response-body</div>
 <div class="content">
@@ -5516,7 +5785,7 @@ Content-Length: 280
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 72. response-fields</caption>
+<caption class="title">Table 76. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -5567,16 +5836,16 @@ Content-Length: 280
 </tr>
 </tbody>
 </table>
-<h4 id="_request_summary_29" class="discrete"><code>Request Summary</code></h4>
+<h4 id="_request_summary_30" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /users/pets/1?_csrf=85a41ee2-c405-4efd-a276-c94bdf15d8a8 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /users/pets/1?_csrf=a75f8811-10fb-49b2-9d0f-a6457f106b9f HTTP/1.1
 Authorization: {AccessToken}
 Accept: application/json
 Host: server.petching.net</code></pre>
 </div>
 </div>
-<h4 id="_response_summary_29" class="discrete"><code>Response Summary</code></h4>
+<h4 id="_response_summary_30" class="discrete"><code>Response Summary</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
@@ -5620,14 +5889,14 @@ Content-Length: 762
 </div>
 <div class="sect2">
 <h3 id="_mypet_삭제_api"><a class="anchor" href="#_mypet_삭제_api"></a><a class="link" href="#_mypet_삭제_api">7.4. MyPet 삭제 API</a></h3>
-<h4 id="_request_30" class="discrete"><code>Request</code></h4>
+<h4 id="_request_32" class="discrete"><code>Request</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="http">DELETE: /users/pets/{petId}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 73. request-headers</caption>
+<caption class="title">Table 77. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -5649,7 +5918,7 @@ Content-Length: 762
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 74. /users/pets/{petId}</caption>
+<caption class="title">Table 78. /users/pets/{petId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -5667,7 +5936,7 @@ Content-Length: 762
 </tr>
 </tbody>
 </table>
-<h4 id="_response_29" class="discrete"><code>Response</code></h4>
+<h4 id="_response_30" class="discrete"><code>Response</code></h4>
 <div class="listingblock">
 <div class="title">http-response</div>
 <div class="content">
@@ -5680,15 +5949,765 @@ Expires: 0
 X-Frame-Options: DENY</code></pre>
 </div>
 </div>
-<h4 id="_request_summary_30" class="discrete"><code>Request Summary</code></h4>
+<h4 id="_request_summary_31" class="discrete"><code>Request Summary</code></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /users/pets/1?_csrf=c817d275-4171-44c9-9ed9-de63b67dabc9 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /users/pets/1?_csrf=501e5cc0-839a-48fa-a6cb-2132111ae2ba HTTP/1.1
 Authorization: {AccessToken}
 Host: server.petching.net</code></pre>
 </div>
 </div>
-<h4 id="_response_summary_30" class="discrete"><code>Response Summary</code></h4>
+<h4 id="_response_summary_31" class="discrete"><code>Response Summary</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<h1 id="Question-API" class="sect0"><a class="anchor" href="#Question-API"></a><a class="link" href="#Question-API">Question API</a></h1>
+<div class="sect1">
+<h2 id="_question_controller"><a class="anchor" href="#_question_controller"></a><a class="link" href="#_question_controller">8. Question Controller</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_question_등록_api"><a class="anchor" href="#_question_등록_api"></a><a class="link" href="#_question_등록_api">8.1. Question 등록 API</a></h3>
+<h4 id="_request_33" class="discrete"><code>Request</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="http">POST: /questions</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 79. request-headers</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">필수값 여부</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Request User의 access token</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">request-body</div>
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code>{
+  "title" : "this is title1",
+  "content" : "this is content1",
+  "questionType" : "SYSTEM",
+  "imgUrls" : [ "https://server.petching.net{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_01.png" ]
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 80. request-fields</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">타입</th>
+<th class="tableblock halign-left valign-top">필수값 여부</th>
+<th class="tableblock halign-left valign-top">설명</th>
+<th class="tableblock halign-left valign-top">제약 조건</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제목</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">내용</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>imgUrls</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">이미지(생략가능)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>questionType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">질문 유형</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<h4 id="_response_31" class="discrete"><code>Response</code></h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 81. response-headers</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Location</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Location header. 등록된 Question 의 URI</p></td>
+</tr>
+</tbody>
+</table>
+<h4 id="_request_summary_32" class="discrete"><code>Request Summary</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /questions?_csrf=1850a779-0274-4f5a-82c8-88581756c28e HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Accept: application/json
+Authorization: {AccessToken}
+Content-Length: 231
+Host: server.petching.net
+
+{
+  "title" : "this is title1",
+  "content" : "this is content1",
+  "questionType" : "SYSTEM",
+  "imgUrls" : [ "https://server.petching.net{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_01.png" ]
+}</code></pre>
+</div>
+</div>
+<h4 id="_response_summary_32" class="discrete"><code>Response Summary</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 201 Created
+Location: /questions/1
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="_question_수정_api"><a class="anchor" href="#_question_수정_api"></a><a class="link" href="#_question_수정_api">8.2. Question 수정 API</a></h3>
+<h4 id="_request_34" class="discrete"><code>Request</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="http">PATCH: /question/{questionId}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 82. /questions/{questionId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>questionId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">질문 식별자 ID</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 83. request-headers</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">필수값 여부</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Request User의 access token</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">request-body</div>
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code>{
+  "title" : "this is title1",
+  "content" : "this is content1",
+  "questionType" : "SYSTEM",
+  "imgUrls" : [ "https://server.petching.net{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_01.png" ]
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 84. request-fields</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">타입</th>
+<th class="tableblock halign-left valign-top">필수값 여부</th>
+<th class="tableblock halign-left valign-top">설명</th>
+<th class="tableblock halign-left valign-top">제약 조건</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제목</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">내용</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>imgUrls</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">이미지(생략가능)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>questionType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">질문 유형</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<h4 id="_response_32" class="discrete"><code>Response</code></h4>
+<div class="listingblock">
+<div class="title">response-body</div>
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code>{
+  "data" : {
+    "questionId" : 1,
+    "title" : "this is title1",
+    "content" : "this is content1",
+    "questionType" : "SYSTEM",
+    "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_01.png" ]
+  }
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 85. response-fields</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.questionId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">질문 식별자 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.imgUrls</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">이미지(생략가능)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.questionType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">질문 유형</p></td>
+</tr>
+</tbody>
+</table>
+<h4 id="_request_summary_33" class="discrete"><code>Request Summary</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /questions/1?_csrf=f8c35af5-cafb-49d1-bea8-88858282c858 HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Accept: application/json
+Authorization: {AccessToken}
+Content-Length: 231
+Host: server.petching.net
+
+{
+  "title" : "this is title1",
+  "content" : "this is content1",
+  "questionType" : "SYSTEM",
+  "imgUrls" : [ "https://server.petching.net{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_01.png" ]
+}</code></pre>
+</div>
+</div>
+<h4 id="_response_summary_33" class="discrete"><code>Response Summary</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 265
+
+{
+  "data" : {
+    "questionId" : 1,
+    "title" : "this is title1",
+    "content" : "this is content1",
+    "questionType" : "SYSTEM",
+    "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_01.png" ]
+  }
+}</code></pre>
+</div>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="_question_조회_api"><a class="anchor" href="#_question_조회_api"></a><a class="link" href="#_question_조회_api">8.3. Question 조회 API</a></h3>
+<h4 id="_request_35" class="discrete"><code>Request</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="http">GET: /question/{questionId}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 86. /questions/{questionId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>questionId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">질문 식별자 ID</p></td>
+</tr>
+</tbody>
+</table>
+<h4 id="_response_33" class="discrete"><code>Response</code></h4>
+<div class="listingblock">
+<div class="title">response-body</div>
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code>{
+  "data" : {
+    "questionId" : 1,
+    "title" : "this is title1",
+    "content" : "this is content1",
+    "questionType" : "SYSTEM",
+    "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_01.png" ]
+  }
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 87. response-fields</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.questionId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">질문 식별자 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.imgUrls</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">이미지(생략가능)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.questionType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">질문 유형</p></td>
+</tr>
+</tbody>
+</table>
+<h4 id="_request_summary_34" class="discrete"><code>Request Summary</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /questions/1?_csrf=f5f98a7a-7b41-4aaf-ae4c-a43120ccc7f6 HTTP/1.1
+Authorization: {AccessToken}
+Accept: application/json
+Host: server.petching.net</code></pre>
+</div>
+</div>
+<h4 id="_response_summary_34" class="discrete"><code>Response Summary</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 265
+
+{
+  "data" : {
+    "questionId" : 1,
+    "title" : "this is title1",
+    "content" : "this is content1",
+    "questionType" : "SYSTEM",
+    "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_01.png" ]
+  }
+}</code></pre>
+</div>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="_question_전체_조회_api"><a class="anchor" href="#_question_전체_조회_api"></a><a class="link" href="#_question_전체_조회_api">8.4. Question 전체 조회 API</a></h3>
+<h4 id="_request_36" class="discrete"><code>Request</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="http">GET: /question</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 88. request-parameters</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">파라미터명</th>
+<th class="tableblock halign-left valign-top">필수값 여부</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Page 번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Page Size</p></td>
+</tr>
+</tbody>
+</table>
+<h4 id="_response_34" class="discrete"><code>Response</code></h4>
+<div class="listingblock">
+<div class="title">response-body</div>
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code>{
+  "data" : [ {
+    "questionId" : 1,
+    "title" : "this is title1",
+    "content" : "this is content1",
+    "questionType" : "SYSTEM",
+    "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_01.png" ]
+  }, {
+    "questionId" : 2,
+    "title" : "this is title2",
+    "content" : "this is content2",
+    "questionType" : "SYSTEM",
+    "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_02.png" ]
+  }, {
+    "questionId" : 3,
+    "title" : "this is title3",
+    "content" : "this is content3",
+    "questionType" : "SYSTEM",
+    "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_03.png" ]
+  } ],
+  "pageInfo" : {
+    "page" : 1,
+    "size" : 10,
+    "totalElements" : 3,
+    "totalPages" : 1
+  }
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 89. response-fields</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].questionId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">질문 식별자 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].imgUrls</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">이미지(생략가능)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].questionType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">질문 유형</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageInfo</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 정보</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageInfo.page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageInfo.size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 사이즈</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageInfo.totalElements</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전체 건 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageInfo.totalPages</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전체 페이지 수</p></td>
+</tr>
+</tbody>
+</table>
+<h4 id="_request_summary_35" class="discrete"><code>Request Summary</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /questions?page=1&amp;size=10&amp;_csrf=c6028cb4-9bd2-477d-9724-45c5488be2aa HTTP/1.1
+Authorization: {AccessToken}
+Accept: application/json
+Host: server.petching.net</code></pre>
+</div>
+</div>
+<h4 id="_response_summary_35" class="discrete"><code>Response Summary</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 876
+
+{
+  "data" : [ {
+    "questionId" : 1,
+    "title" : "this is title1",
+    "content" : "this is content1",
+    "questionType" : "SYSTEM",
+    "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_01.png" ]
+  }, {
+    "questionId" : 2,
+    "title" : "this is title2",
+    "content" : "this is content2",
+    "questionType" : "SYSTEM",
+    "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_02.png" ]
+  }, {
+    "questionId" : 3,
+    "title" : "this is title3",
+    "content" : "this is content3",
+    "questionType" : "SYSTEM",
+    "imgUrls" : [ "https://s3.{region-name}.amazonaws.com/{bucket-name}/questions/{yyyy-mm-dd}-randomUUID_03.png" ]
+  } ],
+  "pageInfo" : {
+    "page" : 1,
+    "size" : 10,
+    "totalElements" : 3,
+    "totalPages" : 1
+  }
+}</code></pre>
+</div>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="_question_삭제_api"><a class="anchor" href="#_question_삭제_api"></a><a class="link" href="#_question_삭제_api">8.5. Question 삭제 API</a></h3>
+<h4 id="_request_37" class="discrete"><code>Request</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="http">DELETE: /users/pets/{petId}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 90. /questions/{questionId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>questionId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">질문 식별자 ID</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 91. request-headers</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">필수값 여부</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Request User의 access token</p></td>
+</tr>
+</tbody>
+</table>
+<h4 id="_response_35" class="discrete"><code>Response</code></h4>
+<div class="listingblock">
+<div class="title">http-response</div>
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY</code></pre>
+</div>
+</div>
+<h4 id="_request_summary_36" class="discrete"><code>Request Summary</code></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /questions/1?_csrf=93a773fb-3a65-49e9-be8e-3ffdc6273909 HTTP/1.1
+Authorization: {AccessToken}
+Host: server.petching.net</code></pre>
+</div>
+</div>
+<h4 id="_response_summary_36" class="discrete"><code>Response Summary</code></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
@@ -5708,7 +6727,7 @@ X-Frame-Options: DENY</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-08-16 10:54:39 +0900
+Last updated 2023-08-31 00:02:13 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">

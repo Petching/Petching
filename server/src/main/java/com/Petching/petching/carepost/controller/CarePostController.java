@@ -167,10 +167,9 @@ public class CarePostController {
                                              @PathVariable("user-id") @Positive long userId) {
 
         Pageable pageable = PageRequest.of(page-1, size);
-        Page<CarePost> pageCare = service.findAllPost(pageable);
-        List<CarePostDto.MyPage> find = mapper.carePostsToCarePostMyPageDto(
-                service.findUserCarePost(userId
-                ));
+        List<CarePost> posts = service.findUserCarePost(userId);
+        Page<CarePost> pageCare = service.findUserCarePost(pageable, posts);
+        List<CarePostDto.MyPage> find = mapper.carePostsToCarePostMyPageDto(posts);
 
         return new ResponseEntity<>(new MultiResponse<>(find, pageCare),HttpStatus.OK);
     }

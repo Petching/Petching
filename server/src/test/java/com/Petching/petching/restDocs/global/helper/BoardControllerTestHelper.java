@@ -7,6 +7,7 @@ import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.request.ParameterDescriptor;
 import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.util.MultiValueMap;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +23,8 @@ public interface BoardControllerTestHelper extends ControllerTestHelper{
     String BOARD_URL = "/boards";
     String RESOURCE_URI = "/{boardId}";
 
+    String USER_URI = "/{userId}/written";
+
     default String getUrl() {
         return BOARD_URL;
     }
@@ -30,9 +33,30 @@ public interface BoardControllerTestHelper extends ControllerTestHelper{
         return BOARD_URL + RESOURCE_URI;
     }
 
+    default String getUserURI() {
+        return BOARD_URL + USER_URI;
+    }
+
+    default RequestBuilder getWrittenRequestBuilder(String url, long userId,MultiValueMap<String, String> queryParams) {
+        return get(url,userId)
+                .params(
+                        queryParams
+                )
+                .header("Authorization", "{AccessToken}")
+                .accept(MediaType.APPLICATION_JSON).with(csrf());
+    }
+
+
     default List<ParameterDescriptor> getBoardRequestPathParameterDescriptor() {
         return Arrays.asList(
                 parameterWithName("boardId").description("Board 식별자 ID")
+        );
+    }
+
+
+    default List<ParameterDescriptor> getWrittenBoardRequestPathParameterDescriptor() {
+        return Arrays.asList(
+                parameterWithName("userId").description("User 식별자 ID")
         );
     }
 

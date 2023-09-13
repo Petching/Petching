@@ -1,10 +1,6 @@
 package com.Petching.petching.restDocs.v1.login;
 
 
-import com.Petching.petching.board.controller.BoardController;
-import com.Petching.petching.board.mapper.BoardMapper;
-import com.Petching.petching.board.service.BoardService;
-import com.Petching.petching.comment.mapper.CommentMapper;
 import com.Petching.petching.config.SecurityConfiguration;
 import com.Petching.petching.global.aws.s3.config.S3Configuration;
 import com.Petching.petching.login.dto.LoginDto;
@@ -12,13 +8,10 @@ import com.Petching.petching.login.jwt.service.JwtService;
 import com.Petching.petching.login.jwt.util.CustomAuthorityUtils;
 import com.Petching.petching.login.oauth.OAuth2UserSuccessHandler;
 import com.Petching.petching.login.oauth.userInfo.JwtToken;
-import com.Petching.petching.restDocs.global.helper.ControllerTestHelper;
 import com.Petching.petching.restDocs.global.helper.LoginTestHelper;
-import com.Petching.petching.restDocs.global.helper.StubData;
-import com.Petching.petching.user.controller.UserController;
+import com.Petching.petching.restDocs.global.mock.StubData;
 import com.Petching.petching.user.dto.UserPostDto;
 import com.Petching.petching.user.entity.User;
-import com.Petching.petching.user.mapper.UserMapper;
 import com.Petching.petching.user.service.UserService;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.DisplayName;
@@ -35,8 +28,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import static com.Petching.petching.restDocs.global.utils.ApiDocumentUtils.getRequestPreProcessor;
-import static com.Petching.petching.restDocs.global.utils.ApiDocumentUtils.getResponsePreProcessor;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
@@ -45,7 +36,6 @@ import static org.springframework.restdocs.request.RequestDocumentation.pathPara
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest({
         SecurityConfiguration.class
