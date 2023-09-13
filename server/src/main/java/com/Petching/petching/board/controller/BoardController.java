@@ -218,14 +218,19 @@ public class BoardController {
 
         authorization = authorization.replaceAll("Bearer ","");
         User requestUser = userService.findUser(jwtToken.extractUserIdFromToken(authorization));
-        requestUser.addLikedBoard(boardId);
+
+        if(requestUser.getLikedBoardList().contains(boardId)){
+            requestUser.addLikedBoard(boardId);
+        }else {
+            requestUser.deleteLikedBoard(boardId);
+        }
+
         userService.updatedByBoardLike(requestUser);
-
         boardService.updateBoardLike(boardId, requestUser);
-
 
         return new ResponseEntity( HttpStatus.OK);
     }
+
 
     @GetMapping("/{user-id}/like")
     public ResponseEntity getUserLikeBoards(@RequestParam(defaultValue = "1") int page,

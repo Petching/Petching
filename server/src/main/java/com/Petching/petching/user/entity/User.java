@@ -65,6 +65,10 @@ public class User extends Auditable {
         likedBoardList.add(boardId);
     }
 
+    public void deleteLikedBoard(Long boardId){
+        likedBoardList.remove(boardId);
+    }
+
     public void updateProfileImgUrl(String imgUrl) {
         this.profileImgUrl = imgUrl;
     }

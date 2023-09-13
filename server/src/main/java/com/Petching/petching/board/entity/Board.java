@@ -79,6 +79,9 @@ public class Board extends BaseEntity {
 
     public void addLikedUserId(Long userId){likedUserIds.add(userId);}
 
+    public void deleteLikedUserId(Long userId){likedUserIds.remove(userId);}
+
+
     public void setCommentCount(){commentCount = comments.size();}
 
 
