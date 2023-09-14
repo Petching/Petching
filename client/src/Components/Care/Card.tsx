@@ -20,7 +20,7 @@ const Card: React.FC<CardProps> = ({
   return (
     <div className="m-4">
       <div className=" text-center rounded-md w-[18rem] h-[26rem] pt-6 bg-white shadow-lg shadow-gray-400">
-        <div className="mx-auto w-56">
+        <div className="mx-auto w-56 h-52 mb-3">
           <Carousel imgUrls={imgUrls} width="56" height="52" />
         </div>
         <div onClick={() => toCareListDetail(postId)}>
