@@ -6,10 +6,10 @@ import ReactCalendar from '../Components/Care/ReactCalendar';
 import Postcode from '../Components/Care/Postcode';
 import { postImgHandler } from '../Util/postImg';
 import { useEffect } from 'react';
+import useDateSelect from '../Hook/useDateSelect';
 const CareListPost = () => {
   const location = useLocation();
-  const [startDate, setStartDate] = useState(location.state.startDate);
-  const [endDate, setEndDate] = useState(location.state.endDate);
+  const { startDate, endDate, onDateSelected } = useDateSelect();
   const [locationTag, setLocationTag] = useState(location.state.locationTag);
   const [isPetsitter, setIsPetsitter] = useState(true);
   const [title, setTitle] = useState('');
@@ -53,20 +53,7 @@ const CareListPost = () => {
       console.error(error);
     }
   };
-  const onDateSelected = (value: any) => {
-    if (value.from && value.to) {
-      setStartDate({
-        year: value.from.year,
-        month: value.from.month,
-        day: value.from.day,
-      });
-      setEndDate({
-        year: value.to.year,
-        month: value.to.month,
-        day: value.to.day,
-      });
-    }
-  };
+
   const handlepetSizesClick = (size: string) => {
     if (petSizes.includes(size)) {
       setpetSizes(petSizes.filter(s => s !== size));
