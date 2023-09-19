@@ -5,36 +5,15 @@ import Postcode from '../Components/Care/Postcode';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
-
-interface Date {
-  year: number;
-  month: number;
-  day: number;
-}
+import useDateSelect from '../Hook/useDateSelect';
 
 const CareList = () => {
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
   const [locationTag, setLocationTag] = useState('');
   const [cardData, setCardData] = useState<any[]>([]);
   const [page, setPage] = useState(0);
-
+  const { startDate, endDate, onDateSelected } = useDateSelect();
   const navigate = useNavigate();
 
-  const onDateSelected = (value: any) => {
-    if (value.from && value.to) {
-      setStartDate({
-        year: value.from.year,
-        month: value.from.month,
-        day: value.from.day,
-      });
-      setEndDate({
-        year: value.to.year,
-        month: value.to.month,
-        day: value.to.day,
-      });
-    }
-  };
   const onAddressSelected = (address: string) => {
     setLocationTag(address);
   };
