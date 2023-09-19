@@ -68,26 +68,27 @@ const CareListPost = () => {
   }, [isPetsitter]);
 
   return (
-    <div className="bg-[#F2F2F2] w-full h-full min-h-screen text-xl">
+    <div className="bg-[#F2F2F2] w-full h-[80rem] min-h-screen text-xl ">
       <div className="bg-[#F2F2F2] h-10 mt-[4rem]"></div>
-      <div className="bg-[#F2F2F2] text-center">
+      <div className="bg-[#ffffff] mx-auto w-[40rem] h-[15rem] rounded-lg text-center">
+        <div className="h-4"></div>
         <div>찾으시는 지역</div>
         <Postcode onAddressSelected={setLocationTag} value={locationTag} />
-        <div>언제 맡기시나요?</div>
+        <div className="mt-4">언제 맡기시나요?</div>
         <ReactCalendar onDateSelected={onDateSelected} />
       </div>
-      <div className="bg-white mx-auto w-1/2 h-[30rem] rounded-lg mt-10 text-center">
+      <div className="bg-white mx-auto w-[40rem] h-[42rem] rounded-lg mt-10 text-center">
         <div className="h-1 "></div>
-        <div className="mt-10 mx-16">펫을 맡기시나요?</div>
-        <div>
+        <div className="mt-10 mb-3 ml-[-27rem] ">펫을 맡기시나요?</div>
+        <div className="ml-[25rem]">
           <button
-            className="bg-customGreen rounded-lg"
+            className="bg-customGreen w-24 h-10 rounded-lg"
             onClick={() => setIsPetsitter(true)}
           >
             펫시터에요
           </button>
           <button
-            className="bg-customGreen rounded-lg mx-4"
+            className="bg-customGreen w-24 h-10 rounded-lg mx-4"
             onClick={() => setIsPetsitter(false)}
           >
             집사에요
@@ -96,39 +97,43 @@ const CareListPost = () => {
         {isPetsitter ? (
           <>
             <div className="h-1 "></div>
-            <div className="mt-2">글제목을 입력하세요</div>
+            <div className="mt-2 ml-[-26rem]">글제목을 입력하세요</div>
             <input
-              className="border-2"
+              className="border-4 ml-[22rem] w-64 h-10"
               value={title}
               onChange={e => setTitle(e.target.value)}
             />
-            <div>내용을 입력하세요</div>
-            <input
-              className="border-2"
+            <div className="mt-2 ml-[-26.5rem]">내용을 입력하세요</div>
+            <textarea
+              className="border-4 ml-[22rem] w-64 h-20"
               value={content}
               onChange={e => setContent(e.target.value)}
             />
           </>
         ) : (
           <>
-            <div>글제목을 입력하세요</div>
+            <div className="h-1 "></div>
+            <div className="mt-2 ml-[-26rem]">글제목을 입력하세요</div>
             <input
-              className="border-2"
+              className="border-4 ml-[22rem] w-64 h-10"
               value={title}
               onChange={e => setTitle(e.target.value)}
             />
-            <div>내용을 입력하세요</div>
-            <input
-              className="border-2"
+            <div className="mt-2 ml-[-26.5rem]">내용을 입력하세요</div>
+            <textarea
+              className="border-4 ml-[22rem] w-64 h-20"
               value={content}
               onChange={e => setContent(e.target.value)}
             />
           </>
         )}
-        <div className="mt-3">펫의 크기를 지정해주세요</div>
-        <div>
+        <div className="mt-5 ml-[7rem]">
+          <ImageUploader onUploadComplete={handleImageUploaded} />
+        </div>
+        <div className="mt-6 ml-[-23rem]">펫의 크기를 지정해주세요</div>
+        <div className="ml-[22.5rem]">
           <button
-            className={`bg-customGreen rounded-lg mx-5 w-16 ${
+            className={`bg-customGreen rounded-lg mx-2 w-16 h-10 ${
               petSizes.includes('소형') ? 'text-white' : ''
             }`}
             onClick={() => handlepetSizesClick('소형')}
@@ -136,7 +141,7 @@ const CareListPost = () => {
             소형
           </button>
           <button
-            className={`bg-customGreen rounded-lg mx-5 w-16 ${
+            className={`bg-customGreen rounded-lg mx-2 w-16 h-10 ${
               petSizes.includes('중형') ? 'text-white' : ''
             }`}
             onClick={() => handlepetSizesClick('중형')}
@@ -144,7 +149,7 @@ const CareListPost = () => {
             중형
           </button>
           <button
-            className={`bg-customGreen rounded-lg mx-5 w-16 ${
+            className={`bg-customGreen rounded-lg mx-2 w-16 h-10 ${
               petSizes.includes('대형') ? 'text-white' : ''
             }`}
             onClick={() => handlepetSizesClick('대형')}
@@ -152,19 +157,17 @@ const CareListPost = () => {
             대형
           </button>
         </div>
-        <div className="mt-3">
-          <ImageUploader onUploadComplete={handleImageUploaded} />
-        </div>
-        <div className="mt-3">추가사항을 적어주세요</div>
-        <input
-          className="border-2"
+
+        <div className="mt-3 ml-[-24.5rem]">추가사항을 적어주세요</div>
+        <textarea
+          className="border-4 ml-[22rem] w-64 h-20"
           value={memo}
           onChange={e => setMemo(e.target.value)}
-        ></input>
+        ></textarea>
       </div>
       <div className="text-center">
         <button
-          className="bg-customPink rounded-md mt-10 w-1/2 h-20"
+          className="bg-customPink rounded-md mt-10 w-[40rem] h-20"
           onClick={handlePost}
         >
           게시

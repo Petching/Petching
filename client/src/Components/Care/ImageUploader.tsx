@@ -19,7 +19,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onUploadComplete }) => {
   return (
     <div>
       {previews.map((preview, index) => (
-        <img key={index} src={preview} alt={`preview-${index}`} width="200" />
+        <img key={index} src={preview} alt={`preview-${index}`} width="80" />
       ))}
 
       <input
