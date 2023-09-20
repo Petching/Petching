@@ -7,6 +7,7 @@ import Postcode from '../Components/Care/Postcode';
 import { postImgHandler } from '../Util/postImg';
 import { useEffect } from 'react';
 import useDateSelect from '../Hook/useDateSelect';
+import { useNavigate } from 'react-router-dom';
 const CareListPost = () => {
   const location = useLocation();
   const { startDate, endDate, onDateSelected } = useDateSelect();
@@ -17,7 +18,7 @@ const CareListPost = () => {
   const [petSizes, setpetSizes] = useState<string[]>([]);
   const [memo, setMemo] = useState('');
   const [imagesToUpload, setImagesToUpload] = useState<File[]>([]);
-
+  const navigate = useNavigate();
   const handleImageUploaded = (uploadedUrls: File[]) => {
     setImagesToUpload(uploadedUrls);
   };
@@ -48,6 +49,7 @@ const CareListPost = () => {
           headers: { Authorization: token },
         },
       );
+      navigate('/carelist');
       console.log(response);
     } catch (error) {
       console.error(error);
@@ -70,25 +72,29 @@ const CareListPost = () => {
   return (
     <div className="bg-[#F2F2F2] w-full h-[80rem] min-h-screen text-xl ">
       <div className="bg-[#F2F2F2] h-10 mt-[4rem]"></div>
-      <div className="bg-[#ffffff] mx-auto w-[40rem] h-[15rem] rounded-lg text-center">
+      <div className="bg-[#ffffff] mx-auto w-[40rem] h-[15rem] rounded-lg  text-center">
         <div className="h-4"></div>
         <div>찾으시는 지역</div>
         <Postcode onAddressSelected={setLocationTag} value={locationTag} />
         <div className="mt-4">언제 맡기시나요?</div>
         <ReactCalendar onDateSelected={onDateSelected} />
       </div>
-      <div className="bg-white mx-auto w-[40rem] h-[42rem] rounded-lg mt-10 text-center">
+      <div className="bg-white mx-auto w-[40rem] h-[42rem] rounded-lg mt-10 text-center ">
         <div className="h-1 "></div>
         <div className="mt-10 mb-3 ml-[-27rem] ">펫을 맡기시나요?</div>
         <div className="ml-[25rem]">
           <button
-            className="bg-customGreen w-24 h-10 rounded-lg"
+            className={`w-24 h-10 rounded-lg bg-customGreen ${
+              isPetsitter ? 'text-white' : 'text-black'
+            }`}
             onClick={() => setIsPetsitter(true)}
           >
             펫시터에요
           </button>
           <button
-            className="bg-customGreen w-24 h-10 rounded-lg mx-4"
+            className={`w-24 h-10 rounded-lg mx-4 bg-customGreen ${
+              isPetsitter ? 'text-black' : 'text-white'
+            }`}
             onClick={() => setIsPetsitter(false)}
           >
             집사에요
