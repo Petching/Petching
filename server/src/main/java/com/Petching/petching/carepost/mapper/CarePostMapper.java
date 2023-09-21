@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface CarePostMapper {
-//    CarePost carePostPostDtoToCarePost(CarePostDto.Post requestBody);
     default CarePost carePostPostDtoToCarePost(CarePostDto.Post requestBody) {
         if ( requestBody == null ) {
             return null;
@@ -32,7 +31,6 @@ public interface CarePostMapper {
         carePost.endDay( requestBody.getEndDate().get("day") );
         carePost.endMonth( requestBody.getEndDate().get("month") );
         carePost.endYear( requestBody.getEndDate().get("year") );
-//        carePost.petSize(requestBody.getPetSize());
         carePost.memo(requestBody.getMemo());
         carePost.conditionTag(requestBody.getConditionTag());
         carePost.locationTag(requestBody.getLocationTag());
@@ -40,8 +38,6 @@ public interface CarePostMapper {
 
         return carePost.build();
     }
-
-//    CarePost carePostPatchDtoToCarePost(CarePostDto.Patch requestBody);
 
     default CarePost carePostPatchDtoToCarePost(CarePostDto.Patch requestBody) {
         if ( requestBody == null ) {
@@ -74,8 +70,6 @@ public interface CarePostMapper {
             return null;
         }
 
-//        List<CarePost_ConditionTag> postConditionTags = carePost.getPostConditionTags();
-//        List<CarePost_LocationTag> postLocationTags = carePost.getPostLocationTags();
         List<CarePost_PetSize> postPetSizes = carePost.getPostPetSizes();
 
         String title = null;
@@ -87,7 +81,6 @@ public interface CarePostMapper {
         Integer endDay = null;
         Integer endMonth = null;
         Integer endYear = null;
-//        String petSize = null;
         String memo = null;
         String conditionTag = null;
         String locationTag = null;
@@ -116,8 +109,6 @@ public interface CarePostMapper {
 
 
 
-//        List<String> conditionTags = postConditionTagDtoResponse(postConditionTags);
-//        List<String> locationTags = postLocationTagDtoResponse(postLocationTags);
         List<String> petSizes = postPetSizeDtoResponse(postPetSizes);
 
         // enddate 및 startdate 정의 및 초기화
