@@ -3,28 +3,47 @@ import SockJS from 'sockjs-client';
 import { useState, useRef, useEffect, useId } from 'react';
 import { Axios } from '../../API/api';
 import { getUserIdFromToken } from '../../Util/getUserIdFromToken';
+import axios from 'axios';
 
 const ChatComponent: React.FC = () => {
   const [room, setRoom] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const sock = new SockJS('https://petching.net/ws/chat');
+  const sock = new WebSocket('wss://server.petching.net/ws/chat');
   const stomp = Stomp.over(sock);
   const Token = localStorage.getItem('ACCESS_TOKEN') || '';
   const userId = String(getUserIdFromToken(true, Token));
+  const [roomId, setRoomId] = useState('');
   console.log(userId);
 
   //방을 생성하는 postAPI
+  //roomId값도 리턴함
   const postChat = async (userId: string) => {
     try {
-      const response = await Axios.post('/chat', {
-        userId: userId,
-      });
-      console.log(response.data);
+      const response = await axios.post(
+        'https://server.petching.net/chats',
+        { userId: userId },
+        {
+          headers: {
+            Authorization: Token,
+          },
+        },
+      );
+      console.log(response);
+      const headerResponse = response.headers.location;
+      const roomId = headerResponse.split('/').pop();
+      setRoomId(roomId);
+      console.log(roomId);
     } catch (error) {
       console.error('방 생성 오류');
     }
   };
+
+  // const subscribedUser = (subscribedUserId: string) => {
+  //   stomp.subscribe(`/sub/chats/messages/${userId}`, message => {
+  //     console.log('상대방에게 받은 메세지', message.body);
+  //   });
+  // };
 
   useEffect(() => {
     postChat(userId);
@@ -57,18 +76,20 @@ const ChatComponent: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full h-screen p-4 md:p-8">
-      <h2 className="text-xl mb-2 md:text-2xl">Current room:</h2>
+      <h2 className="text-xl mb-2 md:text-2xl">Current room:{roomId}</h2>
       <form className="mb-4" onSubmit={joinRoom}>
-        <input
+        {/* <input
           className="mb-3 p-2 rounded-md border w-full md:w-1/2 md:text-lg"
           placeholder="Enter room"
+          value={room}
+          onChange={e => setRoom(e.target.value)}
         />
         <button
           type="submit"
           className="w-full bg-[#99DDCC] text-white p-2 rounded-md hover:bg-[#79C3B1] md:w-1/2 md:text-lg"
         >
           Join Room
-        </button>
+        </button> */}
       </form>
       <div className="flex-grow overflow-auto mb-4 p-3 bg-white rounded-md"></div>
       <form className="flex" onSubmit={sendMessage}>
