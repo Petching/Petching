@@ -5,7 +5,6 @@ import {
   AiOutlineUser,
   AiOutlineHome,
   AiOutlineMail,
-  AiOutlineKey,
 } from 'react-icons/ai';
 import { usePatchUserProfile } from '../../Hook/usePatchUserProfile';
 import { useDeleteUserProfile } from '../../Hook/useDeleteUserProfile';
@@ -145,13 +144,7 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
         : UserProfile?.profileImgUrl,
       password: changePw ? newPw : undefined,
     });
-    setChangeNickName(UserProfile!.nickName);
-    setChangeAddress(UserProfile!.address || '');
-    setChangeImg(UserProfile!.profileImgUrl);
-    setNickCheck(false);
-    setNickError('');
-    setOnEdit(false);
-    setChangePw(false);
+    cancelHandler();
   };
 
   const cancelHandler = () => {
@@ -186,6 +179,7 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
       </div>
     );
   }
+
   return (
     <div className="flex items-center w-9/12 my-10 relative flex-col sm:flex-row">
       <div className="mr-6 w-32 h-32 box-border my-5">
@@ -198,7 +192,7 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
             <img
               src={changeImg}
               alt="변경된 이미지"
-              className="w-full h-full"
+              className="w-full h-full object-cover"
             />
             <input
               id="attach-file"
@@ -212,7 +206,7 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
           <img
             src={UserProfile?.profileImgUrl}
             alt="유저의 프로필 이미지"
-            className="w-32 h-32 rounded"
+            className="w-32 h-32 rounded object-cover"
           />
         )}
       </div>
@@ -237,9 +231,6 @@ const UserInfo: React.FC<{ userId: string }> = ({ userId }) => {
                 중복확인
               </button>
               <p className="ml-2 text-red-700">{nickError}</p>
-              {/* {isDuplication && (
-
-              )} */}
             </label>
           ) : (
             <label className="flex items-center">

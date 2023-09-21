@@ -1,61 +1,101 @@
 import React, { useState } from 'react';
-import pit from '../Style/kakaoLogo.png';
 import { useNavigate } from 'react-router-dom';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { AiOutlineComment } from 'react-icons/ai';
-// import doctor from '../Style/doctor.jpg';
-// import doctors from '../Style/doctors.jpg';
-// import pills from '../Style/pills.jpg';
+import NoImage from '../Style/NoImage.png';
 import { useGetPeacock } from '../Hook/useGetPeacock';
+import { usePostLike } from '../Hook/usePostLike';
+
+interface PeacockData {
+  boardId: number;
+  title: string;
+  profileImgUrl: string;
+  nickName: string;
+  likes: number;
+  createdAt: string;
+  commentCount: number;
+  checkLike: boolean;
+  imgUrls: string[];
+}
 
 export const CarouselComponent: React.FC = () => {
   const { GetPeacock } = useGetPeacock();
-
-  interface PictureItem {
-    id: number;
-    imgurl: string;
-  }
-
-  function changearray(el: any[]): PictureItem[] {
-    const picture: PictureItem[] = [];
-    for (let i = 0; i < el.length; i++) {
-      const id = i + 1;
-      const imgurl = el[i];
-      picture.push({ id, imgurl });
-    }
-    return picture;
-  }
-  let pictureItems: PictureItem[] = [];
-
-  if (GetPeacock) {
-    pictureItems = changearray(GetPeacock[0].imgUrls);
-  }
-
+  const navigate = useNavigate();
+  const toPeacockDetail = (boardId: number) => {
+    navigate(`/peacock/${boardId}`);
+  };
   return (
-    <Carousel
-      showStatus={false}
-      showIndicators={false}
-      showThumbs={false}
-      infiniteLoop={true}
-    >
-      {pictureItems.map(el => (
-        <div key={el.id}>
-          <img
-            src={el.imgurl}
-            alt="cau"
-            style={{ maxHeight: '100%', maxWidth: '100%' }}
-          />
-        </div>
-      ))}
-    </Carousel>
+    <div className="flex flex-wrap mb-20">
+      {GetPeacock &&
+        GetPeacock.map((item: PeacockData) => (
+          <div
+            key={item.boardId}
+            className="w-1/4 p-4 m-8 border border-gray-200"
+          >
+            {item.imgUrls.length > 0 ? (
+              <>
+                <Carousel
+                  showThumbs={false}
+                  showStatus={false}
+                  className="flex flex-row"
+                  infiniteLoop
+                >
+                  {/* 해당 게시물의 이미지들로 캐러셀 슬라이드 생성 */}
+                  {item.imgUrls.map((imageUrl, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-center h-full"
+                      onClick={() => {
+                        toPeacockDetail(item.boardId);
+                      }}
+                    >
+                      <img
+                        src={imageUrl}
+                        alt="petimage"
+                        className=" max-h-40 object-center"
+                      />
+                    </div>
+                  ))}
+                </Carousel>
+                <h2 className="mt-4">{item.title}</h2>
+                <div className="flex items-center">
+                  <img
+                    src={item.profileImgUrl}
+                    alt="profile"
+                    className="w-12 h-12 rounded-full"
+                  />
+                  <span className="ml-2">{item.nickName}</span>
+                </div>
+                <div className="flex items-center">
+                  <AiOutlineHeart
+                    onClick={() => {
+                      usePostLike(item.boardId);
+                    }}
+                  />
+                  <span className="ml-4">{item.likes}</span>
+                  <AiOutlineComment className="ml-4" />
+                  <span className="ml-4">{item.commentCount}</span>
+                </div>
+              </>
+            ) : (
+              <div className="p-4 m-2">
+                {/* Replace with actual image URL or default image URL */}
+                <img
+                  src={NoImage}
+                  alt="Default Image"
+                  className="max-h-40 object-center"
+                />
+              </div>
+            )}
+          </div>
+        ))}
+    </div>
   );
 };
 
-export const LikeComponent = () => {
-  const { GetPeacock } = useGetPeacock();
-
+const PeacockCarousel: React.FC<PeacockComponentProps> = ({ data }) => {
   const [count, setCount] = useState(1);
   const [isLiked, setIsLiked] = useState(false);
 
@@ -70,27 +110,43 @@ export const LikeComponent = () => {
   };
 
   return (
-    <>
-      {GetPeacock &&
-        GetPeacock.map(el => (
-          <div key={el.boardId} className="flex items-center">
-            <button className="" onClick={handleLike}>
-              {isLiked ? (
-                <AiFillHeart className="w-6 h-6" color="red" />
-              ) : (
-                <AiOutlineHeart className="w-6 h-6" />
-              )}
-            </button>
-            <span className="ml-4">좋아요 {count}개</span>
-            <button className="flex items-center ml-10">
-              <AiOutlineComment className="w-6 h-6" />
-            </button>
-            <span className="ml-4">댓글 {el.commentCount}개</span>
-          </div>
-        ))}
-    </>
+    <div>
+      <img src={data.imgUrls[0]} alt={data.title} className="w-40 h-40" />
+      <p>{data.title}</p>
+      <div className="flex items-center">
+        <button className="" onClick={handleLike}>
+          {isLiked ? (
+            <AiFillHeart className="w-6 h-6" color="red" />
+          ) : (
+            <AiOutlineHeart className="w-6 h-6" />
+          )}
+        </button>
+        <span className="ml-4">좋아요 {count}개</span>
+        <button className="flex items-center ml-10">
+          <AiOutlineComment className="w-6 h-6" />
+        </button>
+        <span className="ml-4">댓글 {data.commentCount}개</span>
+      </div>
+    </div>
   );
 };
+
+export const PeacockComponent: React.FC = () => {
+  const { GetPeacock } = useGetPeacock();
+
+  return (
+    <Carousel showThumbs={false}>
+      {GetPeacock &&
+        GetPeacock.map((item: PeacockData) => (
+          <PeacockCarousel key={item.boardId} data={item} />
+        ))}
+    </Carousel>
+  );
+};
+
+interface PeacockComponentProps {
+  data: PeacockData;
+}
 
 export const Square = () => {
   const navigate = useNavigate();
@@ -108,27 +164,6 @@ export const Square = () => {
       >
         글 작성하기
       </button>
-    </div>
-  );
-};
-
-export const PeacockComponent = () => {
-  const { GetPeacock } = useGetPeacock();
-
-  return (
-    <div className="h-96 w-72 m-12 bg-[#f2f2f2]">
-      <CarouselComponent />
-      <div className="mt-3 text-center">노가르시아</div>
-      {GetPeacock &&
-        GetPeacock.map(el => (
-          <div key={el.boardId} className="flex items-center ml-2">
-            <img className="w-16 h-16" src={pit} alt="logo" />
-            <span className="ml-4">{el.nickName}</span>
-          </div>
-        ))}
-      <div className="flex items-center mt-8 ml-2">
-        <LikeComponent />
-      </div>
     </div>
   );
 };

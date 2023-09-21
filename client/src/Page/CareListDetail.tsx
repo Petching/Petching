@@ -63,34 +63,49 @@ const CareListDetail = () => {
   }, [postId]);
 
   return (
-    <div className="bg-[#F2F2F2] w-full h-full min-h-screen text-xl">
-      <div>
-        <div className="mx-auto w-60">
-          <Carousel imgUrls={imgUrls} />
+    <div className="bg-[#F2F2F2] w-full h-full min-h-screen text-2xl">
+      <div className="bg-[#F2F2F2] h-10 mt-[4rem]"></div>
+      <div className="mt-[1rem]">
+        <div className="mx-auto w-[40rem] h-96">
+          <Carousel imgUrls={imgUrls} width="40rem" height="96" />
         </div>
         <div className="bg-[#F2F2F2] text-center">
-          <div className="bg-white mt-5">
-            <img className="w-20 " src={profileImgUrl}></img>
-            <div>{nickName}</div>
-            <div>{title}</div>
-            <div>
-              {startDate && endDate
-                ? `${startDate.year}-${startDate.month}-${startDate.day} ~ ${endDate.year}-${endDate.month}-${endDate.day}`
-                : '날짜 정보를 불러오는 중...'}
+          <div className="bg-white mx-auto h-[10rem] rounded-md mt-5 w-[40rem]">
+            <div className="flex items-center mt-5">
+              <img
+                className="w-20 ml-4 mr-[8.5rem] rounded-full"
+                src={profileImgUrl}
+              ></img>
+              <div>
+                <div>{nickName}</div>
+                <div>{title}</div>
+                <div>
+                  {startDate && endDate
+                    ? `${startDate.year}-${startDate.month}-${startDate.day} ~ ${endDate.year}-${endDate.month}-${endDate.day}`
+                    : '날짜 정보를 불러오는 중...'}
+                </div>
+                <button className="bg-customGreen rounded-md">
+                  {locationTag}
+                </button>
+                {petSizes.map((size: any, idx: any) => (
+                  <button key={idx} className="bg-customGreen rounded-md mx-2">
+                    {size}
+                  </button>
+                ))}
+              </div>
             </div>
-            <button className="bg-customGreen rounded-full">
-              {locationTag}
-            </button>
-            {petSizes.map((size: any, idx: any) => (
-              <button key={idx} className="bg-customGreen rounded-full mx-2">
-                {size}
-              </button>
-            ))}
-            <div>{content}</div>
           </div>
-          <div>
-            <button className="bg-customPink">문의 하기</button>
-            <button className="bg-black text-white" onClick={deletePost}>
+          <div className="bg-white mx-auto h-[9rem] rounded-md mt-5 w-[40rem]">
+            {content}
+          </div>
+          <div className="mt-5">
+            <button className="bg-customPink rounded-md w-64 h-20">
+              문의 하기
+            </button>
+            <button
+              className="bg-[#131342] text-white ml-10 rounded-md w-64 h-20"
+              onClick={deletePost}
+            >
               삭제하기
             </button>
           </div>

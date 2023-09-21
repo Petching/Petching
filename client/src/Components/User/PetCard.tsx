@@ -93,7 +93,7 @@ const PetCard: React.FC<MyPetsType> = ({
             <img
               src={changeImg}
               alt="변경된 이미지"
-              className="w-full h-full"
+              className="w-full h-full object-cover"
             />
             <input
               id="attach-file"
@@ -107,7 +107,7 @@ const PetCard: React.FC<MyPetsType> = ({
           <img
             src={petImgUrl}
             alt="반려동물의 이미지"
-            className="w-32 h-32 rounded"
+            className="w-32 h-32 rounded object-cover"
           />
         )}
       </div>

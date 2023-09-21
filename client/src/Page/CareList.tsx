@@ -5,36 +5,15 @@ import Postcode from '../Components/Care/Postcode';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
-
-interface Date {
-  year: number;
-  month: number;
-  day: number;
-}
+import useDateSelect from '../Hook/useDateSelect';
 
 const CareList = () => {
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
   const [locationTag, setLocationTag] = useState('');
   const [cardData, setCardData] = useState<any[]>([]);
   const [page, setPage] = useState(0);
-
+  const { startDate, endDate, onDateSelected } = useDateSelect();
   const navigate = useNavigate();
 
-  const onDateSelected = (value: any) => {
-    if (value.from && value.to) {
-      setStartDate({
-        year: value.from.year,
-        month: value.from.month,
-        day: value.from.day,
-      });
-      setEndDate({
-        year: value.to.year,
-        month: value.to.month,
-        day: value.to.day,
-      });
-    }
-  };
   const onAddressSelected = (address: string) => {
     setLocationTag(address);
   };
@@ -85,14 +64,15 @@ const CareList = () => {
 
   return (
     <div className="text-[1.2rem]">
-      <div className="flex flex-col w-full items-center bg-gray-100 ">
-        <div>
-          <div className="flex flex-col items-center">
+      <div className="bg-white h-10 mt-[4rem]"></div>
+      <div className="flex flex-col mx-auto w-3/4 h-68 rounded-lg items-center bg-gray-100 ">
+        <div className="flex flex-row mt-8 justify-around items-center">
+          <div className="flex flex-col mr-10 items-center">
             <div className="text-center leading-10 ">
               어느 지역을 찾으시나요?
             </div>
             <div className="flex items-center">
-              <div>
+              <div className="z-[100]">
                 <Postcode onAddressSelected={onAddressSelected} />
               </div>
             </div>
@@ -106,7 +86,7 @@ const CareList = () => {
             </div>
           </div>
         </div>
-        <div className="w-[15rem]">
+        <div className="w-[15rem] ml-[30rem] mt-10">
           <div className="flex justify-end m-7">
             <button
               className="w-[7rem] h-7 bg-customGreen shadow-sm shadow-gray-400 rounded-full mr-1"

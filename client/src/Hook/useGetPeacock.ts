@@ -1,7 +1,6 @@
-/* eslint-disable */
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import { Axios } from '../API/api';
+
 interface PeacockData {
   boardId: number;
   title: string;

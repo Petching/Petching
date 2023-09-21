@@ -5,6 +5,8 @@ import { MouseEventHandler, useRef } from 'react';
 
 interface CarouselProps {
   imgUrls: string[];
+  width: string;
+  height: string;
 }
 interface ArrowProps {
   onClick: MouseEventHandler<HTMLButtonElement>;
@@ -33,7 +35,7 @@ const PrevArrow = ({ onClick }: ArrowProps) => {
     </button>
   );
 };
-const Carousel: React.FC<CarouselProps> = ({ imgUrls }) => {
+const Carousel: React.FC<CarouselProps> = ({ imgUrls, width, height }) => {
   const sliderRef = useRef<Slider>(null);
 
   const handleNextClick = () => {
@@ -57,10 +59,10 @@ const Carousel: React.FC<CarouselProps> = ({ imgUrls }) => {
   };
 
   return (
-    <div className="w-60">
+    <div>
       <Slider {...settings}>
         {imgUrls.map((imgUrl, index) => (
-          <div key={index} className="h-60 w-60">
+          <div key={index} className={`h-${height} w-${width}`}>
             <img
               className="h-full w-full"
               src={imgUrl}

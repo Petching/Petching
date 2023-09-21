@@ -2,17 +2,28 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QueryKey } from 'react-query';
 import axios from 'axios';
 
-interface BoardData {
-  userId: number;
+export interface BoardData {
   title: string;
   content: string;
-  //imgUrls :
+  imgUrls: string[];
 }
 
 const createBoard = async (boardData: BoardData) => {
+  const accessToken = localStorage.getItem('ACCESS_TOKEN');
+
+  if (!accessToken) {
+    // 액세스 토큰이 없으면 처리
+    throw new Error('Access token not found');
+  }
+
   const response = await axios.post(
     'https://server.petching.net/boards',
     boardData,
+    {
+      headers: {
+        Authorization: `${accessToken}`,
+      },
+    },
   );
   return response.data;
 };

@@ -4,25 +4,32 @@ import { useLocation } from 'react-router-dom';
 import ImageUploader from '../Components/Care/ImageUploader';
 import ReactCalendar from '../Components/Care/ReactCalendar';
 import Postcode from '../Components/Care/Postcode';
-
+import { postImgHandler } from '../Util/postImg';
+import { useEffect } from 'react';
+import useDateSelect from '../Hook/useDateSelect';
+import { useNavigate } from 'react-router-dom';
 const CareListPost = () => {
   const location = useLocation();
-  const [startDate, setStartDate] = useState(location.state.startDate);
-  const [endDate, setEndDate] = useState(location.state.endDate);
+  const { startDate, endDate, onDateSelected } = useDateSelect();
   const [locationTag, setLocationTag] = useState(location.state.locationTag);
-  const [isPetsitter, setIsPetsitter] = useState(false);
+  const [isPetsitter, setIsPetsitter] = useState(true);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [petSizes, setpetSizes] = useState<string[]>([]);
   const [memo, setMemo] = useState('');
-  const [imgUrls, setImgUrls] = useState<string[]>([]);
-
-  const handleImageUploaded = (uploadedUrls: string[]) => {
-    setImgUrls([...imgUrls, ...uploadedUrls]);
+  const [imagesToUpload, setImagesToUpload] = useState<File[]>([]);
+  const navigate = useNavigate();
+  const handleImageUploaded = (uploadedUrls: File[]) => {
+    setImagesToUpload(uploadedUrls);
   };
 
   const handlePost = async () => {
     const token = localStorage.getItem('ACCESS_TOKEN');
+    const imgUrls: string[] = [];
+    for (const img of imagesToUpload) {
+      const imgUrl = await postImgHandler(img, 'careposts');
+      imgUrls.push(imgUrl);
+    }
     try {
       const requestBody = {
         title,
@@ -42,25 +49,13 @@ const CareListPost = () => {
           headers: { Authorization: token },
         },
       );
+      navigate('/carelist');
       console.log(response);
     } catch (error) {
       console.error(error);
     }
   };
-  const onDateSelected = (value: any) => {
-    if (value.from && value.to) {
-      setStartDate({
-        year: value.from.year,
-        month: value.from.month,
-        day: value.from.day,
-      });
-      setEndDate({
-        year: value.to.year,
-        month: value.to.month,
-        day: value.to.day,
-      });
-    }
-  };
+
   const handlepetSizesClick = (size: string) => {
     if (petSizes.includes(size)) {
       setpetSizes(petSizes.filter(s => s !== size));
@@ -68,50 +63,83 @@ const CareListPost = () => {
       setpetSizes([...petSizes, size]);
     }
   };
+
+  useEffect(() => {
+    setTitle(isPetsitter ? '' : '펫시터 찾아요 👀');
+    setContent(isPetsitter ? '' : '펫시터분 문의주세요~');
+  }, [isPetsitter]);
+
   return (
-    <div className="bg-[#F2F2F2] w-full h-full min-h-screen text-xl">
-      <div className="bg-[#F2F2F2] text-center">
+    <div className="bg-[#F2F2F2] w-full h-[80rem] min-h-screen text-xl ">
+      <div className="bg-[#F2F2F2] h-10 mt-[4rem]"></div>
+      <div className="bg-[#ffffff] mx-auto w-[40rem] h-[15rem] rounded-lg  text-center">
+        <div className="h-4"></div>
         <div>찾으시는 지역</div>
         <Postcode onAddressSelected={setLocationTag} value={locationTag} />
-        <div>언제 맡기시나요?</div>
+        <div className="mt-4">언제 맡기시나요?</div>
         <ReactCalendar onDateSelected={onDateSelected} />
       </div>
-      <div className="bg-white mt-10 text-center">
-        <div>펫을 맡기시나요?</div>
-        <div>
+      <div className="bg-white mx-auto w-[40rem] h-[42rem] rounded-lg mt-10 text-center ">
+        <div className="h-1 "></div>
+        <div className="mt-10 mb-3 ml-[-27rem] ">펫을 맡기시나요?</div>
+        <div className="ml-[25rem]">
           <button
-            className="bg-customGreen rounded-full"
+            className={`w-24 h-10 rounded-lg bg-customGreen ${
+              isPetsitter ? 'text-white' : 'text-black'
+            }`}
             onClick={() => setIsPetsitter(true)}
           >
             펫시터에요
           </button>
           <button
-            className="bg-customGreen rounded-full mx-4"
+            className={`w-24 h-10 rounded-lg mx-4 bg-customGreen ${
+              isPetsitter ? 'text-black' : 'text-white'
+            }`}
             onClick={() => setIsPetsitter(false)}
           >
             집사에요
           </button>
         </div>
-        {isPetsitter && (
+        {isPetsitter ? (
           <>
-            <div>글제목을 입력하세요</div>
+            <div className="h-1 "></div>
+            <div className="mt-2 ml-[-26rem]">글제목을 입력하세요</div>
             <input
-              className="border-2"
+              className="border-4 ml-[22rem] w-64 h-10"
               value={title}
               onChange={e => setTitle(e.target.value)}
             />
-            <div>내용을 입력하세요</div>
+            <div className="mt-2 ml-[-26.5rem]">내용을 입력하세요</div>
+            <textarea
+              className="border-4 ml-[22rem] w-64 h-20"
+              value={content}
+              onChange={e => setContent(e.target.value)}
+            />
+          </>
+        ) : (
+          <>
+            <div className="h-1 "></div>
+            <div className="mt-2 ml-[-26rem]">글제목을 입력하세요</div>
             <input
-              className="border-2"
+              className="border-4 ml-[22rem] w-64 h-10"
+              value={title}
+              onChange={e => setTitle(e.target.value)}
+            />
+            <div className="mt-2 ml-[-26.5rem]">내용을 입력하세요</div>
+            <textarea
+              className="border-4 ml-[22rem] w-64 h-20"
               value={content}
               onChange={e => setContent(e.target.value)}
             />
           </>
         )}
-        <div>펫의 크기를 지정해주세요</div>
-        <div>
+        <div className="mt-5 ml-[7rem]">
+          <ImageUploader onUploadComplete={handleImageUploaded} />
+        </div>
+        <div className="mt-6 ml-[-23rem]">펫의 크기를 지정해주세요</div>
+        <div className="ml-[22.5rem]">
           <button
-            className={`bg-customGreen rounded-full mx-4 ${
+            className={`bg-customGreen rounded-lg mx-2 w-16 h-10 ${
               petSizes.includes('소형') ? 'text-white' : ''
             }`}
             onClick={() => handlepetSizesClick('소형')}
@@ -119,7 +147,7 @@ const CareListPost = () => {
             소형
           </button>
           <button
-            className={`bg-customGreen rounded-full mx-4 ${
+            className={`bg-customGreen rounded-lg mx-2 w-16 h-10 ${
               petSizes.includes('중형') ? 'text-white' : ''
             }`}
             onClick={() => handlepetSizesClick('중형')}
@@ -127,7 +155,7 @@ const CareListPost = () => {
             중형
           </button>
           <button
-            className={`bg-customGreen rounded-full mx-4 ${
+            className={`bg-customGreen rounded-lg mx-2 w-16 h-10 ${
               petSizes.includes('대형') ? 'text-white' : ''
             }`}
             onClick={() => handlepetSizesClick('대형')}
@@ -135,19 +163,17 @@ const CareListPost = () => {
             대형
           </button>
         </div>
-        <div>
-          <ImageUploader onUploadComplete={handleImageUploaded} />
-        </div>
-        <div>추가사항을 적어주세요</div>
-        <input
-          className="border-2"
+
+        <div className="mt-3 ml-[-24.5rem]">추가사항을 적어주세요</div>
+        <textarea
+          className="border-4 ml-[22rem] w-64 h-20"
           value={memo}
           onChange={e => setMemo(e.target.value)}
-        ></input>
+        ></textarea>
       </div>
-      <div className="bg-white mt-10 text-center">
+      <div className="text-center">
         <button
-          className="bg-customPink w-10 rounded-full"
+          className="bg-customPink rounded-md mt-10 w-[40rem] h-20"
           onClick={handlePost}
         >
           게시

@@ -39,14 +39,14 @@ Axios.interceptors.request.use(
         if (response.status === 201) {
           const newAccessToken = response.data.accessToken;
           localStorage.setItem('ACCESS_TOKEN', newAccessToken);
-          config.headers['Authorization'] = `Bearer ${newAccessToken}`;
+          config.headers['Authorization'] = `${newAccessToken}`;
         }
       } catch (error) {
         console.error(error);
       }
     } else if (accessToken) {
       // 액세스 토큰, 리프레시 토큰이 있다면 요청 헤더에 추가
-      config.headers['Authorization'] = `Bearer ${accessToken}`;
+      config.headers['Authorization'] = `${accessToken}`;
     } else {
       console.log('아무것도 아닙니다');
     }
@@ -68,6 +68,7 @@ Axios.interceptors.response.use(
       window.location.href = `${BASE_URL}/signin`;
     } else {
       console.log('에러가 아닌 무언가');
+      console.log(error);
     }
     return Promise.reject(error);
   },

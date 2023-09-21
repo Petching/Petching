@@ -1,21 +1,16 @@
 /* eslint-disable */
 import React from 'react';
-import { CarouselComponent } from '../Components/peacockComponent';
-import doctors from '../Style/doctors.jpg';
-import { LikeComponent } from '../Components/peacockComponent';
+import doctors from '../Style/bulldog.jpg';
 const PeacockDetail = () => {
   return (
     <div className="flex items-center justify-center h-full mb-12">
       <div className="mt-20 w-5/6 bg-[#f2f2f2] flex flex-col items-center ">
-        <div className="mt-12 w-2/3">
-          <CarouselComponent />
-        </div>
+        <div className="mt-12 w-2/3"></div>
         <div className="w-5/6 h-32 mt-12 flex items-center rounded-2xl bg-[#ffffff]">
           <img className="ml-8 w-20 h-20 rounded-full" src={doctors}></img>
           <div className="h-32 ml-8 flex flex-col items-start">
             <div className="mt-4 text-xs">애플망고</div>
             <div className="mt-2 mb-2 font-bold text-3xl">도와조약입니다</div>
-            <LikeComponent />
           </div>
         </div>
         <div className="w-5/6 h-64 mt-12 rounded-2xl bg-[#ffffff]">

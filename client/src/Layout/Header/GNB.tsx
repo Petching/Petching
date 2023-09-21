@@ -85,7 +85,7 @@ const GNB = () => {
                     : 'https://s3.ap-northeast-2.amazonaws.com/petching.image/dog-5960092_1920.jpg'
                 }
                 alt="유저 메뉴 버튼"
-                className="w-10 h-10 rounded-full"
+                className="w-10 h-10 rounded-full object-cover"
               />
             </button>
           </>
