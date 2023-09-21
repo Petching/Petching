@@ -29,7 +29,7 @@ public class ChatService {
     }
 
     public void saveMessage(MessageDto dto, Long roomId) {
-        User member = userService.findUser(dto.getSenderId());
+        User member = userService.findUserById(dto.getSenderId());
         ChatRoom chatRoom = roomService.findRoom(roomId);
 
         ChatMessage chatMessage = ChatMessage
