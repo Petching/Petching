@@ -16,3 +16,5 @@ function removeCookie() {
 }
 
 export { setCookie, getCookie, removeCookie };
+
+// 테스트주석
