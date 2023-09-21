@@ -135,6 +135,11 @@ public class UserService {
         return user;
     }
 
+    public User findUserById (long userId) {
+        User user = verifiedUser(userId);
+
+        return user;
+    }
     public User verifiedUser (String email) {
 
         Optional<User> optional = repository.findByEmail(email);
