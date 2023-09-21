@@ -66,6 +66,7 @@ public class CarePostDto {
     public static class Response {
 
         private Long postId;
+        private Long userId;
         private String title;
         private String content;
         private List<String> imgUrls;
