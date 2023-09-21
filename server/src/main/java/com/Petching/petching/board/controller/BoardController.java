@@ -219,7 +219,7 @@ public class BoardController {
         authorization = authorization.replaceAll("Bearer ","");
         User requestUser = userService.findUser(jwtToken.extractUserIdFromToken(authorization));
 
-        if(requestUser.getLikedBoardList().contains(boardId)){
+        if(!requestUser.getLikedBoardList().contains(boardId)){
             requestUser.addLikedBoard(boardId);
         }else {
             requestUser.deleteLikedBoard(boardId);
