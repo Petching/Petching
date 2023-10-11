@@ -536,6 +536,7 @@ public class StubData {
         public static CarePostDto.Response getSingleResponseBody() {
             return CarePostDto.Response.builder()
                     .postId(1L)
+                    .userId(1L)
                     .title("this is title1")
                     .content("this is content1")
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_01.png"))
@@ -554,6 +555,7 @@ public class StubData {
 
             return CarePostDto.Response.builder()
                     .postId(2L)
+                    .userId(2L)
                     .title("this is title2")
                     .content("this is content2")
                     .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_02.png"))
@@ -588,6 +590,7 @@ public class StubData {
             CarePostDto.Response responseDto1 =
                     CarePostDto.Response.builder()
                             .postId(1L)
+                            .userId(1L)
                             .title("this is title1")
                             .content("this is content1")
                             .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_01.png"))
@@ -604,6 +607,7 @@ public class StubData {
             CarePostDto.Response responseDto2 =
                     CarePostDto.Response.builder()
                             .postId(2L)
+                            .userId(2L)
                             .title("this is title2")
                             .content("this is content2")
                             .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_02.png"))
@@ -620,6 +624,7 @@ public class StubData {
             CarePostDto.Response responseDto3 =
                     CarePostDto.Response.builder()
                             .postId(3L)
+                            .userId(3L)
                             .title("this is title3")
                             .content("this is content3")
                             .imgUrls(List.of("https://s3.{region-name}.amazonaws.com/{bucket-name}/careposts/{yyyy-mm-dd}-randomUUID_03.png"))
