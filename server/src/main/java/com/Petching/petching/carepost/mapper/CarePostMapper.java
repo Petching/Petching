@@ -7,6 +7,8 @@ import com.Petching.petching.tag.locationTag.CarePost_LocationTag;
 import com.Petching.petching.tag.petSize.CarePost_PetSize;
 import org.mapstruct.Mapper;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -34,6 +36,9 @@ public interface CarePostMapper {
         carePost.memo(requestBody.getMemo());
         carePost.conditionTag(requestBody.getConditionTag());
         carePost.locationTag(requestBody.getLocationTag());
+        carePost.startDate(LocalDate.of(requestBody.getStartDate().get("year"),requestBody.getStartDate().get("month"),requestBody.getStartDate().get("day")));
+        carePost.endDate(LocalDate.of(requestBody.getEndDate().get("year"),requestBody.getEndDate().get("month"),requestBody.getEndDate().get("day")));
+
 
 
         return carePost.build();
@@ -61,6 +66,8 @@ public interface CarePostMapper {
         carePost.memo( requestBody.getMemo() );
         carePost.conditionTag( requestBody.getConditionTag() );
         carePost.locationTag( requestBody.getLocationTag() );
+        carePost.startDate(LocalDate.of(requestBody.getStartDate().get("year"),requestBody.getStartDate().get("month"),requestBody.getStartDate().get("day")));
+        carePost.endDate(LocalDate.of(requestBody.getEndDate().get("year"),requestBody.getEndDate().get("month"),requestBody.getEndDate().get("day")));
 
         return carePost.build();
     }
