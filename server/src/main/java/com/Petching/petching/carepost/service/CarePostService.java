@@ -25,6 +25,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -120,6 +121,14 @@ public class CarePostService {
         Optional.ofNullable(patch.getLocationTag())
                 .ifPresent(findPost::setLocationTag);
 
+        if (patch.getStartYear() != null ) {
+            findPost.setStartDate(LocalDate.of(patch.getStartYear(), patch.getStartMonth(), patch.getStartDay()));
+        }
+        if (patch.getEndYear() != null ) {
+            findPost.setEndDate(LocalDate.of(patch.getEndYear(), patch.getEndMonth(), patch.getEndDay()));
+        }
+
+
 //        carePostConditionTagRepository.deleteAllByCarePost_PostId(postId);
 //        carePostLocationTagRepository.deleteAllByCarePost_PostId(postId);
 //
@@ -176,10 +185,11 @@ public class CarePostService {
 
     public List<CarePost> searchPost(String locationTag, int startDay, int startMonth, int startYear,
                                      int endDay, int endMonth, int endYear) {
+        LocalDate startDate = LocalDate.of(startYear,startMonth,startDay);
+        LocalDate endDate = LocalDate.of(endYear,endMonth,endDay);
 
-            return repository.findByLocationTagAndStartDayAndStartMonthAndStartYearAndEndDayAndEndMonthAndEndYear(
-                    locationTag, startDay, startMonth, startYear,
-                    endDay, endMonth, endYear);
+        List<CarePost> carePosts =  repository.findByLocationTagAndDates(locationTag,startDate,endDate);
+        return carePosts;
     }
 
     public Page<CarePost> findAllPost(Pageable pageable) {
