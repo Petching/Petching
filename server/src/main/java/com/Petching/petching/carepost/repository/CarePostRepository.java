@@ -17,7 +17,7 @@ public interface CarePostRepository extends JpaRepository<CarePost, Long> {
     );
 
     @Query("SELECT c FROM CarePost c WHERE c.locationTag = :locationTag " +
-            "AND (c.startDate <= :endDate AND c.endDate >= :startDate)")
+            "AND (c.startDate <= :startDate AND c.startDate <= :endDate AND c.endDate >= :startDate AND c.endDate >= :endDate)")
     List<CarePost> findByLocationTagAndDates(
             @Param("locationTag") String locationTag,
             @Param("startDate") LocalDate startDate,
