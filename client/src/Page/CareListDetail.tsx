@@ -2,6 +2,7 @@ import Carousel from '../Components/Care/Carousel';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { getUserIdFromToken } from '../Util/getUserIdFromToken';
 
 interface Date {
   year: number;
@@ -19,9 +20,13 @@ const CareListDetail = () => {
   const [nickName, setNickName] = useState('');
   const [profileImgUrl, setProfileImgUrl] = useState('');
   const [imgUrls, setImgUrls] = useState<string[]>([]);
+  const [postUserId, setPostUserId] = useState('');
+  const [showEditButton, setShowEditButton] = useState(false);
   const navigate = useNavigate();
   const { postId } = useParams<{ postId: string }>();
-
+  const Token = localStorage.getItem('ACCESS_TOKEN') || '';
+  const userId = String(getUserIdFromToken(true, Token));
+  console.log(userId);
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -38,6 +43,10 @@ const CareListDetail = () => {
       setNickName(data.nickName);
       setProfileImgUrl(data.profileImgUrl);
       setImgUrls(data.imgUrls);
+      setPostUserId(data.userId);
+      if (Number(userId) === data.userId) {
+        setShowEditButton(true);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -99,11 +108,16 @@ const CareListDetail = () => {
             {content}
           </div>
           <div className="mt-5">
-            <button className="bg-customPink rounded-md w-64 h-20">
+            <button className="bg-customPink rounded-md w-48 h-20">
               문의 하기
             </button>
+            {showEditButton && (
+              <button className="bg-customGreen rounded-md w-48 h-20 ml-5">
+                수정하기
+              </button>
+            )}
             <button
-              className="bg-[#131342] text-white ml-10 rounded-md w-64 h-20"
+              className="bg-[#131342] text-white rounded-md w-48 h-20 ml-5"
               onClick={deletePost}
             >
               삭제하기
