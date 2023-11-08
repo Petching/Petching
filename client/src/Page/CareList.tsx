@@ -68,9 +68,9 @@ const CareList = () => {
   return (
     <div className="text-[1.2rem]">
       <div className="bg-white h-10 mt-[4rem]"></div>
-      <div className="flex flex-col mx-auto w-3/4 h-68 rounded-lg items-center bg-gray-100 ">
-        <div className="flex flex-row mt-8 justify-around items-center">
-          <div className="flex flex-col mr-10 items-center">
+      <div className="flex flex-col mx-auto w-[35rem] md:w-[60rem] h-68 rounded-lg items-center bg-gray-100 ">
+        <div className="flex flex-col md:flex-row mt-8 justify-around items-center">
+          <div className="flex flex-col mr-1 md:mr-10 items-center">
             <div className="text-center leading-10 ">
               어느 지역을 찾으시나요?
             </div>
@@ -80,7 +80,7 @@ const CareList = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center mt-8 md:mt-0">
             <div className="text-center leading-10">언제 맡기시나요?</div>
             <div className="flex items-center">
               <div>
@@ -89,7 +89,7 @@ const CareList = () => {
             </div>
           </div>
         </div>
-        <div className="w-[15rem] ml-[30rem] mt-10">
+        <div className="w-[15rem] ml-0 md:ml-[30rem] mt-10">
           <div className="flex justify-end m-7">
             <button
               className="w-[7rem] h-7 bg-customGreen shadow-sm shadow-gray-400 rounded-full mr-1"
