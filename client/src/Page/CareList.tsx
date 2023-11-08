@@ -6,8 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import useDateSelect from '../Hook/useDateSelect';
+import { useStore } from '../store/editPost';
 
 const CareList = () => {
+  const { postToEdit, isEdit, setIsEdit } = useStore();
   const [locationTag, setLocationTag] = useState('');
   const [cardData, setCardData] = useState<any[]>([]);
   const [page, setPage] = useState(0);
@@ -43,6 +45,7 @@ const CareList = () => {
   };
 
   const toCareListPost = () => {
+    setIsEdit(false);
     navigate('/carelistpost', { state: { startDate, endDate, locationTag } });
   };
 
