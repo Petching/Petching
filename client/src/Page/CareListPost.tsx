@@ -8,16 +8,27 @@ import { postImgHandler } from '../Util/postImg';
 import { useEffect } from 'react';
 import useDateSelect from '../Hook/useDateSelect';
 import { useNavigate } from 'react-router-dom';
+import { useStore } from '../store/editPost';
+
 const CareListPost = () => {
   const location = useLocation();
+  const { postToEdit, isEdit, setIsEdit } = useStore();
+  const [title, setTitle] = useState(isEdit ? postToEdit.title : '');
   const { startDate, endDate, onDateSelected } = useDateSelect();
-  const [locationTag, setLocationTag] = useState(location.state.locationTag);
-  const [isPetsitter, setIsPetsitter] = useState(true);
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [petSizes, setpetSizes] = useState<string[]>([]);
-  const [memo, setMemo] = useState('');
-  const [imagesToUpload, setImagesToUpload] = useState<File[]>([]);
+  const [locationTag, setLocationTag] = useState(
+    isEdit ? postToEdit?.locationTag : location.state?.locationTag || '',
+  );
+  const [isPetsitter, setIsPetsitter] = useState(
+    isEdit ? postToEdit.isPetsitter : true,
+  );
+  const [content, setContent] = useState(isEdit ? postToEdit.content : '');
+  const [petSizes, setpetSizes] = useState<string[]>(
+    isEdit ? postToEdit.petSizes : [],
+  );
+  const [memo, setMemo] = useState(isEdit ? postToEdit.memo : '');
+  const [imagesToUpload, setImagesToUpload] = useState<File[]>(
+    isEdit ? postToEdit.imgUrls : [],
+  );
   const navigate = useNavigate();
   const handleImageUploaded = (uploadedUrls: File[]) => {
     setImagesToUpload(uploadedUrls);
@@ -42,15 +53,24 @@ const CareListPost = () => {
         petSizes,
         memo,
       };
-      const response = await axios.post(
-        'https://server.petching.net/careposts',
-        requestBody,
-        {
+      if (isEdit) {
+        // 수정 요청
+        await axios.patch(
+          `https://server.petching.net/careposts/${postToEdit.postId}`,
+          requestBody,
+          {
+            headers: { Authorization: token },
+          },
+        );
+        console.log(requestBody);
+        setIsEdit(false);
+      } else {
+        // 새 게시물 작성 요청
+        await axios.post('https://server.petching.net/careposts', requestBody, {
           headers: { Authorization: token },
-        },
-      );
+        });
+      }
       navigate('/carelist');
-      console.log(response);
     } catch (error) {
       console.error(error);
     }
@@ -65,9 +85,14 @@ const CareListPost = () => {
   };
 
   useEffect(() => {
-    setTitle(isPetsitter ? '' : '펫시터 찾아요 👀');
-    setContent(isPetsitter ? '' : '펫시터분 문의주세요~');
-  }, [isPetsitter]);
+    if (isPetsitter) {
+      setTitle('');
+      setContent('');
+    } else {
+      setTitle(postToEdit.title);
+      setContent(postToEdit.content);
+    }
+  }, [isPetsitter, postToEdit]);
 
   return (
     <div className="bg-[#F2F2F2] w-full h-[80rem] min-h-screen text-xl ">
@@ -176,7 +201,7 @@ const CareListPost = () => {
           className="bg-customPink rounded-md mt-10 w-[40rem] h-20"
           onClick={handlePost}
         >
-          게시
+          {isEdit ? '수정하기' : '게시'}
         </button>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { getUserIdFromToken } from '../Util/getUserIdFromToken';
+import { useStore } from '../store/editPost';
 
 interface Date {
   year: number;
@@ -22,18 +23,21 @@ const CareListDetail = () => {
   const [imgUrls, setImgUrls] = useState<string[]>([]);
   const [postUserId, setPostUserId] = useState('');
   const [showEditButton, setShowEditButton] = useState(false);
+  const [memo, setMemo] = useState('');
+  const [isPetsitter, setIsPetsitter] = useState(false);
   const navigate = useNavigate();
   const { postId } = useParams<{ postId: string }>();
   const Token = localStorage.getItem('ACCESS_TOKEN') || '';
   const userId = String(getUserIdFromToken(true, Token));
-  console.log(userId);
+  const { setPostToEdit, setIsEdit } = useStore();
+
   const fetchData = async () => {
     try {
       const response = await axios.get(
         `https://server.petching.net/careposts/${postId}`,
       );
       const data = response.data.data;
-
+      console.log(data);
       setTitle(data.title);
       setStartDate(data.startDate);
       setEndDate(data.endDate);
@@ -44,6 +48,8 @@ const CareListDetail = () => {
       setProfileImgUrl(data.profileImgUrl);
       setImgUrls(data.imgUrls);
       setPostUserId(data.userId);
+      setMemo(data.memo);
+      setIsPetsitter(data.conditionTag === '펫시터예요');
       if (Number(userId) === data.userId) {
         setShowEditButton(true);
       }
@@ -65,7 +71,22 @@ const CareListDetail = () => {
       alert('게시물 삭제에 실패했습니다.');
     }
   };
-
+  const handleEditPost = () => {
+    setPostToEdit({
+      title,
+      content,
+      startDate,
+      endDate,
+      locationTag,
+      petSizes,
+      memo,
+      imgUrls,
+      conditionTag: isPetsitter ? '펫시터예요' : '집사예요',
+      postId,
+    });
+    setIsEdit(true);
+    navigate('/carelistpost');
+  };
   useEffect(() => {
     window.scrollTo(0, 0);
     fetchData();
@@ -112,7 +133,10 @@ const CareListDetail = () => {
               문의 하기
             </button>
             {showEditButton && (
-              <button className="bg-customGreen rounded-md w-48 h-20 ml-5">
+              <button
+                className="bg-customGreen rounded-md w-48 h-20 ml-5"
+                onClick={handleEditPost}
+              >
                 수정하기
               </button>
             )}
