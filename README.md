@@ -47,13 +47,12 @@
 
 | 기능           | 영상                                                                           |
 | ---------------------- | -------------------------------------------------------------------------------------- |
-| 메인 페이지 | ![ezgif-5-4df5cccdfb](https://github.com/Petching/Petching/assets/82007474/38685058-adc5-4a7b-999c-51c12de171b2)|
-| 회원가입 | ![ezgif-5-9481369167](https://github.com/Petching/Petching/assets/82007474/b5d2fe2c-1f5a-4002-b9bc-b03bb6f28b01)|
-| 로그인 | ![ezgif-5-aabf73347e](https://github.com/Petching/Petching/assets/82007474/f707e72a-69fe-40ca-aa1e-88c8b23b2d3c)|
-| OAuth 로그인 |![ezgif-5-76d0d89089](https://github.com/Petching/Petching/assets/82007474/9cc54e8c-a1dd-468a-adb7-59d60e5b4be3)|
-| 고객센터 | ![ezgif-5-2335de39be](https://github.com/Petching/Petching/assets/82007474/bd199974-8f81-426e-94bd-e4ca75a52d7b)|
-| 돌봄페이지 글작성 | ![ezgif-5-a904583d38](https://github.com/Petching/Petching/assets/82007474/fd63b916-4015-4027-9053-6512a9409d75)|
-| 돌봄페이지 글수정, 삭제 | ![ezgif-5-7a502fc6c6](https://github.com/Petching/Petching/assets/82007474/e350e43b-5bb1-4119-9d87-17598b3cb07e)|
+| 회원가입 | ![화면 기록 2023-12-04 오후 6 38 20](https://github.com/Petching/Petching/assets/82007474/ee59d5eb-146b-4102-8113-ea615b7d6824) |
+| 로그인 | ![화면 기록 2023-12-04 오후 6 39 08](https://github.com/Petching/Petching/assets/82007474/d3705349-8e93-40b6-bafc-3af19d5f1441) |
+| OAuth 로그인 | ![화면 기록 2023-12-04 오후 7 28 29](https://github.com/Petching/Petching/assets/82007474/38420db1-58f2-4d4f-a5f4-da975d00ad60) |
+| 고객센터 | ![화면 기록 2023-12-04 오후 7 34 02](https://github.com/Petching/Petching/assets/82007474/a7becde5-2f3e-4ab1-a1da-805737b92b64) |
+| 돌봄페이지 글작성 | ![화면 기록 2023-12-04 오후 9 44 21](https://github.com/Petching/Petching/assets/82007474/30383137-22ac-49f5-a603-e5870888448c) |
+| 돌봄페이지 글수정, 삭제 | ![화면 기록 2023-12-04 오후 9 47 53](https://github.com/Petching/Petching/assets/82007474/da5fb5b0-1fdb-4d79-b565-8b5192b20b67) |
 
 
 
