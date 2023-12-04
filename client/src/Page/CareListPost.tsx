@@ -83,14 +83,15 @@ const CareListPost = () => {
       setpetSizes([...petSizes, size]);
     }
   };
-
   useEffect(() => {
     if (isPetsitter) {
       setTitle('');
       setContent('');
     } else {
-      setTitle(postToEdit.title);
-      setContent(postToEdit.content);
+      if (postToEdit) {
+        setTitle(postToEdit.title);
+        setContent(postToEdit.content);
+      }
     }
   }, [isPetsitter, postToEdit]);
 
