@@ -9,7 +9,7 @@ import useDateSelect from '../Hook/useDateSelect';
 import { useStore } from '../store/editPost';
 
 const CareList = () => {
-  const { postToEdit, isEdit, setIsEdit } = useStore();
+  const { setIsEdit } = useStore();
   const [locationTag, setLocationTag] = useState('');
   const [cardData, setCardData] = useState<any[]>([]);
   const [page, setPage] = useState(0);

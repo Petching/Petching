@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Carousel from '../Components/Care/Carousel';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';

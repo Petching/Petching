@@ -25,7 +25,6 @@ const CareListPost = () => {
   const [petSizes, setpetSizes] = useState<string[]>(
     isEdit ? postToEdit.petSizes : [],
   );
-  const [memo, setMemo] = useState(isEdit ? postToEdit.memo : '');
   const [imagesToUpload, setImagesToUpload] = useState<File[]>(
     isEdit ? postToEdit.imgUrls : [],
   );
@@ -51,7 +50,6 @@ const CareListPost = () => {
         conditionTag: isPetsitter ? '펫시터예요' : '집사예요',
         locationTag,
         petSizes,
-        memo,
       };
       if (isEdit) {
         // 수정 요청
@@ -189,13 +187,6 @@ const CareListPost = () => {
             대형
           </button>
         </div>
-
-        <div className="mt-3 ml-[-24.5rem]">추가사항을 적어주세요</div>
-        <textarea
-          className="border-4 ml-[22rem] w-64 h-20"
-          value={memo}
-          onChange={e => setMemo(e.target.value)}
-        ></textarea>
       </div>
       <div className="text-center">
         <button
