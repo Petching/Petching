@@ -20,7 +20,7 @@ const Card: React.FC<CardProps> = ({
   return (
     <div className="m-4">
       <div className=" text-center rounded-md w-[18rem] h-[26rem] pt-6 bg-white shadow-lg shadow-gray-400">
-        <div className="mx-auto w-56 h-52 mb-3">
+        <div className="mx-auto w-56 h-52 mb-4">
           <Carousel imgUrls={imgUrls} width="56" height="52" />
         </div>
         <div onClick={() => toCareListDetail(postId)}>
@@ -37,8 +37,8 @@ const Card: React.FC<CardProps> = ({
               </button>
             ))}
           </div>
-          <div className="mt-5">{title}</div>
-          <div className="flex justify-center items-center">
+          <div className="mt-4">{title}</div>
+          <div className="mt-2 flex justify-center items-center">
             <img
               className="w-8 h-8 rounded-full mr-2"
               src={profileImgUrl}

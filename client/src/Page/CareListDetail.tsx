@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Carousel from '../Components/Care/Carousel';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -68,7 +69,7 @@ const CareListDetail = () => {
       alert('게시물이 성공적으로 삭제되었습니다');
     } catch (error) {
       console.error(error);
-      alert('게시물 삭제에 실패했습니다.');
+      alert('본인 게시물이 아니면 삭제할 수 없습니다');
     }
   };
   const handleEditPost = () => {
@@ -93,9 +94,9 @@ const CareListDetail = () => {
   }, [postId]);
 
   return (
-    <div className="bg-[#F2F2F2] w-full h-full min-h-screen text-2xl">
+    <div className="bg-[#F2F2F2] w-full h-full min-h-screen text-xl">
       <div className="bg-[#F2F2F2] h-10 mt-[4rem]"></div>
-      <div className="mt-[1rem]">
+      <div className="mt-[0.01rem]">
         <div className="mx-auto w-[40rem] h-96">
           <Carousel imgUrls={imgUrls} width="40rem" height="96" />
         </div>
@@ -107,7 +108,7 @@ const CareListDetail = () => {
                 src={profileImgUrl}
               ></img>
               <div>
-                <div>{nickName}</div>
+                <div className="pt-3">{nickName}</div>
                 <div>{title}</div>
                 <div>
                   {startDate && endDate
@@ -125,7 +126,7 @@ const CareListDetail = () => {
               </div>
             </div>
           </div>
-          <div className="bg-white mx-auto h-[9rem] rounded-md mt-5 w-[40rem]">
+          <div className="bg-white mx-auto h-[4rem] rounded-md mt-5 w-[40rem] pt-2">
             {content}
           </div>
           <div className="mt-5">
