@@ -67,8 +67,10 @@
 | 회원가입 | ![ezgif-5-a41f4e3696](https://github.com/Petching/Petching/assets/82007474/4550a79d-85a7-4711-8b61-b3d793b5a60e)|
 | 로그인 |![ezgif-5-c648ecb4b1](https://github.com/Petching/Petching/assets/82007474/79579b47-b710-4474-94bd-58088731c377)|
 | OAuth 로그인 |![ezgif-5-f02403cb5d](https://github.com/Petching/Petching/assets/82007474/7e903e24-a5f6-4172-a78c-b162260654e9)|
+| 돌봄페이지 검색 |![ezgif-5-b7bf14c885](https://github.com/Petching/Petching/assets/82007474/9803e454-c46e-45e9-bc38-07843a456d4f)|
 | 돌봄페이지 글작성 | ![ezgif-5-7557a625f7](https://github.com/Petching/Petching/assets/82007474/744d2aaf-c71e-437d-b78e-9ce622beb61e)|
 | 돌봄페이지 글수정, 삭제 | ![ezgif-5-0ea36eefa0](https://github.com/Petching/Petching/assets/82007474/4cef97bc-6a14-4cba-9c51-50aee40d296b)|
+| 자랑하기 페이지 |![ezgif-5-09b40235db](https://github.com/Petching/Petching/assets/82007474/d4a01270-8ee9-4e11-ad86-a326ded69d6d)|
 | 고객센터 |![ezgif-5-e164d4941a](https://github.com/Petching/Petching/assets/82007474/468b4d02-33eb-450e-8a15-e799eb019362)|
 
 
