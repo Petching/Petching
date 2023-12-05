@@ -31,6 +31,7 @@
 * **프로젝트 명** : Petching
 * **진행 기간** : 23.07.24 ~ 23.11.30
 * **서비스 URL** : [🐶 Petching 🐱 바로 가기](https://petching.net/)
+* **노션 문서** : [Notion 바로 가기]([https://petching.net/](https://www.notion.so/Team-PETmatCHING-30be5eeca58e45138f720cbaec70ea19))
 
 <br>
 
@@ -54,5 +55,27 @@
 | 돌봄페이지 글작성 | ![ezgif-5-7557a625f7](https://github.com/Petching/Petching/assets/82007474/744d2aaf-c71e-437d-b78e-9ce622beb61e)|
 | 돌봄페이지 글수정, 삭제 | ![ezgif-5-0ea36eefa0](https://github.com/Petching/Petching/assets/82007474/4cef97bc-6a14-4cba-9c51-50aee40d296b)|
 | 고객센터 |![ezgif-5-e164d4941a](https://github.com/Petching/Petching/assets/82007474/468b4d02-33eb-450e-8a15-e799eb019362)|
+
+
+<br>
+
+## 🚩 커밋 컨벤션
+
+| Message     | 설명        |
+| ---------------------- | -------------------------------------------------------------------------------------- |
+| [feat]      | 새로운 기능을 추가할 경우        |
+| [fix]      | 버그를 고친 경우        |
+| [design]      | CSS 등 사용자 UI 디자인 변경        |
+| [style]      | 코드 포맷변경, 세미콜론 누락, 코드수정이 없는 경우        |
+| [refactor]      | 프로덕션 코드 리펙토링할 경우        |
+| [comment]      | 필요한 주석 추가 및 변경        |
+| [docs]      | 문서를 수정한 경우        |
+| [test]      | 테스트 코드 작업을할 경우        |
+| [chore]      | 빌드 테스트 업데이트, 패키지 매니저를 설정하는 경우        |
+| [rename]      | 파일 혹은 폴더명을 수정하거나 옮기는 작업만 하는 경우        |
+| [init]      | 브랜치 초기화 및 초기셋팅 관련된 설정일 경우        |
+| [Test]      | 테스트 코드 추가, 이 외 테스트        |
+| [refactor]      | Code refactoring        |
+|[etc]|이 외 기타사항|
 
 
