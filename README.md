@@ -31,7 +31,7 @@
 * **프로젝트 명** : Petching
 * **진행 기간** : 23.07.24 ~ 23.11.30
 * **서비스 URL** : [🐶 Petching 🐱 바로 가기](https://petching.net/)
-* **노션 문서** : [Notion 바로 가기]([https://petching.net/](https://www.notion.so/Team-PETmatCHING-30be5eeca58e45138f720cbaec70ea19))
+* **노션 문서** : [Notion 바로 가기](https://www.notion.so/Team-PETmatCHING-30be5eeca58e45138f720cbaec70ea19)
 
 <br>
 
