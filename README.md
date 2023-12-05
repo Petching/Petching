@@ -23,17 +23,19 @@
 > 🐶 **Petching** 🐱에서는 이 모든 것이 가능합니다 😊
 
 <br>
+
 ------------
 
 <br>
 
 ## 🚩 프로젝트 개요
-<br>
+
 * **프로젝트 명** : Petching
 * **진행 기간** : 23.07.24 ~ 23.11.30
 * **서비스 URL** : [🐶 Petching 🐱 바로 가기](https://petching.net/)
 * **노션 문서** : [Notion 바로 가기](https://www.notion.so/Team-PETmatCHING-30be5eeca58e45138f720cbaec70ea19)
 
+<br>
 <br>
 
 ## 👪 팀원 소개
@@ -44,15 +46,19 @@
 
 
 <br>
-
+<br>
 
 ## 🚩 기술스택
+
 <br>
 
 ![Web_App_Reference_Architecture_2](https://github.com/Petching/Petching/assets/82007474/6eb01093-ce9c-4b13-afb5-21ee97b8fe15)
 
 <br>
+<br>
+
 ## 🖥 구현 이미지
+
 <br>
 
 | 기능           | 영상                                                                           |
