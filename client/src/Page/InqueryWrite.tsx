@@ -1,10 +1,10 @@
-import { ChangeEvent, MouseEvent, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import TextEditor from '../Components/Care/TextEditor';
 import Dropdown from '../Components/Inquery/Dropdown';
 
 const InqueryWrite = () => {
-  const handleButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const handleButtonClick = (e?: React.MouseEvent<HTMLButtonElement>) => {
+    e?.preventDefault();
     alert('1대1 문의는 준비중입니다.');
   };
   const [title, setTitle] = useState<string>('');
@@ -34,13 +34,10 @@ const InqueryWrite = () => {
             있습니다.
           </div>
           <div className="mt-4 w-full h-full lg:w-[700px] lg:h-[170px]">
-            <TextEditor title={title} />
-            <button
-              onClick={handleButtonClick}
-              className="bg-customGreen hover:bg-customHoverGreen text-gray-700 font-bold py-2 px-4 mt-4 mb-16 rounded duration-300 hover:scale-110 ease-in-out"
-            >
-              Submit
-            </button>
+            <TextEditor
+              title={title}
+              onClickButton={e => handleButtonClick(e)}
+            />
           </div>
         </div>
       </section>
