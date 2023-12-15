@@ -11,10 +11,11 @@ type HookCallback = (url: string, text?: string) => void;
 
 interface TextEditorProps {
   title: string;
+  onClickButton?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 //title props에 대한 TextEditorProps추가
-const TextEditor = ({ title }: TextEditorProps) => {
+const TextEditor = ({ title, onClickButton }: TextEditorProps) => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [imgUrls, setImgUrls] = useState<string[]>();
   const editorRef = useRef<Editor | null>(null);
@@ -39,7 +40,7 @@ const TextEditor = ({ title }: TextEditorProps) => {
   const onUploadImage = async (blob: any, callback: any) => {
     const url = await uploadImage(blob);
     console.log(url);
-    callback(url, 'alt text');
+    callback(url, '사용자가 올린 이미지');
     //null값 예외처리 추가
     setImgUrls(prevUrls => (prevUrls ? [...prevUrls, url] : [url]));
     return false;
@@ -85,8 +86,13 @@ const TextEditor = ({ title }: TextEditorProps) => {
         }}
       />
       <button
-        onClick={handleSubmit}
-        className="mt-4 bg-customGreen hover:bg-customHoverGreen text-gray-700 font-bold py-2 px-4 rounded duration-300 hover:scale-110 ease-in-out"
+        onClick={e => {
+          handleSubmit();
+          if (onClickButton) {
+            onClickButton(e);
+          }
+        }}
+        className="mt-4 mb-16 bg-customGreen hover:bg-customHoverGreen text-gray-700 font-bold py-2 px-4 rounded duration-300 hover:scale-110 ease-in-out"
       >
         Submit
       </button>
