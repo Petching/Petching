@@ -1,4 +1,3 @@
-import poo from '../Style/footerdog.png';
 import QuestionSection from '../Components/Inquery/QuestionSection';
 import { useNavigate } from 'react-router-dom';
 import { GoToFunction } from '../Util/types';
@@ -49,13 +48,10 @@ const InqueryMap = () => {
       <section className=" flex flex-col bg-#e0e0e0 justify-center items-center mt-10 mb-10">
         <Map />
       </section>
-      <section className="flex justify-center h-[20vh] bg-gray-100 p-10 overflow-hidden">
+      <section className="flex justify-center h-[20vh] bg-gray-100 mt-40 p-10 overflow-hidden">
         <div className="flex flex-col items-left">
           <div className="text-3xl mb-5">질문에 대한 답을 찾지 못하셨나요?</div>
           <div className="text-lg">1대1 문의하기</div>
-        </div>
-        <div className="flex ml-16">
-          <img src={poo} className="w-[160px] h-[120px]" />
         </div>
       </section>
     </>
