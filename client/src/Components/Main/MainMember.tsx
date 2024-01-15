@@ -14,7 +14,7 @@ const member_fe = [
     icon: 'https://avatars.githubusercontent.com/u/82639552?v=4',
     name: '염도경',
     github: 'https://github.com/yeomdogyeong',
-    part: '로그인, 회원가입, 채팅, 문의하기',
+    part: '로그인, 회원가입, 문의하기',
   },
   {
     icon: 'https://avatars.githubusercontent.com/u/120395149?v=4',
@@ -40,7 +40,7 @@ const member_be = [
     icon: 'https://avatars.githubusercontent.com/u/120084774?v=4',
     name: '김상래',
     github: 'https://github.com/ksr0818',
-    part: '돌봄페이지 CRUD, 태그, 채팅',
+    part: '돌봄페이지 CRUD, 태그 ',
   },
   {
     icon: 'https://avatars.githubusercontent.com/u/120099321?v=4',

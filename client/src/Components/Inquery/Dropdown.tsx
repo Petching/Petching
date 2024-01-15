@@ -23,6 +23,7 @@ const Dropdown = () => {
 
   const handleClickOutside = (event: MouseEvent) => {
     if (
+      //useRef를 통해 생성된 참조 객체의 현재값
       dropdownRef.current &&
       !dropdownRef.current.contains(event.target as Node)
     ) {
@@ -38,6 +39,7 @@ const Dropdown = () => {
   }, []);
 
   return (
+    //dropdown 메뉴의 dom요소 참조
     <div className="relative z-10 " ref={dropdownRef}>
       <button
         onClick={toggleDropdown}

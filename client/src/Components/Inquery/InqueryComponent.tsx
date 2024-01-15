@@ -24,14 +24,14 @@ const InqueryComponent: React.FC<InqueryComponentProps> = ({
   return (
     <>
       <div className="flex flex-col p-6 justify-left items-left w-[90vw]">
-        <div className="text-[30px] mb-6 p-5">
+        <div className="text-[30px] m-6 p-6">
           총 {filteredData.length}개의 질문
         </div>
         {/* dummydata/data/filteredData 순으로 바뀌었음 */}
         {filteredData.map((item, index) => (
           <div key={item.id}>
             <div>
-              <div className="flex p-3 text-2xl">
+              <div className="flex p-3 m-6 text-2xl">
                 Q. {item.q}
                 <button
                   onClick={() =>
