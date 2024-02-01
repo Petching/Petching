@@ -1,4 +1,7 @@
-import { CarouselComponent, Square } from '../Components/peacockComponent';
+import {
+  CarouselComponent,
+  Square,
+} from '../Components/Peacock/PeacockComponent';
 import React from 'react';
 const Peacock = () => {
   return (
