@@ -15,17 +15,18 @@ interface PeacockDetailData {
   imgUrls: string[];
 }
 
-export const useGetPeacockDetail = () => {
+export const useGetPeacockDetail = (boardId: number) => {
   const {
     isLoading: GetPeacockDetailLoading,
     isError: GetPeacockDetailError,
     data: GetPeacockDetail,
   } = useQuery<PeacockDetailData, Error>({
-    queryKey: ['GetPeacockDetail'],
-    queryFn: async boardId => {
-      const response = await Axios.get(`${BASE_URL}/boards/${boardId}`);
+    queryKey: ['GetPeacockDetail', boardId],
+    queryFn: async () => {
+      const response = await Axios.get(`/boards/${boardId}`);
       return response.data.data;
     },
+
     onError: () => {
       console.error('데이터를 받아오지 못했습니다.');
     },
